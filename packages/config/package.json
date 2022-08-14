@@ -1,0 +1,10 @@
+{
+  "name": "@taho-chat/config",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^18.6.4",
+    "typescript": "^4.6.4"
+  }
+}

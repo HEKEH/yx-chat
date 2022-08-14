@@ -1,0 +1,11 @@
+{
+  "name": "taho-chat",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev:web": "pnpm --filter @taho-chat/web run dev",
+    "build:web": "pnpm --filter @taho-chat/web run build",
+    "dev": "pnpm -r run dev",
+    "build": "pnpm -r run build"
+  }
+}
