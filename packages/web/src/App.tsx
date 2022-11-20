@@ -2,7 +2,7 @@ import { CSSProperties, defineComponent, PropType, ref } from "vue";
 import { HelloWorld } from "./components/HelloWorld";
 import s from "./App.module.sass";
 import vueImg from "./assets/vue.svg";
-import { fetch } from "./infrastructure/socketFetch";
+import { fetch } from "./infrastructure/socketIO/fetch";
 
 fetch();
 export default defineComponent({
