@@ -7,12 +7,14 @@ export const HelloWorld = defineComponent({
       type: String, // as PropType<String>
       required: true,
     },
+    // onTileClick: {
+    //   required: true,
+    // },
   },
   emits: {
-    tileClick: (count: number) => undefined,
+    tileClick: (count: number) => typeof count === 'number',
   },
-  setup(props, ctx) {
-    const { slots, emit } = ctx;
+  setup(props, { slots, emit }) {
     const count = ref(1);
     return () => (
       <>

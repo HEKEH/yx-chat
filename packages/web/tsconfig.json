@@ -5,6 +5,6 @@
     "./src/**/*.d.ts",
     "./src/**/*.tsx",
     "./src/**/*.vue"
-  ],
+, "src/components/HelloWorld copy.tsx.bak", "src/components/HelloWorld1.tsx.bak"  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
