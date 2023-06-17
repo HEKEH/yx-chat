@@ -1,11 +1,22 @@
 {
-  "name": "taho-chat",
+  "name": "yx-chat",
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev:web": "pnpm --filter @taho-chat/web run dev",
-    "build:web": "pnpm --filter @taho-chat/web run build",
+    "dev:web": "pnpm --filter @yx-chat/web run dev",
+    "build:web": "pnpm --filter @yx-chat/web run build",
     "dev": "pnpm -r run dev",
-    "build": "pnpm -r run build"
+    "build": "pnpm -r run build",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "husky": "^8.0.0",
+    "lint-staged": "^10.2.10"
+  },
+  "lint-staged": {
+    "{packages}/**/*.{js,ts,tsx}": [
+      "eslint --fix --color"
+    ]
   }
 }

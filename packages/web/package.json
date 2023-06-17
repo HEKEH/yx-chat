@@ -1,22 +1,21 @@
 {
-  "name": "@taho-chat/web",
+  "name": "@yx-chat/web",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite --config ./vite.config.js",
     "build": "cross-env NODE_ENV=production vue-tsc --noEmit && vite build --config ./vite.config.js",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@taho-chat/config": "workspace:*",
+    "@yx-chat/config": "workspace:*",
     "element-plus": "^2.3.6",
     "socket.io-client": "^4.5.1",
     "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^3.0.0",
-    "@vitejs/plugin-vue-jsx": "^2.0.0",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "@vitejs/plugin-vue-jsx": "^3.0.1",
     "cross-env": "^7.0.3",
     "sass": "^1.54.3",
     "typescript": "^4.6.4",

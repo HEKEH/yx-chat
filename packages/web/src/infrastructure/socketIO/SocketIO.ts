@@ -1,5 +1,5 @@
 import IO, { Socket } from 'socket.io-client';
-import clientConfig from "@taho-chat/config/client";
+import clientConfig from "@yx-chat/config/client";
 import { MessageForSend } from '../message/MessageForSend';
 import { MessageTypeEnum } from '../message/MessageTypeEnum';
 import { NotificationReceiver } from '../notification/NotificationReceiver';
