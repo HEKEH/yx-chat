@@ -1,5 +1,5 @@
-import type { userServiceModuleAPI } from "./User";
+import type { userServiceModuleAPI } from './User';
 
 export type DefaultModulesAPI = {
-    "user": userServiceModuleAPI,
-}
+  user: userServiceModuleAPI;
+};

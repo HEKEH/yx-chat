@@ -1,3 +1,3 @@
 export enum MessageTypeEnum {
-    login = "login",
-};
+  login = 'login',
+}

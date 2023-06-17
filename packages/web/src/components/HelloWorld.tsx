@@ -1,5 +1,5 @@
-import { CSSProperties, defineComponent, PropType, ref } from "vue";
-import s from "./HelloWorld.module.sass";
+import { CSSProperties, defineComponent, PropType, ref } from 'vue';
+import s from './HelloWorld.module.sass';
 
 export const HelloWorld = defineComponent({
   props: {
@@ -25,7 +25,7 @@ export const HelloWorld = defineComponent({
             type="button"
             onClick={() => {
               count.value++;
-              emit("tileClick", count.value);
+              emit('tileClick', count.value);
             }}
           >
             count is {count.value}
@@ -53,7 +53,7 @@ export const HelloWorld = defineComponent({
           </a>
           in your IDE for a better DX
         </p>
-        <p class={s["read-the-docs"]}>
+        <p class={s['read-the-docs']}>
           Click on the Vite and Vue logos to learn more
         </p>
       </>
