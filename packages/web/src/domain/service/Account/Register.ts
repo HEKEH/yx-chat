@@ -1,14 +1,19 @@
-import { RegisterUserInfo } from '@yx-chat/types/account';
+import {
+  LoginSuccessResponse,
+  RegisterData,
+} from '@yx-chat/common/types/account';
 import platform from 'platform';
-import { CommonResultStatus } from '~/types/common';
+import { BusinessError } from '~/common/error';
+import { RegisterMessage } from '~/infrastructure/message/RegisterMessage';
+import { SocketIO } from '~/infrastructure/socketIO/SocketIO';
 import { BaseService } from '../base/BaseService';
 
 export class Register extends BaseService {
   async execute(userInfo: {
     username: string;
     password: string;
-  }): Promise<CommonResultStatus> {
-    const registerUserInfo: RegisterUserInfo = {
+  }): Promise<void> {
+    const registerUserInfo: RegisterData = {
       username: userInfo.username,
       password: userInfo.password,
       /** 客户端系统 */
@@ -18,9 +23,13 @@ export class Register extends BaseService {
       /** 客户端环境信息 */
       environment: platform.description || '',
     };
-    console.log(registerUserInfo, 'registerUserInfo');
-    return {
-      succeed: true,
-    };
+    const res = await SocketIO.instance.fetch<LoginSuccessResponse | string>(
+      new RegisterMessage(registerUserInfo),
+    );
+    // 和后端约定，返回string时，则为错误信息
+    if (typeof res === 'string') {
+      throw new BusinessError(res);
+    }
+    this.context.m.account.loginUser.handleLoginSuccess(res);
   }
 }

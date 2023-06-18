@@ -1,6 +1,7 @@
 {
-  "name": "@yx-chat/types",
+  "name": "@yx-chat/common",
   "version": "0.0.0",
+  "description": "The common utils and types of all packages",
   "license": "MIT",
   "scripts": {
     "lint": "eslint",

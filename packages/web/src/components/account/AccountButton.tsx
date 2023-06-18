@@ -28,10 +28,18 @@ export const AccountButton = defineComponent({
           >
             <ElTabs stretch v-model={activeTab.value}>
               <ElTabPane name="login" label="登录">
-                <Login />
+                <Login
+                  onSuccess={() => {
+                    showAccountPanel.value = false;
+                  }}
+                />
               </ElTabPane>
               <ElTabPane name="register" label="注册">
-                <Register />
+                <Register
+                  onSuccess={() => {
+                    showAccountPanel.value = false;
+                  }}
+                />
               </ElTabPane>
             </ElTabs>
           </ElDialog>

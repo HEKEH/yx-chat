@@ -1,3 +1,4 @@
 export enum MessageTypeEnum {
-  login = 'login',
+  login = 'login', // 登录账号
+  register = 'register', // 注册账号
 }

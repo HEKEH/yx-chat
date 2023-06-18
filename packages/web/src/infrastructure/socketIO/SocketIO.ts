@@ -37,11 +37,15 @@ export class SocketIO {
     });
   }
   /** 给后台发送消息 */
-  fetch<T>(message: MessageForSend): Promise<T> {
+  async fetch<T>(message: MessageForSend): Promise<T> {
+    if (!this._isConnected) {
+      await this.onReady();
+    }
     return new Promise((resolve, reject) => {
       this._io
         .timeout(TIMEOUT_MILLISECONDS)
         .emit(message.type, message.data, (err: any, response: T) => {
+          console.log(err, response, 'fetch result');
           // TODO 暂时不确定会不会生效
           if (err) {
             reject(err);
@@ -78,13 +82,13 @@ export class SocketIO {
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
+
+  private static _instance: SocketIO | null = null;
   /** 单例 */
-  static instance(): SocketIO {
-    if (!socketIO) {
-      socketIO = new SocketIO();
-      socketIO.connect();
+  static get instance(): SocketIO {
+    if (!this._instance) {
+      this._instance = new SocketIO();
     }
-    return socketIO;
+    return this._instance;
   }
 }
-let socketIO: SocketIO | null = null;

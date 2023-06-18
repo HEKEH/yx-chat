@@ -4,7 +4,10 @@ import { UserInfo } from '../typing';
 import { LoginForm } from './LoginForm';
 
 export const Login = defineComponent({
-  setup() {
+  emits: {
+    success: () => true,
+  },
+  setup(_, { emit }) {
     const services = getServices();
 
     const onLogin = async (userInfo: UserInfo) => {

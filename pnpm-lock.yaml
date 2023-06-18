@@ -32,10 +32,10 @@ importers:
       prettier: 2.8.8
       typescript: 4.7.4
 
-  packages/config:
+  packages/common:
     specifiers: {}
 
-  packages/types:
+  packages/config:
     specifiers: {}
 
   packages/web:
@@ -43,8 +43,8 @@ importers:
       '@types/platform': ^1.3.4
       '@vitejs/plugin-vue': ^4.2.3
       '@vitejs/plugin-vue-jsx': ^3.0.1
+      '@yx-chat/common': workspace:*
       '@yx-chat/config': workspace:*
-      '@yx-chat/types': workspace:*
       cross-env: ^7.0.3
       element-plus: ^2.3.6
       platform: ^1.3.6
@@ -54,8 +54,8 @@ importers:
       vue: ^3.3.4
       vue-tsc: ^0.38.4
     dependencies:
+      '@yx-chat/common': link:../common
       '@yx-chat/config': link:../config
-      '@yx-chat/types': link:../types
       element-plus: 2.3.6_vue@3.3.4
       platform: 1.3.6
       socket.io-client: registry.npmmirror.com/socket.io-client/4.5.1
