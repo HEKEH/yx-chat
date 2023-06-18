@@ -1,11 +1,7 @@
+import { ModulesAPI } from '../ModulesAPI';
 import { ServiceModule } from './ServiceModule';
 
-export class ServiceContext<
-  ModulesAPI extends {
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    [name: string]: Function | object;
-  },
-> {
+export class ServiceContext {
   private _modules: ModulesAPI = {} as ModulesAPI;
   get m() {
     return this._modules;

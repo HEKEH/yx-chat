@@ -1,18 +1,13 @@
-import { DefaultModulesAPI } from '../DefaultModulesAPI';
+import { ModulesAPI } from '../ModulesAPI';
 import { ServiceContext } from './ServiceContext';
 
-export abstract class BaseService<
-  ModulesAPI extends {
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    [name: string]: Function | object;
-  } = DefaultModulesAPI,
-> {
-  private _context: ServiceContext<ModulesAPI>;
+export abstract class BaseService {
+  private _context: ServiceContext;
 
   get context() {
     return this._context;
   }
-  constructor(context: ServiceContext<ModulesAPI>) {
+  constructor(context: ServiceContext) {
     this._context = context;
   }
   abstract execute(...args: any): any;

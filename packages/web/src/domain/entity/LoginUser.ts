@@ -1,6 +1,6 @@
 /** 登录用户的个人信息 */
 
-export class UserInfo {
+export class LoginUser {
   private _name = '';
   get name() {
     return this._name;
@@ -8,7 +8,7 @@ export class UserInfo {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
-  static createEmpty(): UserInfo {
-    return new UserInfo();
+  static createEmpty(): LoginUser {
+    return new LoginUser();
   }
 }

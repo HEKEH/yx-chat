@@ -1,8 +1,7 @@
 import { ServiceContext } from './base/ServiceContext';
-import { DefaultModulesAPI } from './DefaultModulesAPI';
-import { userServiceModule } from './User';
+import { accountServiceModule } from './Account';
 
-const serviceContext: ServiceContext<DefaultModulesAPI> = new ServiceContext();
-serviceContext.registerModule('user', userServiceModule);
+const serviceContext: ServiceContext = new ServiceContext();
+serviceContext.registerModule('user', accountServiceModule);
 
 export default serviceContext;

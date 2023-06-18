@@ -9,6 +9,6 @@ export type ServiceModule = {
     [name: string]: any;
   };
   services: {
-    [name: string]: new (context: ServiceContext<any>) => BaseService;
+    [name: string]: new (context: ServiceContext) => BaseService;
   };
 };
