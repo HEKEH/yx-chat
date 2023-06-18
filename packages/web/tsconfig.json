@@ -4,7 +4,15 @@
     "./src/**/*.ts",
     "./src/**/*.d.ts",
     "./src/**/*.tsx",
-    "./src/**/*.vue",
+    "./src/**/*.vue"
   ],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "compilerOptions": {
+    "paths": {
+      "~/assets/*": ["./src/assets/*"],
+      "~/components/*": ["./src/components/*"],
+      "~/domain/*": ["./src/domain/*"],
+      "~/infrastructure/*": ["./src/infrastructure/*"]
+    }
+  }
 }
