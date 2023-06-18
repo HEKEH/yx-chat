@@ -1,8 +1,8 @@
-import { createApp, reactive } from 'vue';
-import './style.css';
+import { createApp } from 'vue';
 import App from './App';
-import serviceContext from './domain/service';
+import './style.css';
+import { registerServices } from './utils/vue';
 
 const app = createApp(App);
-app.config.globalProperties.$services = reactive(serviceContext);
+registerServices(app);
 app.mount('#app');

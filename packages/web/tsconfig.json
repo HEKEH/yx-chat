@@ -10,9 +10,12 @@
   "compilerOptions": {
     "paths": {
       "~/assets/*": ["./src/assets/*"],
+      "~/common/*": ["./src/common/*"],
       "~/components/*": ["./src/components/*"],
       "~/domain/*": ["./src/domain/*"],
-      "~/infrastructure/*": ["./src/infrastructure/*"]
+      "~/infrastructure/*": ["./src/infrastructure/*"],
+      "~/types/*": ["./src/types/*"],
+      "~/utils/*": ["./src/utils/*"]
     }
   }
 }
