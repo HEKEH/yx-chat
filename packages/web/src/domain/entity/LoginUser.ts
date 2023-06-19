@@ -1,7 +1,7 @@
 /** 登录用户的个人信息 */
 
-import { LoginSuccessResponse } from '@yx-chat/common/types/account';
-import { User } from '@yx-chat/common/types/user';
+import { LoginSuccessResponse } from '@yx-chat/shared/types/account';
+import { User } from '@yx-chat/shared/types/user';
 import { LocalStorageStore } from '~/infrastructure/localStorage/localStorageStore';
 
 export class LoginUser {

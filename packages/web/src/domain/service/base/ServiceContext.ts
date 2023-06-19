@@ -1,16 +1,16 @@
 import { ServiceModule } from './ServiceModule';
-import { ModuleAPI, ModulesAPI } from './types';
-export class ServiceContext<T extends ModulesAPI = ModulesAPI> {
-  private _modules: T = {} as T;
-  get m(): T {
-    return this._modules;
+import { ServiceModuleAPI, ServiceModulesAPI } from './types';
+export class ServiceContext<T extends ServiceModulesAPI = ServiceModulesAPI> {
+  private _services: T = {} as T;
+  get services(): T {
+    return this._services;
   }
   registerModule(name: string, module: ServiceModule<T>) {
-    if (name in this._modules) {
+    if (name in this._services) {
       throw new Error(`${name}服务已经被注册过`);
     }
-    const m: ModuleAPI = {};
-    (this._modules as ModulesAPI)[name] = m;
+    const m: ServiceModuleAPI = {};
+    (this._services as ServiceModulesAPI)[name] = m;
     Object.entries(module.services).forEach(([serviceName, Service]) => {
       const service = new Service(this);
       m[serviceName] = service.execute.bind(service);

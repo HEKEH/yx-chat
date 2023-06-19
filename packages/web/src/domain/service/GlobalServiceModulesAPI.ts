@@ -1,5 +1,5 @@
 import type { AccountServiceModuleAPI } from './Account';
 
-export type GlobalModulesAPI = {
+export type GlobalServiceModulesAPI = {
   account: AccountServiceModuleAPI;
 };

@@ -1,7 +1,7 @@
-import { GlobalModulesAPI } from '../GlobalModulesAPI';
+import { GlobalServiceModulesAPI } from '../GlobalServiceModulesAPI';
 import { BaseService } from '../base/BaseService';
 
-export class Login extends BaseService<GlobalModulesAPI> {
+export class Login extends BaseService<GlobalServiceModulesAPI> {
   async execute(): Promise<{
     success: boolean;
     msg?: string;

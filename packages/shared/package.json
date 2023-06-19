@@ -1,7 +1,7 @@
 {
-  "name": "@yx-chat/common",
+  "name": "@yx-chat/shared",
   "version": "0.0.0",
-  "description": "The common utils and types of all packages",
+  "description": "The shared utils and types of all packages",
   "license": "MIT",
   "scripts": {
     "lint": "eslint",

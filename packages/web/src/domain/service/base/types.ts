@@ -1,5 +1,5 @@
-export type ModuleAPI = Record<
+export type ServiceModuleAPI = Record<
   string,
   ((...args: unknown[]) => unknown) | object
 >;
-export type ModulesAPI = Record<string, ModuleAPI>;
+export type ServiceModulesAPI = Record<string, ServiceModuleAPI>;

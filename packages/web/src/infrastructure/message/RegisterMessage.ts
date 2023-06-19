@@ -1,4 +1,4 @@
-import { RegisterData } from '@yx-chat/common/types/account';
+import { RegisterData } from '@yx-chat/shared/types/account';
 import { MessageForSend } from './MessageForSend';
 import { MessageTypeEnum } from './MessageTypeEnum';
 

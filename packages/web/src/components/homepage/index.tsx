@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue';
-import { getServices } from '~/utils/vue';
 import s from './index.module.sass';
 import { AccountButton } from '../account/AccountButton';
+import { getServices } from '~/utils/vue';
 
 export const Homepage = defineComponent({
   setup(props, ctx) {
@@ -9,7 +9,7 @@ export const Homepage = defineComponent({
     return () => {
       return (
         <div class={s.homepage}>
-          {services.m.account.loginUser.isReady && <div>登录成功</div>}
+          {services.account.loginUser.isReady && <div>登录成功</div>}
           <AccountButton />
         </div>
       );

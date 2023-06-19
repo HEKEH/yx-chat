@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue';
-import { getServices } from '~/utils/vue';
-import { UserInfo } from '../typing';
 import { LoginForm } from './LoginForm';
+import { UserInfo } from '../typing';
+import { getServices } from '~/utils/vue';
 
 export const Login = defineComponent({
   emits: {

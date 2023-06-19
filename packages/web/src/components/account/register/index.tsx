@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue';
-import { UserInfo } from '../typing';
 import { RegisterForm } from './RegisterForm';
+import { UserInfo } from '../typing';
 import { getServices } from '~/utils/vue';
 
 export const Register = defineComponent({
@@ -10,7 +10,7 @@ export const Register = defineComponent({
   setup(_, { emit }) {
     const services = getServices();
     const onRegister = async (userInfo: UserInfo) => {
-      await services.m.account.register(userInfo);
+      await services.account.register(userInfo);
       emit('success');
     };
     return () => <RegisterForm onSubmit={onRegister} />;

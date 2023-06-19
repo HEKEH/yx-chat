@@ -10,7 +10,7 @@
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
-    "@yx-chat/common": "workspace:*",
+    "@yx-chat/shared": "workspace:*",
     "@yx-chat/config": "workspace:*",
     "@yx-chat/i18n": "workspace:*",
     "element-plus": "^2.3.6",

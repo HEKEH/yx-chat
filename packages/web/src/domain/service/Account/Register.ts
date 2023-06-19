@@ -1,15 +1,15 @@
 import {
   LoginSuccessResponse,
   RegisterData,
-} from '@yx-chat/common/types/account';
+} from '@yx-chat/shared/types/account';
 import platform from 'platform';
 import { BusinessError } from '~/common/error';
 import { RegisterMessage } from '~/infrastructure/message/RegisterMessage';
 import { SocketIO } from '~/infrastructure/socketIO/SocketIO';
 import { BaseService } from '../base/BaseService';
-import { GlobalModulesAPI } from '../GlobalModulesAPI';
+import { GlobalServiceModulesAPI } from '../GlobalServiceModulesAPI';
 
-export class Register extends BaseService<GlobalModulesAPI> {
+export class Register extends BaseService<GlobalServiceModulesAPI> {
   async execute(userInfo: {
     username: string;
     password: string;
@@ -31,6 +31,6 @@ export class Register extends BaseService<GlobalModulesAPI> {
     if (typeof res === 'string') {
       throw new BusinessError(res);
     }
-    this.context.m.account.loginUser.handleLoginSuccess(res);
+    this.context.services.account.loginUser.handleLoginSuccess(res);
   }
 }
