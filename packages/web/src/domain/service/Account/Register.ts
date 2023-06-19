@@ -7,8 +7,9 @@ import { BusinessError } from '~/common/error';
 import { RegisterMessage } from '~/infrastructure/message/RegisterMessage';
 import { SocketIO } from '~/infrastructure/socketIO/SocketIO';
 import { BaseService } from '../base/BaseService';
+import { GlobalModulesAPI } from '../GlobalModulesAPI';
 
-export class Register extends BaseService {
+export class Register extends BaseService<GlobalModulesAPI> {
   async execute(userInfo: {
     username: string;
     password: string;

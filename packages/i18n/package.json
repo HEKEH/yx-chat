@@ -1,0 +1,11 @@
+{
+  "name": "@yx-chat/i18n",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint",
+    "preinstall": "npx only-allow pnpm"
+  },
+  "devDependencies": {
+  }
+}

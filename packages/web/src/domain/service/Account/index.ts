@@ -1,4 +1,5 @@
 import { LoginUser } from '../../entity/LoginUser';
+import { GlobalModulesAPI } from '../GlobalModulesAPI';
 import { ServiceModule } from '../base/ServiceModule';
 import { Login } from './Login';
 import { Register } from './Register';
@@ -9,7 +10,7 @@ export type AccountServiceModuleAPI = {
   loginUser: LoginUser;
 };
 
-export const accountServiceModule: ServiceModule = {
+export const accountServiceModule: ServiceModule<GlobalModulesAPI> = {
   services: {
     login: Login,
     register: Register,

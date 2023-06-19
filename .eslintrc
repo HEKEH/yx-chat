@@ -26,20 +26,20 @@
     "parser": "@typescript-eslint/parser",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "vue", "prettier"],
+  "plugins": ["@typescript-eslint", "vue", "prettier", "import"],
   "rules": {
-    "prettier/prettier": [
-      "error",
+    "prettier/prettier": "error",
+    "import/order": [
+      "error", 
       {
-        "singleQuote": true,
-        "arrowParens": "avoid",
-        "trailingComma": "all",
-        "printWidth": 80,
-        "comma-dangle": [2, "never"],
-        "tabWidth": 2,
-        "useTabs": false,
-        "semi": true,
-        "bracketSpacing": true
+        "groups": [
+          "external",
+          "builtin",
+          "internal",
+          "sibling",
+          "parent",
+          "index"
+        ]
       }
     ]
   }
