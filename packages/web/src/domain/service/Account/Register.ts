@@ -4,7 +4,7 @@ import {
 } from '@yx-chat/shared/types/account';
 import platform from 'platform';
 import { BusinessError } from '~/common/error';
-import { RegisterMessage } from '~/infrastructure/message/RegisterMessage';
+import { RegisterMessage } from '~/infrastructure/message/send/RegisterMessage';
 import { SocketIO } from '~/infrastructure/socketIO/SocketIO';
 import { BaseService } from '../base/BaseService';
 import { GlobalServiceModulesAPI } from '../GlobalServiceModulesAPI';

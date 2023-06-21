@@ -1,8 +1,8 @@
 export type CommonResultStatus =
   | {
-      succeed: true;
+      success: true;
     }
   | {
-      succeed: false;
+      success: false;
       msg: string;
     };

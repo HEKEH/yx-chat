@@ -1,9 +1,9 @@
+import { ClientMessageType } from '@yx-chat/shared/types/message/ClientMessageType';
 import { MessageForSend } from './MessageForSend';
-import { MessageTypeEnum } from './MessageTypeEnum';
 
 export class LoginMessage extends MessageForSend {
   get type() {
-    return MessageTypeEnum.login;
+    return ClientMessageType.login;
   }
   get data() {
     return {};

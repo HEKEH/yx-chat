@@ -29,6 +29,7 @@
   "plugins": ["@typescript-eslint", "vue", "prettier", "import"],
   "rules": {
     "prettier/prettier": "error",
+    "@typescript-eslint/no-non-null-assertion": "off",
     "import/order": [
       "error", 
       {

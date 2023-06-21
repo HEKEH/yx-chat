@@ -5,7 +5,7 @@
     "./src/**/*.d.ts",
     "./src/**/*.tsx",
     "./src/**/*.vue"
-  ],
+, "../shared/types/message/ClientMessageType.ts"  ],
   "references": [{ "path": "./tsconfig.node.json" }],
   "compilerOptions": {
     "paths": {

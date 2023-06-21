@@ -1,30 +1,62 @@
 import { ElNotification } from 'element-plus';
 import 'element-plus/dist/index.css';
-import { defineComponent } from 'vue';
+import { defineComponent, onBeforeUnmount, onErrorCaptured, ref } from 'vue';
 import { Homepage } from '~/components/homepage';
-import { SocketIO } from '~/infrastructure/socketIO/SocketIO';
+import { SocketEventType, SocketIO } from '~/infrastructure/socketIO/SocketIO';
 
 export default defineComponent({
-  beforeCreate() {
-    // socket连接
-    SocketIO.instance.connect();
-  },
-  beforeUnmount() {
-    // socket断开连接
-    SocketIO.instance.disconnect();
-  },
-  errorCaptured(e) {
-    ElNotification.error({
-      message: typeof e === 'string' ? e : (e as Error).message,
-    });
-    console.error(e);
-    return false;
-  },
-  setup(props, ctx) {
-    return () => (
-      <>
-        <Homepage />
-      </>
+  setup() {
+    const isReady = ref(false);
+
+    const onSocketConnectError = () => {
+      ElNotification.error({
+        message: '服务器连接失败',
+      });
+    };
+
+    const socketIO = SocketIO.instance;
+
+    socketIO.addSocketEventListener(
+      SocketEventType.connectError,
+      onSocketConnectError,
     );
+    // socket连接
+    socketIO.connect();
+    socketIO.onReady(() => {
+      isReady.value = true;
+    });
+
+    onBeforeUnmount(() => {
+      socketIO.removeSocketEventListener(
+        SocketEventType.connectError,
+        onSocketConnectError,
+      );
+      // socket断开连接
+      socketIO.disconnect();
+    });
+
+    onErrorCaptured(e => {
+      ElNotification.error({
+        message: typeof e === 'string' ? e : (e as Error).message,
+      });
+      console.error(e);
+      return false;
+    });
+
+    return () => {
+      return isReady.value ? (
+        <Homepage />
+      ) : (
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            overflow: 'hidden',
+          }}
+          v-loading="loading"
+          element-loading-text="Loading..."
+        />
+      );
+    };
   },
 });

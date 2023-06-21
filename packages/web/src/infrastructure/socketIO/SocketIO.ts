@@ -1,24 +1,38 @@
 import IO, { Socket } from 'socket.io-client';
 import clientConfig from '@yx-chat/config/client';
-import { MessageForSend } from '../message/MessageForSend';
-import { MessageTypeEnum } from '../message/MessageTypeEnum';
-import { NotificationReceiver } from '../notification/NotificationReceiver';
+import { ServerMessageType } from '@yx-chat/shared/types/message/ServerMessageType';
+import { MessageForSend } from '../message/send/MessageForSend';
+import { MessageReceiver } from '../message/receive/MessageReceiver';
 
 const TIMEOUT_MILLISECONDS = 10000; // 十秒超时
 const options = {
-  reconnectionDelay: 1000, // 一秒重连
+  reconnectionDelay: 5000, // 5秒重连
 };
 /** 对Socket做一层封装 */
+
+/** socket的全局事件类型 */
+export enum SocketEventType {
+  connectError = 'connect-error',
+}
+
+export interface SortEventListenerMap {
+  [SocketEventType.connectError]: ((err: Error) => void)[];
+}
+
 export class SocketIO {
-  private _io: Socket = IO(clientConfig.server, options);
+  private _io!: Socket;
   // eslint-disable-next-line @typescript-eslint/ban-types
   private _readyCallbacks: Function[] = [];
   private _isConnected = false;
-  private _notificationReceiverMap: {
-    [messageType in MessageTypeEnum]?: NotificationReceiver;
+  private _messageReceiverMap: {
+    [x in ServerMessageType]?: MessageReceiver[];
   } = {};
-  /** 连接后台 */
+  private _eventListenerMap: SortEventListenerMap = {
+    [SocketEventType.connectError]: [],
+  };
+  /** 连接服务端 */
   connect() {
+    this._io = IO(clientConfig.server, options);
     this._bindEvents();
     this._io.connect();
   }
@@ -27,13 +41,17 @@ export class SocketIO {
     this._io.disconnect();
   }
   /** 等待就绪 */
-  onReady(): Promise<void> | void {
+  onReady(callback?: () => void): Promise<void> {
     // 如果已经就绪，那么直接返回
     if (this._isConnected) {
-      return;
+      callback?.();
+      return Promise.resolve();
     }
     return new Promise(resolve => {
-      this._readyCallbacks.push(resolve);
+      this._readyCallbacks.push(() => {
+        callback?.();
+        resolve();
+      });
     });
   }
   /** 给后台发送消息 */
@@ -56,13 +74,36 @@ export class SocketIO {
     });
   }
   /** 注册针对消息类型的消息处理者 */
-  registerNotificationReceiver(
-    messageType: MessageTypeEnum,
-    notificationReceiver: NotificationReceiver,
+  registerMessageReceiver(
+    messageType: ServerMessageType,
+    messageReceiver: MessageReceiver,
   ) {
-    this._notificationReceiverMap[messageType] = notificationReceiver;
+    if (!this._messageReceiverMap[messageType]) {
+      this._messageReceiverMap[messageType] = [];
+    }
+    this._messageReceiverMap[messageType]!.push(messageReceiver);
   }
+
+  addSocketEventListener<T extends SocketEventType>(
+    eventType: T,
+    callback: SortEventListenerMap[T][0],
+  ) {
+    this._eventListenerMap[eventType].push(callback);
+  }
+
+  removeSocketEventListener(eventType: SocketEventType, callback: () => void) {
+    this._eventListenerMap[eventType] = this._eventListenerMap[
+      eventType
+    ]?.filter(item => item !== callback);
+  }
+
   private _bindEvents() {
+    this._io.on('connect_error', (e: Error) => {
+      console.error(e, '服务端连接失败');
+      this._eventListenerMap[SocketEventType.connectError].forEach(cb => {
+        cb(e);
+      });
+    });
     this._io.on('connect', () => {
       this._isConnected = true;
       // 让正在等待onReady的异步函数继续进行
@@ -71,12 +112,15 @@ export class SocketIO {
       });
       this._readyCallbacks = [];
     });
-    this._io.on('message', (notification: { type: MessageTypeEnum }) => {
-      const type = notification.type;
-      if (!Reflect.has(this._notificationReceiverMap, type)) {
+    this._io.on('message', (message: { type: ServerMessageType }) => {
+      console.log(message, '收到消息');
+      const type = message.type;
+      if (!Reflect.has(this._messageReceiverMap, type)) {
         throw new Error(`未找到${type}类型消息的接受者`);
       }
-      this._notificationReceiverMap[type]?.receiveNotification(notification);
+      this._messageReceiverMap[type]!.forEach(receiver => {
+        receiver.receiveMessage(message);
+      });
     });
   }
 

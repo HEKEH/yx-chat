@@ -1,4 +1,4 @@
-export enum MessageTypeEnum {
+export enum ClientMessageType {
   login = 'login', // 登录账号
   register = 'register', // 注册账号
 }
