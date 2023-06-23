@@ -1,8 +1,8 @@
 import IO, { Socket } from 'socket.io-client';
 import clientConfig from '@yx-chat/config/client';
-import { ServerMessageType } from '@yx-chat/shared/types/message/ServerMessageType';
-import { MessageForSend } from '../message/send/MessageForSend';
-import { MessageReceiver } from '../message/receive/MessageReceiver';
+import { ServerMessageType } from '@yx-chat/shared/types';
+import { MessageForSend } from './message/send/MessageForSend';
+import { MessageReceiver } from './message/receive/MessageReceiver';
 
 const TIMEOUT_MILLISECONDS = 10000; // 十秒超时
 const options = {

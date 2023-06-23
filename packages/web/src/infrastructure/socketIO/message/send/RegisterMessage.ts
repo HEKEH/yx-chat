@@ -1,5 +1,5 @@
-import { RegisterData } from '@yx-chat/shared/types/account';
-import { ClientMessageType } from '@yx-chat/shared/types/message/ClientMessageType';
+import { RegisterData } from '@yx-chat/shared/types';
+import { ClientMessageType } from '@yx-chat/shared/types';
 import { MessageForSend } from './MessageForSend';
 
 export class RegisterMessage extends MessageForSend<RegisterData> {

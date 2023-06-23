@@ -1,4 +1,4 @@
-import { ClientMessageType } from '@yx-chat/shared/types/message/ClientMessageType';
+import { ClientMessageType } from '@yx-chat/shared/types';
 import { MessageForSend } from './MessageForSend';
 
 export class LoginMessage extends MessageForSend {

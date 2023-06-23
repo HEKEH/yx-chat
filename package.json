@@ -31,5 +31,9 @@
     "{packages}/**/*.{js,ts,tsx}": [
       "eslint --fix --color"
     ]
+  },
+  "engines": {
+    "node": ">= 14",
+    "pnpm": ">= 6"
   }
 }

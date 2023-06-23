@@ -8,6 +8,7 @@ import {
 } from 'element-plus';
 import type { Arrayable } from 'element-plus/es/utils/typescript';
 import { defineComponent, reactive, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { UserInfo } from '../typing';
 
 const USER_NAME: keyof UserInfo = 'username';
@@ -36,13 +37,19 @@ export const LoginForm = defineComponent({
         console.warn(e);
       }
     };
+    const { t } = useI18n();
     return () => {
       return (
-        <ElForm model={userInfo} rules={rules} ref={formRef} labelWidth="80px">
-          <ElFormItem prop={USER_NAME} label="用户名">
+        <ElForm
+          model={userInfo}
+          rules={rules}
+          ref={formRef}
+          labelPosition="top"
+        >
+          <ElFormItem prop={USER_NAME} label={t('account.username')}>
             <ElInput v-model={userInfo.username} />
           </ElFormItem>
-          <ElFormItem prop={PASSWORD} label="密码">
+          <ElFormItem prop={PASSWORD} label={t('account.password')}>
             <ElInput
               v-model={userInfo.password}
               type="password"
@@ -52,7 +59,7 @@ export const LoginForm = defineComponent({
           </ElFormItem>
           <ElFormItem>
             <ElButton type="primary" onClick={onSubmit}>
-              登录
+              {t('account.login')}
             </ElButton>
           </ElFormItem>
         </ElForm>

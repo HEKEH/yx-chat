@@ -31,17 +31,7 @@
     "prettier/prettier": "error",
     "@typescript-eslint/no-non-null-assertion": "off",
     "import/order": [
-      "error", 
-      {
-        "groups": [
-          "external",
-          "builtin",
-          "internal",
-          "sibling",
-          "parent",
-          "index"
-        ]
-      }
+      "error"
     ]
   }
 }
