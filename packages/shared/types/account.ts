@@ -22,6 +22,8 @@ export interface LoginSuccessResponse extends User {
   groups: []; // TODO
 }
 
+export type LoginByTokenSuccessResponse = Omit<LoginSuccessResponse, 'token'>; // no token when login by token
+
 // {
 //   "_id": "648f3a1917ca19a6c7cd1469",
 //   "avatar": "/avatar/13.jpg",

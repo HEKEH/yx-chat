@@ -7,6 +7,7 @@ import { getServices } from '~/utils/vue';
 export const Homepage = defineComponent({
   setup(props, ctx) {
     const services = getServices();
+    services.account.loginByToken();
     return () => {
       return (
         <div class={s.homepage}>

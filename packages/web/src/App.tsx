@@ -45,6 +45,14 @@ const addSocketEventListeners = () => {
 
 export default defineComponent({
   setup() {
+    onErrorCaptured(e => {
+      ElNotification.error({
+        message: typeof e === 'string' ? e : (e as Error).message,
+      });
+      console.error(e);
+      return false;
+    });
+
     addSocketEventListeners();
 
     const isReady = ref(false);
@@ -60,14 +68,6 @@ export default defineComponent({
     onBeforeUnmount(() => {
       // socket断开连接
       socketIO.disconnect();
-    });
-
-    onErrorCaptured(e => {
-      ElNotification.error({
-        message: typeof e === 'string' ? e : (e as Error).message,
-      });
-      console.error(e);
-      return false;
     });
 
     return () => {

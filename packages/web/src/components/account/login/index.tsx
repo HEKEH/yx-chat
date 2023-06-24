@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue';
-import { LoginForm } from './LoginForm';
 import { UserInfo } from '../typing';
+import { LoginForm } from './LoginForm';
 import { getServices } from '~/utils/vue';
 
 export const Login = defineComponent({
@@ -11,7 +11,8 @@ export const Login = defineComponent({
     const services = getServices();
 
     const onLogin = async (userInfo: UserInfo) => {
-      console.log(userInfo);
+      await services.account.login(userInfo);
+      emit('success');
     };
     return () => <LoginForm onSubmit={onLogin} />;
   },

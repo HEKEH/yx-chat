@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue';
-import { RegisterForm } from './RegisterForm';
 import { UserInfo } from '../typing';
+import { RegisterForm } from './RegisterForm';
 import { getServices } from '~/utils/vue';
 
 export const Register = defineComponent({

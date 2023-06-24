@@ -2,7 +2,6 @@
 
 import { LoginSuccessResponse } from '@yx-chat/shared/types';
 import { User } from '@yx-chat/shared/types';
-import { LocalStorageStore } from '~/infrastructure/localStorage/localStorageStore';
 
 export class LoginUser {
   private _userInfo: User | undefined;
@@ -17,10 +16,10 @@ export class LoginUser {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
-  handleLoginSuccess(loginSuccessResponse: LoginSuccessResponse) {
-    console.log(loginSuccessResponse, 'loginSuccessResponse');
-    const { token, friends, groups, ...userInfo } = loginSuccessResponse;
-    LocalStorageStore.instance.setItem('token', token);
+  handleLoginSuccess(
+    loginSuccessResponse: Omit<LoginSuccessResponse, 'token'>,
+  ) {
+    const { friends, groups, ...userInfo } = loginSuccessResponse;
     this._userInfo = userInfo;
   }
 
