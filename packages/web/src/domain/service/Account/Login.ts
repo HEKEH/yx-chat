@@ -2,7 +2,7 @@ import { LoginSuccessResponse } from '@yx-chat/shared/types';
 import { GlobalServiceModulesAPI } from '../GlobalServiceModulesAPI';
 import { BaseService } from '../base/BaseService';
 import { BusinessError } from '~/common/error';
-import { SocketIO } from '~/infrastructure/socketIO/SocketIO';
+import { SocketIO } from '~/infrastructure/socketIO';
 import { LoginMessage } from '~/infrastructure/socketIO/message/send/LoginMessage';
 import { LocalStorageStore } from '~/infrastructure/localStorage/localStorageStore';
 

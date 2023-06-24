@@ -2,10 +2,11 @@ import { ElNotification } from 'element-plus';
 import 'element-plus/dist/index.css';
 import { defineComponent, onBeforeUnmount, onErrorCaptured, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { getServices } from './utils/vue';
 import { Homepage } from '~/components/homepage';
-import { SocketEventType, SocketIO } from '~/infrastructure/socketIO/SocketIO';
+import { SocketEventType, SocketIO } from '~/infrastructure/socketIO';
 
-const addSocketEventListeners = () => {
+function addSocketEventListeners() {
   const { t } = useI18n();
   const onSocketConnectError = () => {
     ElNotification.error({
@@ -41,7 +42,7 @@ const addSocketEventListeners = () => {
       onSocketDisconnect,
     );
   });
-};
+}
 
 export default defineComponent({
   setup() {
@@ -69,6 +70,10 @@ export default defineComponent({
       // socket断开连接
       socketIO.disconnect();
     });
+
+    // 尝试根据token登录
+    const services = getServices();
+    services.account.loginByToken();
 
     return () => {
       return isReady.value ? (

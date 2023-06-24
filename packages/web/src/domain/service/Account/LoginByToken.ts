@@ -3,7 +3,7 @@ import { BaseService } from '../base/BaseService';
 import { GlobalServiceModulesAPI } from '../GlobalServiceModulesAPI';
 import { BusinessError } from '~/common/error';
 import { LocalStorageStore } from '~/infrastructure/localStorage/localStorageStore';
-import { SocketIO } from '~/infrastructure/socketIO/SocketIO';
+import { SocketIO } from '~/infrastructure/socketIO';
 import { LoginByTokenMessage } from '~/infrastructure/socketIO/message/send/LoginByTokenMessage';
 
 export class LoginByToken extends BaseService<GlobalServiceModulesAPI> {

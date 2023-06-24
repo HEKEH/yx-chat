@@ -5,15 +5,16 @@ import { I18nSelect } from './widgets/I18nSelect';
 import { getServices } from '~/utils/vue';
 
 export const Homepage = defineComponent({
-  setup(props, ctx) {
+  setup() {
     const services = getServices();
-    services.account.loginByToken();
     return () => {
       return (
         <div class={s.homepage}>
-          {services.account.loginUser.isReady && <div>登录成功</div>}
-          <AccountButton />
-          <I18nSelect />
+          <div class={s.main}>
+            {services.account.loginUser.isReady && <div>登录成功</div>}
+            <AccountButton />
+            <I18nSelect />
+          </div>
         </div>
       );
     };
