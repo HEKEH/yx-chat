@@ -1,25 +1,56 @@
 import { ElNotification } from 'element-plus';
 import 'element-plus/dist/index.css';
 import { defineComponent, onBeforeUnmount, onErrorCaptured, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { Homepage } from '~/components/homepage';
 import { SocketEventType, SocketIO } from '~/infrastructure/socketIO/SocketIO';
 
-export default defineComponent({
-  setup() {
-    const isReady = ref(false);
+const addSocketEventListeners = () => {
+  const { t } = useI18n();
+  const onSocketConnectError = () => {
+    ElNotification.error({
+      message: t('server.connectError'),
+    });
+  };
 
-    const onSocketConnectError = () => {
-      ElNotification.error({
-        message: '服务器连接失败',
-      });
-    };
+  const onSocketDisconnect = (reason: string) => {
+    ElNotification.error({
+      message: `${t('server.disconnect')}: ${reason}`,
+    });
+  };
 
-    const socketIO = SocketIO.instance;
+  const socketIO = SocketIO.instance;
 
-    socketIO.addSocketEventListener(
+  socketIO.addSocketEventListener(
+    SocketEventType.connectError,
+    onSocketConnectError,
+  );
+
+  socketIO.addSocketEventListener(
+    SocketEventType.disconnect,
+    onSocketDisconnect,
+  );
+
+  onBeforeUnmount(() => {
+    socketIO.removeSocketEventListener(
       SocketEventType.connectError,
       onSocketConnectError,
     );
+    socketIO.removeSocketEventListener(
+      SocketEventType.disconnect,
+      onSocketDisconnect,
+    );
+  });
+};
+
+export default defineComponent({
+  setup() {
+    addSocketEventListeners();
+
+    const isReady = ref(false);
+
+    const socketIO = SocketIO.instance;
+
     // socket连接
     socketIO.connect();
     socketIO.onReady(() => {
@@ -27,10 +58,6 @@ export default defineComponent({
     });
 
     onBeforeUnmount(() => {
-      socketIO.removeSocketEventListener(
-        SocketEventType.connectError,
-        onSocketConnectError,
-      );
       // socket断开连接
       socketIO.disconnect();
     });

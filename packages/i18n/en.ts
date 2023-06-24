@@ -8,5 +8,9 @@ const en: I18nMessage = {
     password: 'Password',
     confirmPassword: 'Confirm Password',
   },
+  server: {
+    connectError: 'Server connect error',
+    disconnect: 'Server disconnect',
+  },
 };
 export default en;

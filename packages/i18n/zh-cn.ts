@@ -8,5 +8,9 @@ const cn: I18nMessage = {
     password: '密码',
     confirmPassword: '确认密码',
   },
+  server: {
+    connectError: '服务器连接失败',
+    disconnect: '服务器连接断开',
+  },
 };
 export default cn;

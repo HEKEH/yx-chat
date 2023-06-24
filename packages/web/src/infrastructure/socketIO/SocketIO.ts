@@ -1,6 +1,7 @@
 import IO, { Socket } from 'socket.io-client';
 import clientConfig from '@yx-chat/config/client';
 import { ServerMessageType } from '@yx-chat/shared/types';
+import i18n from '../i18n';
 import { MessageForSend } from './message/send/MessageForSend';
 import { MessageReceiver } from './message/receive/MessageReceiver';
 
@@ -8,17 +9,19 @@ const TIMEOUT_MILLISECONDS = 10000; // 十秒超时
 const options = {
   reconnectionDelay: 5000, // 5秒重连
 };
-/** 对Socket做一层封装 */
 
 /** socket的全局事件类型 */
 export enum SocketEventType {
   connectError = 'connect-error',
+  disconnect = 'disconnect',
 }
 
-export interface SortEventListenerMap {
+export interface SocketEventListenerMap {
   [SocketEventType.connectError]: ((err: Error) => void)[];
+  [SocketEventType.disconnect]: ((reason: string) => void)[];
 }
 
+/** 对Socket做一层封装 */
 export class SocketIO {
   private _io!: Socket;
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -27,8 +30,9 @@ export class SocketIO {
   private _messageReceiverMap: {
     [x in ServerMessageType]?: MessageReceiver[];
   } = {};
-  private _eventListenerMap: SortEventListenerMap = {
+  private _eventListenerMap: SocketEventListenerMap = {
     [SocketEventType.connectError]: [],
+    [SocketEventType.disconnect]: [],
   };
   /** 连接服务端 */
   connect() {
@@ -86,20 +90,25 @@ export class SocketIO {
 
   addSocketEventListener<T extends SocketEventType>(
     eventType: T,
-    callback: SortEventListenerMap[T][0],
+    callback: SocketEventListenerMap[T][number],
   ) {
-    this._eventListenerMap[eventType].push(callback);
+    const eventListerList: Array<typeof callback> =
+      this._eventListenerMap[eventType];
+    eventListerList.push(callback);
   }
 
-  removeSocketEventListener(eventType: SocketEventType, callback: () => void) {
-    this._eventListenerMap[eventType] = this._eventListenerMap[
-      eventType
-    ]?.filter(item => item !== callback);
+  removeSocketEventListener<T extends SocketEventType>(
+    eventType: T,
+    callback: SocketEventListenerMap[T][number],
+  ) {
+    this._eventListenerMap[eventType] = (
+      this._eventListenerMap[eventType] as Array<typeof callback>
+    ).filter(item => item !== callback) as SocketEventListenerMap[T];
   }
 
   private _bindEvents() {
     this._io.on('connect_error', (e: Error) => {
-      console.error(e, '服务端连接失败');
+      console.error(e, i18n.global.t('server.connectError'));
       this._eventListenerMap[SocketEventType.connectError].forEach(cb => {
         cb(e);
       });
@@ -111,6 +120,12 @@ export class SocketIO {
         cb();
       });
       this._readyCallbacks = [];
+    });
+    this._io.on('disconnect', (reason: string) => {
+      this._isConnected = false;
+      this._eventListenerMap[SocketEventType.disconnect].forEach(cb => {
+        cb(reason);
+      });
     });
     this._io.on('message', (message: { type: ServerMessageType }) => {
       console.log(message, '收到消息');

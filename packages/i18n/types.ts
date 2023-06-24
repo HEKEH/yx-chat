@@ -6,6 +6,10 @@ export interface I18nMessage {
     password: string;
     confirmPassword: string;
   };
+  server: {
+    connectError: string;
+    disconnect: string;
+  };
 }
 
 export type Locale = 'en' | 'zh-cn';
