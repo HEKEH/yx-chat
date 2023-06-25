@@ -1,9 +1,9 @@
 import { LoginUser } from '../../entity/LoginUser';
-import { GlobalServiceModulesAPI } from '../GlobalServiceModulesAPI';
-import { ServiceModule } from '../base/ServiceModule';
-import { Login } from './Login';
-import { LoginByToken } from './LoginByToken';
-import { Register } from './Register';
+import { GlobalServiceModulesAPI } from '../global-service-modules-api';
+import { ServiceModule } from '../base/service-module';
+import { Login } from './login';
+import { LoginByToken } from './login-by-token';
+import { Register } from './register';
 
 export type AccountServiceModuleAPI = {
   login: typeof Login.prototype.execute;

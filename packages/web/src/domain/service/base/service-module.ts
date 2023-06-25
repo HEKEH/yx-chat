@@ -1,5 +1,5 @@
-import { BaseService } from './BaseService';
-import { ServiceContext } from './ServiceContext';
+import { BaseService } from './base-service';
+import { ServiceContext } from './service-context';
 import { ServiceModulesAPI } from './types';
 
 /**

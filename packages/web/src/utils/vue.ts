@@ -1,6 +1,6 @@
 import { App, getCurrentInstance, reactive } from 'vue';
-import { GlobalServiceModulesAPI } from '~/domain/service/GlobalServiceModulesAPI';
-import { ServiceContext } from '~/domain/service/base/ServiceContext';
+import { GlobalServiceModulesAPI } from '~/domain/service/global-service-modules-api';
+import { ServiceContext } from '~/domain/service/base/service-context';
 import { ServiceModulesAPI } from '~/domain/service/base/types';
 
 /** register services when init */

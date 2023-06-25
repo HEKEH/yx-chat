@@ -1,10 +1,10 @@
 import { LoginSuccessResponse } from '@yx-chat/shared/types';
-import { GlobalServiceModulesAPI } from '../GlobalServiceModulesAPI';
-import { BaseService } from '../base/BaseService';
+import { GlobalServiceModulesAPI } from '../global-service-modules-api';
+import { BaseService } from '../base/base-service';
 import { BusinessError } from '~/common/error';
-import { SocketIO } from '~/infrastructure/socketIO';
-import { RegisterMessage } from '~/infrastructure/socketIO/message/send/RegisterMessage';
-import { LocalStorageStore } from '~/infrastructure/localStorage/localStorageStore';
+import { SocketIO } from '~/infrastructure/socket-io';
+import { RegisterMessage } from '~/infrastructure/socket-io/message/send/register-message';
+import { LocalStorageStore } from '~/infrastructure/local-store/local-storage-store';
 
 export class Register extends BaseService<GlobalServiceModulesAPI> {
   async execute(userInfo: {

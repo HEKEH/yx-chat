@@ -1,4 +1,4 @@
-import { ServiceModule } from './ServiceModule';
+import { ServiceModule } from './service-module';
 import { ServiceModuleAPI, ServiceModulesAPI } from './types';
 export class ServiceContext<T extends ServiceModulesAPI = ServiceModulesAPI> {
   private _services: T = {} as T;

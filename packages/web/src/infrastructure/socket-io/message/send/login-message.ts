@@ -1,6 +1,6 @@
 import { ClientMessageType, LoginData } from '@yx-chat/shared/types';
 import platform from 'platform';
-import { MessageForSend } from './MessageForSend';
+import { MessageForSend } from './message-for-send';
 import i18n from '~/infrastructure/i18n';
 
 export class LoginMessage extends MessageForSend<LoginData> {

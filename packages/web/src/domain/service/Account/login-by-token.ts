@@ -1,10 +1,10 @@
 import { LoginSuccessResponse } from '@yx-chat/shared/types';
-import { BaseService } from '../base/BaseService';
-import { GlobalServiceModulesAPI } from '../GlobalServiceModulesAPI';
+import { BaseService } from '../base/base-service';
+import { GlobalServiceModulesAPI } from '../global-service-modules-api';
 import { BusinessError } from '~/common/error';
-import { LocalStorageStore } from '~/infrastructure/localStorage/localStorageStore';
-import { SocketIO } from '~/infrastructure/socketIO';
-import { LoginByTokenMessage } from '~/infrastructure/socketIO/message/send/LoginByTokenMessage';
+import { LocalStorageStore } from '~/infrastructure/local-store/local-storage-store';
+import { SocketIO } from '~/infrastructure/socket-io';
+import { LoginByTokenMessage } from '~/infrastructure/socket-io/message/send/login-by-token-message';
 
 export class LoginByToken extends BaseService<GlobalServiceModulesAPI> {
   async execute(): Promise<void> {

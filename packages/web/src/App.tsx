@@ -4,7 +4,7 @@ import { defineComponent, onBeforeUnmount, onErrorCaptured, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { getServices } from './utils/vue';
 import { Homepage } from '~/components/homepage';
-import { SocketEventType, SocketIO } from '~/infrastructure/socketIO';
+import { SocketEventType, SocketIO } from '~/infrastructure/socket-io';
 
 function addSocketEventListeners() {
   const { t } = useI18n();

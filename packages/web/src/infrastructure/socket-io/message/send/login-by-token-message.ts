@@ -1,6 +1,6 @@
 import { ClientMessageType } from '@yx-chat/shared/types';
 import platform from 'platform';
-import { MessageForSend } from './MessageForSend';
+import { MessageForSend } from './message-for-send';
 
 export class LoginByTokenMessage extends MessageForSend {
   private _token: string;

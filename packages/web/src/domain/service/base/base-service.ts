@@ -1,7 +1,9 @@
-import { ServiceContext } from './ServiceContext';
+import { ServiceContext } from './service-context';
 import { ServiceModulesAPI } from './types';
 
-export abstract class BaseService<T extends ServiceModulesAPI = ServiceModulesAPI> {
+export abstract class BaseService<
+  T extends ServiceModulesAPI = ServiceModulesAPI,
+> {
   private _context: ServiceContext<T>;
 
   get context() {

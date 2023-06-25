@@ -1,7 +1,7 @@
 import { RegisterData } from '@yx-chat/shared/types';
 import { ClientMessageType } from '@yx-chat/shared/types';
 import platform from 'platform';
-import { MessageForSend } from './MessageForSend';
+import { MessageForSend } from './message-for-send';
 import i18n from '~/infrastructure/i18n';
 
 export class RegisterMessage extends MessageForSend<RegisterData> {
