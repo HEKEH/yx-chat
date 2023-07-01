@@ -1,5 +1,6 @@
 import { defineComponent } from 'vue';
 import { AccountButton } from '../account/AccountButton';
+import { Sidebar } from '../sidebar';
 import s from './index.module.sass';
 import { I18nSelect } from './widgets/I18nSelect';
 import { getServices } from '~/utils/vue';
@@ -11,9 +12,15 @@ export const Homepage = defineComponent({
       return (
         <div class={s.homepage}>
           <div class={s.main}>
-            {services.account.loginUser.isReady && <div>登录成功</div>}
-            <AccountButton />
-            <I18nSelect />
+            <div class={s['sidebar-container']}>
+              <Sidebar />
+            </div>
+            <div class={s['contact-container']}></div>
+            <div class={s['chat-container']}>
+              {services.account.self.isReady && <div>登录成功</div>}
+              <AccountButton />
+              <I18nSelect />
+            </div>
           </div>
         </div>
       );

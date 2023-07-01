@@ -21,6 +21,6 @@ export class LoginByToken extends BaseService<GlobalServiceModulesAPI> {
     if (typeof res === 'string') {
       throw new BusinessError(res);
     }
-    this.context.services.account.loginUser.handleLoginSuccess(res);
+    this.context.services.account.self.handleLoginSuccess(res);
   }
 }

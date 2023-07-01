@@ -1,9 +1,9 @@
-/** 登录用户的个人信息 */
+/** Info of the login user */
 
 import { LoginSuccessResponse } from '@yx-chat/shared/types';
 import { User } from '@yx-chat/shared/types';
 
-export class LoginUser {
+export class Self {
   private _userInfo: User | undefined;
   get userInfo() {
     return this._userInfo;
@@ -23,7 +23,7 @@ export class LoginUser {
     this._userInfo = userInfo;
   }
 
-  static createEmpty(): LoginUser {
-    return new LoginUser();
+  static createEmpty(): Self {
+    return new Self();
   }
 }

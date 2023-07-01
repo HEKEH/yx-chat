@@ -6,6 +6,7 @@ import { registerServices } from './utils/vue';
 import globalServiceContext from './domain/service';
 
 import './style.css';
+import './styles/global.sass';
 
 const app = createApp(App);
 registerServices(app, globalServiceContext);
