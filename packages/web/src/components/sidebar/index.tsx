@@ -13,9 +13,8 @@ export const Sidebar = defineComponent({
       return (
         <div class={s.sidebar}>
           <div class={s['avatar-container']}>
-            <Avatar url={avatar} />
+            <Avatar url={avatar} status="online" />
           </div>
-          {/* <div>1221</div> */}
         </div>
       );
     };

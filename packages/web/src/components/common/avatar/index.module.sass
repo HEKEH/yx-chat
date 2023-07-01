@@ -1,6 +1,27 @@
-.avatar
+.container
+  position: relative
   width: 100%
-  height: auto
+  overflow: hidden
   aspect-ratio: 1/1
-  border-radius: 50%
   cursor: pointer
+  .avatar
+    width: 100%
+    height: auto
+    border-radius: 50%
+  .status-container
+    position: absolute
+    aspect-ratio: 1/1
+    border-radius: 50%
+    right: 19%
+    bottom: 13%
+    translate: 50% 50%
+    padding: 1px
+    background-color: var(--primary-color-8)
+    .status
+      width: 100%
+      height: 100%
+      border-radius: 50%
+      &.online
+        background-color: #5ed45c
+      &.offline
+        background-color: #ce0c23

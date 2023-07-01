@@ -1,10 +1,18 @@
-import { defineComponent } from 'vue';
+import { PropType, defineComponent } from 'vue';
 import s from './index.module.sass';
 
 export const Avatar = defineComponent({
   props: {
     url: {
       type: String,
+      required: false,
+    },
+    status: {
+      type: String as PropType<'online' | 'offline'>,
+      required: false,
+    },
+    statusSize: {
+      type: Number,
       required: false,
     },
   },
@@ -14,7 +22,22 @@ export const Avatar = defineComponent({
       if (!url) {
         return null;
       }
-      return <img class={s.avatar} src={url}></img>;
+      const { status, statusSize = 14 } = props;
+      return (
+        <div class={s.container}>
+          <img class={s.avatar} src={url} />
+          {status && (
+            <div
+              style={{ width: `${statusSize}px` }}
+              class={s['status-container']}
+            >
+              <div
+                class={[s.status, status === 'online' ? s.online : s.offline]}
+              />
+            </div>
+          )}
+        </div>
+      );
     };
   },
 });
