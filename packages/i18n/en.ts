@@ -15,6 +15,17 @@ const en: I18nMessage = {
   },
   common: {
     sourceCode: 'Source code',
+    language: 'Language',
+  },
+  setting: {
+    general: 'General',
+    theme: 'Theme',
+  },
+  style: {
+    theme: {
+      default: 'Default',
+      cool: 'Cool',
+    },
   },
 };
 export default en;

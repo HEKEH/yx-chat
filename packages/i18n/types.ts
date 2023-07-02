@@ -13,6 +13,17 @@ export interface I18nMessage {
   };
   common: {
     sourceCode: string;
+    language: string;
+  };
+  setting: {
+    general: string;
+    theme: string;
+  };
+  style: {
+    theme: {
+      default: string;
+      cool: string;
+    };
   };
 }
 

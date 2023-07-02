@@ -15,6 +15,17 @@ const cn: I18nMessage = {
   },
   common: {
     sourceCode: '源码',
+    language: '语言',
+  },
+  setting: {
+    general: '通用',
+    theme: '主题',
+  },
+  style: {
+    theme: {
+      default: '默认',
+      cool: '清爽',
+    },
   },
 };
 export default cn;

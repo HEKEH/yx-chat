@@ -2,7 +2,6 @@ import { defineComponent } from 'vue';
 import { AccountButton } from '../account/AccountButton';
 import { Sidebar } from '../sidebar';
 import s from './index.module.sass';
-import { I18nSelect } from './widgets/I18nSelect';
 import { getServices } from '~/utils/vue';
 
 export const Homepage = defineComponent({
@@ -19,7 +18,6 @@ export const Homepage = defineComponent({
             <div class={s['chat-container']}>
               {services.account.self.hasLogged && <div>登录成功</div>}
               <AccountButton />
-              <I18nSelect />
             </div>
           </div>
         </div>

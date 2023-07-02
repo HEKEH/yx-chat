@@ -2,15 +2,14 @@ import { createApp } from 'vue';
 import Element from 'element-plus';
 import App from './App';
 import i18n from './infrastructure/i18n';
-import { LocalStorageStore } from './infrastructure/local-store/local-storage-store';
 import { registerServices } from './utils/vue';
-import { setTheme } from './utils/theme';
+import { initTheme } from './theme';
 import globalServiceContext from './domain/service';
 
 import './style.css';
 import './styles/global.sass';
 
-setTheme(LocalStorageStore.instance.getItem('theme') || 'cool');
+initTheme();
 
 const app = createApp(App);
 registerServices(app, globalServiceContext);
