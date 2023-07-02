@@ -13,5 +13,8 @@ const en: I18nMessage = {
     connectError: 'Server connect error',
     disconnect: 'Server disconnect',
   },
+  common: {
+    sourceCode: 'Source code',
+  },
 };
 export default en;

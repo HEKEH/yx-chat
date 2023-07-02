@@ -11,6 +11,9 @@ export interface I18nMessage {
     connectError: string;
     disconnect: string;
   };
+  common: {
+    sourceCode: string;
+  };
 }
 
 export type Locale = 'en' | 'zh-cn';

@@ -13,5 +13,8 @@ const cn: I18nMessage = {
     connectError: '服务器连接失败',
     disconnect: '服务器连接断开',
   },
+  common: {
+    sourceCode: '源码',
+  },
 };
 export default cn;
