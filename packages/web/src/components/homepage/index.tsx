@@ -17,7 +17,7 @@ export const Homepage = defineComponent({
             </div>
             <div class={s['contact-container']}></div>
             <div class={s['chat-container']}>
-              {services.account.self.isReady && <div>登录成功</div>}
+              {services.account.self.hasLogged && <div>登录成功</div>}
               <AccountButton />
               <I18nSelect />
             </div>

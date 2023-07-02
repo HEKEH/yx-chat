@@ -7,6 +7,7 @@ const en: I18nMessage = {
     username: 'Username',
     password: 'Password',
     confirmPassword: 'Confirm Password',
+    logoutConfirm: 'Are you sure to log out?',
   },
   server: {
     connectError: 'Server connect error',

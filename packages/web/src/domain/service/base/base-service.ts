@@ -9,6 +9,9 @@ export abstract class BaseService<
   get context() {
     return this._context;
   }
+  get services() {
+    return this._context.services;
+  }
   constructor(context: ServiceContext<T>) {
     this._context = context;
   }

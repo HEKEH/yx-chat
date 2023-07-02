@@ -9,7 +9,8 @@ export class Self {
     return this._userInfo;
   }
 
-  get isReady() {
+  /** 已登录 */
+  get hasLogged() {
     return Boolean(this._userInfo);
   }
 
@@ -21,6 +22,10 @@ export class Self {
   ) {
     const { friends, groups, ...userInfo } = loginSuccessResponse;
     this._userInfo = userInfo;
+  }
+
+  clear() {
+    this._userInfo = undefined;
   }
 
   static createEmpty(): Self {

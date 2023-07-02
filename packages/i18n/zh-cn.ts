@@ -7,6 +7,7 @@ const cn: I18nMessage = {
     username: '用户名',
     password: '密码',
     confirmPassword: '确认密码',
+    logoutConfirm: '是否要退出登录?',
   },
   server: {
     connectError: '服务器连接失败',

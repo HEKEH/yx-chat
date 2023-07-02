@@ -20,6 +20,6 @@ export class Register extends BaseService<GlobalServiceModulesAPI> {
     }
     const { token, ...data } = res;
     LocalStorageStore.instance.setItem('token', token);
-    this.context.services.account.self.handleLoginSuccess(data);
+    this.services.account.self.handleLoginSuccess(data);
   }
 }

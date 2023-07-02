@@ -10,6 +10,7 @@
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
+    "@icon-park/vue-next": "^1.4.2",
     "@yx-chat/config": "workspace:*",
     "@yx-chat/i18n": "workspace:*",
     "@yx-chat/shared": "workspace:*",
