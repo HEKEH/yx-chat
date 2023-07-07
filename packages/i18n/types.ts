@@ -6,6 +6,8 @@ export interface I18nMessage {
     password: string;
     confirmPassword: string;
     logoutConfirm: string;
+    loginSuccess: string;
+    registerSuccess: string;
   };
   server: {
     connectError: string;

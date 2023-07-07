@@ -8,6 +8,8 @@ const en: I18nMessage = {
     password: 'Password',
     confirmPassword: 'Confirm Password',
     logoutConfirm: 'Are you sure to log out?',
+    loginSuccess: 'Login successful',
+    registerSuccess: 'Register successful',
   },
   server: {
     connectError: 'Server connect error',

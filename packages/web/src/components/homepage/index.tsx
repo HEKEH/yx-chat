@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue';
-import { AccountButton } from '../account/AccountButton';
+import { AccountEntry } from '../account/AccountEntry';
 import { Sidebar } from '../sidebar';
 import s from './index.module.sass';
 import { getServices } from '~/utils/vue';
@@ -8,17 +8,24 @@ export const Homepage = defineComponent({
   setup() {
     const services = getServices();
     return () => {
+      const { hasLogged } = services.account.self;
       return (
         <div class={s.homepage}>
           <div class={s.main}>
-            <div class={s['sidebar-container']}>
+            <div class={s['left-container']}>
               <Sidebar />
             </div>
-            <div class={s['contact-container']}></div>
-            <div class={s['chat-container']}>
-              {services.account.self.hasLogged && <div>登录成功</div>}
-              <AccountButton />
-            </div>
+            {!hasLogged && (
+              <div class={s['account-container']}>
+                <AccountEntry />
+              </div>
+            )}
+            {hasLogged && (
+              <>
+                <div class={s['middle-container']}></div>
+                <div class={s['right-container']}></div>
+              </>
+            )}
           </div>
         </div>
       );
