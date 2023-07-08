@@ -3,15 +3,14 @@ import { Avatar } from '../common/avatar';
 import s from './index.module.sass';
 import { HighButtons } from './buttons/HighButtons';
 import { LowButtons } from './buttons/LowButtons';
-import { getServices } from '~/utils/vue';
+import { getGlobalStore } from '~/utils/vue';
 
 export const Sidebar = defineComponent({
   name: 'MainSidebar',
   setup() {
-    const services = getServices();
-    const { account } = services;
+    const globalStore = getGlobalStore();
     return () => {
-      const { self } = account;
+      const { self } = globalStore;
       const avatar = self.userInfo?.avatar;
       return (
         <div class={s.sidebar}>

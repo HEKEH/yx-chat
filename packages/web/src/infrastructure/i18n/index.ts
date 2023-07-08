@@ -14,11 +14,10 @@ const i18n = createI18n({
 });
 
 const LoadLocaleMap = {
-  'zh-cn': () => import('@yx-chat/i18n/zh-cn'),
   en: () => import('@yx-chat/i18n/en'),
 };
 
-async function loadLocaleMessages(locale: Locale) {
+async function loadLocaleMessages(locale: Exclude<Locale, 'zh-cn'>) {
   if (i18n.global.availableLocales.includes(locale)) {
     return;
   }
@@ -31,7 +30,9 @@ async function loadLocaleMessages(locale: Locale) {
 }
 
 export async function setI18nLanguage(locale: Locale) {
-  await loadLocaleMessages(locale);
+  if (locale !== 'zh-cn') {
+    await loadLocaleMessages(locale);
+  }
   i18n.global.locale.value = locale;
   LocalStorageStore.instance.setItem('locale', locale);
   /**
@@ -44,7 +45,11 @@ export async function setI18nLanguage(locale: Locale) {
   document.querySelector('html')?.setAttribute('lang', locale);
 }
 
-setI18nLanguage(LocalStorageStore.instance.getItem('locale') || 'zh-cn');
+export async function initI18n() {
+  await setI18nLanguage(
+    LocalStorageStore.instance.getItem('locale') || 'zh-cn',
+  );
+}
 
 export const I18N_OPTIONS: { value: Locale; label: string }[] = [
   { value: 'en', label: 'English' },

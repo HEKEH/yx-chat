@@ -3,19 +3,18 @@ import { ElPopconfirm, ElTooltip } from 'element-plus';
 import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
 import s from './style.module.sass';
-import { getServices } from '~/utils/vue';
+import { getGlobalStore } from '~/utils/vue';
 
 export const LogoutButton = defineComponent({
   name: 'LogoutButton',
   setup() {
-    const services = getServices();
-    const { account } = services;
+    const globalStore = getGlobalStore();
     const { t } = useI18n();
     const logout = () => {
-      account.logout();
+      globalStore.logout();
     };
     return () => {
-      if (!account.self.hasLogged) {
+      if (!globalStore.self.hasLogged) {
         return null;
       }
       return (

@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue';
 import { UserInfo } from '../typing';
 import { LoginForm } from './LoginForm';
-import { getServices } from '~/utils/vue';
+import { getGlobalStore } from '~/utils/vue';
 
 export const Login = defineComponent({
   name: 'LoginEntry',
@@ -9,10 +9,10 @@ export const Login = defineComponent({
     success: () => true,
   },
   setup(_, { emit }) {
-    const services = getServices();
+    const globalStore = getGlobalStore();
 
     const onLogin = async (userInfo: UserInfo) => {
-      await services.account.login(userInfo);
+      await globalStore.login(userInfo);
       emit('success');
     };
     return () => <LoginForm onSubmit={onLogin} />;

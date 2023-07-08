@@ -2,17 +2,13 @@ import { createApp } from 'vue';
 import Element from 'element-plus';
 import App from './App';
 import i18n from './infrastructure/i18n';
-import { registerServices } from './utils/vue';
-import { initTheme } from './theme';
-import globalServiceContext from './domain/service';
+import { registerGlobalStore } from './utils/vue';
 
 import './style.css';
 import './styles/global.sass';
 
-initTheme();
-
 const app = createApp(App);
-registerServices(app, globalServiceContext);
+registerGlobalStore(app);
 app.use(Element); // TODO 最好干掉，不要全局如此使用
 // app.directive('v-loading', vLoading); // TODO 不生效，过一段时间再尝试
 

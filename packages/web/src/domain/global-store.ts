@@ -1,0 +1,87 @@
+import { LoginSuccessResponse } from '@yx-chat/shared/types';
+import Self from './models/self';
+import { MainMenu } from './types';
+import { ThemeManager } from './models/theme';
+import { SocketIO } from '~/infrastructure/socket-io';
+import { LoginMessage } from '~/infrastructure/socket-io/message/send/login-message';
+import { BusinessError } from '~/common/error';
+import { LocalStorageStore } from '~/infrastructure/local-store/local-storage-store';
+import { LoginByTokenMessage } from '~/infrastructure/socket-io/message/send/login-by-token-message';
+import { RegisterMessage } from '~/infrastructure/socket-io/message/send/register-message';
+
+export default class GlobalStore {
+  private _self: Self = Self.createEmpty();
+
+  private _themeManager: ThemeManager = new ThemeManager();
+
+  private _selectedMenu: MainMenu = MainMenu.message;
+
+  get self() {
+    return this._self;
+  }
+
+  get themeManager() {
+    return this._themeManager;
+  }
+
+  /** 菜单：联系人 / 消息 */
+  get selectedMenu() {
+    return this._selectedMenu;
+  }
+
+  selectMenu(menu: MainMenu) {
+    this._selectedMenu = menu;
+  }
+
+  async login(userInfo: { username: string; password: string }): Promise<void> {
+    const resp = await SocketIO.instance.fetch<LoginSuccessResponse | string>(
+      new LoginMessage(userInfo),
+    );
+    this._handleLoginResponse(resp);
+  }
+
+  async loginByToken() {
+    const token = LocalStorageStore.instance.getItem<string | undefined>(
+      'token',
+    );
+    if (!token) {
+      return;
+    }
+    const resp = await SocketIO.instance.fetch<LoginSuccessResponse | string>(
+      new LoginByTokenMessage(token),
+    );
+    this._handleLoginResponse(resp);
+  }
+
+  async register(userInfo: {
+    username: string;
+    password: string;
+  }): Promise<void> {
+    const resp = await SocketIO.instance.fetch<LoginSuccessResponse | string>(
+      new RegisterMessage(userInfo),
+    );
+    this._handleLoginResponse(resp);
+  }
+
+  logout() {
+    LocalStorageStore.instance.removeItem('token');
+    this._clear();
+  }
+
+  private _clear() {
+    this.self.clear();
+    this._selectedMenu = MainMenu.message;
+  }
+
+  private _handleLoginResponse(resp: LoginSuccessResponse | string) {
+    // 和后端约定，返回string时，则为错误信息
+    if (typeof resp === 'string') {
+      throw new BusinessError(resp);
+    }
+    const { token, ...data } = resp;
+    if (token) {
+      LocalStorageStore.instance.setItem('token', token);
+    }
+    this._self.handleLoginSuccess(data);
+  }
+}

@@ -3,19 +3,19 @@ import { ElTooltip } from 'element-plus';
 import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
 import s from './style.module.sass';
-import { getThemeColor } from '~/theme';
-import { getServices } from '~/utils/vue';
+import { getGlobalStore } from '~/utils/vue';
+import { MainMenu } from '~/domain/types';
 
 export const MessageButton = defineComponent({
   name: 'MessageButton',
   setup() {
     const { t } = useI18n();
-    const globalService = getServices().global;
+    const globalStore = getGlobalStore();
     const onClick = () => {
-      globalService.selectMenu('message');
+      globalStore.selectMenu(MainMenu.message);
     };
     return () => {
-      const isSelected = globalService.state.selectedMenu === 'message';
+      const isSelected = globalStore.selectedMenu === MainMenu.message;
       return (
         <ElTooltip
           effect="dark"
@@ -25,7 +25,9 @@ export const MessageButton = defineComponent({
           <MessageOne
             theme={isSelected ? 'filled' : 'outline'}
             class={[s.button, isSelected ? s['button-selected'] : undefined]}
-            fill={isSelected ? getThemeColor() : undefined}
+            fill={
+              isSelected ? globalStore.themeManager.getThemeColor() : undefined
+            }
             strokeWidth={3}
             onClick={onClick}
           />

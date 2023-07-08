@@ -22,6 +22,7 @@ const cn: I18nMessage = {
     setting: '设置',
     message: '消息',
     contact: '联系人',
+    loading: '载入中',
   },
   setting: {
     general: '通用',

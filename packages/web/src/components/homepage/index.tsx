@@ -2,14 +2,14 @@ import { defineComponent } from 'vue';
 import { AccountEntry } from '../account/AccountEntry';
 import { Sidebar } from '../sidebar';
 import s from './index.module.sass';
-import { getServices } from '~/utils/vue';
+import { getGlobalStore } from '~/utils/vue';
 
 export const HomePage = defineComponent({
   name: 'HomePage',
   setup() {
-    const services = getServices();
+    const globalStore = getGlobalStore();
     return () => {
-      const { hasLogged } = services.account.self;
+      const { hasLogged } = globalStore.self;
       return (
         <div class={s.homepage}>
           <div class={s.main}>

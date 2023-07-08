@@ -20,8 +20,9 @@ const en: I18nMessage = {
     sourceCode: 'Source code',
     language: 'Language',
     setting: 'Setting',
-    message: '消息',
-    contact: '联系人',
+    message: 'Message',
+    contact: 'Contact',
+    loading: 'Loading',
   },
   setting: {
     general: 'General',

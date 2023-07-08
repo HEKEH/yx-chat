@@ -2,11 +2,12 @@ import { ElNotification } from 'element-plus';
 import 'element-plus/dist/index.css';
 import { defineComponent, onBeforeUnmount, onErrorCaptured, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { getServices } from './utils/vue';
+import { getGlobalStore } from './utils/vue';
+import { initI18n } from './infrastructure/i18n';
 import { HomePage } from '~/components/homepage';
 import { SocketEventType, SocketIO } from '~/infrastructure/socket-io';
 
-function addSocketEventListeners() {
+function addSocketEventListeners(socketIO: SocketIO) {
   const { t } = useI18n();
   const onSocketConnectError = () => {
     ElNotification.error({
@@ -19,8 +20,6 @@ function addSocketEventListeners() {
       message: `${t('server.disconnect')}: ${reason}`,
     });
   };
-
-  const socketIO = SocketIO.instance;
 
   socketIO.addSocketEventListener(
     SocketEventType.connectError,
@@ -55,41 +54,46 @@ export default defineComponent({
       return false;
     });
 
-    addSocketEventListeners();
-
-    const isReady = ref(false);
+    const isI18nReady = ref(false);
+    initI18n().then(() => {
+      isI18nReady.value = true;
+    });
+    const { t } = useI18n();
 
     const socketIO = SocketIO.instance;
-
-    // socket连接
-    socketIO.connect();
-    socketIO.onReady(() => {
-      isReady.value = true;
-    });
-
+    addSocketEventListeners(socketIO);
+    socketIO.connect(); // socket连接
     onBeforeUnmount(() => {
       // socket断开连接
       socketIO.disconnect();
     });
 
+    const isReady = ref(false);
     // 尝试根据token登录
-    const services = getServices();
-    services.account.loginByToken();
+    const globalStore = getGlobalStore();
+    globalStore.loginByToken().finally(() => {
+      /** 不管成不成功，都进入主页 */
+      isReady.value = true;
+    });
 
     return () => {
-      return isReady.value ? (
-        <HomePage />
-      ) : (
-        <div
-          style={{
-            width: '100%',
-            height: '100%',
-            overflow: 'hidden',
-          }}
-          v-loading="loading"
-          element-loading-text="Loading..."
-        />
-      );
+      if (!isI18nReady.value) {
+        return null;
+      }
+      if (!isReady.value) {
+        return (
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              overflow: 'hidden',
+            }}
+            v-loading="loading"
+            element-loading-text={`${t('common.loading')}...`}
+          />
+        );
+      }
+      return <HomePage />;
     };
   },
 });

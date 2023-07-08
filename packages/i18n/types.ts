@@ -20,6 +20,7 @@ export interface I18nMessage {
     setting: string;
     message: string;
     contact: string;
+    loading: string;
   };
   setting: {
     general: string;

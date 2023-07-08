@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue';
 import { UserInfo } from '../typing';
 import { RegisterForm } from './RegisterForm';
-import { getServices } from '~/utils/vue';
+import { getGlobalStore } from '~/utils/vue';
 
 export const Register = defineComponent({
   name: 'RegisterEntry',
@@ -9,9 +9,9 @@ export const Register = defineComponent({
     success: () => true,
   },
   setup(_, { emit }) {
-    const services = getServices();
+    const globalStore = getGlobalStore();
     const onRegister = async (userInfo: UserInfo) => {
-      await services.account.register(userInfo);
+      await globalStore.register(userInfo);
       emit('success');
     };
     return () => <RegisterForm onSubmit={onRegister} />;

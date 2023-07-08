@@ -17,12 +17,10 @@ export interface LoginData extends Environment {
 export type RegisterData = LoginData;
 
 export interface LoginSuccessResponse extends User {
-  token: string;
+  token?: string;
   friends: []; // TODO
   groups: []; // TODO
 }
-
-export type LoginByTokenSuccessResponse = Omit<LoginSuccessResponse, 'token'>; // no token when login by token
 
 // {
 //   "_id": "648f3a1917ca19a6c7cd1469",

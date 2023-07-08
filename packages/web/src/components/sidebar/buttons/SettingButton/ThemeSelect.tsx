@@ -1,11 +1,13 @@
 import { ElRadio, ElRadioGroup } from 'element-plus';
 import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { ThemeName, getTheme, setTheme } from '~/theme';
+import { ThemeName } from '~/domain/models/theme';
+import { getGlobalStore } from '~/utils/vue';
 
 export const ThemeSelect = defineComponent({
   setup() {
     const { t } = useI18n();
+    const globalStore = getGlobalStore();
     return () => {
       const THEME_OPTIONS: {
         value: ThemeName;
@@ -16,9 +18,9 @@ export const ThemeSelect = defineComponent({
       ];
       return (
         <ElRadioGroup
-          modelValue={getTheme()}
+          modelValue={globalStore.themeManager.theme}
           onUpdate:modelValue={v => {
-            setTheme(v as ThemeName);
+            globalStore.themeManager.setTheme(v as ThemeName);
           }}
         >
           {THEME_OPTIONS.map(({ value, label }) => (
