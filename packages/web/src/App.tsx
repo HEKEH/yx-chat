@@ -3,7 +3,7 @@ import 'element-plus/dist/index.css';
 import { defineComponent, onBeforeUnmount, onErrorCaptured, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { getServices } from './utils/vue';
-import { Homepage } from '~/components/homepage';
+import { HomePage } from '~/components/homepage';
 import { SocketEventType, SocketIO } from '~/infrastructure/socket-io';
 
 function addSocketEventListeners() {
@@ -45,6 +45,7 @@ function addSocketEventListeners() {
 }
 
 export default defineComponent({
+  name: 'App',
   setup() {
     onErrorCaptured(e => {
       ElNotification.error({
@@ -77,7 +78,7 @@ export default defineComponent({
 
     return () => {
       return isReady.value ? (
-        <Homepage />
+        <HomePage />
       ) : (
         <div
           style={{

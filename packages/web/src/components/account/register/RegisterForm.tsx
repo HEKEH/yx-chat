@@ -20,6 +20,7 @@ const PASSWORD: keyof ResisterUserInfo = 'password';
 const CONFIRM_PASSWORD: keyof ResisterUserInfo = 'confirmPassword';
 
 export const RegisterForm = defineComponent({
+  name: 'RegisterForm',
   emits: {
     submit: (userInfo: UserInfo) => userInfo && typeof userInfo === 'object',
   },

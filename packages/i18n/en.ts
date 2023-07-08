@@ -3,6 +3,7 @@ import { I18nMessage } from './types';
 const en: I18nMessage = {
   account: {
     login: 'Log In',
+    logout: 'Log Out',
     register: 'Sign Up',
     username: 'Username',
     password: 'Password',
@@ -18,6 +19,9 @@ const en: I18nMessage = {
   common: {
     sourceCode: 'Source code',
     language: 'Language',
+    setting: 'Setting',
+    message: '消息',
+    contact: '联系人',
   },
   setting: {
     general: 'General',

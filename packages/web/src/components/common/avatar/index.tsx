@@ -2,6 +2,7 @@ import { PropType, defineComponent } from 'vue';
 import s from './index.module.sass';
 
 export const Avatar = defineComponent({
+  name: 'AvatarItem',
   props: {
     url: {
       type: String,

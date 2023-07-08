@@ -7,6 +7,7 @@ import { Register } from './register';
 
 /** 登录/注册按钮 */
 export const AccountEntry = defineComponent({
+  name: 'AccountEntry',
   setup() {
     const showAccountPanel = ref(true);
     const activeTab: Ref<'login' | 'register'> = ref('login');

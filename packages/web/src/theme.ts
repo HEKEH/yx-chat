@@ -37,3 +37,8 @@ export function initTheme() {
 export function getTheme() {
   return GlobalTheme.value;
 }
+
+export function getThemeColor(alpha = 1) {
+  const color = Themes[GlobalTheme.value].primaryColor;
+  return `rgba(${color}, ${alpha})`;
+}

@@ -11,10 +11,12 @@ export class ServiceContext<T extends ServiceModulesAPI = ServiceModulesAPI> {
     }
     const m: ServiceModuleAPI = {};
     (this._services as ServiceModulesAPI)[name] = m;
-    Object.entries(module.services).forEach(([serviceName, Service]) => {
-      const service = new Service(this);
-      m[serviceName] = service.execute.bind(service);
-    });
+    if (module.services) {
+      Object.entries(module.services).forEach(([serviceName, Service]) => {
+        const service = new Service(this);
+        m[serviceName] = service.execute.bind(service);
+      });
+    }
     if (module.repos) {
       Object.entries(module.repos).forEach(([repoName, repo]) => {
         m[repoName] = repo;

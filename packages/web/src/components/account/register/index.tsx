@@ -4,6 +4,7 @@ import { RegisterForm } from './RegisterForm';
 import { getServices } from '~/utils/vue';
 
 export const Register = defineComponent({
+  name: 'RegisterEntry',
   emits: {
     success: () => true,
   },

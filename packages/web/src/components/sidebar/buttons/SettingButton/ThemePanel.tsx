@@ -3,6 +3,7 @@ import s from './style.module.sass';
 import { ThemeSelect } from './ThemeSelect';
 
 export const ThemePanel = defineComponent({
+  name: 'ThemePanel',
   setup() {
     return () => {
       return (

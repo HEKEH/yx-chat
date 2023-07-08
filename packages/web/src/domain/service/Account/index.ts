@@ -1,4 +1,4 @@
-import { Self } from '../../entity/Self';
+import Self from '../../entity/Self';
 import { GlobalServiceModulesAPI } from '../global-service-modules-api';
 import { ServiceModule } from '../base/service-module';
 import { Login } from './login';

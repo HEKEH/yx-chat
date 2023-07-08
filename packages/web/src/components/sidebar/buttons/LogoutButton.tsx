@@ -1,15 +1,19 @@
 import { Power } from '@icon-park/vue-next';
-import { ElPopconfirm } from 'element-plus';
+import { ElPopconfirm, ElTooltip } from 'element-plus';
 import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
+import s from './style.module.sass';
 import { getServices } from '~/utils/vue';
 
 export const LogoutButton = defineComponent({
-  setup(_, { attrs }) {
+  name: 'LogoutButton',
+  setup() {
     const services = getServices();
     const { account } = services;
     const { t } = useI18n();
-    const logout = () => account.logout();
+    const logout = () => {
+      account.logout();
+    };
     return () => {
       if (!account.self.hasLogged) {
         return null;
@@ -20,11 +24,19 @@ export const LogoutButton = defineComponent({
           width={200}
           v-slots={{
             reference: () => (
-              <Power theme="outline" class={attrs.class} strokeWidth={3} />
+              <span>
+                <ElTooltip
+                  effect="dark"
+                  content={t('account.logout')}
+                  placement="right"
+                >
+                  <Power theme="outline" class={s.button} strokeWidth={3} />
+                </ElTooltip>
+              </span>
             ),
           }}
           onConfirm={logout}
-        ></ElPopconfirm>
+        />
       );
     };
   },

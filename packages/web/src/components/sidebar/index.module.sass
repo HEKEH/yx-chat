@@ -5,15 +5,27 @@
   overflow: hidden
   display: flex
   flex-direction: column
-  justify-content: space-between
   align-items: center
-  .avatar-container
+  & > .avatar-container
     position: relative
     width: 100%
     overflow: hidden
     padding: 40px 10px 0 10px
-  .buttons-container
+  & > .buttons-container
     position: relative
     width: 100%
+    flex: 1
     overflow: hidden
-    padding: 0px 10px 40px 10px
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: space-between
+    padding: 40px 0
+    & > .high-buttons-container
+      position: relative
+      width: 100%
+      overflow: hidden
+    & > .low-buttons-container
+      position: relative
+      width: 100%
+      overflow: hidden

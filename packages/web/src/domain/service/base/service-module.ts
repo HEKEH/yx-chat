@@ -9,7 +9,7 @@ export type ServiceModule<T extends ServiceModulesAPI> = {
   repos?: {
     [name: string]: any;
   };
-  services: {
+  services?: {
     [name: string]: new (context: ServiceContext<T>) => BaseService<T>;
   };
 };

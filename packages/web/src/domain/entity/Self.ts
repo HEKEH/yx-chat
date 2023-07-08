@@ -3,7 +3,7 @@
 import { LoginSuccessResponse } from '@yx-chat/shared/types';
 import { User } from '@yx-chat/shared/types';
 
-export class Self {
+export default class Self {
   private _userInfo: User | undefined;
   get userInfo() {
     return this._userInfo;

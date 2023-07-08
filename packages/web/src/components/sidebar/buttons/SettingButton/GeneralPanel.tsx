@@ -4,6 +4,7 @@ import s from './style.module.sass';
 import { LanguageSelect } from './LanguageSelect';
 
 export const GeneralPanel = defineComponent({
+  name: 'GeneralPanel',
   setup() {
     const { t } = useI18n();
     return () => {

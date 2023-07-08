@@ -4,7 +4,8 @@ import { Sidebar } from '../sidebar';
 import s from './index.module.sass';
 import { getServices } from '~/utils/vue';
 
-export const Homepage = defineComponent({
+export const HomePage = defineComponent({
+  name: 'HomePage',
   setup() {
     const services = getServices();
     return () => {

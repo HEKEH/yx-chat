@@ -4,6 +4,7 @@ import { LoginForm } from './LoginForm';
 import { getServices } from '~/utils/vue';
 
 export const Login = defineComponent({
+  name: 'LoginEntry',
   emits: {
     success: () => true,
   },
