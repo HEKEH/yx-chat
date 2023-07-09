@@ -1,0 +1,25 @@
+.contact-tabs
+  width: 100%
+  height: 100%
+  overflow: hidden
+  :global(.el-tabs)
+    height: 100%
+    overflow: hidden
+    display: flex
+    flex-direction: column
+  :global(.el-tabs__header)
+    margin: 0 2px 2px 2px
+    :global(.el-tabs__nav)
+      height: 39px
+  :global(.el-tabs__content)
+    flex: 1
+    overflow: hidden
+  :global(.el-tab-pane)
+    height: 100%
+    overflow: hidden
+  :global(.el-tabs__item)
+    color: var(--primary-text-color-8)
+    &:global(.is-active)
+      font-weight: bolder
+      background-color: var(--primary-color-3)
+      color: var(--primary-text-color-10)

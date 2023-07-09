@@ -20,8 +20,6 @@ const en: I18nMessage = {
     sourceCode: 'Source code',
     language: 'Language',
     setting: 'Setting',
-    message: 'Message',
-    contact: 'Contact',
     loading: 'Loading',
   },
   setting: {
@@ -33,6 +31,12 @@ const en: I18nMessage = {
       default: 'Default',
       cool: 'Cool',
     },
+  },
+  main: {
+    chats: 'Chats',
+    contacts: 'Contacts',
+    friends: 'Friends',
+    groups: 'Groups',
   },
 };
 export default en;

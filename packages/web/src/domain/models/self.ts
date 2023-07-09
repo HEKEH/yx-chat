@@ -1,6 +1,5 @@
 /** Info of the login user */
 
-import { LoginSuccessResponse } from '@yx-chat/shared/types';
 import { User } from '@yx-chat/shared/types';
 
 export default class Self {
@@ -17,10 +16,7 @@ export default class Self {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
-  handleLoginSuccess(
-    loginSuccessResponse: Omit<LoginSuccessResponse, 'token'>,
-  ) {
-    const { friends, groups, ...userInfo } = loginSuccessResponse;
+  setUserInfo(userInfo: User) {
     this._userInfo = userInfo;
   }
 

@@ -2,6 +2,7 @@ import { LoginSuccessResponse } from '@yx-chat/shared/types';
 import Self from './models/self';
 import { MainMenu } from './types';
 import { ThemeManager } from './models/theme';
+import { ContactManager } from './models/contact';
 import { SocketIO } from '~/infrastructure/socket-io';
 import { LoginMessage } from '~/infrastructure/socket-io/message/send/login-message';
 import { BusinessError } from '~/common/error';
@@ -12,12 +13,18 @@ import { RegisterMessage } from '~/infrastructure/socket-io/message/send/registe
 export default class GlobalStore {
   private _self: Self = Self.createEmpty();
 
+  private _contactManager: ContactManager = new ContactManager();
+
   private _themeManager: ThemeManager = new ThemeManager();
 
   private _selectedMenu: MainMenu = MainMenu.message;
 
   get self() {
     return this._self;
+  }
+
+  get contactManager() {
+    return this._contactManager;
   }
 
   get themeManager() {
@@ -30,7 +37,10 @@ export default class GlobalStore {
   }
 
   selectMenu(menu: MainMenu) {
-    this._selectedMenu = menu;
+    if (this._selectedMenu !== menu) {
+      this._selectedMenu = menu;
+      // TODO
+    }
   }
 
   async login(userInfo: { username: string; password: string }): Promise<void> {
@@ -70,6 +80,7 @@ export default class GlobalStore {
 
   private _clear() {
     this.self.clear();
+    this._contactManager.clear();
     this._selectedMenu = MainMenu.message;
   }
 
@@ -78,10 +89,14 @@ export default class GlobalStore {
     if (typeof resp === 'string') {
       throw new BusinessError(resp);
     }
-    const { token, ...data } = resp;
+    const { token, friends, groups, ...userInfo } = resp;
     if (token) {
       LocalStorageStore.instance.setItem('token', token);
     }
-    this._self.handleLoginSuccess(data);
+    this._self.setUserInfo(userInfo);
+    this._contactManager.init({
+      friends,
+      groups,
+    });
   }
 }

@@ -17,11 +17,7 @@ export const ContactButton = defineComponent({
     return () => {
       const isSelected = globalStore.selectedMenu === MainMenu.contact;
       return (
-        <ElTooltip
-          effect="dark"
-          content={t('common.contact')}
-          placement="right"
-        >
+        <ElTooltip effect="dark" content={t('main.contacts')} placement="right">
           <People
             theme={isSelected ? 'filled' : 'outline'}
             class={[s.button, isSelected ? s['button-selected'] : undefined]}

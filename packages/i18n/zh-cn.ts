@@ -20,8 +20,6 @@ const cn: I18nMessage = {
     sourceCode: '源码',
     language: '语言',
     setting: '设置',
-    message: '消息',
-    contact: '联系人',
     loading: '载入中',
   },
   setting: {
@@ -33,6 +31,12 @@ const cn: I18nMessage = {
       default: '默认',
       cool: '清爽',
     },
+  },
+  main: {
+    chats: '聊天',
+    contacts: '联系人',
+    friends: '好友',
+    groups: '群组',
   },
 };
 export default cn;

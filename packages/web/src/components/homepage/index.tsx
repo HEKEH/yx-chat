@@ -2,6 +2,7 @@ import { defineComponent } from 'vue';
 import { AccountEntry } from '../account/AccountEntry';
 import { Sidebar } from '../sidebar';
 import s from './index.module.sass';
+import { MiddlePage } from './middle-page';
 import { getGlobalStore } from '~/utils/vue';
 
 export const HomePage = defineComponent({
@@ -23,7 +24,9 @@ export const HomePage = defineComponent({
             )}
             {hasLogged && (
               <>
-                <div class={s['middle-container']}></div>
+                <div class={s['middle-container']}>
+                  <MiddlePage />
+                </div>
                 <div class={s['right-container']}></div>
               </>
             )}

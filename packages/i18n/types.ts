@@ -18,8 +18,6 @@ export interface I18nMessage {
     sourceCode: string;
     language: string;
     setting: string;
-    message: string;
-    contact: string;
     loading: string;
   };
   setting: {
@@ -31,6 +29,12 @@ export interface I18nMessage {
       default: string;
       cool: string;
     };
+  };
+  main: {
+    chats: string;
+    contacts: string;
+    friends: string;
+    groups: string;
   };
 }
 

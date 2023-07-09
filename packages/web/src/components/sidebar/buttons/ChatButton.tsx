@@ -6,8 +6,8 @@ import s from './style.module.sass';
 import { getGlobalStore } from '~/utils/vue';
 import { MainMenu } from '~/domain/types';
 
-export const MessageButton = defineComponent({
-  name: 'MessageButton',
+export const ChatButton = defineComponent({
+  name: 'ChatButton',
   setup() {
     const { t } = useI18n();
     const globalStore = getGlobalStore();
@@ -17,11 +17,7 @@ export const MessageButton = defineComponent({
     return () => {
       const isSelected = globalStore.selectedMenu === MainMenu.message;
       return (
-        <ElTooltip
-          effect="dark"
-          content={t('common.message')}
-          placement="right"
-        >
+        <ElTooltip effect="dark" content={t('main.chats')} placement="right">
           <MessageOne
             theme={isSelected ? 'filled' : 'outline'}
             class={[s.button, isSelected ? s['button-selected'] : undefined]}

@@ -19,7 +19,7 @@ export const Sidebar = defineComponent({
           </div>
           <div class={s['buttons-container']}>
             <div class={s['high-buttons-container']}>
-              <HighButtons />
+              {self.hasLogged && <HighButtons />}
             </div>
             <div class={s['low-buttons-container']}>
               <LowButtons />
