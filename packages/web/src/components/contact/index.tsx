@@ -1,8 +1,7 @@
-import { PropType, Ref, defineComponent, ref } from 'vue';
 import { ElTabPane, ElTabs } from 'element-plus';
+import { PropType, Ref, defineComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { FriendList } from './friend-list';
-
+import { ContactUnitList } from './contact-unit-list';
 import s from './index.module.sass';
 import { ContactManager } from '~/domain/models/contact';
 
@@ -23,10 +22,14 @@ export const ContactTabs = defineComponent({
         <div class={s['contact-tabs']}>
           <ElTabs type="card" stretch v-model={activeTab.value}>
             <ElTabPane name="friends" label={t('main.friends')}>
-              <FriendList friendCollection={contactManager.friendCollection} />
+              <ContactUnitList
+                contactUnitCollection={contactManager.friendCollection}
+              />
             </ElTabPane>
             <ElTabPane name="groups" label={t('main.groups')}>
-              {/* <ThemePanel /> */}
+              <ContactUnitList
+                contactUnitCollection={contactManager.groupCollection}
+              />
             </ElTabPane>
           </ElTabs>
         </div>

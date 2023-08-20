@@ -11,6 +11,7 @@ import { LoginByTokenMessage } from '~/infrastructure/socket-io/message/send/log
 import { RegisterMessage } from '~/infrastructure/socket-io/message/send/register-message';
 
 export default class GlobalStore {
+  /** the user logged in */
   private _self: Self = Self.createEmpty();
 
   private _contactManager: ContactManager = new ContactManager();

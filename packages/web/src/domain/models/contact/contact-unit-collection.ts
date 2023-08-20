@@ -1,13 +1,12 @@
-import { Friend } from '@yx-chat/shared/types';
-import { FriendModel } from './friend';
+import { ContactUnit } from './typing';
 
-export class FriendCollection {
-  private _list: FriendModel[] = [];
+export class ContactUnitCollection<T extends ContactUnit = ContactUnit> {
+  private _list: T[] = [];
   private _selectedId: string | undefined;
   get list() {
     return this._list;
   }
-  get selectedItem(): FriendModel | undefined {
+  get selectedItem(): ContactUnit | undefined {
     return this._list.find(item => item.id === this._selectedId);
   }
   get selectedId() {
@@ -18,8 +17,8 @@ export class FriendCollection {
       this._selectedId = id;
     }
   }
-  init(friends: Friend[]) {
-    this._list = friends.map(friend => new FriendModel(friend));
+  init(list: T[]) {
+    this._list = list;
     if (this._list.length) {
       this._selectedId = this._list[0].id;
     }

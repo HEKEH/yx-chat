@@ -1,20 +1,23 @@
 import { Friend, Group } from '@yx-chat/shared/types';
-import { FriendCollection } from './friend-collection';
-import { GroupCollection } from './group-collection';
+import { ContactUnitCollection } from './contact-unit-collection';
+import { FriendModel } from './friend';
+import { GroupModel } from './group';
 
 /** Domain entity of contacts */
 export class ContactManager {
-  private _friendCollection: FriendCollection = new FriendCollection();
-  private _groupCollection: GroupCollection = new GroupCollection();
-  get friendCollection(): FriendCollection {
+  private _friendCollection: ContactUnitCollection<FriendModel> =
+    new ContactUnitCollection();
+  private _groupCollection: ContactUnitCollection<GroupModel> =
+    new ContactUnitCollection();
+  get friendCollection() {
     return this._friendCollection;
   }
-  get groupCollection(): GroupCollection {
+  get groupCollection() {
     return this._groupCollection;
   }
   init({ friends, groups }: { friends: Friend[]; groups: Group[] }) {
-    this._friendCollection.init(friends);
-    this._groupCollection.init(groups);
+    this._friendCollection.init(friends.map(item => new FriendModel(item)));
+    this._groupCollection.init(groups.map(item => new GroupModel(item)));
   }
   clear() {
     this._friendCollection.clear();
