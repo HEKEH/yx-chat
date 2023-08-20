@@ -1,6 +1,12 @@
 import { Friend, Group } from './contact';
 import { User } from './user';
 
+export enum AccountRequestType {
+  login = 'login', // 登录账号
+  loginByToken = 'loginByToken', // 根据token来登录
+  register = 'register', // 注册账号
+}
+
 export interface Environment {
   /** 客户端系统 */
   os: string;
@@ -10,12 +16,16 @@ export interface Environment {
   environment: string;
 }
 
-export interface LoginData extends Environment {
+export interface LoginRequestBody extends Environment {
   username: string;
   password: string;
 }
 
-export type RegisterData = LoginData;
+export interface LoginByTokenRequestBody extends Environment {
+  token: string;
+}
+
+export type RegisterRequestBody = LoginRequestBody;
 
 export interface LoginSuccessResponse extends User {
   token?: string;

@@ -1,13 +1,13 @@
-import { RegisterData } from '@yx-chat/shared/types';
-import { ClientMessageType } from '@yx-chat/shared/types';
+import { RegisterRequestBody } from '@yx-chat/shared/types';
+import { AccountRequestType } from '@yx-chat/shared/types';
 import platform from 'platform';
-import { MessageForSend } from './message-for-send';
+import { AbstractSocketRequest } from './request';
 import i18n from '~/infrastructure/i18n';
 
-export class RegisterMessage extends MessageForSend<RegisterData> {
-  private _userInfo: Pick<RegisterData, 'username' | 'password'>;
+export class RegisterRequest extends AbstractSocketRequest<RegisterRequestBody> {
+  private _userInfo: Pick<RegisterRequestBody, 'username' | 'password'>;
   get type() {
-    return ClientMessageType.register;
+    return AccountRequestType.register;
   }
   get data() {
     return {
@@ -23,7 +23,7 @@ export class RegisterMessage extends MessageForSend<RegisterData> {
   get name() {
     return i18n.global.t('account.register');
   }
-  constructor(userInfo: Pick<RegisterData, 'username' | 'password'>) {
+  constructor(userInfo: Pick<RegisterRequestBody, 'username' | 'password'>) {
     super();
     this._userInfo = userInfo;
   }

@@ -1,12 +1,12 @@
-import { ClientMessageType, LoginData } from '@yx-chat/shared/types';
+import { AccountRequestType, LoginRequestBody } from '@yx-chat/shared/types';
 import platform from 'platform';
-import { MessageForSend } from './message-for-send';
+import { AbstractSocketRequest } from './request';
 import i18n from '~/infrastructure/i18n';
 
-export class LoginMessage extends MessageForSend<LoginData> {
-  private _userInfo: Pick<LoginData, 'username' | 'password'>;
+export class LoginRequest extends AbstractSocketRequest<LoginRequestBody> {
+  private _userInfo: Pick<LoginRequestBody, 'username' | 'password'>;
   get type() {
-    return ClientMessageType.login;
+    return AccountRequestType.login;
   }
   get data() {
     return {
@@ -22,7 +22,7 @@ export class LoginMessage extends MessageForSend<LoginData> {
   get name() {
     return i18n.global.t('account.login');
   }
-  constructor(userInfo: Pick<LoginData, 'username' | 'password'>) {
+  constructor(userInfo: Pick<LoginRequestBody, 'username' | 'password'>) {
     super();
     this._userInfo = userInfo;
   }

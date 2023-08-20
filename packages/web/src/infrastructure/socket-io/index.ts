@@ -1,9 +1,9 @@
 import IO, { Socket } from 'socket.io-client';
 import clientConfig from '@yx-chat/config/client';
-import { ServerMessageType } from '@yx-chat/shared/types';
+import { ServerMessage, ServerMessageType } from '@yx-chat/shared/types';
 import i18n from '../i18n';
-import { MessageForSend } from './message/send/message-for-send';
-import { MessageReceiver } from './message/receive/message-receiver';
+import { AbstractSocketRequest } from './message/request/request';
+import { ServerMessageReceiver } from './message/receiver/server-message-receiver';
 
 const TIMEOUT_MILLISECONDS = 10000; // 十秒超时
 const options = {
@@ -24,11 +24,10 @@ export interface SocketEventListenerMap {
 /** 对Socket做一层封装 */
 export class SocketIO {
   private _io!: Socket;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  private _readyCallbacks: Function[] = [];
+  private _readyCallbacks: (() => void)[] = [];
   private _isConnected = false;
   private _messageReceiverMap: {
-    [x in ServerMessageType]?: MessageReceiver[];
+    [T in ServerMessageType]?: ServerMessageReceiver<T>[];
   } = {};
   private _eventListenerMap: SocketEventListenerMap = {
     [SocketEventType.connectError]: [],
@@ -59,14 +58,14 @@ export class SocketIO {
     });
   }
   /** 给后台发送消息 */
-  async fetch<T>(message: MessageForSend): Promise<T> {
+  async fetch<T>(request: AbstractSocketRequest): Promise<T> {
     if (!this._isConnected) {
       await this.onReady();
     }
     return new Promise((resolve, reject) => {
       this._io
         .timeout(TIMEOUT_MILLISECONDS)
-        .emit(message.type, message.data, (err: any, response: T) => {
+        .emit(request.type, request.data, (err: any, response: T) => {
           console.log(err, response, 'fetch result');
           // TODO 暂时不确定会不会生效
           if (err) {
@@ -78,9 +77,9 @@ export class SocketIO {
     });
   }
   /** 注册针对消息类型的消息处理者 */
-  registerMessageReceiver(
-    messageType: ServerMessageType,
-    messageReceiver: MessageReceiver,
+  registerMessageReceiver<T extends ServerMessageType>(
+    messageType: T,
+    messageReceiver: ServerMessageReceiver<T>,
   ) {
     if (!this._messageReceiverMap[messageType]) {
       this._messageReceiverMap[messageType] = [];
@@ -127,7 +126,7 @@ export class SocketIO {
         cb(reason);
       });
     });
-    this._io.on('message', (message: { type: ServerMessageType }) => {
+    this._io.on('message', (message: ServerMessage) => {
       console.log(message, '收到消息');
       const type = message.type;
       if (!Reflect.has(this._messageReceiverMap, type)) {

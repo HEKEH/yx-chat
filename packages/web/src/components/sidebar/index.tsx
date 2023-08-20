@@ -11,7 +11,7 @@ export const Sidebar = defineComponent({
     const globalStore = getGlobalStore();
     return () => {
       const { self } = globalStore;
-      const avatar = self.userInfo?.avatar;
+      const avatar = self.avatar;
       return (
         <div class={s.sidebar}>
           <div class={s['avatar-container']}>

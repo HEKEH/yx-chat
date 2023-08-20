@@ -1,15 +1,19 @@
-import { ClientMessageType } from '@yx-chat/shared/types';
+import {
+  AccountRequestType,
+  LoginByTokenRequestBody,
+} from '@yx-chat/shared/types';
 import platform from 'platform';
-import { MessageForSend } from './message-for-send';
+import { AbstractSocketRequest } from './request';
 
-export class LoginByTokenMessage extends MessageForSend {
+export class LoginByTokenRequest extends AbstractSocketRequest<LoginByTokenRequestBody> {
   private _token: string;
   get type() {
-    return ClientMessageType.loginByToken;
+    return AccountRequestType.loginByToken;
   }
   get data() {
     return {
-      token: this._token /** 客户端系统 */,
+      token: this._token,
+      /** 客户端系统 */
       os: platform.os?.family || '',
       /** 客户端浏览器 */
       browser: platform.name || '',

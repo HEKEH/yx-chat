@@ -1,14 +1,18 @@
-import { LoginSuccessResponse } from '@yx-chat/shared/types';
+import {
+  LastMessagesResponse,
+  LoginSuccessResponse,
+} from '@yx-chat/shared/types';
 import Self from './models/self';
 import { MainMenu } from './types';
 import { ThemeManager } from './models/theme';
 import { ContactManager } from './models/contact';
 import { SocketIO } from '~/infrastructure/socket-io';
-import { LoginMessage } from '~/infrastructure/socket-io/message/send/login-message';
+import { LoginRequest } from '~/infrastructure/socket-io/message/request/login-request';
 import { BusinessError } from '~/common/error';
 import { LocalStorageStore } from '~/infrastructure/local-store/local-storage-store';
-import { LoginByTokenMessage } from '~/infrastructure/socket-io/message/send/login-by-token-message';
-import { RegisterMessage } from '~/infrastructure/socket-io/message/send/register-message';
+import { LoginByTokenRequest } from '~/infrastructure/socket-io/message/request/login-by-token-request';
+import { RegisterRequest } from '~/infrastructure/socket-io/message/request/register-request';
+import { ChatMessagesRequest } from '~/infrastructure/socket-io/message/request/chat-messages-request';
 
 export default class GlobalStore {
   /** the user logged in */
@@ -46,9 +50,10 @@ export default class GlobalStore {
 
   async login(userInfo: { username: string; password: string }): Promise<void> {
     const resp = await SocketIO.instance.fetch<LoginSuccessResponse | string>(
-      new LoginMessage(userInfo),
+      new LoginRequest(userInfo),
     );
     this._handleLoginResponse(resp);
+    await this._initChatMessages();
   }
 
   async loginByToken() {
@@ -59,9 +64,10 @@ export default class GlobalStore {
       return;
     }
     const resp = await SocketIO.instance.fetch<LoginSuccessResponse | string>(
-      new LoginByTokenMessage(token),
+      new LoginByTokenRequest(token),
     );
     this._handleLoginResponse(resp);
+    await this._initChatMessages();
   }
 
   async register(userInfo: {
@@ -69,9 +75,10 @@ export default class GlobalStore {
     password: string;
   }): Promise<void> {
     const resp = await SocketIO.instance.fetch<LoginSuccessResponse | string>(
-      new RegisterMessage(userInfo),
+      new RegisterRequest(userInfo),
     );
     this._handleLoginResponse(resp);
+    await this._initChatMessages();
   }
 
   logout() {
@@ -99,5 +106,18 @@ export default class GlobalStore {
       friends,
       groups,
     });
+  }
+
+  private async _initChatMessages() {
+    const chatMessagesResponse =
+      await SocketIO.instance.fetch<LastMessagesResponse>(
+        new ChatMessagesRequest({
+          selfId: this._self.id,
+          friends: this._contactManager.friendCollection.list,
+          groups: this._contactManager.groupCollection.list,
+        }),
+      );
+    console.log(chatMessagesResponse, 'chatMessagesResponse');
+    // TODO
   }
 }

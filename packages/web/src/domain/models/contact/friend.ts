@@ -22,4 +22,8 @@ export class FriendModel {
     this._username = to.username;
     this._avatar = to.avatar;
   }
+
+  getMessageRequestKey(selfId: string) {
+    return `${selfId}${this._id}`;
+  }
 }
