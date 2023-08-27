@@ -1,12 +1,12 @@
-import { ContactUnit } from './typing';
+import { IContactUnit } from './typing';
 
-export class ContactUnitCollection<T extends ContactUnit = ContactUnit> {
+export class ContactUnitCollection<T extends IContactUnit = IContactUnit> {
   private _list: T[] = [];
   private _selectedId: string | undefined;
   get list() {
     return this._list;
   }
-  get selectedItem(): ContactUnit | undefined {
+  get selectedItem(): IContactUnit | undefined {
     return this._list.find(item => item.id === this._selectedId);
   }
   get selectedId() {

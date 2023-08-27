@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue';
-import { UserInfo } from '../typing';
+import { UserAccountInfo } from '../typing';
 import { RegisterForm } from './RegisterForm';
 import { getGlobalStore } from '~/utils/vue';
 
@@ -10,7 +10,7 @@ export const Register = defineComponent({
   },
   setup(_, { emit }) {
     const globalStore = getGlobalStore();
-    const onRegister = async (userInfo: UserInfo) => {
+    const onRegister = async (userInfo: UserAccountInfo) => {
       await globalStore.register(userInfo);
       emit('success');
     };

@@ -15,6 +15,8 @@ export type ChatMessage = {
   _id: string;
   from: {
     _id: string; // user id
+    username: string;
+    avatar: string;
   };
 };
 

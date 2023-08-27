@@ -6,6 +6,8 @@ import Self from './models/self';
 import { MainMenu } from './types';
 import { ThemeManager } from './models/theme';
 import { ContactManager } from './models/contact';
+import { ChatMessageCollection } from './models/chat/chat-message-collection';
+import { IUser } from './models/typing';
 import { SocketIO } from '~/infrastructure/socket-io';
 import { LoginRequest } from '~/infrastructure/socket-io/message/request/login-request';
 import { BusinessError } from '~/common/error';
@@ -109,15 +111,33 @@ export default class GlobalStore {
   }
 
   private async _initChatMessages() {
+    const contacts = [
+      ...this._contactManager.friendCollection.list,
+      ...this._contactManager.groupCollection.list,
+    ];
     const chatMessagesResponse =
       await SocketIO.instance.fetch<LastMessagesResponse>(
         new ChatMessagesRequest({
           selfId: this._self.id,
-          friends: this._contactManager.friendCollection.list,
-          groups: this._contactManager.groupCollection.list,
+          contacts,
         }),
       );
     console.log(chatMessagesResponse, 'chatMessagesResponse');
-    // TODO
+    const userMap: Record<string, IUser> = [...contacts, this._self].reduce(
+      (prev, cur) => {
+        prev[cur.id] = cur;
+        return prev;
+      },
+      {} as Record<string, IUser>,
+    );
+    contacts.forEach(contact => {
+      const key = contact.getMessageOwnerKey(this._self.id);
+      const messagesRecord = chatMessagesResponse[key];
+      const messageCollection = ChatMessageCollection.createByRawData({
+        messagesRecord,
+        userMap,
+      });
+      contact.setChatMessageCollection(messageCollection);
+    });
   }
 }

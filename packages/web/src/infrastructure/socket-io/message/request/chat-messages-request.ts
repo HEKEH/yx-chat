@@ -3,8 +3,7 @@ import {
   LastMessagesRequestBody,
 } from '@yx-chat/shared/types';
 import { AbstractSocketRequest } from './request';
-import { FriendModel } from '~/domain/models/contact/friend';
-import { GroupModel } from '~/domain/models/contact/group';
+import { IContactUnit } from '~/domain/models/contact/typing';
 
 export class ChatMessagesRequest extends AbstractSocketRequest<LastMessagesRequestBody> {
   readonly data: LastMessagesRequestBody;
@@ -16,19 +15,12 @@ export class ChatMessagesRequest extends AbstractSocketRequest<LastMessagesReque
   get name() {
     return 'Get last messages';
   }
-  constructor(props: {
-    selfId: string;
-    groups: GroupModel[];
-    friends: FriendModel[];
-  }) {
+  constructor(props: { selfId: string; contacts: IContactUnit[] }) {
     super();
     this.data = {
-      linkmans: [
-        ...props.groups.map(group => group.id),
-        ...props.friends.map(friend =>
-          friend.getMessageRequestKey(props.selfId),
-        ),
-      ],
+      linkmans: props.contacts.map(item =>
+        item.getMessageOwnerKey(props.selfId),
+      ),
     };
   }
 }

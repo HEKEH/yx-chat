@@ -1,10 +1,10 @@
 /** Info of the login user */
 
-import { User } from '@yx-chat/shared/types';
-import { ContactUnit } from './contact/typing';
+import { UserBasicInfo } from '@yx-chat/shared/types';
+import { IUser } from './typing';
 
-export default class Self implements ContactUnit {
-  private _userInfo: User | undefined;
+export default class Self implements IUser {
+  private _userInfo: UserBasicInfo | undefined;
   get userInfo() {
     return this._userInfo;
   }
@@ -29,7 +29,7 @@ export default class Self implements ContactUnit {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
-  setUserInfo(userInfo: User) {
+  setUserInfo(userInfo: UserBasicInfo) {
     this._userInfo = userInfo;
   }
 

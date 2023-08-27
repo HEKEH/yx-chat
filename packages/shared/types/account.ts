@@ -1,5 +1,5 @@
 import { Friend, Group } from './contact';
-import { User } from './user';
+import { UserBasicInfo } from './user';
 
 export enum AccountRequestType {
   login = 'login', // 登录账号
@@ -27,7 +27,7 @@ export interface LoginByTokenRequestBody extends Environment {
 
 export type RegisterRequestBody = LoginRequestBody;
 
-export interface LoginSuccessResponse extends User {
+export interface LoginSuccessResponse extends UserBasicInfo {
   token?: string;
   friends: Friend[];
   groups: Group[];

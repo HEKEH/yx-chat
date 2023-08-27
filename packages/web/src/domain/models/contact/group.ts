@@ -1,25 +1,16 @@
 import { Group } from '@yx-chat/shared/types';
+import { AbstractContactUnit } from './abstract-contact-unit';
 
-export class GroupModel {
-  private _id: string;
-  private _name: string;
-  private _avatar: string;
-
-  get id() {
-    return this._id;
-  }
-
-  get name() {
-    return this._name;
-  }
-
-  get avatar() {
-    return this._avatar;
-  }
-
+export class GroupModel extends AbstractContactUnit {
   constructor({ _id, createTime, name, creator, avatar }: Group) {
-    this._id = _id;
-    this._name = name;
-    this._avatar = avatar;
+    super({
+      id: _id,
+      avatar,
+      name,
+    });
+  }
+
+  getMessageOwnerKey(selfId: string) {
+    return `${selfId}${this._id}`;
   }
 }

@@ -9,22 +9,22 @@ import {
 import type { Arrayable } from 'element-plus/es/utils/typescript';
 import { defineComponent, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { UserInfo } from '../typing';
+import { UserAccountInfo } from '../typing';
 
-const USER_NAME: keyof UserInfo = 'username';
-const PASSWORD: keyof UserInfo = 'password';
+const USER_NAME: keyof UserAccountInfo = 'username';
+const PASSWORD: keyof UserAccountInfo = 'password';
 
 export const LoginForm = defineComponent({
   emits: {
-    submit: (userInfo: UserInfo) => userInfo && typeof userInfo === 'object',
+    submit: (userInfo: UserAccountInfo) => userInfo && typeof userInfo === 'object',
   },
   setup(_, ctx) {
-    const userInfo = reactive<UserInfo>({
+    const userInfo = reactive<UserAccountInfo>({
       username: '',
       password: '',
     });
     const { emit } = ctx;
-    const rules: Partial<Record<keyof UserInfo, Arrayable<FormItemRule>>> = {
+    const rules: Partial<Record<keyof UserAccountInfo, Arrayable<FormItemRule>>> = {
       username: { required: true, message: '用户名为必填项' },
       password: [{ required: true, message: '密码为必填项' }],
     };

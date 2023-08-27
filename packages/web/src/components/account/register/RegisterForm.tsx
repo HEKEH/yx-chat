@@ -9,9 +9,9 @@ import {
 import type { Arrayable } from 'element-plus/es/utils/typescript';
 import { defineComponent, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { UserInfo } from '../typing';
+import { UserAccountInfo } from '../typing';
 
-interface ResisterUserInfo extends UserInfo {
+interface ResisterUserInfo extends UserAccountInfo {
   confirmPassword: string;
 }
 
@@ -22,7 +22,7 @@ const CONFIRM_PASSWORD: keyof ResisterUserInfo = 'confirmPassword';
 export const RegisterForm = defineComponent({
   name: 'RegisterForm',
   emits: {
-    submit: (userInfo: UserInfo) => userInfo && typeof userInfo === 'object',
+    submit: (userInfo: UserAccountInfo) => userInfo && typeof userInfo === 'object',
   },
   setup(_, ctx) {
     const userInfo = reactive<ResisterUserInfo>({
