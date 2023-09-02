@@ -1,5 +1,5 @@
 import setCssVariable from '~/utils/css-variable';
-import { LocalStorageStore } from '~/infrastructure/local-store/local-storage-store';
+import { LocalStorageStore } from '~/infra/local-store/local-storage-store';
 
 type ThemeSetting = {
   primaryColor: string;

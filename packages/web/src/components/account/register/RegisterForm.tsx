@@ -22,7 +22,8 @@ const CONFIRM_PASSWORD: keyof ResisterUserInfo = 'confirmPassword';
 export const RegisterForm = defineComponent({
   name: 'RegisterForm',
   emits: {
-    submit: (userInfo: UserAccountInfo) => userInfo && typeof userInfo === 'object',
+    submit: (userInfo: UserAccountInfo) =>
+      userInfo && typeof userInfo === 'object',
   },
   setup(_, ctx) {
     const userInfo = reactive<ResisterUserInfo>({

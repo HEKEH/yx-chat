@@ -2,10 +2,10 @@ import { ElNotification } from 'element-plus';
 import 'element-plus/dist/index.css';
 import { defineComponent, onBeforeUnmount, onErrorCaptured, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { getGlobalStore } from './utils/vue';
-import { initI18n } from './infrastructure/i18n';
 import { HomePage } from '~/components/homepage';
-import { SocketEventType, SocketIO } from '~/infrastructure/socket-io';
+import { SocketEventType, SocketIO } from '~/infra/socket-io';
+import { initI18n } from './infra/i18n';
+import { provideGlobalStore } from './utils/vue';
 
 function addSocketEventListeners(socketIO: SocketIO) {
   const { t } = useI18n();
@@ -70,7 +70,7 @@ export default defineComponent({
 
     const isReady = ref(false);
     // 尝试根据token登录
-    const globalStore = getGlobalStore();
+    const globalStore = provideGlobalStore();
     globalStore.loginByToken().finally(() => {
       /** 不管成不成功，都进入主页 */
       isReady.value = true;

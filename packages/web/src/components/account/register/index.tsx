@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue';
+import { getGlobalStore } from '~/utils/vue';
 import { UserAccountInfo } from '../typing';
 import { RegisterForm } from './RegisterForm';
-import { getGlobalStore } from '~/utils/vue';
 
 export const Register = defineComponent({
   name: 'RegisterEntry',

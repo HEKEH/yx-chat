@@ -1,7 +1,7 @@
 import { AccountRequestType, LoginRequestBody } from '@yx-chat/shared/types';
 import platform from 'platform';
 import { AbstractSocketRequest } from './request';
-import i18n from '~/infrastructure/i18n';
+import i18n from '~/infra/i18n';
 
 export class LoginRequest extends AbstractSocketRequest<LoginRequestBody> {
   private _userInfo: Pick<LoginRequestBody, 'username' | 'password'>;

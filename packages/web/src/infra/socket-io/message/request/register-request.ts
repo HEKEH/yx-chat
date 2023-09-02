@@ -2,7 +2,7 @@ import { RegisterRequestBody } from '@yx-chat/shared/types';
 import { AccountRequestType } from '@yx-chat/shared/types';
 import platform from 'platform';
 import { AbstractSocketRequest } from './request';
-import i18n from '~/infrastructure/i18n';
+import i18n from '~/infra/i18n';
 
 export class RegisterRequest extends AbstractSocketRequest<RegisterRequestBody> {
   private _userInfo: Pick<RegisterRequestBody, 'username' | 'password'>;

@@ -31,7 +31,16 @@
     "prettier/prettier": "error",
     "@typescript-eslint/no-non-null-assertion": "off",
     "import/order": [
-      "error"
+      "error",
+      {
+        "groups": ["builtin", "external", "parent", "sibling", "index"],
+        "pathGroups": [
+          {
+            "pattern": "~/**",
+            "group": "external"
+          }
+        ]
+      }
     ]
   }
 }
