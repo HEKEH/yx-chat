@@ -8,6 +8,7 @@ interface MessageFrom {
 }
 
 export interface IChatMessageModel {
+  readonly id: string;
   readonly deleted: boolean;
   readonly createTime: GeneralTime;
   readonly type: ChatMessageFormat;

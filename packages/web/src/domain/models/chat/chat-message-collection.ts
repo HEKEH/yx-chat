@@ -7,7 +7,7 @@ import { IChatMessageModel, chatMessageFactory } from './chat-message';
 export class ChatMessageCollection {
   readonly id: string;
 
-  private _chatMessages: IChatMessageModel[];
+  private _list: IChatMessageModel[];
 
   private _unread: number;
 
@@ -24,14 +24,12 @@ export class ChatMessageCollection {
     return this._owner;
   }
 
-  get chatChatMessages() {
-    return this._chatMessages;
+  get list() {
+    return this._list;
   }
 
   get latestMessage() {
-    return this._chatMessages.length
-      ? this._chatMessages[this._chatMessages.length - 1]
-      : undefined;
+    return this._list.length ? this._list[this._list.length - 1] : undefined;
   }
 
   get unread() {
@@ -45,7 +43,7 @@ export class ChatMessageCollection {
     owner?: IContactUnit;
   }) {
     this.id = props.id;
-    this._chatMessages = props.chatMessages;
+    this._list = props.chatMessages;
     this._unread = props.unread;
     this._owner = props.owner;
   }

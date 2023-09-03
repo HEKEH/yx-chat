@@ -1,6 +1,7 @@
 import { defineComponent } from 'vue';
 import { getGlobalStore } from '~/utils/vue';
 import { AccountEntry } from '../account/AccountEntry';
+import { ChatMessagePanel } from '../chat/message-panel';
 import { Sidebar } from '../sidebar';
 import s from './index.module.sass';
 import { MiddlePage } from './middle-page';
@@ -27,7 +28,14 @@ export const HomePage = defineComponent({
                 <div class={s['middle-container']}>
                   <MiddlePage />
                 </div>
-                <div class={s['right-container']}></div>
+                <div class={s['right-container']}>
+                  <ChatMessagePanel
+                    chatMessageCollection={
+                      globalStore.currentChatMessageCollection
+                    }
+                    self={globalStore.self}
+                  />
+                </div>
               </>
             )}
           </div>

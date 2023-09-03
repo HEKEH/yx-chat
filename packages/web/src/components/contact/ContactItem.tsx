@@ -30,7 +30,7 @@ export const ContactItem = defineComponent({
           <div class={s.container}>
             <div class={[s.row, s['name-row']]}>
               <div class={s.name}>{value.name}</div>
-              <div class={s.time}>{value.displayTime.toDisplayFormat()}</div>
+              <div class={s.time}>{value.displayTime.toBriefFormat()}</div>
             </div>
             <div class={s.row}>
               <div class={s.message}>
