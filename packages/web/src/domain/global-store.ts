@@ -15,6 +15,7 @@ import { ThemeManager } from './models/theme';
 import { ContactManager } from './models/contact';
 import { ChatMessageCollection } from './models/chat/chat-message-collection';
 import { IUser } from './models/typing';
+import { ChatMessageManager } from './models/chat/chat-message-manager';
 
 export default class GlobalStore {
   /** the user logged in */
@@ -25,6 +26,8 @@ export default class GlobalStore {
   private _themeManager: ThemeManager = new ThemeManager();
 
   private _selectedMenu: MainMenu = MainMenu.message;
+
+  private _chatMessageManager: ChatMessageManager = new ChatMessageManager();
 
   get self() {
     return this._self;
@@ -43,10 +46,22 @@ export default class GlobalStore {
     return this._selectedMenu;
   }
 
+  get currentChatMessageCollection(): ChatMessageCollection | undefined {
+    if (this._selectedMenu === MainMenu.contact) {
+      return this._contactManager.currentContact?.chatMessageCollection;
+    }
+    if (this._selectedMenu === MainMenu.message) {
+      return this._chatMessageManager.selectedItem;
+    }
+  }
+
+  get chatMessageManager() {
+    return this._chatMessageManager;
+  }
+
   selectMenu(menu: MainMenu) {
     if (this._selectedMenu !== menu) {
       this._selectedMenu = menu;
-      // TODO
     }
   }
 
@@ -130,14 +145,27 @@ export default class GlobalStore {
       },
       {} as Record<string, IUser>,
     );
+    const chatMessageCollectionList = Object.entries(chatMessagesResponse).map(
+      ([key, messagesRecord]) => {
+        return ChatMessageCollection.createByRawData({
+          id: key,
+          messagesRecord,
+          userMap,
+        });
+      },
+    );
+    const chatMessageCollectionMap = chatMessageCollectionList.reduce(
+      (prev, cur) => {
+        prev[cur.id] = cur;
+        return prev;
+      },
+      {} as Record<string, ChatMessageCollection>,
+    );
     contacts.forEach(contact => {
       const key = contact.getMessageOwnerKey(this._self.id);
-      const messagesRecord = chatMessagesResponse[key];
-      const messageCollection = ChatMessageCollection.createByRawData({
-        messagesRecord,
-        userMap,
-      });
+      const messageCollection = chatMessageCollectionMap[key];
       contact.setChatMessageCollection(messageCollection);
     });
+    this._chatMessageManager.init(chatMessageCollectionList);
   }
 }

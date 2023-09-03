@@ -1,9 +1,9 @@
 import { defineComponent } from 'vue';
+import { getGlobalStore } from '~/utils/vue';
 import { AccountEntry } from '../account/AccountEntry';
 import { Sidebar } from '../sidebar';
 import s from './index.module.sass';
 import { MiddlePage } from './middle-page';
-import { getGlobalStore } from '~/utils/vue';
 
 export const HomePage = defineComponent({
   name: 'HomePage',

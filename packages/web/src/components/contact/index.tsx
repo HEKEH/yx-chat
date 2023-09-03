@@ -1,9 +1,9 @@
 import { ElTabPane, ElTabs } from 'element-plus';
-import { PropType, Ref, defineComponent, ref } from 'vue';
+import { PropType, defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { ContactManager } from '~/domain/models/contact';
 import { ContactUnitList } from './contact-unit-list';
 import s from './index.module.sass';
-import { ContactManager } from '~/domain/models/contact';
 
 export const ContactTabs = defineComponent({
   name: 'ContactTabs',
@@ -15,12 +15,20 @@ export const ContactTabs = defineComponent({
   },
   setup(props) {
     return () => {
-      const activeTab: Ref<'friends' | 'groups'> = ref('friends');
       const { t } = useI18n();
       const { contactManager } = props;
       return (
         <div class={s['contact-tabs']}>
-          <ElTabs type="card" stretch v-model={activeTab.value}>
+          <ElTabs
+            type="card"
+            stretch
+            modelValue={contactManager.currentContactCollectionKey}
+            onUpdate:modelValue={val => {
+              contactManager.setContactCollectionKey(
+                val as 'friends' | 'groups',
+              );
+            }}
+          >
             <ElTabPane name="friends" label={t('main.friends')}>
               <ContactUnitList
                 contactUnitCollection={contactManager.friendCollection}

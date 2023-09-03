@@ -20,9 +20,7 @@ export abstract class AbstractContactUnit implements IContactUnit {
 
   /** Time for display, message time or create time */
   get displayTime() {
-    return this.latestMessage
-      ? this.latestMessage.createTime.toDisplayFormat()
-      : this.createTime.toDisplayFormat();
+    return this.latestMessage ? this.latestMessage.createTime : this.createTime;
   }
 
   constructor(props: {

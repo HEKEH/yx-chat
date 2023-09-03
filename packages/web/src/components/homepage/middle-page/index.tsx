@@ -1,9 +1,9 @@
 import { defineComponent } from 'vue';
-import s from './index.module.sass';
 import { getGlobalStore } from '~/utils/vue';
 import { MainMenu } from '~/domain/types';
 import { ContactTabs } from '~/components/contact';
-import { MessageList } from '~/components/message-list';
+import { ChatMessageCollectionList } from '~/components/chat/message-collection-list';
+import s from './index.module.sass';
 
 export const MiddlePage = defineComponent({
   name: 'MiddlePage',
@@ -16,7 +16,9 @@ export const MiddlePage = defineComponent({
           {globalStore.selectedMenu === MainMenu.contact ? (
             <ContactTabs contactManager={globalStore.contactManager} />
           ) : (
-            <MessageList />
+            <ChatMessageCollectionList
+              chatMessageManager={globalStore.chatMessageManager}
+            />
           )}
         </div>
       </div>

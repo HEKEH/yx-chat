@@ -2,8 +2,8 @@ import { Power } from '@icon-park/vue-next';
 import { ElPopconfirm, ElTooltip } from 'element-plus';
 import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
-import s from './style.module.sass';
 import { getGlobalStore } from '~/utils/vue';
+import s from './style.module.sass';
 
 export const LogoutButton = defineComponent({
   name: 'LogoutButton',

@@ -1,9 +1,9 @@
 import { defineComponent } from 'vue';
+import { getGlobalStore } from '~/utils/vue';
 import { Avatar } from '../common/avatar';
 import s from './index.module.sass';
 import { HighButtons } from './buttons/HighButtons';
 import { LowButtons } from './buttons/LowButtons';
-import { getGlobalStore } from '~/utils/vue';
 
 export const Sidebar = defineComponent({
   name: 'MainSidebar',

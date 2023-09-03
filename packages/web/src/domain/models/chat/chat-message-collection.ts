@@ -5,6 +5,8 @@ import { IChatMessageModel, chatMessageFactory } from './chat-message';
 
 /** Chat messages of a friend or a group */
 export class ChatMessageCollection {
+  readonly id: string;
+
   private _chatMessages: IChatMessageModel[];
 
   private _unread: number;
@@ -37,19 +39,23 @@ export class ChatMessageCollection {
   }
 
   private constructor(props: {
+    id: string;
     chatMessages: IChatMessageModel[];
     unread: number;
     owner?: IContactUnit;
   }) {
+    this.id = props.id;
     this._chatMessages = props.chatMessages;
     this._unread = props.unread;
     this._owner = props.owner;
   }
 
   static createByRawData({
+    id,
     messagesRecord,
     userMap,
   }: {
+    id: string;
     messagesRecord: ChatMessagesRecord | undefined;
     userMap: Record<string, IUser>; // includes self
   }): ChatMessageCollection {
@@ -59,12 +65,14 @@ export class ChatMessageCollection {
         return chatMessageFactory.create(message, from);
       }) || [];
     return new ChatMessageCollection({
+      id,
       chatMessages: messageModels,
       unread: messagesRecord?.unread || 0,
     });
   }
-  static createEmpty(): ChatMessageCollection {
+  static createEmpty(id: string): ChatMessageCollection {
     return new ChatMessageCollection({
+      id,
       chatMessages: [],
       unread: 0,
     });

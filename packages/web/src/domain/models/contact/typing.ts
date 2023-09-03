@@ -1,5 +1,6 @@
 import { IChatMessageModel } from '../chat/chat-message';
 import { ChatMessageCollection } from '../chat/chat-message-collection';
+import { GeneralTime } from '../common/time';
 import { IUser } from '../typing';
 
 export interface IContactUnit extends IUser {
@@ -10,5 +11,5 @@ export interface IContactUnit extends IUser {
   readonly latestMessage: IChatMessageModel | undefined;
   readonly latestMessageBrief: string | undefined;
   /** Time for display, message time or create time */
-  readonly displayTime: string;
+  readonly displayTime: GeneralTime;
 }
