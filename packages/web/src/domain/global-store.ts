@@ -2,19 +2,19 @@ import {
   LastMessagesResponse,
   LoginSuccessResponse,
 } from '@yx-chat/shared/types';
+import { SocketIO } from '~/infra/socket-io';
+import { LoginRequest } from '~/infra/socket-io/message/request/login-request';
+import { BusinessError } from '~/common/error';
+import { LocalStorageStore } from '~/infra/local-storage-store';
+import { LoginByTokenRequest } from '~/infra/socket-io/message/request/login-by-token-request';
+import { RegisterRequest } from '~/infra/socket-io/message/request/register-request';
+import { ChatMessagesRequest } from '~/infra/socket-io/message/request/chat-messages-request';
 import Self from './models/self';
 import { MainMenu } from './types';
 import { ThemeManager } from './models/theme';
 import { ContactManager } from './models/contact';
 import { ChatMessageCollection } from './models/chat/chat-message-collection';
 import { IUser } from './models/typing';
-import { SocketIO } from '~/infra/socket-io';
-import { LoginRequest } from '~/infra/socket-io/message/request/login-request';
-import { BusinessError } from '~/common/error';
-import { LocalStorageStore } from '~/infra/local-store/local-storage-store';
-import { LoginByTokenRequest } from '~/infra/socket-io/message/request/login-by-token-request';
-import { RegisterRequest } from '~/infra/socket-io/message/request/register-request';
-import { ChatMessagesRequest } from '~/infra/socket-io/message/request/chat-messages-request';
 
 export default class GlobalStore {
   /** the user logged in */

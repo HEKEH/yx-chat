@@ -13,8 +13,35 @@
   .avatar
     overflow: hidden
     width: 48px
-  .name
-    color: var(--primary-text-color-10)
-    font-weight: bold
-    font-size: 14px
+    flex: 0 0 auto
+  .container
     margin-left: 12px
+    overflow: hidden
+    height: 100%
+    flex: 1
+    display: flex
+    flex-direction: column
+    .row
+      overflow: hidden
+      width: 100%
+      flex: 1
+      display: flex
+      flex-direction: row
+      align-items: center
+    .name-row
+      justify-content: space-between
+    .name
+      color: var(--primary-text-color-10)
+      font-weight: bold
+      font-size: 14px
+    .time
+      color: var(--primary-text-color-9)
+      font-weight: bold
+      font-size: 13px
+    .message
+      color: var(--primary-text-color-8)
+      font-size: 12px
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
+    

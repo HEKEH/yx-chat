@@ -1,7 +1,7 @@
 import { PropType, defineComponent } from 'vue';
+import { ContactUnitCollection } from '~/domain/models/contact/contact-unit-collection';
 import { ContactItem } from '../ContactItem';
 import s from './index.module.sass';
-import { ContactUnitCollection } from '~/domain/models/contact/contact-unit-collection';
 
 export const ContactUnitList = defineComponent({
   name: 'ContactUnitList',

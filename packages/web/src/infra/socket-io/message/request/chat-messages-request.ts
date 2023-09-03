@@ -2,8 +2,8 @@ import {
   ChatMessageRequestType,
   LastMessagesRequestBody,
 } from '@yx-chat/shared/types';
-import { AbstractSocketRequest } from './request';
 import { IContactUnit } from '~/domain/models/contact/typing';
+import { AbstractSocketRequest } from './request';
 
 export class ChatMessagesRequest extends AbstractSocketRequest<LastMessagesRequestBody> {
   readonly data: LastMessagesRequestBody;

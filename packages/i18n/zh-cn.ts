@@ -38,5 +38,9 @@ const cn: I18nMessage = {
     friends: '好友',
     groups: '群组',
   },
+  time: {
+    today: '今天',
+    yesterday: '昨天',
+  },
 };
 export default cn;

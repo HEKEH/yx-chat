@@ -26,6 +26,12 @@ export class ChatMessageCollection {
     return this._chatMessages;
   }
 
+  get latestMessage() {
+    return this._chatMessages.length
+      ? this._chatMessages[this._chatMessages.length - 1]
+      : undefined;
+  }
+
   get unread() {
     return this._unread;
   }

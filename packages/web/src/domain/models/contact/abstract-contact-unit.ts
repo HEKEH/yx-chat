@@ -1,15 +1,14 @@
 import { ChatMessageCollection } from '../chat/chat-message-collection';
+import { GeneralTime } from '../common/time';
 import { IContactUnit } from './typing';
 
 export abstract class AbstractContactUnit implements IContactUnit {
-  protected _id: string;
   protected _name: string;
   protected _avatar: string;
   protected _chatMessageCollection: ChatMessageCollection | undefined;
 
-  get id() {
-    return this._id;
-  }
+  readonly id: string;
+  readonly createTime: GeneralTime;
 
   get name() {
     return this._name;
@@ -19,17 +18,28 @@ export abstract class AbstractContactUnit implements IContactUnit {
     return this._avatar;
   }
 
-  constructor(props: { id: string; name: string; avatar: string }) {
-    this._id = props.id;
-    this._name = props.name;
-    this._avatar = props.avatar;
+  /** Time for display, message time or create time */
+  get displayTime() {
+    return this.latestMessage
+      ? this.latestMessage.createTime.toDisplayFormat()
+      : this.createTime.toDisplayFormat();
   }
 
-  abstract getMessageOwnerKey(selfId: string): string;
+  constructor(props: {
+    id: string;
+    name: string;
+    avatar: string;
+    createTime: string;
+  }) {
+    this.id = props.id;
+    this._name = props.name;
+    this._avatar = props.avatar;
+    this.createTime = new GeneralTime(props.createTime);
+  }
 
   get chatMessageCollection() {
     if (!this._chatMessageCollection) {
-      throw new Error('chatMessageCollection does not exist yet');
+      throw new Error('chatMessageCollection has not been initiated yet');
     }
     return this._chatMessageCollection;
   }
@@ -38,4 +48,12 @@ export abstract class AbstractContactUnit implements IContactUnit {
     this._chatMessageCollection = chatMessageCollection;
     chatMessageCollection.setOwner(this);
   }
+
+  get latestMessage() {
+    return this.chatMessageCollection.latestMessage;
+  }
+
+  abstract get latestMessageBrief(): string | undefined;
+
+  abstract getMessageOwnerKey(selfId: string): string;
 }

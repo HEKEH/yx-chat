@@ -1,7 +1,7 @@
 import { I18nMessage, Locale } from '@yx-chat/i18n/types';
 import zhCn from '@yx-chat/i18n/zh-cn';
 import { createI18n } from 'vue-i18n';
-import { LocalStorageStore } from '../local-store/local-storage-store';
+import { LocalStorageStore } from '../local-storage-store';
 
 const initialMessages: { [x in Locale]?: I18nMessage } = {
   'zh-cn': zhCn,

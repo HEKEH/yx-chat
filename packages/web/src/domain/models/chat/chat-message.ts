@@ -1,4 +1,5 @@
 import { ChatMessage, ChatMessageFormat } from '@yx-chat/shared/types';
+import { GeneralTime } from '../common/time';
 
 interface MessageFrom {
   readonly id: string;
@@ -8,9 +9,10 @@ interface MessageFrom {
 
 export interface IChatMessageModel {
   readonly deleted: boolean;
-  readonly createTime: string;
+  readonly createTime: GeneralTime;
   readonly type: ChatMessageFormat;
   readonly content: string;
+  readonly brief: string;
   readonly from: MessageFrom;
   delete: () => Promise<void>;
   save: () => Promise<boolean>;
@@ -25,7 +27,7 @@ abstract class AbstractChatMessageModel implements IChatMessageModel {
     return this._deleted;
   }
 
-  readonly createTime: string;
+  readonly createTime: GeneralTime;
 
   readonly id: string;
 
@@ -36,7 +38,7 @@ abstract class AbstractChatMessageModel implements IChatMessageModel {
     this.id = message._id;
     this._deleted = message.deleted;
     this.content = message.content;
-    this.createTime = message.createTime;
+    this.createTime = new GeneralTime(message.createTime);
   }
 
   abstract delete(): Promise<void>;
@@ -44,12 +46,16 @@ abstract class AbstractChatMessageModel implements IChatMessageModel {
   abstract save(): Promise<boolean>;
 
   abstract readonly type: ChatMessageFormat;
+  abstract readonly brief: string;
 }
 
 class TextChatMessageModel extends AbstractChatMessageModel {
   readonly type = ChatMessageFormat.text;
   constructor(from: MessageFrom, message: ChatMessage) {
     super(from, message);
+  }
+  get brief() {
+    return this.content;
   }
 
   async delete() {

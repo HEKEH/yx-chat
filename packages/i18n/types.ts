@@ -36,6 +36,10 @@ export interface I18nMessage {
     friends: string;
     groups: string;
   };
+  time: {
+    today: string;
+    yesterday: string;
+  };
 }
 
 export type Locale = 'en' | 'zh-cn';

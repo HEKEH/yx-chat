@@ -38,5 +38,9 @@ const en: I18nMessage = {
     friends: 'Friends',
     groups: 'Groups',
   },
+  time: {
+    today: 'Today',
+    yesterday: 'Yesterday',
+  },
 };
 export default en;

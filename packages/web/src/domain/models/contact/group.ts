@@ -7,10 +7,18 @@ export class GroupModel extends AbstractContactUnit {
       id: _id,
       avatar,
       name,
+      createTime,
     });
   }
 
-  getMessageOwnerKey(selfId: string) {
-    return `${selfId}${this._id}`;
+  getMessageOwnerKey() {
+    return this.id;
+  }
+
+  get latestMessageBrief() {
+    if (!this.latestMessage) {
+      return;
+    }
+    return `${this.latestMessage.from.name}: ${this.latestMessage.brief}`;
   }
 }

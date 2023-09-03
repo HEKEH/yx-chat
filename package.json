@@ -11,6 +11,9 @@
     "prepare": "husky install",
     "preinstall": "npx only-allow pnpm"
   },
+  "dependencies": {
+    "dayjs": "^1.11.9"
+  },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
@@ -25,7 +28,7 @@
     "husky": "^8.0.0",
     "lint-staged": "^10.2.10",
     "prettier": "^2.8.8",
-    "typescript": "^4.6.4"
+    "typescript": "^5.2.2"
   },
   "lint-staged": {
     "{packages}/**/*.{js,ts,tsx}": [
@@ -35,8 +38,5 @@
   "engines": {
     "node": ">= 14",
     "pnpm": ">= 6"
-  },
-  "dependencies": {
-    "dayjs": "^1.11.9"
   }
 }
