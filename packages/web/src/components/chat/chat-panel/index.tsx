@@ -1,11 +1,11 @@
 import { PropType, defineComponent } from 'vue';
 import { ChatMessageCollection } from '~/domain/models/chat/chat-message-collection';
 import Self from '~/domain/models/self';
-import { ChatMessageItem } from '../message-item';
+import { ChatItem } from './chat-item';
 import s from './index.module.sass';
 
-export const ChatMessagePanel = defineComponent({
-  name: 'ChatMessagePanel',
+export const ChatPanel = defineComponent({
+  name: 'ChatPanel',
   props: {
     chatMessageCollection: {
       type: Object as PropType<ChatMessageCollection | undefined>,
@@ -25,7 +25,7 @@ export const ChatMessagePanel = defineComponent({
       return (
         <div class={s.list}>
           {chatMessageCollection.list.map(item => (
-            <ChatMessageItem key={item.id} value={item} self={props.self} />
+            <ChatItem key={item.id} value={item} self={props.self} />
           ))}
         </div>
       );

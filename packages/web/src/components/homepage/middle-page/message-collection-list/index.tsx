@@ -1,6 +1,6 @@
 import { PropType, defineComponent } from 'vue';
 import { ChatMessageManager } from '~/domain/models/chat/chat-message-manager';
-import { ContactItem } from '../../contact/ContactItem';
+import { ContactItem } from '../contact-tabs/ContactItem';
 import s from './index.module.sass';
 
 export const ChatMessageCollectionList = defineComponent({

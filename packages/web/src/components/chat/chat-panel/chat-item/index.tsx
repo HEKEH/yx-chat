@@ -4,8 +4,8 @@ import { IChatMessageModel } from '~/domain/models/chat/chat-message';
 import Self from '~/domain/models/self';
 import s from './index.module.sass';
 
-export const ChatMessageItem = defineComponent({
-  name: 'ChatMessageItem',
+export const ChatItem = defineComponent({
+  name: 'ChatItem',
   props: {
     value: {
       type: Object as PropType<IChatMessageModel>,
@@ -22,7 +22,7 @@ export const ChatMessageItem = defineComponent({
       const { from } = value;
       const isSelf = from.id === self.id;
       return (
-        <div class={[s['message-item'], isSelf ? s.right : s.left]}>
+        <div class={[s['chat-item'], isSelf ? s.right : s.left]}>
           <Avatar url={from.avatar} class={s.avatar} />
           <div class={s.container}>
             <div class={[s.row, s['first-row']]}>

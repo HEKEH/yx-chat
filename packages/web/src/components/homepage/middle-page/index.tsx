@@ -1,8 +1,8 @@
 import { defineComponent } from 'vue';
 import { getGlobalStore } from '~/utils/vue';
 import { MainMenu } from '~/domain/types';
-import { ContactTabs } from '~/components/contact';
-import { ChatMessageCollectionList } from '~/components/chat/message-collection-list';
+import { ContactTabs } from '~/components/homepage/middle-page/contact-tabs';
+import { ChatMessageCollectionList } from '~/components/homepage/middle-page/message-collection-list';
 import s from './index.module.sass';
 
 export const MiddlePage = defineComponent({
