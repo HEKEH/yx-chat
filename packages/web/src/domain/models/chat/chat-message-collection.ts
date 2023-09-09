@@ -5,6 +5,7 @@ import {
 } from '@yx-chat/shared/types';
 import { SocketIO } from '~/infra/socket-io';
 import { SendChatMessageRequest } from '~/infra/socket-io/request/send-chat-message-request';
+import { Subject } from 'rxjs';
 import { IContactUnit } from '../contact/typing';
 import Self from '../self';
 import { IUser } from '../typing';
@@ -17,6 +18,8 @@ interface ChatMessageCollectionContext {
 /** Chat messages of a friend or a group */
 export class ChatMessageCollection {
   readonly id: string;
+
+  readonly onHasNewChatMessage = new Subject<void>();
 
   private readonly _context: ChatMessageCollectionContext;
 
@@ -75,6 +78,7 @@ export class ChatMessageCollection {
     this._list.push(message);
     this._draft = undefined;
     this._sortMessages();
+    this.onHasNewChatMessage.next();
   }
 
   receiveChatMessage(message: ChatMessage) {
@@ -90,6 +94,7 @@ export class ChatMessageCollection {
     const chatMessage = chatMessageFactory.create(message, messageFrom);
     this._list.push(chatMessage);
     this._sortMessages();
+    this.onHasNewChatMessage.next();
   }
 
   /** sort by time */

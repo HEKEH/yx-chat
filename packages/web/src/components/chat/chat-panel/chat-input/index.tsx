@@ -12,10 +12,7 @@ export const ChatInputContainer = defineComponent({
       required: true,
     },
   },
-  emits: {
-    afterSendMessage: () => true,
-  },
-  setup(props, { emit }) {
+  setup(props) {
     return () => {
       const { chatMessageCollection } = props;
       if (!chatMessageCollection) {
@@ -23,7 +20,6 @@ export const ChatInputContainer = defineComponent({
       }
       const sendMessage = async () => {
         await chatMessageCollection.sendChatMessage();
-        emit('afterSendMessage');
       };
       return (
         <div class={s['chat-input-container']}>

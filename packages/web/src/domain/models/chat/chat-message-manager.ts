@@ -10,8 +10,8 @@ export class ChatMessageManager {
   /** Use arrow functions so no need to bind this, keep the function unique */
   private _receiveChatMessage = (message: ChatMessage) => {
     const chatMessageCollection = this._list.find(item => {
-      const ownerId = item.owner.id;
-      return message.from._id === ownerId || message.to === ownerId;
+      const messageOwnerKey = item.owner.messageOwnerKey;
+      return message.to === messageOwnerKey;
     });
     if (chatMessageCollection) {
       chatMessageCollection.receiveChatMessage(message);
@@ -51,6 +51,9 @@ export class ChatMessageManager {
 
   init(chatMessageCollectionList: ChatMessageCollection[]) {
     this._list = chatMessageCollectionList;
+    this._list.forEach(item =>
+      item.onHasNewChatMessage.subscribe(() => this._sortList()),
+    );
     this._sortList();
     this._selectedId = this._list[0]?.id;
     SocketIO.instance.addMessageListener<ChatMessage>(
@@ -66,6 +69,7 @@ export class ChatMessageManager {
 
   clear() {
     this._list = [];
+    this._list.forEach(item => item.onHasNewChatMessage.unsubscribe());
     this._selectedId = undefined;
     SocketIO.instance.removeMessageListener<ChatMessage>(
       ChatMessageFormat.text,
