@@ -12,6 +12,15 @@ export class GeneralTime {
   private _isYesterday() {
     return dayjs().add(-1, 'day').isSame(this._value, 'day');
   }
+  isBefore(time: GeneralTime) {
+    return this._value.isBefore(time.value);
+  }
+  isAfter(time: GeneralTime) {
+    return this._value.isAfter(time.value);
+  }
+  isSame(time: GeneralTime) {
+    return this._value.isSame(time.value);
+  }
   toBriefFormat() {
     if (this._isToday()) {
       // return time

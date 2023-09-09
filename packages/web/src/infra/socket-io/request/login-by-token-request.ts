@@ -3,7 +3,7 @@ import {
   LoginByTokenRequestBody,
 } from '@yx-chat/shared/types';
 import platform from 'platform';
-import { AbstractSocketRequest } from './request';
+import { AbstractSocketRequest } from './type';
 
 export class LoginByTokenRequest extends AbstractSocketRequest<LoginByTokenRequestBody> {
   private _token: string;

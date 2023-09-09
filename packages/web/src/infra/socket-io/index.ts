@@ -2,8 +2,7 @@ import IO, { Socket } from 'socket.io-client';
 import clientConfig from '@yx-chat/config/client';
 import { ServerMessage, ServerMessageType } from '@yx-chat/shared/types';
 import i18n from '../i18n';
-import { AbstractSocketRequest } from './message/request/request';
-import { ServerMessageReceiver } from './message/receiver/server-message-receiver';
+import { AbstractSocketRequest } from './request/type';
 
 const TIMEOUT_MILLISECONDS = 10000; // 十秒超时
 const options = {
@@ -21,14 +20,20 @@ export interface SocketEventListenerMap {
   [SocketEventType.disconnect]: ((reason: string) => void)[];
 }
 
+type MessageListener<T extends ServerMessage = ServerMessage> = (
+  message: T,
+) => void;
+
+export type MessageListenerMap = {
+  [T in ServerMessageType]?: MessageListener[];
+};
+
 /** 对Socket做一层封装 */
 export class SocketIO {
   private _io!: Socket;
   private _readyCallbacks: (() => void)[] = [];
   private _isConnected = false;
-  private _messageReceiverMap: {
-    [T in ServerMessageType]?: ServerMessageReceiver<T>[];
-  } = {};
+  private _messageListenerMap: MessageListenerMap = {};
   private _eventListenerMap: SocketEventListenerMap = {
     [SocketEventType.connectError]: [],
     [SocketEventType.disconnect]: [],
@@ -77,14 +82,29 @@ export class SocketIO {
     });
   }
   /** 注册针对消息类型的消息处理者 */
-  registerMessageReceiver<T extends ServerMessageType>(
-    messageType: T,
-    messageReceiver: ServerMessageReceiver<T>,
+  addMessageListener<T extends ServerMessage>(
+    messageType: ServerMessageType,
+    callback: MessageListener<T>,
   ) {
-    if (!this._messageReceiverMap[messageType]) {
-      this._messageReceiverMap[messageType] = [];
+    if (!this._messageListenerMap[messageType]) {
+      this._messageListenerMap[messageType] = [];
     }
-    this._messageReceiverMap[messageType]!.push(messageReceiver);
+    (this._messageListenerMap[messageType] as MessageListener<T>[])!.push(
+      callback,
+    );
+  }
+
+  removeMessageListener<T extends ServerMessage>(
+    messageType: ServerMessageType,
+    callback: MessageListener<T>,
+  ) {
+    const messageListeners = this._messageListenerMap[messageType];
+    if (!messageListeners?.length) {
+      return;
+    }
+    this._messageListenerMap[messageType] = messageListeners.filter(
+      item => item !== callback,
+    );
   }
 
   addSocketEventListener<T extends SocketEventType>(
@@ -129,11 +149,11 @@ export class SocketIO {
     this._io.on('message', (message: ServerMessage) => {
       console.log(message, '收到消息');
       const type = message.type;
-      if (!Reflect.has(this._messageReceiverMap, type)) {
+      if (!Reflect.has(this._messageListenerMap, type)) {
         throw new Error(`未找到${type}类型消息的接受者`);
       }
-      this._messageReceiverMap[type]!.forEach(receiver => {
-        receiver.receiveMessage(message);
+      this._messageListenerMap[type]!.forEach(callback => {
+        callback(message);
       });
     });
   }

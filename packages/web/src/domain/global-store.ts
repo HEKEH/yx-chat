@@ -3,12 +3,12 @@ import {
   LoginSuccessResponse,
 } from '@yx-chat/shared/types';
 import { SocketIO } from '~/infra/socket-io';
-import { LoginRequest } from '~/infra/socket-io/message/request/login-request';
+import { LoginRequest } from '~/infra/socket-io/request/login-request';
 import { BusinessError } from '~/common/error';
 import { LocalStorageStore } from '~/infra/local-storage-store';
-import { LoginByTokenRequest } from '~/infra/socket-io/message/request/login-by-token-request';
-import { RegisterRequest } from '~/infra/socket-io/message/request/register-request';
-import { GetChatMessagesRequest } from '~/infra/socket-io/message/request/get-chat-messages-request';
+import { LoginByTokenRequest } from '~/infra/socket-io/request/login-by-token-request';
+import { RegisterRequest } from '~/infra/socket-io/request/register-request';
+import { GetChatMessagesRequest } from '~/infra/socket-io/request/get-chat-messages-request';
 import Self from './models/self';
 import { MainMenu } from './types';
 import { ThemeManager } from './models/theme';
@@ -106,6 +106,7 @@ export default class GlobalStore {
   private _clear() {
     this.self.clear();
     this._contactManager.clear();
+    this._chatMessageManager.clear();
     this._selectedMenu = MainMenu.message;
   }
 
@@ -150,7 +151,7 @@ export default class GlobalStore {
       ([key, messagesRecord]) => {
         return ChatMessageCollection.createByRawData({
           id: key,
-          self: this._self,
+          context: this,
           messagesRecord,
           userMap,
         });

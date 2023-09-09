@@ -20,6 +20,7 @@ export type ChatMessage = {
     username: string;
     avatar: string;
   };
+  to?: string;
 };
 
 /** Messages with an user or an group */

@@ -4,17 +4,21 @@ import {
   ChatMessagesRecord,
 } from '@yx-chat/shared/types';
 import { SocketIO } from '~/infra/socket-io';
-import { SendChatMessageRequest } from '~/infra/socket-io/message/request/send-chat-message-request';
+import { SendChatMessageRequest } from '~/infra/socket-io/request/send-chat-message-request';
 import { IContactUnit } from '../contact/typing';
 import Self from '../self';
 import { IUser } from '../typing';
 import { IChatMessageModel, chatMessageFactory } from './chat-message';
 
+interface ChatMessageCollectionContext {
+  readonly self: Self;
+}
+
 /** Chat messages of a friend or a group */
 export class ChatMessageCollection {
   readonly id: string;
 
-  private readonly self: Self;
+  private readonly _context: ChatMessageCollectionContext;
 
   private _draftMessageType: ChatMessageFormat = ChatMessageFormat.text;
 
@@ -67,20 +71,48 @@ export class ChatMessageCollection {
       type: this._draftMessageType,
     });
     const response = await SocketIO.instance.fetch<ChatMessage>(request);
-    const message = chatMessageFactory.create(response, this.self);
+    const message = chatMessageFactory.create(response, this._context.self);
     this._list.push(message);
     this._draft = undefined;
+    this._sortMessages();
+  }
+
+  receiveChatMessage(message: ChatMessage) {
+    let messageFrom: IUser;
+    const fromId = message.from._id;
+    if (fromId === this._context.self.id) {
+      messageFrom = this._context.self;
+    } else if (fromId === this.owner.id) {
+      messageFrom = this.owner;
+    } else {
+      throw new Error('incorrect sender id: ' + fromId);
+    }
+    const chatMessage = chatMessageFactory.create(message, messageFrom);
+    this._list.push(chatMessage);
+    this._sortMessages();
+  }
+
+  /** sort by time */
+  private _sortMessages() {
+    this._list.sort((a, b) => {
+      const timeA = a.createTime;
+      const timeB = b.createTime;
+      if (timeA.isSame(timeB)) {
+        return 0;
+      }
+      return timeA.isBefore(timeB) ? -1 : 1;
+    });
   }
 
   private constructor(props: {
     id: string;
     chatMessages: IChatMessageModel[];
-    self: Self;
+    context: ChatMessageCollectionContext;
     unread: number;
     owner?: IContactUnit;
   }) {
     this.id = props.id;
-    this.self = props.self;
+    this._context = props.context;
     this._list = props.chatMessages;
     this._unread = props.unread;
     this._owner = props.owner;
@@ -88,12 +120,12 @@ export class ChatMessageCollection {
 
   static createByRawData({
     id,
-    self,
+    context,
     messagesRecord,
     userMap,
   }: {
     id: string;
-    self: Self;
+    context: ChatMessageCollectionContext;
     messagesRecord: ChatMessagesRecord | undefined;
     userMap: Record<string, IUser>; // includes self
   }): ChatMessageCollection {
@@ -104,15 +136,18 @@ export class ChatMessageCollection {
       }) || [];
     return new ChatMessageCollection({
       id,
-      self,
+      context,
       chatMessages: messageModels,
       unread: messagesRecord?.unread || 0,
     });
   }
-  static createEmpty(id: string, self: Self): ChatMessageCollection {
+  static createEmpty(
+    id: string,
+    context: ChatMessageCollectionContext,
+  ): ChatMessageCollection {
     return new ChatMessageCollection({
       id,
-      self,
+      context,
       chatMessages: [],
       unread: 0,
     });

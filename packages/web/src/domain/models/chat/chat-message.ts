@@ -15,8 +15,6 @@ export interface IChatMessageModel {
   readonly content: string;
   readonly brief: string;
   readonly from: MessageFrom;
-  delete: () => Promise<void>;
-  save: () => Promise<boolean>;
 }
 
 abstract class AbstractChatMessageModel implements IChatMessageModel {
@@ -42,10 +40,6 @@ abstract class AbstractChatMessageModel implements IChatMessageModel {
     this.createTime = new GeneralTime(message.createTime);
   }
 
-  abstract delete(): Promise<void>;
-
-  abstract save(): Promise<boolean>;
-
   abstract readonly type: ChatMessageFormat;
   abstract readonly brief: string;
 }
@@ -57,15 +51,6 @@ class TextChatMessageModel extends AbstractChatMessageModel {
   }
   get brief() {
     return this.content;
-  }
-
-  async delete() {
-    // TODO
-  }
-
-  async save() {
-    // TODO
-    return true;
   }
 }
 

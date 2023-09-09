@@ -1,9 +1,24 @@
+import { SocketIO } from '~/infra/socket-io';
+import { ChatMessage, ChatMessageFormat } from '@yx-chat/shared/types';
 import { ChatMessageCollection } from './chat-message-collection';
 
 /** Model of chat menu */
 export class ChatMessageManager {
   private _selectedId: string | undefined;
   private _list: ChatMessageCollection[] = [];
+
+  /** Use arrow functions so no need to bind this, keep the function unique */
+  private _receiveChatMessage = (message: ChatMessage) => {
+    const chatMessageCollection = this._list.find(item => {
+      const ownerId = item.owner.id;
+      return message.from._id === ownerId || message.to === ownerId;
+    });
+    if (chatMessageCollection) {
+      chatMessageCollection.receiveChatMessage(message);
+    } else {
+      throw new Error(`incorrect message, ${JSON.stringify(message)}`);
+    }
+  };
 
   get selectedItem() {
     return this._list.find(item => item.id === this._selectedId);
@@ -24,8 +39,8 @@ export class ChatMessageManager {
   private _sortList() {
     const list = [...this._list];
     list.sort((a, b) => {
-      const aTime = a.owner.displayTime.value;
-      const bTime = b.owner.displayTime.value;
+      const aTime = a.owner.displayTime;
+      const bTime = b.owner.displayTime;
       if (aTime.isSame(bTime)) {
         return 0;
       }
@@ -38,5 +53,28 @@ export class ChatMessageManager {
     this._list = chatMessageCollectionList;
     this._sortList();
     this._selectedId = this._list[0]?.id;
+    SocketIO.instance.addMessageListener<ChatMessage>(
+      ChatMessageFormat.text,
+      this._receiveChatMessage,
+    );
+    // TODO 改成下面的样子
+    // SocketIO.instance.addMessageListener<XXX>(
+    //   ServerMessageType.chat,
+    //   this._receiveChatMessage,
+    // );
+  }
+
+  clear() {
+    this._list = [];
+    this._selectedId = undefined;
+    SocketIO.instance.removeMessageListener<ChatMessage>(
+      ChatMessageFormat.text,
+      this._receiveChatMessage,
+    );
+    // TODO 改成下面的样子
+    // SocketIO.instance.addMessageListener<XXX>(
+    //   ServerMessageType.chat,
+    //   this._receiveChatMessage,
+    // );
   }
 }
