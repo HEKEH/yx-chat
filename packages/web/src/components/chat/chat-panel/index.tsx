@@ -1,4 +1,4 @@
-import { PropType, defineComponent, ref } from 'vue';
+import { PropType, defineComponent } from 'vue';
 import { ChatMessageCollection } from '~/domain/models/chat/chat-message-collection';
 import Self from '~/domain/models/self';
 import { ChatItemList } from './ChatItemList';

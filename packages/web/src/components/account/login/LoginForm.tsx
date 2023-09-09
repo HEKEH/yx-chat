@@ -58,6 +58,9 @@ export const LoginForm = defineComponent({
               type="password"
               showPassword
               autocomplete="off"
+              onKeydown={e => {
+                (e as KeyboardEvent).key === 'Enter' && onSubmit();
+              }}
             />
           </ElFormItem>
           <ElFormItem>

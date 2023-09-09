@@ -5,6 +5,6 @@ export type ServerMessageType = ChatMessageFormat; // TODO 暂时，要改成下
 //   chat = 'chat'
 // }
 
-export type ServerMessage = {
-  type: ServerMessageType;
+export type ServerMessage<T extends ServerMessageType = ServerMessageType> = {
+  type: T;
 };
