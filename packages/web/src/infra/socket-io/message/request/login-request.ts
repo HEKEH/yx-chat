@@ -1,7 +1,6 @@
 import { AccountRequestType, LoginRequestBody } from '@yx-chat/shared/types';
 import platform from 'platform';
 import { AbstractSocketRequest } from './request';
-import i18n from '~/infra/i18n';
 
 export class LoginRequest extends AbstractSocketRequest<LoginRequestBody> {
   private _userInfo: Pick<LoginRequestBody, 'username' | 'password'>;
@@ -20,7 +19,7 @@ export class LoginRequest extends AbstractSocketRequest<LoginRequestBody> {
     };
   }
   get name() {
-    return i18n.global.t('account.login');
+    return 'Login';
   }
   constructor(userInfo: Pick<LoginRequestBody, 'username' | 'password'>) {
     super();

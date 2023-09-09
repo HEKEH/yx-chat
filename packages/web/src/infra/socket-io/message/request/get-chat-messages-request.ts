@@ -5,7 +5,7 @@ import {
 import { IContactUnit } from '~/domain/models/contact/typing';
 import { AbstractSocketRequest } from './request';
 
-export class ChatMessagesRequest extends AbstractSocketRequest<LastMessagesRequestBody> {
+export class GetChatMessagesRequest extends AbstractSocketRequest<LastMessagesRequestBody> {
   readonly data: LastMessagesRequestBody;
 
   get type() {
@@ -13,14 +13,12 @@ export class ChatMessagesRequest extends AbstractSocketRequest<LastMessagesReque
   }
 
   get name() {
-    return 'Get last messages';
+    return 'GetLastMessages';
   }
   constructor(props: { selfId: string; contacts: IContactUnit[] }) {
     super();
     this.data = {
-      linkmans: props.contacts.map(item =>
-        item.getMessageOwnerKey(props.selfId),
-      ),
+      linkmans: props.contacts.map(item => item.messageOwnerKey),
     };
   }
 }

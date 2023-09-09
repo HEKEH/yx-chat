@@ -16,7 +16,8 @@ const PASSWORD: keyof UserAccountInfo = 'password';
 
 export const LoginForm = defineComponent({
   emits: {
-    submit: (userInfo: UserAccountInfo) => userInfo && typeof userInfo === 'object',
+    submit: (userInfo: UserAccountInfo) =>
+      userInfo && typeof userInfo === 'object',
   },
   setup(_, ctx) {
     const userInfo = reactive<UserAccountInfo>({
@@ -24,7 +25,9 @@ export const LoginForm = defineComponent({
       password: '',
     });
     const { emit } = ctx;
-    const rules: Partial<Record<keyof UserAccountInfo, Arrayable<FormItemRule>>> = {
+    const rules: Partial<
+      Record<keyof UserAccountInfo, Arrayable<FormItemRule>>
+    > = {
       username: { required: true, message: '用户名为必填项' },
       password: [{ required: true, message: '密码为必填项' }],
     };

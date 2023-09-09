@@ -1,6 +1,8 @@
 export enum ChatMessageRequestType {
   /** get last messages by contacts' ids */
   getLastMessages = 'getLinkmansLastMessagesV2',
+  /** send chat message */
+  sendChatMessage = 'sendMessage',
 }
 
 export enum ChatMessageFormat {
@@ -28,6 +30,12 @@ export type ChatMessagesRecord = {
 
 export type LastMessagesRequestBody = {
   linkmans: string[]; // connection of two user ids or a group id
+};
+
+export type SendChatMessageBody = {
+  content: string;
+  type: ChatMessageFormat;
+  to: string;
 };
 
 /** Key is connection of two user ids or a group id */

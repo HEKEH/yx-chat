@@ -4,6 +4,7 @@ import App from './App';
 import i18n from './infra/i18n';
 import './style.css';
 import './styles/global.sass';
+import './styles/theme.sass';
 
 const app = createApp(App);
 app.use(Element); // TODO 最好干掉，不要全局如此使用

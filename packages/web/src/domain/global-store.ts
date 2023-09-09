@@ -8,7 +8,7 @@ import { BusinessError } from '~/common/error';
 import { LocalStorageStore } from '~/infra/local-storage-store';
 import { LoginByTokenRequest } from '~/infra/socket-io/message/request/login-by-token-request';
 import { RegisterRequest } from '~/infra/socket-io/message/request/register-request';
-import { ChatMessagesRequest } from '~/infra/socket-io/message/request/chat-messages-request';
+import { GetChatMessagesRequest } from '~/infra/socket-io/message/request/get-chat-messages-request';
 import Self from './models/self';
 import { MainMenu } from './types';
 import { ThemeManager } from './models/theme';
@@ -122,6 +122,7 @@ export default class GlobalStore {
     this._contactManager.init({
       friends,
       groups,
+      selfId: this._self.id,
     });
   }
 
@@ -132,7 +133,7 @@ export default class GlobalStore {
     ];
     const chatMessagesResponse =
       await SocketIO.instance.fetch<LastMessagesResponse>(
-        new ChatMessagesRequest({
+        new GetChatMessagesRequest({
           selfId: this._self.id,
           contacts,
         }),
@@ -149,6 +150,7 @@ export default class GlobalStore {
       ([key, messagesRecord]) => {
         return ChatMessageCollection.createByRawData({
           id: key,
+          self: this._self,
           messagesRecord,
           userMap,
         });
@@ -162,7 +164,7 @@ export default class GlobalStore {
       {} as Record<string, ChatMessageCollection>,
     );
     contacts.forEach(contact => {
-      const key = contact.getMessageOwnerKey(this._self.id);
+      const key = contact.messageOwnerKey;
       const messageCollection = chatMessageCollectionMap[key];
       contact.setChatMessageCollection(messageCollection);
     });

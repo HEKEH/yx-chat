@@ -1,8 +1,8 @@
 import { RegisterRequestBody } from '@yx-chat/shared/types';
 import { AccountRequestType } from '@yx-chat/shared/types';
 import platform from 'platform';
-import { AbstractSocketRequest } from './request';
 import i18n from '~/infra/i18n';
+import { AbstractSocketRequest } from './request';
 
 export class RegisterRequest extends AbstractSocketRequest<RegisterRequestBody> {
   private _userInfo: Pick<RegisterRequestBody, 'username' | 'password'>;
@@ -21,7 +21,7 @@ export class RegisterRequest extends AbstractSocketRequest<RegisterRequestBody> 
     };
   }
   get name() {
-    return i18n.global.t('account.register');
+    return 'Register';
   }
   constructor(userInfo: Pick<RegisterRequestBody, 'username' | 'password'>) {
     super();

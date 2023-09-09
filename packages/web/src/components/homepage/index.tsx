@@ -1,6 +1,7 @@
 import { defineComponent } from 'vue';
 import { getGlobalStore } from '~/utils/vue';
 import { AccountEntry } from '../account/AccountEntry';
+import { ChatInputContainer } from '../chat/chat-panel/chat-input';
 import { ChatPanel } from '../chat/chat-panel';
 import { Sidebar } from '../sidebar';
 import s from './index.module.sass';

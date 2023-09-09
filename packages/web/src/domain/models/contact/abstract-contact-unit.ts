@@ -51,7 +51,6 @@ export abstract class AbstractContactUnit implements IContactUnit {
     return this.chatMessageCollection.latestMessage;
   }
 
+  abstract readonly messageOwnerKey: string;
   abstract get latestMessageBrief(): string | undefined;
-
-  abstract getMessageOwnerKey(selfId: string): string;
 }

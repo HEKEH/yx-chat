@@ -22,7 +22,7 @@ export class LoginByTokenRequest extends AbstractSocketRequest<LoginByTokenReque
     };
   }
   get name() {
-    return 'Login by token';
+    return 'LoginByToken';
   }
   constructor(token: string) {
     super();

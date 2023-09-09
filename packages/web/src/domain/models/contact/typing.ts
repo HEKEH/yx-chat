@@ -7,7 +7,7 @@ export interface IContactUnit extends IUser {
   readonly chatMessageCollection: ChatMessageCollection;
   setChatMessageCollection(chatMessageCollection: ChatMessageCollection): void;
   /** For friend, the key is selfId + friend's id. for group, it is the group id */
-  getMessageOwnerKey(selfId: string): string;
+  readonly messageOwnerKey: string;
   readonly latestMessage: IChatMessageModel | undefined;
   readonly latestMessageBrief: string | undefined;
   /** Time for display, message time or create time */

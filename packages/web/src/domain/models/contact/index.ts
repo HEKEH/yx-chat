@@ -1,4 +1,5 @@
 import { Friend, Group } from '@yx-chat/shared/types';
+import Self from '../self';
 import { ContactUnitCollection } from './contact-unit-collection';
 import { FriendModel } from './friend';
 import { GroupModel } from './group';
@@ -27,8 +28,18 @@ export class ContactManager {
   setContactCollectionKey(key: 'friends' | 'groups') {
     this._currentContactCollectionKey = key;
   }
-  init({ friends, groups }: { friends: Friend[]; groups: Group[] }) {
-    this._friendCollection.init(friends.map(item => new FriendModel(item)));
+  init({
+    friends,
+    groups,
+    selfId,
+  }: {
+    friends: Friend[];
+    groups: Group[];
+    selfId: string;
+  }) {
+    this._friendCollection.init(
+      friends.map(item => new FriendModel(item, selfId)),
+    );
     this._groupCollection.init(groups.map(item => new GroupModel(item)));
   }
   clear() {

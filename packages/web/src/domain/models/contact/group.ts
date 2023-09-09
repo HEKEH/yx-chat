@@ -11,7 +11,7 @@ export class GroupModel extends AbstractContactUnit {
     });
   }
 
-  getMessageOwnerKey() {
+  get messageOwnerKey() {
     return this.id;
   }
 
