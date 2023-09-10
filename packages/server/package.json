@@ -8,12 +8,21 @@
     "koa",
     "socket-io"
   ],
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"      
+    }
+  },
   "scripts": {
     "dev": "cross-env --NODE_ENV=development DOTENV_CONFIG_PATH=../../.env.development nodemon",
-    "build": "rm -rf dist && tsc",
-    "start": "cross-env pm2 start ecosystem.config.js --env production",
-    "restart": "cross-env pm2 restart ecosystem.config.js --env production",
-    "stop": "cross-env pm2 stop ecosystem.config.js",
+    "build": "rm -rf dist && tsup ./src/index.ts --format cjs --dts",
+    "pro:start": "cross-env DOTENV_CONFIG_PATH=../../.env.production pm2 start ecosystem.config.js --env production",
+    "pro:restart": "cross-env DOTENV_CONFIG_PATH=../../.env.production pm2 restart ecosystem.config.js --env production",
+    "pro:stop": "cross-env pm2 stop ecosystem.config.js",
+    "pro:delete": "cross-env pm2 delete ecosystem.config.js",
+    "pro:log": "cross-env pm2 logs",
+    "pro:flush": "cross-env pm2 flush",
     "lint": "eslint",
     "preinstall": "npx only-allow pnpm"
   },
@@ -30,7 +39,7 @@
     "@types/koa-router": "^7.4.4",
     "cross-env": "^7.0.3",
     "nodemon": "^3.0.1",
-    "pm2": "^3.5.0",
+    "pm2": "^5.3.0",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0"
   }

@@ -11,6 +11,7 @@ module.exports = {
       autorestart: true,
       watch: true,
       exec_mode: 'fork',
+      node_args: '-r dotenv/config', // 注入.env参数
       env_production: {
         NODE_ENV: 'production',
       },

@@ -1,10 +1,11 @@
 import { resolve } from 'path';
-import { defineConfig, loadEnv } from 'vite';
+import { AliasOptions, defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
+  console.log(mode, 'mode');
   const envPrefix = 'PUBLIC_';
   const env = loadEnv(mode, '../../', envPrefix);
   let path = env.PUBLIC_SERVER_BASE_URL;
@@ -13,15 +14,20 @@ export default defineConfig(({ mode }) => {
   }
   const serverPath =
     path || (mode === 'development' ? 'http://localhost:6870' : '/');
+  const alias: AliasOptions = {
+    '~': resolve(__dirname, './src/'),
+    '@': resolve(__dirname, './'),
+  };
+  if (mode === 'development') {
+    // 重定向到ts文件
+    alias['@yx-chat/config'] = resolve(__dirname, '../config');
+  }
   return {
     plugins: [vue(), vueJsx()],
     envDir: resolve(__dirname, '../../'),
     envPrefix,
     resolve: {
-      alias: {
-        '~': resolve(__dirname, './src/'),
-        '@': resolve(__dirname, './'),
-      },
+      alias,
     },
     server: {
       proxy: {

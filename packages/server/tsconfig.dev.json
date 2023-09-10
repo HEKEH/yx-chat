@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "paths": {
+      "@yx-chat/config/*": [
+        "../config/*"
+      ]
+    }
+  }
+}
