@@ -16,17 +16,21 @@ export enum SocketEventType {
   disconnect = 'disconnect',
 }
 
-export interface SocketEventListenerMap {
-  [SocketEventType.connectError]: ((err: Error) => void)[];
-  [SocketEventType.disconnect]: ((reason: string) => void)[];
-}
+type SocketEventParamsMap = {
+  [SocketEventType.connectError]: Error;
+  [SocketEventType.disconnect]: string;
+};
+
+export type SocketEventSubjectMap = {
+  [K in SocketEventType]: Subject<SocketEventParamsMap[K]>;
+};
 
 type MessageListener<
   T extends ServerMessageType,
   M extends ServerMessage<T>,
 > = (message: M) => void;
 
-export type MessageListenerMap = {
+export type MessageSubjectMap = {
   [T in ServerMessageType]?: Subject<ServerMessage<T>>;
 };
 
@@ -35,10 +39,10 @@ export class SocketIO {
   private _io!: Socket;
   private _readyCallbacks: (() => void)[] = [];
   private _isConnected = false;
-  private _messageListenerMap: MessageListenerMap = {};
-  private _eventListenerMap: SocketEventListenerMap = {
-    [SocketEventType.connectError]: [],
-    [SocketEventType.disconnect]: [],
+  private _messageSubjectMap: MessageSubjectMap = {};
+  private _eventSubjectMap: SocketEventSubjectMap = {
+    [SocketEventType.connectError]: new Subject(),
+    [SocketEventType.disconnect]: new Subject(),
   };
   /** 连接服务端 */
   connect() {
@@ -88,39 +92,23 @@ export class SocketIO {
     messageType: T,
     callback: MessageListener<T, M>,
   ): Subscription {
-    if (!this._messageListenerMap[messageType]) {
-      this._messageListenerMap[messageType] = new Subject<ServerMessage>();
+    if (!this._messageSubjectMap[messageType]) {
+      this._messageSubjectMap[messageType] = new Subject<ServerMessage>();
     }
     return (
-      this._messageListenerMap[messageType]! as unknown as Subject<M>
+      this._messageSubjectMap[messageType]! as unknown as Subject<M>
     ).subscribe(callback);
   }
 
   addSocketEventListener<T extends SocketEventType>(
     eventType: T,
-    callback: SocketEventListenerMap[T][number],
-  ) {
-    const eventListerList: Array<typeof callback> =
-      this._eventListenerMap[eventType];
-    eventListerList.push(callback);
-  }
-
-  removeSocketEventListener<T extends SocketEventType>(
-    eventType: T,
-    callback: SocketEventListenerMap[T][number],
-  ) {
-    this._eventListenerMap[eventType] = (
-      this._eventListenerMap[eventType] as Array<typeof callback>
-    ).filter(item => item !== callback) as SocketEventListenerMap[T];
+    callback: (arg: SocketEventParamsMap[T]) => void,
+  ): Subscription {
+    const subject = this._eventSubjectMap[eventType];
+    return subject.subscribe(callback);
   }
 
   private _bindEvents() {
-    this._io.on('connect_error', (e: Error) => {
-      console.error(e, i18n.global.t('server.connectError'));
-      this._eventListenerMap[SocketEventType.connectError].forEach(cb => {
-        cb(e);
-      });
-    });
     this._io.on('connect', () => {
       this._isConnected = true;
       // 让正在等待onReady的异步函数继续进行
@@ -129,19 +117,21 @@ export class SocketIO {
       });
       this._readyCallbacks = [];
     });
+    this._io.on('connect_error', (e: Error) => {
+      console.error(e, i18n.global.t('server.connectError'));
+      this._eventSubjectMap[SocketEventType.connectError].next(e);
+    });
     this._io.on('disconnect', (reason: string) => {
       this._isConnected = false;
-      this._eventListenerMap[SocketEventType.disconnect].forEach(cb => {
-        cb(reason);
-      });
+      this._eventSubjectMap[SocketEventType.disconnect].next(reason);
     });
     this._io.on('message', (message: ServerMessage) => {
       console.log(message, '收到消息');
       const type = message.type;
-      if (!Reflect.has(this._messageListenerMap, type)) {
+      if (!Reflect.has(this._messageSubjectMap, type)) {
         throw new Error(`未找到${type}类型消息的接受者`);
       }
-      this._messageListenerMap[type]!.next(message);
+      this._messageSubjectMap[type]!.next(message);
     });
   }
 

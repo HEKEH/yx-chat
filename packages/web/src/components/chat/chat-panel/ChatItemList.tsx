@@ -1,7 +1,7 @@
 import {
   PropType,
   defineComponent,
-  onUnmounted,
+  onBeforeUnmount,
   ref,
   watch,
   nextTick,
@@ -54,7 +54,7 @@ export const ChatItemList = defineComponent({
         immediate: true,
       },
     );
-    onUnmounted(() => scrollSubscription?.unsubscribe());
+    onBeforeUnmount(() => scrollSubscription?.unsubscribe());
     return () => {
       const { chatMessageCollection } = props;
       if (!chatMessageCollection) {

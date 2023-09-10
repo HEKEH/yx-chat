@@ -21,25 +21,19 @@ function addSocketEventListeners(socketIO: SocketIO) {
     });
   };
 
-  socketIO.addSocketEventListener(
-    SocketEventType.connectError,
-    onSocketConnectError,
-  );
-
-  socketIO.addSocketEventListener(
-    SocketEventType.disconnect,
-    onSocketDisconnect,
-  );
-
-  onBeforeUnmount(() => {
-    socketIO.removeSocketEventListener(
+  const subscriptions = [
+    socketIO.addSocketEventListener(
       SocketEventType.connectError,
       onSocketConnectError,
-    );
-    socketIO.removeSocketEventListener(
+    ),
+    socketIO.addSocketEventListener(
       SocketEventType.disconnect,
       onSocketDisconnect,
-    );
+    ),
+  ];
+
+  onBeforeUnmount(() => {
+    subscriptions.forEach(subscription => subscription.unsubscribe());
   });
 }
 
@@ -69,10 +63,10 @@ export default defineComponent({
     });
 
     const isReady = ref(false);
-    // 尝试根据token登录
     const globalStore = provideGlobalStore();
+    // 尝试根据token登录
     globalStore.loginByToken().finally(() => {
-      /** 不管成不成功，都进入主页 */
+      // 不管成不成功，都进入主页
       isReady.value = true;
     });
 
