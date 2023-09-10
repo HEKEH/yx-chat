@@ -5,6 +5,8 @@
   "scripts": {
     "dev:web": "pnpm --filter @yx-chat/web run dev",
     "build:web": "pnpm --filter @yx-chat/web run build",
+    "dev:server": "pnpm --filter @yx-chat/server run dev",
+    "build:server": "pnpm --filter @yx-chat/server run build",
     "dev": "pnpm -r run dev",
     "build": "pnpm -r run build",
     "lint": "eslint",

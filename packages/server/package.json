@@ -1,0 +1,37 @@
+{
+  "name": "@yx-chat/server",
+  "version": "0.0.0",
+  "description": "The server of @yx-chat",
+  "license": "MIT",
+  "tags": [
+    "typescript",
+    "koa",
+    "socket-io"
+  ],
+  "scripts": {
+    "dev": "cross-env --NODE_ENV=development DOTENV_CONFIG_PATH=../../.env.development nodemon",
+    "build": "rm -rf dist && tsc",
+    "start": "cross-env pm2 start ecosystem.config.js --env production",
+    "restart": "cross-env pm2 restart ecosystem.config.js --env production",
+    "stop": "cross-env pm2 stop ecosystem.config.js",
+    "lint": "eslint",
+    "preinstall": "npx only-allow pnpm"
+  },
+  "dependencies": {
+    "@yx-chat/config": "workspace:*",
+    "dotenv": "^16.3.1",
+    "koa": "^2.14.2",
+    "koa-bodyparser": "^4.4.1",
+    "koa-router": "^12.0.0"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.8",
+    "@types/koa-bodyparser": "^4.3.10",
+    "@types/koa-router": "^7.4.4",
+    "cross-env": "^7.0.3",
+    "nodemon": "^3.0.1",
+    "pm2": "^3.5.0",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0"
+  }
+}

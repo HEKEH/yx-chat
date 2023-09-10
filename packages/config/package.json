@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "build": "rm -rf dist && tsc",
     "lint": "eslint",
     "preinstall": "npx only-allow pnpm"
   },
