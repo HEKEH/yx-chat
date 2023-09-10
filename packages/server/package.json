@@ -27,7 +27,6 @@
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
-    "@yx-chat/config": "workspace:*",
     "dotenv": "^16.3.1",
     "koa": "^2.14.2",
     "koa-bodyparser": "^4.4.1",

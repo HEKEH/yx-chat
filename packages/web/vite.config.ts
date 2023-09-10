@@ -18,10 +18,6 @@ export default defineConfig(({ mode }) => {
     '~': resolve(__dirname, './src/'),
     '@': resolve(__dirname, './'),
   };
-  if (mode === 'development') {
-    // 重定向到ts文件
-    alias['@yx-chat/config'] = resolve(__dirname, '../config');
-  }
   return {
     plugins: [vue(), vueJsx()],
     envDir: resolve(__dirname, '../../'),

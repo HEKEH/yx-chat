@@ -1,4 +1,4 @@
-import clientConfig from '@yx-chat/config/client';
+import clientConfig from '~/config';
 import { ServerMessage, ServerMessageType } from '@yx-chat/shared/types';
 import { Subject, Subscription } from 'rxjs';
 import IO, { Socket } from 'socket.io-client';

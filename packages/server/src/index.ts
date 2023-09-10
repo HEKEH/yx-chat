@@ -1,4 +1,4 @@
-import serverConfig from '@yx-chat/config/server';
+import serverConfig from './config';
 import app from './app';
 
 const { env } = process;
