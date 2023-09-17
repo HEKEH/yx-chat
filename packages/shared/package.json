@@ -3,10 +3,24 @@
   "version": "0.0.0",
   "description": "The shared utils and types of all packages",
   "license": "MIT",
+  "exports": {
+    "./*": {
+      "import": {
+        "default": "./dist/*.mjs",
+        "type": "./dist/*.d.mts"
+      },
+      "require": {
+        "default": "./dist/*.js",
+        "type": "./dist/*.d.ts"
+      }
+    }
+  },
   "scripts": {
+    "build": "rm -rf dist && tsup ./types ./utils --format cjs,esm --dts",
     "lint": "eslint",
     "preinstall": "npx only-allow pnpm"
   },
-  "devDependencies": {
+  "dependencies": {
+    "log4js": "^6.9.1"
   }
 }

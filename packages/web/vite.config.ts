@@ -18,6 +18,9 @@ export default defineConfig(({ mode }) => {
     '~': resolve(__dirname, './src/'),
     '@': resolve(__dirname, './'),
   };
+  if (mode === 'development') {
+    alias['@yx-chat'] = resolve(__dirname, '../'); // develop mode redirect
+  }
   return {
     plugins: [vue(), vueJsx()],
     envDir: resolve(__dirname, '../../'),

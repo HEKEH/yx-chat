@@ -10,27 +10,35 @@
   ],
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"      
+      "import": {
+        "default": "./dist/index.mjs",
+        "type": "./dist/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/index.js",
+        "type": "./dist/index.d.ts"
+      }
     }
   },
   "scripts": {
     "dev": "cross-env --NODE_ENV=development DOTENV_CONFIG_PATH=../../.env.development nodemon",
-    "build": "rm -rf dist && tsup ./src/index.ts --format cjs --dts",
-    "pro:start": "cross-env DOTENV_CONFIG_PATH=../../.env.production pm2 start ecosystem.config.js --env production",
-    "pro:restart": "cross-env DOTENV_CONFIG_PATH=../../.env.production pm2 restart ecosystem.config.js --env production",
-    "pro:stop": "cross-env pm2 stop ecosystem.config.js",
-    "pro:delete": "cross-env pm2 delete ecosystem.config.js",
-    "pro:log": "cross-env pm2 logs",
-    "pro:flush": "cross-env pm2 flush",
+    "build": "rm -rf dist && tsup ./src/index.ts --format cjs,esm --dts",
+    "prod:start": "cross-env DOTENV_CONFIG_PATH=../../.env.production pm2 start ecosystem.config.js --env production",
+    "prod:restart": "cross-env DOTENV_CONFIG_PATH=../../.env.production pm2 restart ecosystem.config.js --env production",
+    "prod:stop": "cross-env pm2 stop ecosystem.config.js",
+    "prod:delete": "cross-env pm2 delete ecosystem.config.js",
+    "prod:log": "cross-env pm2 logs",
+    "prod:flush": "cross-env pm2 flush",
     "lint": "eslint",
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
+    "@yx-chat/shared": "workspace:*",
     "dotenv": "^16.3.1",
     "koa": "^2.14.2",
     "koa-bodyparser": "^4.4.1",
-    "koa-router": "^12.0.0"
+    "koa-router": "^12.0.0",
+    "socket.io": "^4.7.2"
   },
   "devDependencies": {
     "@types/koa": "^2.13.8",
