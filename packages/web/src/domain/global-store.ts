@@ -1,7 +1,9 @@
 import {
   LastMessagesResponse,
   LoginSuccessResponse,
+  ErrorResponse,
 } from '@yx-chat/shared/types';
+import { isErrorResponse } from '@yx-chat/shared/utils';
 import { SocketIO } from '~/infra/socket-io';
 import { LoginRequest } from '~/infra/socket-io/request/login-request';
 import { BusinessError } from '~/common/error';
@@ -66,9 +68,9 @@ export default class GlobalStore {
   }
 
   async login(userInfo: { username: string; password: string }): Promise<void> {
-    const resp = await SocketIO.instance.fetch<LoginSuccessResponse | string>(
-      new LoginRequest(userInfo),
-    );
+    const resp = await SocketIO.instance.fetch<
+      LoginSuccessResponse | ErrorResponse
+    >(new LoginRequest(userInfo));
     this._handleLoginResponse(resp);
     await this._initChatMessages();
   }
@@ -80,9 +82,9 @@ export default class GlobalStore {
     if (!token) {
       return;
     }
-    const resp = await SocketIO.instance.fetch<LoginSuccessResponse | string>(
-      new LoginByTokenRequest(token),
-    );
+    const resp = await SocketIO.instance.fetch<
+      LoginSuccessResponse | ErrorResponse
+    >(new LoginByTokenRequest(token));
     this._handleLoginResponse(resp);
     await this._initChatMessages();
   }
@@ -91,9 +93,9 @@ export default class GlobalStore {
     username: string;
     password: string;
   }): Promise<void> {
-    const resp = await SocketIO.instance.fetch<LoginSuccessResponse | string>(
-      new RegisterRequest(userInfo),
-    );
+    const resp = await SocketIO.instance.fetch<
+      LoginSuccessResponse | ErrorResponse
+    >(new RegisterRequest(userInfo));
     this._handleLoginResponse(resp);
     await this._initChatMessages();
   }
@@ -110,10 +112,10 @@ export default class GlobalStore {
     this._selectedMenu = MainMenu.message;
   }
 
-  private _handleLoginResponse(resp: LoginSuccessResponse | string) {
+  private _handleLoginResponse(resp: LoginSuccessResponse | ErrorResponse) {
     // 和后端约定，返回string时，则为错误信息
-    if (typeof resp === 'string') {
-      throw new BusinessError(resp);
+    if (isErrorResponse(resp)) {
+      throw new BusinessError(resp.message);
     }
     const { token, friends, groups, ...userInfo } = resp;
     if (token) {

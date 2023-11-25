@@ -4,3 +4,4 @@ export * from './chat';
 export * from './contact';
 export * from './request-types';
 export * from './server-message';
+export * from './error';

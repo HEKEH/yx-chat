@@ -5,7 +5,6 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  console.log(mode, 'mode');
   const envPrefix = 'PUBLIC_';
   const env = loadEnv(mode, '../../', envPrefix);
   let path = env.PUBLIC_SERVER_BASE_URL;

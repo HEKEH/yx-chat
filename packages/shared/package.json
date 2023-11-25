@@ -20,7 +20,5 @@
     "lint": "eslint",
     "preinstall": "npx only-allow pnpm"
   },
-  "dependencies": {
-    "log4js": "^6.9.1"
-  }
+  "dependencies": {}
 }
