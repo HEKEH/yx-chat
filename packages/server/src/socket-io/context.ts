@@ -1,23 +1,35 @@
 import { AssertionError } from 'assert';
-import { Socket } from 'socket.io';
 import { errorResponse } from '@yx-chat/shared/utils';
+import { Socket } from 'socket.io';
 import logger from '../utils/logger';
+import config from '../config';
+import { EventHandler, EventHandlerContext } from './handler/types';
 
-export class SocketContext {
+export class SocketContext implements EventHandlerContext {
   private _socket: Socket;
-  get id() {
+  private _userId: string | undefined;
+
+  get socketId() {
     return this._socket.id;
-  }
-  get user() {
-    return this._socket.data.user;
-  }
-  get isAdmin() {
-    return this._socket.data.isAdmin;
   }
   get socketIp() {
     return this._socket.request.socket.remoteAddress || '';
   }
-  on(eventName: string, handler: (context: SocketContext, data: any) => any) {
+  get userId() {
+    return this._userId;
+  }
+  setUserId(userId: string) {
+    this._userId = userId;
+  }
+  get isAdmin(): boolean {
+    return Boolean(
+      this._userId && config.administrators.includes(this._userId),
+    );
+  }
+  get isLogin(): boolean {
+    return Boolean(this._userId);
+  }
+  on(eventName: string, handler: EventHandler) {
     this._socket.on(eventName, async (data, callback) => {
       try {
         const before = Date.now();
@@ -26,8 +38,8 @@ export class SocketContext {
         logger.info(
           `[${eventName}]`,
           after - before,
-          this.id,
-          this.user || 'null',
+          this.socketId,
+          this.userId || 'null',
           JSON.stringify(res),
         );
         callback(res);

@@ -46,11 +46,13 @@ importers:
 
   packages/server:
     specifiers:
+      '@types/bcryptjs': ^2.4.6
       '@types/koa': ^2.13.8
       '@types/koa-bodyparser': ^4.3.10
       '@types/koa-router': ^7.4.4
       '@yx-chat/shared': workspace:*
       assert: ^2.1.0
+      bcryptjs: ^2.4.3
       cross-env: ^7.0.3
       dotenv: ^16.3.1
       jwt-simple: ^0.5.6
@@ -67,6 +69,7 @@ importers:
     dependencies:
       '@yx-chat/shared': link:../shared
       assert: 2.1.0
+      bcryptjs: 2.4.3
       dotenv: 16.3.1
       jwt-simple: 0.5.6
       koa: 2.14.2
@@ -76,6 +79,7 @@ importers:
       mongoose: 8.0.1
       socket.io: 4.7.2
     devDependencies:
+      '@types/bcryptjs': 2.4.6
       '@types/koa': 2.13.8
       '@types/koa-bodyparser': 4.3.10
       '@types/koa-router': 7.4.4
@@ -1397,6 +1401,10 @@ packages:
       '@types/node': 20.3.1
     dev: true
 
+  /@types/bcryptjs/2.4.6:
+    resolution: {integrity: sha512-9xlo6R2qDs5uixm0bcIqCeMCE6HiQsIyel9KQySStiyqNl2tnj2mP3DX1Nf56MD6KMenNNlBBsy3LJ7gUEQPXQ==}
+    dev: true
+
   /@types/body-parser/1.19.2:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
     dependencies:
@@ -2176,6 +2184,10 @@ packages:
     resolution: {integrity: sha512-QHX8HLlncOLpy54mh+k/sWIFd0ThmRqwe9ZjELybGZK+tZ8rUb9VO0saKJUROTbE+KhzDUT7xziGpGrW8Kmd+g==}
     engines: {node: '>=10.0.0'}
     dev: true
+
+  /bcryptjs/2.4.3:
+    resolution: {integrity: sha512-V/Hy/X9Vt7f3BbPJEi8BdVFMByHi+jNXrYkW3huaybV/kQ0KJg0Y6PkEMbn+zeT+i+SiKZ/HMqJGIIt4LZDqNQ==}
+    dev: false
 
   /binary-extensions/2.2.0:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
