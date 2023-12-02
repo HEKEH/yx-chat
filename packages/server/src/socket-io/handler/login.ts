@@ -35,11 +35,11 @@ const login: EventHandler = async (
   }
   const isPasswordCorrect = bcrypt.compareSync(password, user.password);
   assert(isPasswordCorrect, 'Password is incorrect');
-  const userId = user._id.toString();
+  const userId = user.id;
   context.setUserId(userId);
   const token = generateToken(userId, environment);
   return {
-    _id: user._id,
+    _id: user.id,
     token,
     avatar: user.avatar,
     username: user.username,

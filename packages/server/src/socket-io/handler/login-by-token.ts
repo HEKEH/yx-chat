@@ -37,10 +37,10 @@ const loginByToken: EventHandler = async (
   if (!user) {
     return errorResponse("User doesn't exist");
   }
-  context.setUserId(user._id.toString());
+  context.setUserId(user.id);
 
   return {
-    _id: user._id,
+    _id: user.id,
     avatar: user.avatar,
     username: user.username,
     tag: user.tag,
