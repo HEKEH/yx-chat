@@ -1,5 +1,7 @@
 import http from 'http';
+import path from 'path';
 import Koa from 'koa';
+import koaStatic from 'koa-static';
 import { Server } from 'socket.io';
 import logger from './utils/logger';
 import config from './config';
@@ -8,6 +10,14 @@ import { SocketContext } from './socket-io/context';
 
 const app = new Koa();
 app.proxy = true;
+
+// serve public static files
+app.use(
+  koaStatic(path.join(__dirname, '../public'), {
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    gzip: true,
+  }),
+);
 
 const httpServer = http.createServer(app.callback());
 
