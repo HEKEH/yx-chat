@@ -7,7 +7,7 @@ import type {
 import { errorResponse } from '@yx-chat/shared/utils';
 import User from '../../database/mongoDB/model/user';
 import { EventHandler, EventHandlerContext } from './types';
-import { parseToken } from './utils';
+import { findFriendsAndGroupsByUserId, parseToken } from './utils';
 
 const loginByToken: EventHandler = async (
   context: EventHandlerContext,
@@ -38,15 +38,16 @@ const loginByToken: EventHandler = async (
     return errorResponse("User doesn't exist");
   }
   context.setUserId(user.id);
+  const { groups, friends } = await findFriendsAndGroupsByUserId(userId);
 
   return {
-    _id: user.id,
+    id: user.id,
     avatar: user.avatar,
     username: user.username,
     tag: user.tag,
     isAdmin: context.isAdmin,
-    groups: [], // TODO
-    friends: [], // TODO
+    groups,
+    friends,
     notificationTokens: [], // TODO
   };
 };

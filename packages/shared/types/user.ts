@@ -1,5 +1,5 @@
 export interface UserBasicInfo {
-  _id: string;
+  id: string;
   username: string;
   avatar: string;
   tag: string;

@@ -18,7 +18,7 @@ export class GetChatMessagesRequest extends AbstractSocketRequest<LastMessagesRe
   constructor(props: { selfId: string; contacts: IContactUnit[] }) {
     super();
     this.data = {
-      linkmans: props.contacts.map(item => item.messageOwnerKey),
+      contactKeys: props.contacts.map(item => item.messageOwnerKey),
     };
   }
 }

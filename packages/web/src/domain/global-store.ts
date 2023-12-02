@@ -149,16 +149,16 @@ export default class GlobalStore {
       },
       {} as Record<string, IUser>,
     );
-    const chatMessageCollectionList = Object.entries(chatMessagesResponse).map(
-      ([key, messagesRecord]) => {
-        return ChatMessageCollection.createByRawData({
-          id: key,
-          context: this,
-          messagesRecord,
-          userMap,
-        });
-      },
-    );
+    const chatMessageCollectionList = contacts.map(contact => {
+      const key = contact.messageOwnerKey;
+      const messagesRecord = chatMessagesResponse[key];
+      return ChatMessageCollection.createByRawData({
+        id: key,
+        context: this,
+        messagesRecord,
+        userMap,
+      });
+    });
     const chatMessageCollectionMap = chatMessageCollectionList.reduce(
       (prev, cur) => {
         prev[cur.id] = cur;

@@ -15,7 +15,7 @@ export default class Self implements IUser {
   }
 
   get id() {
-    return this._userInfo?._id || '';
+    return this._userInfo?.id || '';
   }
 
   get name() {

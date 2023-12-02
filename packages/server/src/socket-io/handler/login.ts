@@ -9,7 +9,7 @@ import bcrypt from 'bcryptjs';
 import logger from '../../utils/logger';
 import User from '../../database/mongoDB/model/user';
 import { EventHandler, EventHandlerContext } from './types';
-import { generateToken } from './utils';
+import { findFriendsAndGroupsByUserId, generateToken } from './utils';
 
 const login: EventHandler = async (
   context: EventHandlerContext,
@@ -38,15 +38,16 @@ const login: EventHandler = async (
   const userId = user.id;
   context.setUserId(userId);
   const token = generateToken(userId, environment);
+  const { groups, friends } = await findFriendsAndGroupsByUserId(userId);
   return {
-    _id: user.id,
+    id: user.id,
     token,
     avatar: user.avatar,
     username: user.username,
     tag: user.tag,
     isAdmin: context.isAdmin,
-    groups: [], // TODO
-    friends: [], // TODO
+    groups,
+    friends,
     notificationTokens: [], // TODO
   };
 };

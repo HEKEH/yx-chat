@@ -12,7 +12,6 @@ const UserSchema = new Schema({
     match: NAME_REGEXP,
     index: true,
   },
-  salt: String,
   password: String,
   avatar: String,
   tag: {
@@ -32,8 +31,6 @@ const UserSchema = new Schema({
 export interface UserDocument extends Document {
   /** 用户名 */
   username: string;
-  /** 密码加密盐 */
-  salt: string;
   /** 加密的密码 */
   password: string;
   /** 头像 */
@@ -52,8 +49,7 @@ export interface UserDocument extends Document {
 
 /**
  * User Model
- * 用户信息
- */
+] */
 const User = model<UserDocument>('User', UserSchema);
 
 export default User;

@@ -5,7 +5,7 @@ export class FriendModel extends AbstractContactUnit {
   readonly messageOwnerKey: string;
   constructor({ to, createTime }: Friend, selfId: string) {
     super({
-      id: to._id,
+      id: to.id,
       avatar: to.avatar,
       name: to.username,
       createTime,

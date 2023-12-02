@@ -34,7 +34,7 @@ abstract class AbstractChatMessageModel implements IChatMessageModel {
 
   constructor(from: MessageFrom, message: ChatMessage) {
     this.from = from;
-    this.id = message._id;
+    this.id = message.id;
     this._deleted = message.deleted;
     this.content = message.content;
     this.createTime = new GeneralTime(message.createTime);
@@ -61,7 +61,7 @@ export const chatMessageFactory = {
   ): IChatMessageModel {
     // if not designate, just like a strange group member, then fetch info from message itself
     const from = messageFrom || {
-      id: message.from._id,
+      id: message.from.id,
       name: message.from.username,
       avatar: message.from.avatar,
     };

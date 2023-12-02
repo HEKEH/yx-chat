@@ -83,7 +83,7 @@ export class ChatMessageCollection {
 
   receiveChatMessage(message: ChatMessage) {
     let messageFrom: IUser;
-    const fromId = message.from._id;
+    const fromId = message.from.id;
     if (fromId === this._context.self.id) {
       messageFrom = this._context.self;
     } else if (fromId === this.owner.id) {
@@ -136,7 +136,7 @@ export class ChatMessageCollection {
   }): ChatMessageCollection {
     const messageModels =
       messagesRecord?.messages.map(message => {
-        const from = userMap[message.from._id]; // may be undefined, if message from a stranger
+        const from = userMap[message.from.id]; // may be undefined, if message from a stranger
         return chatMessageFactory.create(message, from);
       }) || [];
     return new ChatMessageCollection({

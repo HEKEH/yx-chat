@@ -45,14 +45,14 @@ const register: EventHandler = async (
   const token = generateToken(userId, environment);
   context.setUserId(userId);
   return {
-    _id: userId,
+    id: userId,
     token,
     avatar: newUser.avatar,
     username: newUser.username,
     tag: newUser.tag,
     isAdmin: context.isAdmin,
-    groups: [], // TODO
-    friends: [], // TODO
+    groups: [],
+    friends: [],
     notificationTokens: [], // TODO
   };
 };
