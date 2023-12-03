@@ -7,12 +7,14 @@ import login from './login';
 import loginByToken from './login-by-token';
 import register from './register';
 import getLastChatMessages from './get-last-chat-messages';
+import getHistoryChatMessages from './get-history-chat-messages';
 
 export const EventHandlerMap = {
   [AccountRequestType.login]: login,
   [AccountRequestType.loginByToken]: loginByToken,
   [AccountRequestType.register]: register,
   [ChatMessageRequestType.getLastChatMessages]: getLastChatMessages,
+  [ChatMessageRequestType.getHistoryChatMessages]: getHistoryChatMessages,
 };
 export type EventHandlerMapType = typeof EventHandlerMap;
 

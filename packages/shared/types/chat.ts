@@ -3,6 +3,7 @@ import { enum2ValueArray } from '../utils';
 export enum ChatMessageRequestType {
   /** get last messages by contacts' ids */
   getLastChatMessages = 'getLastChatMessages',
+  getHistoryChatMessages = 'getHistoryChatMessages',
   /** send chat message */
   sendChatMessage = 'sendMessage',
 }
@@ -38,6 +39,13 @@ export type ChatMessagesRecord = {
 export type LastMessagesRequestBody = {
   contactKeys: string[]; // connection of two user ids or a group id
 };
+
+export type HistoryChatMessagesRequestBody = {
+  contactKey: string;
+  offset: number;
+};
+
+export type HistoryChatMessagesResponse = ChatMessage[];
 
 export type SendChatMessageBody = {
   content: string;

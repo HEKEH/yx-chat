@@ -40,6 +40,32 @@ export const ChatItemList = defineComponent({
           behavior: isSmooth ? 'smooth' : undefined,
         });
     };
+    const isFetchingByScroll = ref<boolean>(false);
+    const handleScroll = async (e: UIEvent) => {
+      if (isFetchingByScroll.value) {
+        return;
+      }
+      const container = e.target as HTMLDivElement;
+      if (
+        container.scrollTop === 0 &&
+        container.scrollHeight > container.clientHeight
+      ) {
+        isFetchingByScroll.value = true;
+        try {
+          const { scrollHeight: prevScrollHeight } = container;
+          const hasFetchedNewData =
+            await props.chatMessageCollection.fetchHistoryChatMessages();
+          if (hasFetchedNewData) {
+            await nextTick();
+            container.scrollTo({
+              top: container.scrollHeight - prevScrollHeight,
+            }); // keep the position unchanged
+          }
+        } finally {
+          isFetchingByScroll.value = false;
+        }
+      }
+    };
     let scrollSubscription: Subscription | undefined;
     watch(
       () => props.chatMessageCollection,
@@ -64,6 +90,8 @@ export const ChatItemList = defineComponent({
         <div
           class={s.list}
           ref={ref => (chatListViewRef.value = ref as HTMLDivElement)}
+          onScroll={handleScroll}
+          v-loading={isFetchingByScroll.value ? 'loading' : undefined}
         >
           {chatMessageCollection.list.map(item => (
             <ChatItem key={item.id} value={item} self={props.self} />

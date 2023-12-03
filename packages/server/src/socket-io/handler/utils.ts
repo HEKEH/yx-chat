@@ -1,11 +1,12 @@
 import { encode, decode } from 'jwt-simple';
-import { Friend, Group } from '@yx-chat/shared/types';
+import { ChatMessage, Friend, Group } from '@yx-chat/shared/types';
 import config from '../../config';
 import FriendModel, {
   FriendDocument,
 } from '../../database/mongoDB/model/friend';
 import GroupModel from '../../database/mongoDB/model/group';
 import { UserDocument } from '../../database/mongoDB/model/user';
+import ChatMessageModel from '../../database/mongoDB/model/chat-message';
 
 export function generateToken(userId: string, environment: string) {
   return encode(
@@ -91,4 +92,44 @@ export async function findFriendsAndGroupsByUserId(
     findGroupsByUserId(userId),
   ]);
   return { groups, friends };
+}
+
+export async function getMessagesByContactKey(
+  contactKey: string,
+  limit: number,
+  offset?: number,
+): Promise<ChatMessage[]> {
+  const messageList = await ChatMessageModel.find(
+    { to: contactKey },
+    {
+      type: 1,
+      content: 1,
+      from: 1,
+      createTime: 1,
+      deleted: 1,
+    },
+    {
+      sort: { createTime: -1 },
+      limit,
+      skip: offset,
+    },
+  ).populate('from', { username: 1, avatar: 1 });
+  return messageList
+    .map(item => {
+      const from = item.from as unknown as UserDocument;
+      return {
+        content: item.content,
+        createTime: item.createTime.toString(),
+        deleted: item.deleted,
+        type: item.type,
+        id: item.id,
+        from: {
+          id: from.id,
+          username: from.username,
+          avatar: from.avatar,
+        },
+        to: contactKey,
+      };
+    })
+    .reverse();
 }

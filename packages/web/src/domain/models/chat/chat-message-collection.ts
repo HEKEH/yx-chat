@@ -2,9 +2,11 @@ import {
   ChatMessage,
   ChatMessageFormat,
   ChatMessagesRecord,
+  HistoryChatMessagesResponse,
 } from '@yx-chat/shared/types';
 import { SocketIO } from '~/infra/socket-io';
 import { SendChatMessageRequest } from '~/infra/socket-io/request/send-chat-message-request';
+import { GetHistoryChatMessagesRequest } from '~/infra/socket-io/request/get-history-chat-messages-request';
 import { Subject } from 'rxjs';
 import { IContactUnit } from '../contact/typing';
 import Self from '../self';
@@ -33,8 +35,42 @@ export class ChatMessageCollection {
 
   private _draft: string | undefined;
 
+  private _isAllHistoryChatMessagesFetched = false;
+
   setOwner(owner: IContactUnit) {
     this._owner = owner;
+  }
+
+  /**
+   * @returns whether to fetch new data
+   */
+  async fetchHistoryChatMessages(): Promise<boolean> {
+    if (this._isAllHistoryChatMessagesFetched) {
+      return false;
+    }
+    let historyChatMessages =
+      await SocketIO.instance.fetch<HistoryChatMessagesResponse>(
+        new GetHistoryChatMessagesRequest({
+          contact: this.owner,
+          offset: this._list.length,
+        }),
+      );
+    const existChatMessageIds = new Set(
+      this._list.map(chatMessage => chatMessage.id),
+    );
+    historyChatMessages = historyChatMessages.filter(
+      msg => !existChatMessageIds.has(msg.id),
+    ); // Remove duplicates
+    if (!historyChatMessages.length) {
+      this._isAllHistoryChatMessagesFetched = true;
+      return false;
+    }
+    const messageModels = historyChatMessages.map(msg =>
+      this._createChatMessageModel(msg),
+    );
+    this._list.unshift(...messageModels);
+    this._sortMessages();
+    return true;
   }
 
   get owner() {
@@ -81,7 +117,7 @@ export class ChatMessageCollection {
     this.onHasNewChatMessage.next();
   }
 
-  receiveChatMessage(message: ChatMessage) {
+  private _createChatMessageModel(message: ChatMessage): IChatMessageModel {
     let messageFrom: IUser;
     const fromId = message.from.id;
     if (fromId === this._context.self.id) {
@@ -91,8 +127,11 @@ export class ChatMessageCollection {
     } else {
       throw new Error('incorrect sender id: ' + fromId);
     }
-    const chatMessage = chatMessageFactory.create(message, messageFrom);
-    this._list.push(chatMessage);
+    return chatMessageFactory.create(message, messageFrom);
+  }
+
+  receiveChatMessage(message: ChatMessage) {
+    this._list.push(this._createChatMessageModel(message));
     this._sortMessages();
     this.onHasNewChatMessage.next();
   }
