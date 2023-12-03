@@ -43,6 +43,6 @@ export class ThemeManager {
   }
 
   private _initTheme() {
-    this.setTheme(LocalStorageStore.instance.getItem('theme') || 'cool');
+    this.setTheme(LocalStorageStore.instance.getItem('theme') || 'default');
   }
 }

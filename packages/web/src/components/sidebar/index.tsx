@@ -1,5 +1,6 @@
 import { defineComponent } from 'vue';
 import { getGlobalStore } from '~/utils/vue';
+import { ElTooltip } from 'element-plus';
 import { Avatar } from '../common/avatar';
 import s from './index.module.sass';
 import { HighButtons } from './buttons/HighButtons';
@@ -15,7 +16,9 @@ export const Sidebar = defineComponent({
       return (
         <div class={s.sidebar}>
           <div class={s['avatar-container']}>
-            <Avatar url={avatar} status="online" />
+            <ElTooltip effect="dark" content={self.name} placement="right">
+              <Avatar url={avatar} status="online" />
+            </ElTooltip>
           </div>
           <div class={s['buttons-container']}>
             <div class={s['high-buttons-container']}>

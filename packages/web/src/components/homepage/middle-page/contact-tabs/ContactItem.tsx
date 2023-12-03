@@ -21,21 +21,33 @@ export const ContactItem = defineComponent({
     };
     return () => {
       const { value, isSelected } = props;
+      const {
+        name,
+        avatar,
+        displayTime,
+        latestMessageBrief,
+        chatMessageCollection,
+      } = value;
       return (
         <div
           class={{ [s['contact-item']]: true, [s.selected]: isSelected }}
           onClick={onSelect}
         >
-          <Avatar url={value.avatar} class={s.avatar} />
+          <Avatar url={avatar} class={s.avatar} />
           <div class={s.container}>
             <div class={[s.row, s['name-row']]}>
-              <div class={s.name}>{value.name}</div>
-              <div class={s.time}>{value.displayTime.toBriefFormat()}</div>
+              <div class={s.name}>{name}</div>
+              <div class={s.time}>{displayTime.toBriefFormat()}</div>
             </div>
             <div class={s.row}>
-              <div class={s.message}>
-                {value.latestMessageBrief ?? '暂无消息'}
-              </div>
+              <div class={s.message}>{latestMessageBrief ?? '暂无消息'}</div>
+              {chatMessageCollection.unread ? (
+                <div class={s.unread}>
+                  {chatMessageCollection.unread > 99
+                    ? '99+'
+                    : chatMessageCollection.unread}
+                </div>
+              ) : undefined}
             </div>
           </div>
         </div>
