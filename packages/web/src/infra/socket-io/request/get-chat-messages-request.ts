@@ -9,7 +9,7 @@ export class GetChatMessagesRequest extends AbstractSocketRequest<LastMessagesRe
   readonly data: LastMessagesRequestBody;
 
   get type() {
-    return ChatMessageRequestType.getLastMessages;
+    return ChatMessageRequestType.getLastChatMessages;
   }
 
   get name() {

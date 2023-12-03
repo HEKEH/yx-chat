@@ -27,6 +27,6 @@ export interface FriendDocument extends Document {
 /**
  * Friend Model
  */
-const Friend = model<FriendDocument>('Friend', FriendSchema);
+const FriendModel = model<FriendDocument>('Friend', FriendSchema);
 
-export default Friend;
+export default FriendModel;

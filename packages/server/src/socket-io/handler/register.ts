@@ -7,7 +7,7 @@ import type {
 import { errorResponse } from '@yx-chat/shared/utils';
 import bcrypt from 'bcryptjs';
 import logger from '../../utils/logger';
-import User, { UserDocument } from '../../database/mongoDB/model/user';
+import UserModel, { UserDocument } from '../../database/mongoDB/model/user';
 import { getRandomAvatarPath } from '../../utils/get-avatar-path';
 import { EventHandler, EventHandlerContext } from './types';
 import { generateToken } from './utils';
@@ -20,7 +20,7 @@ const register: EventHandler = async (
   logger.trace(`register ${username}`);
   assert(username, "Username can't be empty");
   assert(password, "Password can't be empty");
-  const user = await User.findOne({ username });
+  const user = await UserModel.findOne({ username });
   if (user) {
     return errorResponse('Username is already registered');
   }
@@ -28,7 +28,7 @@ const register: EventHandler = async (
   const hash = await bcrypt.hash(password, salt);
   let newUser: UserDocument | undefined;
   try {
-    newUser = await User.create({
+    newUser = await UserModel.create({
       username,
       password: hash,
       avatar: getRandomAvatarPath(),

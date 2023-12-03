@@ -10,7 +10,8 @@ export class FriendModel extends AbstractContactUnit {
       name: to.username,
       createTime,
     });
-    this.messageOwnerKey = `${selfId}${this.id}`;
+    this.messageOwnerKey =
+      selfId < this.id ? `${selfId}${this.id}` : `${this.id}${selfId}`; // Make sure that no matter which side you are on, the id is fixed
   }
 
   get latestMessageBrief() {

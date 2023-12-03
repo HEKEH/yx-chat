@@ -5,7 +5,7 @@ import type {
   LoginSuccessResponse,
 } from '@yx-chat/shared/types';
 import { errorResponse } from '@yx-chat/shared/utils';
-import User from '../../database/mongoDB/model/user';
+import UserModel from '../../database/mongoDB/model/user';
 import { EventHandler, EventHandlerContext } from './types';
 import { findFriendsAndGroupsByUserId, parseToken } from './utils';
 
@@ -24,7 +24,7 @@ const loginByToken: EventHandler = async (
   assert(Date.now() < payload.expires, 'Token expires');
   assert.equal(environment, payload.environment, 'Illegal login');
   const { userId } = payload;
-  const user = await User.findOne(
+  const user = await UserModel.findOne(
     { _id: userId },
     {
       _id: 1,

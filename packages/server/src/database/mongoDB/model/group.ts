@@ -46,6 +46,6 @@ export interface GroupDocument extends Document {
 /**
  * Group Model
 ] */
-const Group = model<GroupDocument>('Group', GroupSchema);
+const GroupModel = model<GroupDocument>('Group', GroupSchema);
 
-export default Group;
+export default GroupModel;

@@ -7,7 +7,7 @@ import type {
 import { errorResponse } from '@yx-chat/shared/utils';
 import bcrypt from 'bcryptjs';
 import logger from '../../utils/logger';
-import User from '../../database/mongoDB/model/user';
+import UserModel from '../../database/mongoDB/model/user';
 import { EventHandler, EventHandlerContext } from './types';
 import { findFriendsAndGroupsByUserId, generateToken } from './utils';
 
@@ -19,7 +19,7 @@ const login: EventHandler = async (
   logger.trace(`login ${username}`);
   assert(username, "Username can't be empty");
   assert(password, "Password can't be empty");
-  const user = await User.findOne(
+  const user = await UserModel.findOne(
     { username },
     {
       _id: 1,

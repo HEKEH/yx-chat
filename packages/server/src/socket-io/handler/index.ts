@@ -6,13 +6,13 @@ import { SocketContext } from '../context';
 import login from './login';
 import loginByToken from './login-by-token';
 import register from './register';
-import getLastMessages from './get-last-messages';
+import getLastChatMessages from './get-last-chat-messages';
 
 export const EventHandlerMap = {
   [AccountRequestType.login]: login,
   [AccountRequestType.loginByToken]: loginByToken,
   [AccountRequestType.register]: register,
-  [ChatMessageRequestType.getLastMessages]: getLastMessages,
+  [ChatMessageRequestType.getLastChatMessages]: getLastChatMessages,
 };
 export type EventHandlerMapType = typeof EventHandlerMap;
 

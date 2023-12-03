@@ -1,13 +1,19 @@
+import { enum2ValueArray } from '../utils';
+
 export enum ChatMessageRequestType {
   /** get last messages by contacts' ids */
-  getLastMessages = 'getLastMessages',
+  getLastChatMessages = 'getLastChatMessages',
   /** send chat message */
   sendChatMessage = 'sendMessage',
 }
 
 export enum ChatMessageFormat {
+  // text message
   text = 'text',
 }
+
+export const ChatMessageFormatList: ChatMessageFormat[] =
+  enum2ValueArray(ChatMessageFormat);
 
 export type ChatMessage = {
   content: string;
@@ -19,8 +25,8 @@ export type ChatMessage = {
     id: string; // user id
     username: string;
     avatar: string;
-  };
-  to?: string;
+  }; // user id
+  to: string;
 };
 
 /** Messages with an user or an group */
