@@ -21,8 +21,8 @@ export const ContactUnitList = defineComponent({
               key={item.id}
               value={item}
               isSelected={item.id === contactUnitCollection.selectedId}
-              onSelect={() => {
-                contactUnitCollection.selectById(item.id);
+              onSelect={async () => {
+                await contactUnitCollection.selectById(item.id);
               }}
             />
           ))}

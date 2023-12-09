@@ -19,7 +19,7 @@ export class ChatMessageManager {
     return this._selectedId;
   }
 
-  selectById(id: string) {
+  async selectById(id: string) {
     if (id !== this._selectedId) {
       this._selectedId = id;
     }
@@ -53,7 +53,7 @@ export class ChatMessageManager {
   init(chatMessageCollectionList: ChatMessageCollection[]) {
     this._list = chatMessageCollectionList;
     this._sortList();
-    this._selectedId = this._list[0]?.id;
+    // this._selectedId = this._list[0]?.id;
     this._list.forEach(item =>
       item.onHasNewChatMessage.subscribe(() => this._sortList()),
     );

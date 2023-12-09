@@ -3,11 +3,15 @@ import {
   ChatMessageFormat,
   ChatMessagesRecord,
   HistoryChatMessagesResponse,
+  UpdateHistoryResponse,
 } from '@yx-chat/shared/types';
-import { SocketIO } from '~/infra/socket-io';
-import { SendChatMessageRequest } from '~/infra/socket-io/request/send-chat-message-request';
-import { GetHistoryChatMessagesRequest } from '~/infra/socket-io/request/get-history-chat-messages-request';
+import { isErrorResponse } from '@yx-chat/shared/utils';
 import { Subject } from 'rxjs';
+import { BusinessError } from '~/common/error';
+import { SocketIO } from '~/infra/socket-io';
+import { GetHistoryChatMessagesRequest } from '~/infra/socket-io/request/get-history-chat-messages-request';
+import { SendChatMessageRequest } from '~/infra/socket-io/request/send-chat-message-request';
+import { UpdateHistoryRequest } from '~/infra/socket-io/request/update-history-request';
 import { IContactUnit } from '../contact/typing';
 import Self from '../self';
 import { IUser } from '../typing';
@@ -115,6 +119,22 @@ export class ChatMessageCollection {
     this._draft = undefined;
     this._sortMessages();
     this.onHasNewChatMessage.next();
+  }
+
+  async clearUnread() {
+    if (this._unread && this.latestMessage) {
+      const updateHistoryResult =
+        await SocketIO.instance.fetch<UpdateHistoryResponse>(
+          new UpdateHistoryRequest({
+            contactKey: this.owner.messageOwnerKey,
+            messageId: this.latestMessage.id,
+          }),
+        );
+      if (isErrorResponse(updateHistoryResult)) {
+        throw new BusinessError(updateHistoryResult.message);
+      }
+      this._unread = 0;
+    }
   }
 
   private _createChatMessageModel(message: ChatMessage): IChatMessageModel {

@@ -44,7 +44,8 @@
     "koa-static": "^5.0.0",
     "log4js": "^6.9.1",
     "mongoose": "^8.0.1",
-    "socket.io": "^4.7.2"
+    "socket.io": "^4.7.2",
+    "xss": "^1.0.14"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

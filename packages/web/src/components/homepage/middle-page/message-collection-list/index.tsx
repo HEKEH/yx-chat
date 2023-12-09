@@ -21,8 +21,8 @@ export const ChatMessageCollectionList = defineComponent({
               key={item.id}
               value={item.owner}
               isSelected={item.id === chatMessageManager.selectedId}
-              onSelect={() => {
-                chatMessageManager.selectById(item.id);
+              onSelect={async () => {
+                await chatMessageManager.selectById(item.id);
               }}
             />
           ))}

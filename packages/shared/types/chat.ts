@@ -6,6 +6,7 @@ export enum ChatMessageRequestType {
   getHistoryChatMessages = 'getHistoryChatMessages',
   /** send chat message */
   sendChatMessage = 'sendMessage',
+  updateHistory = 'updateHistory',
 }
 
 export enum ChatMessageFormat {
@@ -51,6 +52,15 @@ export type SendChatMessageBody = {
   content: string;
   type: ChatMessageFormat;
   to: string;
+};
+
+export type UpdateHistoryRequestBody = {
+  contactKey: string;
+  messageId: string;
+};
+
+export type UpdateHistoryResponse = {
+  success: boolean;
 };
 
 /** Key is connection of two user ids or a group id */

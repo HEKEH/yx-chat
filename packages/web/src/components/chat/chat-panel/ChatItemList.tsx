@@ -9,6 +9,7 @@ import {
 import { ChatMessageCollection } from '~/domain/models/chat/chat-message-collection';
 import Self from '~/domain/models/self';
 import { Subscription } from 'rxjs';
+import { throttle } from 'lodash';
 import s from './ChatItemList.module.sass';
 import { ChatItem } from './chat-item';
 
@@ -41,15 +42,14 @@ export const ChatItemList = defineComponent({
         });
     };
     const isFetchingByScroll = ref<boolean>(false);
-    const handleScroll = async (e: UIEvent) => {
+    const fetchHistoryMessages = async (container: HTMLDivElement) => {
       if (isFetchingByScroll.value) {
         return;
       }
-      const container = e.target as HTMLDivElement;
-      if (
+      const reachTop =
         container.scrollTop === 0 &&
-        container.scrollHeight > container.clientHeight
-      ) {
+        container.scrollHeight > container.clientHeight;
+      if (reachTop) {
         isFetchingByScroll.value = true;
         try {
           const { scrollHeight: prevScrollHeight } = container;
@@ -66,15 +66,20 @@ export const ChatItemList = defineComponent({
         }
       }
     };
+    const handleScroll = (e: UIEvent) => {
+      fetchHistoryMessages(e.target as HTMLDivElement);
+    };
     let scrollSubscription: Subscription | undefined;
     watch(
       () => props.chatMessageCollection,
       async value => {
+        props.chatMessageCollection.clearUnread();
+
         scrollSubscription?.unsubscribe();
         scrollSubscription = value.onHasNewChatMessage.subscribe(async () => {
-          scrollChatListToBottom(true);
+          await scrollChatListToBottom(true);
         });
-        scrollChatListToBottom(false);
+        await scrollChatListToBottom(false);
       },
       {
         immediate: true,

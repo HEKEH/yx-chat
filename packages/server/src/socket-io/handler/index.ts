@@ -8,6 +8,8 @@ import loginByToken from './login-by-token';
 import register from './register';
 import getLastChatMessages from './get-last-chat-messages';
 import getHistoryChatMessages from './get-history-chat-messages';
+import sendChatMessage from './send-chat-message';
+import updateHistory from './update-history';
 
 export const EventHandlerMap = {
   [AccountRequestType.login]: login,
@@ -15,6 +17,8 @@ export const EventHandlerMap = {
   [AccountRequestType.register]: register,
   [ChatMessageRequestType.getLastChatMessages]: getLastChatMessages,
   [ChatMessageRequestType.getHistoryChatMessages]: getHistoryChatMessages,
+  [ChatMessageRequestType.sendChatMessage]: sendChatMessage,
+  [ChatMessageRequestType.updateHistory]: updateHistory,
 };
 export type EventHandlerMapType = typeof EventHandlerMap;
 
