@@ -49,7 +49,7 @@ export interface UserDocument extends Document {
 
 /**
  * User Model
-] */
+ */
 const UserModel = model<UserDocument>('User', UserSchema);
 
 export default UserModel;

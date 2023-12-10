@@ -51,6 +51,7 @@ importers:
       '@types/koa-bodyparser': ^4.3.10
       '@types/koa-router': ^7.4.4
       '@types/koa-static': ^4.0.4
+      '@types/lodash': ^4.14.202
       '@yx-chat/shared': workspace:*
       assert: ^2.1.0
       bcryptjs: ^2.4.3
@@ -61,6 +62,7 @@ importers:
       koa-bodyparser: ^4.4.1
       koa-router: ^12.0.0
       koa-static: ^5.0.0
+      lodash: ^4.17.21
       log4js: ^6.9.1
       mongoose: ^8.0.1
       nodemon: ^3.0.1
@@ -70,6 +72,7 @@ importers:
       tsconfig-paths: ^4.2.0
       xss: ^1.0.14
     dependencies:
+      '@types/lodash': 4.14.202
       '@yx-chat/shared': link:../shared
       assert: 2.1.0
       bcryptjs: 2.4.3
@@ -79,6 +82,7 @@ importers:
       koa-bodyparser: 4.4.1
       koa-router: 12.0.0
       koa-static: 5.0.0
+      lodash: 4.17.21
       log4js: 6.9.1
       mongoose: 8.0.1
       socket.io: 4.7.2

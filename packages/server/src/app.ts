@@ -7,6 +7,7 @@ import logger from './utils/logger';
 import config from './config';
 import { registerSocketEventHandlers } from './socket-io/handler';
 import { SocketContext } from './socket-io/context';
+import SocketModel from './database/mongoDB/model/socket';
 
 const app = new Koa();
 app.proxy = true;
@@ -33,16 +34,16 @@ const io = new Server(httpServer, {
 io.on('connection', async socket => {
   const context = new SocketContext(socket);
   logger.info(`connection ${socket.id} ${context.socketIp}`);
-  // await SocketModel.create({
-  //   id: socket.id,
-  //   ip,
-  // } as SocketDocument);
+  await SocketModel.create({
+    id: socket.id,
+    ip: context.socketIp,
+  });
 
   socket.on('disconnect', async () => {
     logger.info(`disconnect ${socket.id} ${context.socketIp}`);
-    // await SocketModel.deleteOne({
-    //   id: socket.id,
-    // });
+    await SocketModel.deleteOne({
+      id: socket.id,
+    });
   });
 
   registerSocketEventHandlers(context);

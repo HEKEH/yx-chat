@@ -129,11 +129,18 @@ export default class GlobalStore {
     });
   }
 
+  get userMap() {
+    return [...this._contactManager.friendCollection.list, this._self].reduce(
+      (prev, cur) => {
+        prev[cur.id] = cur;
+        return prev;
+      },
+      {} as Record<string, IUser>,
+    );
+  }
+
   private async _initChatMessages() {
-    const contacts = [
-      ...this._contactManager.friendCollection.list,
-      ...this._contactManager.groupCollection.list,
-    ];
+    const { contacts } = this._contactManager;
     const chatMessagesResponse =
       await SocketIO.instance.fetch<LastMessagesResponse>(
         new GetChatMessagesRequest({
@@ -141,14 +148,6 @@ export default class GlobalStore {
           contacts,
         }),
       );
-    console.log(chatMessagesResponse, 'chatMessagesResponse');
-    const userMap: Record<string, IUser> = [...contacts, this._self].reduce(
-      (prev, cur) => {
-        prev[cur.id] = cur;
-        return prev;
-      },
-      {} as Record<string, IUser>,
-    );
     const chatMessageCollectionList = contacts.map(contact => {
       const key = contact.messageOwnerKey;
       const messagesRecord = chatMessagesResponse[key];
@@ -156,7 +155,6 @@ export default class GlobalStore {
         id: key,
         context: this,
         messagesRecord,
-        userMap,
       });
     });
     const chatMessageCollectionMap = chatMessageCollectionList.reduce(

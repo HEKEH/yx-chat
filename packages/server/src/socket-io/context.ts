@@ -1,8 +1,11 @@
 import { AssertionError } from 'assert';
+import { Environment, ServerMessage } from '@yx-chat/shared/types';
 import { errorResponse } from '@yx-chat/shared/utils';
 import { Socket } from 'socket.io';
-import logger from '../utils/logger';
+import { uniq } from 'lodash';
 import config from '../config';
+import SocketModel from '../database/mongoDB/model/socket';
+import logger from '../utils/logger';
 import { EventHandler, EventHandlerContext } from './handler/types';
 
 export class SocketContext implements EventHandlerContext {
@@ -18,8 +21,19 @@ export class SocketContext implements EventHandlerContext {
   get userId() {
     return this._userId;
   }
-  setUserId(userId: string) {
-    this._userId = userId;
+  async setUserInfo(userInfo: Environment & { userId: string }) {
+    const { userId, os, browser, environment } = userInfo;
+    this._userId = userInfo.userId;
+    await SocketModel.updateOne(
+      { id: this.socketId },
+      {
+        user: userId,
+        ip: this.socketIp,
+        os,
+        browser,
+        environment,
+      },
+    );
   }
   get isAdmin(): boolean {
     return Boolean(
@@ -52,6 +66,31 @@ export class SocketContext implements EventHandlerContext {
         }
       }
     });
+  }
+  async sendFriendMessage(
+    friendId: string,
+    message: ServerMessage,
+    toSelf = false,
+  ) {
+    const [targetSockets, selfSockets] = await Promise.all([
+      SocketModel.find({ user: friendId }, { id: 1 }),
+      toSelf ? SocketModel.find({ user: this._userId }, { id: 1 }) : [],
+    ]);
+    const socketIds = uniq([
+      ...targetSockets.map(item => item.id),
+      ...selfSockets.map(item => item.id),
+    ]).filter(item => item !== this.socketId);
+    if (socketIds.length) {
+      this._socket.to(socketIds).emit('message', message);
+    }
+  }
+  async sendGroupMessage(groupId: string, message: ServerMessage) {
+    this._socket.to(groupId).emit('message', message);
+  }
+
+  /** add socket to room */
+  joinToGroups(groupIds: string[]) {
+    this._socket.join(groupIds);
   }
   constructor(socket: Socket) {
     this._socket = socket;

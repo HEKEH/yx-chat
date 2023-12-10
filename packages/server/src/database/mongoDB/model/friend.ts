@@ -1,4 +1,5 @@
-import { Schema, model, Document } from 'mongoose';
+import { Document, Schema, model } from 'mongoose';
+import { UserDocument } from './user';
 
 const FriendSchema = new Schema({
   createTime: { type: Date, default: Date.now },
@@ -17,9 +18,9 @@ const FriendSchema = new Schema({
 
 export interface FriendDocument extends Document {
   /** 源用户id */
-  from: string;
+  from: UserDocument | string;
   /** 目标用户id */
-  to: string;
+  to: UserDocument | string;
   /** 创建时间 */
   createTime: Date;
 }

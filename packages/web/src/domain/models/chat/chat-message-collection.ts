@@ -19,6 +19,7 @@ import { IChatMessageModel, chatMessageFactory } from './chat-message';
 
 interface ChatMessageCollectionContext {
   readonly self: Self;
+  readonly userMap: Record<string, IUser>;
 }
 
 /** Chat messages of a friend or a group */
@@ -123,6 +124,7 @@ export class ChatMessageCollection {
 
   async clearUnread() {
     if (this._unread && this.latestMessage) {
+      this._unread = 0;
       const updateHistoryResult =
         await SocketIO.instance.fetch<UpdateHistoryResponse>(
           new UpdateHistoryRequest({
@@ -133,27 +135,23 @@ export class ChatMessageCollection {
       if (isErrorResponse(updateHistoryResult)) {
         throw new BusinessError(updateHistoryResult.message);
       }
-      this._unread = 0;
     }
   }
 
   private _createChatMessageModel(message: ChatMessage): IChatMessageModel {
-    let messageFrom: IUser;
     const fromId = message.from.id;
-    if (fromId === this._context.self.id) {
-      messageFrom = this._context.self;
-    } else if (fromId === this.owner.id) {
-      messageFrom = this.owner;
-    } else {
-      throw new Error('incorrect sender id: ' + fromId);
-    }
-    return chatMessageFactory.create(message, messageFrom);
+    return chatMessageFactory.create(message, this._context.userMap[fromId]);
   }
 
   receiveChatMessage(message: ChatMessage) {
     this._list.push(this._createChatMessageModel(message));
     this._sortMessages();
+    this._unread++;
     this.onHasNewChatMessage.next();
+  }
+
+  clear() {
+    this.onHasNewChatMessage.unsubscribe();
   }
 
   /** sort by time */
@@ -186,16 +184,14 @@ export class ChatMessageCollection {
     id,
     context,
     messagesRecord,
-    userMap,
   }: {
     id: string;
     context: ChatMessageCollectionContext;
     messagesRecord: ChatMessagesRecord | undefined;
-    userMap: Record<string, IUser>; // includes self
   }): ChatMessageCollection {
     const messageModels =
       messagesRecord?.messages.map(message => {
-        const from = userMap[message.from.id]; // may be undefined, if message from a stranger
+        const from = context.userMap[message.from.id]; // may be undefined, if message from a stranger
         return chatMessageFactory.create(message, from);
       }) || [];
     return new ChatMessageCollection({

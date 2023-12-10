@@ -31,6 +31,13 @@ export type ChatMessage = {
   to: string;
 };
 
+export type SystemMessage = {
+  id: string;
+  to: string;
+  content: string;
+  createTime: string;
+};
+
 /** Messages with an user or an group */
 export type ChatMessagesRecord = {
   messages: ChatMessage[];

@@ -25,13 +25,10 @@ export type SocketEventSubjectMap = {
   [K in SocketEventType]: Subject<SocketEventParamsMap[K]>;
 };
 
-type MessageListener<
-  T extends ServerMessageType,
-  M extends ServerMessage<T>,
-> = (message: M) => void;
+type MessageListener<Data> = (message: Data) => void;
 
 export type MessageSubjectMap = {
-  [T in ServerMessageType]?: Subject<ServerMessage<T>>;
+  [T in ServerMessageType]?: Subject<any>;
 };
 
 /** 对Socket做一层封装 */
@@ -88,16 +85,14 @@ export class SocketIO {
     });
   }
   /** 注册针对消息类型的消息处理者 */
-  addMessageListener<T extends ServerMessageType, M extends ServerMessage<T>>(
-    messageType: T,
-    callback: MessageListener<T, M>,
+  addMessageListener<T extends ServerMessage>(
+    messageType: T['type'],
+    callback: MessageListener<T['data']>,
   ): Subscription {
     if (!this._messageSubjectMap[messageType]) {
-      this._messageSubjectMap[messageType] = new Subject<ServerMessage>();
+      this._messageSubjectMap[messageType] = new Subject();
     }
-    return (
-      this._messageSubjectMap[messageType]! as unknown as Subject<M>
-    ).subscribe(callback);
+    return this._messageSubjectMap[messageType]!.subscribe(callback);
   }
 
   addSocketEventListener<T extends SocketEventType>(
@@ -131,7 +126,7 @@ export class SocketIO {
       if (!Reflect.has(this._messageSubjectMap, type)) {
         throw new Error(`未找到${type}类型消息的接受者`);
       }
-      this._messageSubjectMap[type]!.next(message);
+      this._messageSubjectMap[type]!.next(message.data);
     });
   }
 

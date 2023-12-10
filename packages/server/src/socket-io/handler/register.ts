@@ -43,7 +43,7 @@ const register: EventHandler = async (
   }
   const userId = newUser.id;
   const token = generateToken(userId, environment);
-  context.setUserId(userId);
+  await context.setUserInfo({ userId, os, browser, environment });
   return {
     id: userId,
     token,

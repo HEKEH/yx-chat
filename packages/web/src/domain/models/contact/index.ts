@@ -1,5 +1,4 @@
 import { Friend, Group } from '@yx-chat/shared/types';
-import Self from '../self';
 import { ContactUnitCollection } from './contact-unit-collection';
 import { FriendModel } from './friend';
 import { GroupModel } from './group';
@@ -24,6 +23,9 @@ export class ContactManager {
     return this._currentContactCollectionKey === 'friends'
       ? this._friendCollection.selectedItem
       : this._groupCollection.selectedItem;
+  }
+  get contacts() {
+    return [...this.friendCollection.list, ...this.groupCollection.list];
   }
   setContactCollectionKey(key: 'friends' | 'groups') {
     this._currentContactCollectionKey = key;

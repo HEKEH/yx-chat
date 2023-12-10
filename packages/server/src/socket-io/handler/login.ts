@@ -36,9 +36,12 @@ const login: EventHandler = async (
   const isPasswordCorrect = bcrypt.compareSync(password, user.password);
   assert(isPasswordCorrect, 'Password is incorrect');
   const userId = user.id;
-  context.setUserId(userId);
   const token = generateToken(userId, environment);
-  const { groups, friends } = await findFriendsAndGroupsByUserId(userId);
+  const [{ groups, friends }] = await Promise.all([
+    findFriendsAndGroupsByUserId(userId),
+    context.setUserInfo({ userId, os, browser, environment }),
+  ]);
+  context.joinToGroups(groups.map(({ id }) => id));
   return {
     id: user.id,
     token,

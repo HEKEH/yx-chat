@@ -9,7 +9,6 @@ import {
 import { ChatMessageCollection } from '~/domain/models/chat/chat-message-collection';
 import Self from '~/domain/models/self';
 import { Subscription } from 'rxjs';
-import { throttle } from 'lodash';
 import s from './ChatItemList.module.sass';
 import { ChatItem } from './chat-item';
 
@@ -73,8 +72,6 @@ export const ChatItemList = defineComponent({
     watch(
       () => props.chatMessageCollection,
       async value => {
-        props.chatMessageCollection.clearUnread();
-
         scrollSubscription?.unsubscribe();
         scrollSubscription = value.onHasNewChatMessage.subscribe(async () => {
           await scrollChatListToBottom(true);

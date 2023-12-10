@@ -1,5 +1,6 @@
 import { encode, decode } from 'jwt-simple';
 import { ChatMessage, Friend, Group } from '@yx-chat/shared/types';
+import { Types } from 'mongoose';
 import config from '../../config';
 import FriendModel, {
   FriendDocument,
@@ -28,8 +29,11 @@ export function parseToken(token: string): {
   return decode(token, config.jwtSecret, false, config.jwtAlgorithm);
 }
 
-function formatFriend(friend: FriendDocument & { to: UserDocument }): Friend {
+function formatFriend(friend: FriendDocument): Friend {
   const { to } = friend;
+  if (typeof to === 'string') {
+    throw new Error('Param is wrong');
+  }
   return {
     id: friend.id,
     createTime: friend.createTime.toString(),
@@ -59,9 +63,7 @@ export async function findFriendsByUserId(userId: string): Promise<Friend[]> {
   //     username: 1,
   //   }),
   // ]);
-  return friends.map(friend =>
-    formatFriend(friend as FriendDocument & { to: UserDocument }),
-  );
+  return friends.map(friend => formatFriend(friend));
 }
 
 export async function findGroupsByUserId(userId: string): Promise<Group[]> {
@@ -132,4 +134,11 @@ export async function getMessagesByContactKey(
       };
     })
     .reverse();
+}
+
+/**
+ * @returns is valid mongodb id
+ */
+export function isIdValid(id: string) {
+  return Types.ObjectId.isValid(id);
 }

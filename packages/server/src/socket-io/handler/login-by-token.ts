@@ -37,8 +37,11 @@ const loginByToken: EventHandler = async (
   if (!user) {
     return errorResponse("User doesn't exist");
   }
-  context.setUserId(user.id);
-  const { groups, friends } = await findFriendsAndGroupsByUserId(userId);
+  const [{ groups, friends }] = await Promise.all([
+    findFriendsAndGroupsByUserId(userId),
+    context.setUserInfo({ userId, os, browser, environment }),
+  ]);
+  context.joinToGroups(groups.map(({ id }) => id));
 
   return {
     id: user.id,

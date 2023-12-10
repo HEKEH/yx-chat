@@ -1,10 +1,16 @@
-import { ChatMessageFormat } from './chat';
+import { ChatMessage, SystemMessage } from './chat';
 
-export type ServerMessageType = ChatMessageFormat; // TODO 暂时，要改成下面这样
-// export enum ServerMessageType {
-//   chat = 'chat'
-// }
+export enum ServerMessageType {
+  chat = 'chat',
+  system = 'system',
+}
 
-export type ServerMessage<T extends ServerMessageType = ServerMessageType> = {
-  type: T;
-};
+export type ServerMessage =
+  | {
+      type: ServerMessageType.chat;
+      data: ChatMessage;
+    }
+  | {
+      type: ServerMessageType.system;
+      data: SystemMessage; // TODO
+    };
