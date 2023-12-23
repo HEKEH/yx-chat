@@ -1,0 +1,29 @@
+@use "sass:math"
+@use "../../variables" as v
+
+.search-content
+  width: v.$middle-container-width - 4px
+  background-color: var(--primary-color-1)
+  overflow: hidden
+  --primary-text-color-10: rgb(22, 24, 35)
+  --primary-text-color-9: rgba(22, 24, 35, 0.8)
+  --primary-text-color-8: rgba(22, 24, 35, 0.6)
+  &.is-empty
+    text-align: center
+    color: rgba(22, 24, 35, 0.7)
+    font-size: 14px
+    line-height: 100px
+  .title
+    padding: 10px 0 2px 24px
+    font-size: 13px
+    font-weight: bold
+    color: rgba(22, 24, 35, 0.7)
+  .contact-list
+    max-height: 320px
+    overflow-x: hidden
+    overflow-y: auto
+  hr
+    border-top: 1px solid #dddddd
+    margin: 0
+  .contact-item:hover
+    background-color: var(--primary-color-2)

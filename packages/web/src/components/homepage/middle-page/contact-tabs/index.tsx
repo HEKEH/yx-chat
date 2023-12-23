@@ -14,8 +14,8 @@ export const ContactTabs = defineComponent({
     },
   },
   setup(props) {
+    const { t } = useI18n();
     return () => {
-      const { t } = useI18n();
       const { contactManager } = props;
       return (
         <div class={s['contact-tabs']}>

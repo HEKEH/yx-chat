@@ -21,6 +21,8 @@ const en: I18nMessage = {
     language: 'Language',
     setting: 'Setting',
     loading: 'Loading',
+    searchPlaceholder: 'Search friends/groups',
+    searchNoResult: 'No friend/group found',
   },
   setting: {
     general: 'General',

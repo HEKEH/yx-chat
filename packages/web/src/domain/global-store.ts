@@ -15,11 +15,16 @@ import Self from './models/self';
 import { MainMenu } from './types';
 import { ThemeManager } from './models/theme';
 import { ContactManager } from './models/contact';
-import { ChatMessageCollection } from './models/chat/chat-message-collection';
+import {
+  ChatMessageCollection,
+  ChatMessageCollectionContext,
+} from './models/chat/chat-message-collection';
 import { IUser } from './models/typing';
 import { ChatMessageManager } from './models/chat/chat-message-manager';
+import { FriendModel } from './models/contact/friend';
+import { GroupModel } from './models/contact/group';
 
-export default class GlobalStore {
+export default class GlobalStore implements ChatMessageCollectionContext {
   /** the user logged in */
   private _self: Self = Self.createEmpty();
 
@@ -64,6 +69,14 @@ export default class GlobalStore {
   selectMenu(menu: MainMenu) {
     if (this._selectedMenu !== menu) {
       this._selectedMenu = menu;
+    }
+  }
+
+  selectContactInCurrentMenu(contact: FriendModel | GroupModel) {
+    if (this._selectedMenu === MainMenu.contact) {
+      this.contactManager.selectContact(contact);
+    } else if (this._selectedMenu === MainMenu.message) {
+      this.chatMessageManager.selectById(contact.chatMessageCollection.id);
     }
   }
 

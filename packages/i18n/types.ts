@@ -19,6 +19,8 @@ export interface I18nMessage {
     language: string;
     setting: string;
     loading: string;
+    searchPlaceholder: string;
+    searchNoResult: string;
   };
   setting: {
     general: string;

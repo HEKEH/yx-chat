@@ -21,6 +21,12 @@ export default defineConfig(({ mode }) => {
     alias['@yx-chat'] = resolve(__dirname, '../'); // develop mode redirect
   }
   return {
+    define: {
+      // see https://stackoverflow.com/questions/66140411/you-are-running-the-esm-bundler-build-of-vue-i18n-it-is-recommended-to-configur
+      __VUE_I18N_FULL_INSTALL__: true,
+      __VUE_I18N_LEGACY_API__: false,
+      __INTLIFY_PROD_DEVTOOLS__: false,
+    },
     plugins: [vue(), vueJsx()],
     envDir: resolve(__dirname, '../../'),
     envPrefix,

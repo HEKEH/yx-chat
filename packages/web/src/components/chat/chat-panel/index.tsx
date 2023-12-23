@@ -8,8 +8,7 @@ export const ChatPanel = defineComponent({
   name: 'ChatPanel',
   props: {
     chatMessageCollection: {
-      type: Object as PropType<ChatMessageCollection | undefined>,
-      required: true,
+      type: Object as PropType<ChatMessageCollection>,
     },
     self: {
       type: Object as PropType<Self>,

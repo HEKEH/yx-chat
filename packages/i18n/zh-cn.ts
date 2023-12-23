@@ -21,6 +21,8 @@ const cn: I18nMessage = {
     language: '语言',
     setting: '设置',
     loading: '载入中',
+    searchPlaceholder: '搜索好友/群组',
+    searchNoResult: '未搜索到内容',
   },
   setting: {
     general: '通用',

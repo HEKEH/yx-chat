@@ -1,5 +1,6 @@
 @use "sass:math"
 @use "../../styles/variables" as v
+@use "./variables" as h
 
 .homepage
   width: 100%
@@ -26,7 +27,7 @@
       align-items: center
       background-color: var(--primary-color-1)
     .middle-container
-      width: 300px
+      width: h.$middle-container-width
       height: 100%
       overflow: hidden
       background-color: var(--primary-color-5)

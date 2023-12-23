@@ -27,6 +27,27 @@ export class ContactManager {
   get contacts() {
     return [...this.friendCollection.list, ...this.groupCollection.list];
   }
+  selectContact(contact: FriendModel | GroupModel) {
+    if (contact instanceof FriendModel) {
+      this.setContactCollectionKey('friends');
+      this._friendCollection.selectById(contact.id);
+    } else {
+      this.setContactCollectionKey('groups');
+      this._groupCollection.selectById(contact.id);
+    }
+  }
+  findByText(text: string): { friends: FriendModel[]; groups: GroupModel[] } {
+    const friends = this.friendCollection.list.filter(item =>
+      item.name.includes(text),
+    );
+    const groups = this.groupCollection.list.filter(item =>
+      item.name.includes(text),
+    );
+    return {
+      friends,
+      groups,
+    };
+  }
   setContactCollectionKey(key: 'friends' | 'groups') {
     this._currentContactCollectionKey = key;
   }

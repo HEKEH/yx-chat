@@ -1,0 +1,21 @@
+.search-bar
+  flex: 1
+  height: 100%
+  overflow: hidden
+  display: flex
+  align-items: center
+  .search-bar-input
+    overflow: hidden
+    :global(.el-input__wrapper)
+      border-radius: 18px / 50%
+      background: rgba(255, 255, 255, 0.6)
+      &:focus-within
+        background: rgba(255, 255, 255, 0.9)
+    :global(.i-icon)
+      display: flex
+      align-items: center
+      svg
+        width: 20px
+        height: 20px
+    :global(.el-input__clear)
+      font-size: 18px

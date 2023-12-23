@@ -17,7 +17,7 @@ import Self from '../self';
 import { IUser } from '../typing';
 import { IChatMessageModel, chatMessageFactory } from './chat-message';
 
-interface ChatMessageCollectionContext {
+export interface ChatMessageCollectionContext {
   readonly self: Self;
   readonly userMap: Record<string, IUser>;
 }
