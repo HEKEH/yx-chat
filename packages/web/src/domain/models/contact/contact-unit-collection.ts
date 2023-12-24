@@ -15,6 +15,7 @@ export class ContactUnitCollection<T extends IContactUnit = IContactUnit> {
   async selectById(id: string) {
     if (id !== this._selectedId) {
       this._selectedId = id;
+      await this.selectedItem?.chatMessageCollection.clearUnread();
     }
   }
   init(list: T[]) {

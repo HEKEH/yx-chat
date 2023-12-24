@@ -8,7 +8,7 @@ export const FunctionBar = defineComponent({
     return () => {
       return (
         <div class={s['function-bar']}>
-          <SearchBar />
+          <SearchBar style={{ flex: 1 }} />
         </div>
       );
     };
