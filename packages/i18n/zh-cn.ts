@@ -39,6 +39,8 @@ const cn: I18nMessage = {
     contacts: '联系人',
     friends: '好友',
     groups: '群组',
+    createGroup: '发起群聊',
+    addFriendOrGroup: '加好友/群组',
   },
   time: {
     today: '今天',

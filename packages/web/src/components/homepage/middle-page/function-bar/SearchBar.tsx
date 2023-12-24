@@ -44,8 +44,10 @@ export const SearchBar = defineComponent({
         <div class={s['search-bar']}>
           <ElPopover
             visible={isPopoverVisible.value && Boolean(searchText.value)}
+            placement="bottom-start"
             popper-style={{
               padding: '0',
+              transform: 'translateX(-12px)',
             }}
             width="auto"
             showArrow={false}

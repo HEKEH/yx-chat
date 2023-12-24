@@ -37,6 +37,8 @@ export interface I18nMessage {
     contacts: string;
     friends: string;
     groups: string;
+    createGroup: string;
+    addFriendOrGroup: string;
   };
   time: {
     today: string;

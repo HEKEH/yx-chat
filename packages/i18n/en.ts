@@ -39,6 +39,8 @@ const en: I18nMessage = {
     contacts: 'Contacts',
     friends: 'Friends',
     groups: 'Groups',
+    createGroup: 'Create group',
+    addFriendOrGroup: 'Add friend/group',
   },
   time: {
     today: 'Today',
