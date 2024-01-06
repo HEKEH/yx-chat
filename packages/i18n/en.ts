@@ -23,6 +23,7 @@ const en: I18nMessage = {
     loading: 'Loading',
     searchPlaceholder: 'Search friends/groups',
     searchNoResult: 'No friend/group found',
+    create: 'Create',
   },
   setting: {
     general: 'General',
@@ -41,10 +42,18 @@ const en: I18nMessage = {
     groups: 'Groups',
     createGroup: 'Create group',
     addFriendOrGroup: 'Add friend/group',
+    inputGroupName: 'Input group name',
   },
   time: {
     today: 'Today',
     yesterday: 'Yesterday',
+  },
+  validate: {
+    required: 'This field is required',
+    maxLength: 'The length of this field cannot exceed {len}',
+    minLength: 'Length of this field cannot be less than {len}',
+    noWhitespace: 'This field cannot contain whitespace',
+    notSameWithPassword: "It's not same with the password",
   },
 };
 export default en;

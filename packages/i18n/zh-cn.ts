@@ -23,6 +23,7 @@ const cn: I18nMessage = {
     loading: '载入中',
     searchPlaceholder: '搜索好友/群组',
     searchNoResult: '未搜索到内容',
+    create: '创建',
   },
   setting: {
     general: '通用',
@@ -39,12 +40,20 @@ const cn: I18nMessage = {
     contacts: '联系人',
     friends: '好友',
     groups: '群组',
-    createGroup: '发起群聊',
+    createGroup: '创建群组',
     addFriendOrGroup: '加好友/群组',
+    inputGroupName: '请输入群组名称',
   },
   time: {
     today: '今天',
     yesterday: '昨天',
+  },
+  validate: {
+    required: '此项必填',
+    maxLength: '长度不能超过{len}个字符',
+    minLength: '长度不能少于{len}个字符',
+    noWhitespace: '不能包含空格',
+    notSameWithPassword: '与密码不一致',
   },
 };
 export default cn;

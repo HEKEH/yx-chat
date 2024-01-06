@@ -20,6 +20,7 @@ export const LoginForm = defineComponent({
       userInfo && typeof userInfo === 'object',
   },
   setup(_, ctx) {
+    const { t } = useI18n();
     const userInfo = reactive<UserAccountInfo>({
       username: '',
       password: '',
@@ -28,8 +29,8 @@ export const LoginForm = defineComponent({
     const rules: Partial<
       Record<keyof UserAccountInfo, Arrayable<FormItemRule>>
     > = {
-      username: { required: true, message: '用户名为必填项' },
-      password: [{ required: true, message: '密码为必填项' }],
+      username: { required: true, message: t('validate.required') },
+      password: [{ required: true, message: t('validate.required') }],
     };
     const formRef = ref<FormInstance>();
     const onSubmit = async () => {
@@ -40,7 +41,6 @@ export const LoginForm = defineComponent({
         console.warn(e);
       }
     };
-    const { t } = useI18n();
     return () => {
       return (
         <ElForm

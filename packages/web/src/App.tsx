@@ -75,6 +75,7 @@ export default defineComponent({
         return null;
       }
       if (!isReady.value) {
+        // loading
         return (
           <div
             style={{

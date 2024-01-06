@@ -21,6 +21,7 @@ export interface I18nMessage {
     loading: string;
     searchPlaceholder: string;
     searchNoResult: string;
+    create: string;
   };
   setting: {
     general: string;
@@ -39,10 +40,18 @@ export interface I18nMessage {
     groups: string;
     createGroup: string;
     addFriendOrGroup: string;
+    inputGroupName: string;
   };
   time: {
     today: string;
     yesterday: string;
+  };
+  validate: {
+    required: string;
+    maxLength: string;
+    minLength: string;
+    noWhitespace: string;
+    notSameWithPassword: string;
   };
 }
 

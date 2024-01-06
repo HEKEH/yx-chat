@@ -7,7 +7,7 @@ export default {
   port: env.PUBLIC_SERVER_PORT ? parseInt(env.PUBLIC_SERVER_PORT, 10) : 6870,
   allowOrigin: env.ALLOW_ORIGIN,
   /** mongodb url */
-  mongoDBUrl: env.MONGO_DB_URL || 'mongodb://localhost:27017/fiora',
+  mongoDBUrl: env.MONGO_DB_URL || 'mongodb://localhost:27017/yx-chat',
   /** jwt salt */
   jwtSecret: env.JWT_SECRET || 'yx-chat-jwt-0',
   jwtAlgorithm: (env.JWT_ALGORITHM || 'HS256') as TAlgorithm,

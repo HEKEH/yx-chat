@@ -113,6 +113,23 @@ export default class GlobalStore implements ChatMessageCollectionContext {
     await this._initChatMessages();
   }
 
+  async createGroup(groupName: string) {
+    // const resp = await SocketIO.instance.fetch<
+    //   CreateGroupSuccessResponse | ErrorResponse
+    // >(new CreateGroupRequest(groupName));
+    // this._handleCreateGroupResponse(resp);
+  }
+
+  // private _handleCreateGroupResponse(
+  //   resp: CreateGroupSuccessResponse | ErrorResponse,
+  // ) {
+  //   if (isErrorResponse(resp)) {
+  //     throw new Error(resp.message);
+  //   }
+  //   const group = this._contactManager.createGroup(resp.data);
+  //   this.selectContactInCurrentMenu(group);
+  // }
+
   logout() {
     LocalStorageStore.instance.removeItem('token');
     this._clear();

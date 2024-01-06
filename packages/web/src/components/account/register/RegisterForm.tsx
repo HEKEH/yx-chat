@@ -26,6 +26,7 @@ export const RegisterForm = defineComponent({
       userInfo && typeof userInfo === 'object',
   },
   setup(_, ctx) {
+    const { t } = useI18n();
     const userInfo = reactive<ResisterUserInfo>({
       username: '',
       password: '',
@@ -35,20 +36,24 @@ export const RegisterForm = defineComponent({
     const rules: Partial<
       Record<keyof ResisterUserInfo, Arrayable<FormItemRule>>
     > = {
-      username: { required: true, message: '用户名为必填项' },
+      username: { required: true, message: t('validate.required') },
       password: [
-        { required: true, message: '密码为必填项' },
-        { min: 6, message: '密码不能少于6位', trigger: 'blur' },
+        { required: true, message: t('validate.required') },
+        {
+          min: 6,
+          message: t('validate.minLength', { len: 6 }),
+          trigger: 'blur',
+        },
       ],
       confirmPassword: [
-        { required: true, message: '确认密码为必填项' },
+        { required: true, message: t('validate.required') },
         {
           trigger: 'blur',
           validator: (_, value, callback) => {
             if (value === userInfo.password) {
               return callback();
             }
-            return callback('与输入的密码不一致');
+            return callback(t('validate.notSameWithPassword'));
           },
         },
       ],
@@ -62,7 +67,6 @@ export const RegisterForm = defineComponent({
         console.warn(e);
       }
     };
-    const { t } = useI18n();
     return () => {
       return (
         <ElForm
