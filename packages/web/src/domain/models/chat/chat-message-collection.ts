@@ -187,7 +187,7 @@ export class ChatMessageCollection {
   }: {
     id: string;
     context: ChatMessageCollectionContext;
-    messagesRecord: ChatMessagesRecord | undefined;
+    messagesRecord?: ChatMessagesRecord;
   }): ChatMessageCollection {
     const messageModels =
       messagesRecord?.messages.map(message => {

@@ -15,3 +15,13 @@ export interface Group {
   creator: string;
   avatar: string;
 }
+
+export enum ContactRequestType {
+  createGroup = 'createGroup',
+}
+
+export interface CreateGroupRequestBody {
+  name: string;
+}
+
+export type CreateGroupSuccessResponse = Group; // is same currently

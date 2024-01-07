@@ -54,19 +54,27 @@ export class ChatMessageManager {
     }
   }
 
+  private _subscribeItem(item: ChatMessageCollection) {
+    item.onHasNewChatMessage.subscribe(() => this._sortList());
+  }
+
   init(chatMessageCollectionList: ChatMessageCollection[]) {
     this._list = chatMessageCollectionList;
     this._sortList();
     // this._selectedId = this._list[0]?.id;
-    this._list.forEach(item =>
-      item.onHasNewChatMessage.subscribe(() => this._sortList()),
-    );
+    this._list.forEach(item => this._subscribeItem(item));
     this._messageListenSubscription = SocketIO.instance.addMessageListener<{
       type: ServerMessageType.chat;
       data: ChatMessage;
     }>(ServerMessageType.chat, (message: ChatMessage) => {
       this._receiveChatMessage(message);
     });
+  }
+
+  addItem(item: ChatMessageCollection) {
+    this._list.push(item);
+    this._sortList();
+    this._subscribeItem(item);
   }
 
   clear() {

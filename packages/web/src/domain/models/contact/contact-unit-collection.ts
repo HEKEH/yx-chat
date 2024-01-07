@@ -18,6 +18,9 @@ export class ContactUnitCollection<T extends IContactUnit = IContactUnit> {
       await this.selectedItem?.chatMessageCollection.clearUnread();
     }
   }
+  addItem(item: T) {
+    this._list.push(item);
+  }
   init(list: T[]) {
     this._list = list;
     // if (this._list.length) {

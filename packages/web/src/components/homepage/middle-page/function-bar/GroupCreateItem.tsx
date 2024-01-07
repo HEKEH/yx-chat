@@ -38,7 +38,14 @@ const GroupNameInput = defineComponent({
             rules={[
               { required: true, message: t('validate.required') },
               { max: 20, message: t('validate.maxLength', { len: 20 }) },
-              { whitespace: false, message: t('validate.noWhitespace') },
+              {
+                validator: (_, val, cb) => {
+                  if (val.includes(' ')) {
+                    return cb(t('validate.noWhitespace'));
+                  }
+                  cb();
+                },
+              },
             ]}
             prop="groupName"
           >

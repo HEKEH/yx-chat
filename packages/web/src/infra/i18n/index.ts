@@ -47,7 +47,7 @@ export async function setI18nLanguage(locale: Locale) {
 
 export async function initI18n() {
   await setI18nLanguage(
-    LocalStorageStore.instance.getItem('locale') || 'zh-cn',
+    LocalStorageStore.instance.getItem<Locale | undefined>('locale') || 'zh-cn',
   );
 }
 

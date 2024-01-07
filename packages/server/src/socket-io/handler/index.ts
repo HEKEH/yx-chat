@@ -1,6 +1,7 @@
 import {
   AccountRequestType,
   ChatMessageRequestType,
+  ContactRequestType,
 } from '@yx-chat/shared/types';
 import { SocketContext } from '../context';
 import login from './login';
@@ -10,6 +11,7 @@ import getLastChatMessages from './get-last-chat-messages';
 import getHistoryChatMessages from './get-history-chat-messages';
 import sendChatMessage from './send-chat-message';
 import updateHistory from './update-history';
+import createGroup from './create-group';
 
 export const EventHandlerMap = {
   [AccountRequestType.login]: login,
@@ -19,6 +21,7 @@ export const EventHandlerMap = {
   [ChatMessageRequestType.getHistoryChatMessages]: getHistoryChatMessages,
   [ChatMessageRequestType.sendChatMessage]: sendChatMessage,
   [ChatMessageRequestType.updateHistory]: updateHistory,
+  [ContactRequestType.createGroup]: createGroup,
 };
 export type EventHandlerMapType = typeof EventHandlerMap;
 

@@ -2,6 +2,7 @@ import {
   LastMessagesResponse,
   LoginSuccessResponse,
   ErrorResponse,
+  CreateGroupSuccessResponse,
 } from '@yx-chat/shared/types';
 import { isErrorResponse } from '@yx-chat/shared/utils';
 import { SocketIO } from '~/infra/socket-io';
@@ -11,6 +12,7 @@ import { LocalStorageStore } from '~/infra/local-storage-store';
 import { LoginByTokenRequest } from '~/infra/socket-io/request/login-by-token-request';
 import { RegisterRequest } from '~/infra/socket-io/request/register-request';
 import { GetChatMessagesRequest } from '~/infra/socket-io/request/get-chat-messages-request';
+import { CreateGroupRequest } from '~/infra/socket-io/request/create-group-request';
 import Self from './models/self';
 import { MainMenu } from './types';
 import { ThemeManager } from './models/theme';
@@ -114,21 +116,29 @@ export default class GlobalStore implements ChatMessageCollectionContext {
   }
 
   async createGroup(groupName: string) {
-    // const resp = await SocketIO.instance.fetch<
-    //   CreateGroupSuccessResponse | ErrorResponse
-    // >(new CreateGroupRequest(groupName));
-    // this._handleCreateGroupResponse(resp);
+    const resp = await SocketIO.instance.fetch<
+      CreateGroupSuccessResponse | ErrorResponse
+    >(new CreateGroupRequest(groupName));
+    this._handleCreateGroupResponse(resp);
   }
 
-  // private _handleCreateGroupResponse(
-  //   resp: CreateGroupSuccessResponse | ErrorResponse,
-  // ) {
-  //   if (isErrorResponse(resp)) {
-  //     throw new Error(resp.message);
-  //   }
-  //   const group = this._contactManager.createGroup(resp.data);
-  //   this.selectContactInCurrentMenu(group);
-  // }
+  private _handleCreateGroupResponse(
+    resp: CreateGroupSuccessResponse | ErrorResponse,
+  ) {
+    if (isErrorResponse(resp)) {
+      throw new Error(resp.message);
+    }
+    const groupModel = new GroupModel(resp);
+    groupModel.setChatMessageCollection(
+      ChatMessageCollection.createByRawData({
+        id: groupModel.messageOwnerKey,
+        context: this,
+      }),
+    );
+    this._contactManager.groupCollection.addItem(groupModel);
+    this._chatMessageManager.addItem(groupModel.chatMessageCollection);
+    this.selectContactInCurrentMenu(groupModel);
+  }
 
   logout() {
     LocalStorageStore.instance.removeItem('token');
