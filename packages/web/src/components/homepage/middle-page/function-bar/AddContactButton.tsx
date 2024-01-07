@@ -5,6 +5,7 @@ import { getGlobalStore } from '~/utils/vue';
 import { useI18n } from 'vue-i18n';
 import s from './AddContactButton.module.sass';
 import { GroupCreateItem } from './GroupCreateItem';
+import { ContactAddItem } from './ContactAddItem';
 
 export const AddContactButton = defineComponent({
   name: 'AddContactButton',
@@ -40,7 +41,7 @@ export const AddContactButton = defineComponent({
           hideAfter={0}
         >
           <GroupCreateItem />
-          <div class={s.item}>{t('main.addFriendOrGroup')}</div>
+          <ContactAddItem />
         </ElPopover>
       );
     };

@@ -100,7 +100,7 @@ const CreateGroupDialog = defineComponent({
   },
 });
 
-/** 创建群组 */
+/** Create group */
 export const GroupCreateItem = defineComponent({
   name: 'GroupCreateItem',
   setup() {

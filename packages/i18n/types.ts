@@ -22,6 +22,8 @@ export interface I18nMessage {
     searchPlaceholder: string;
     searchNoResult: string;
     create: string;
+    search: string;
+    searchPlaceholder2: string;
   };
   setting: {
     general: string;

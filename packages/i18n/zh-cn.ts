@@ -24,6 +24,8 @@ const cn: I18nMessage = {
     searchPlaceholder: '搜索好友/群组',
     searchNoResult: '未搜索到内容',
     create: '创建',
+    search: '搜索',
+    searchPlaceholder2: '搜索用户/群组',
   },
   setting: {
     general: '通用',

@@ -24,6 +24,8 @@ const en: I18nMessage = {
     searchPlaceholder: 'Search friends/groups',
     searchNoResult: 'No friend/group found',
     create: 'Create',
+    search: 'Search',
+    searchPlaceholder2: 'Search users/groups',
   },
   setting: {
     general: 'General',
