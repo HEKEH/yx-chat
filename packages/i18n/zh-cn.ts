@@ -22,10 +22,12 @@ const cn: I18nMessage = {
     setting: '设置',
     loading: '载入中',
     searchPlaceholder: '搜索好友/群组',
-    searchNoResult: '未搜索到内容',
+    searchNoResult: '未搜索到结果',
     create: '创建',
     search: '搜索',
+    add: '添加',
     searchPlaceholder2: '搜索用户/群组',
+    toFindNewFriends: '快来发现更多新朋友！',
   },
   setting: {
     general: '通用',
@@ -40,6 +42,7 @@ const cn: I18nMessage = {
   main: {
     chats: '聊天',
     contacts: '联系人',
+    users: '用户',
     friends: '好友',
     groups: '群组',
     createGroup: '创建群组',

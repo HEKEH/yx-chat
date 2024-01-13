@@ -25,7 +25,9 @@ const en: I18nMessage = {
     searchNoResult: 'No friend/group found',
     create: 'Create',
     search: 'Search',
+    add: 'Add',
     searchPlaceholder2: 'Search users/groups',
+    toFindNewFriends: 'To find new friends!',
   },
   setting: {
     general: 'General',
@@ -40,6 +42,7 @@ const en: I18nMessage = {
   main: {
     chats: 'Chats',
     contacts: 'Contacts',
+    users: 'Users',
     friends: 'Friends',
     groups: 'Groups',
     createGroup: 'Create group',

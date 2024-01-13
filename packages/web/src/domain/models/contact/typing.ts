@@ -12,4 +12,5 @@ export interface IContactUnit extends IUser {
   readonly latestMessageBrief: string | undefined;
   /** Time for display, message time or create time */
   readonly displayTime: GeneralTime;
+  readonly unread: number;
 }

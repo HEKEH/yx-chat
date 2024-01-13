@@ -23,7 +23,9 @@ export interface I18nMessage {
     searchNoResult: string;
     create: string;
     search: string;
+    add: string;
     searchPlaceholder2: string;
+    toFindNewFriends: string;
   };
   setting: {
     general: string;
@@ -38,6 +40,7 @@ export interface I18nMessage {
   main: {
     chats: string;
     contacts: string;
+    users: string;
     friends: string;
     groups: string;
     createGroup: string;

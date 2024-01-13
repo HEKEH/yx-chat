@@ -1,5 +1,6 @@
 import { PropType, defineComponent } from 'vue';
 import { IContactUnit } from '~/domain/models/contact/typing';
+import { IUser } from '~/domain/models/typing';
 import { Avatar } from '../../../common/avatar';
 import s from './ContactItem.module.sass';
 
@@ -7,10 +8,19 @@ export const ContactItem = defineComponent({
   name: 'ContactItem',
   props: {
     value: {
-      type: Object as PropType<IContactUnit>,
+      type: Object as PropType<
+        Pick<IUser, 'name' | 'avatar'> &
+          Partial<
+            Pick<IContactUnit, 'displayTime' | 'latestMessageBrief' | 'unread'>
+          >
+      >,
       required: true,
     },
     isSelected: Boolean,
+    showMessage: {
+      type: Boolean,
+      default: true,
+    },
   },
   emits: {
     select: () => true,
@@ -20,14 +30,8 @@ export const ContactItem = defineComponent({
       emit('select');
     };
     return () => {
-      const { value, isSelected } = props;
-      const {
-        name,
-        avatar,
-        displayTime,
-        latestMessageBrief,
-        chatMessageCollection,
-      } = value;
+      const { value, isSelected, showMessage } = props;
+      const { name, avatar, displayTime, latestMessageBrief, unread } = value;
       return (
         <div
           class={{ [s['contact-item']]: true, [s.selected]: isSelected }}
@@ -37,16 +41,16 @@ export const ContactItem = defineComponent({
           <div class={s.container}>
             <div class={[s.row, s['name-row']]}>
               <div class={s.name}>{name}</div>
-              <div class={s.time}>{displayTime.toBriefFormat()}</div>
+              {displayTime && (
+                <div class={s.time}>{displayTime.toBriefFormat()}</div>
+              )}
             </div>
             <div class={s.row}>
-              <div class={s.message}>{latestMessageBrief ?? '暂无消息'}</div>
-              {chatMessageCollection.unread ? (
-                <div class={s.unread}>
-                  {chatMessageCollection.unread > 99
-                    ? '99+'
-                    : chatMessageCollection.unread}
-                </div>
+              {showMessage && (
+                <div class={s.message}>{latestMessageBrief ?? '暂无消息'}</div>
+              )}
+              {unread ? (
+                <div class={s.unread}>{unread > 99 ? '99+' : unread}</div>
               ) : undefined}
             </div>
           </div>
