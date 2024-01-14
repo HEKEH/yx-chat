@@ -126,7 +126,7 @@ export default class GlobalStore implements ChatMessageCollectionContext {
     resp: CreateGroupSuccessResponse | ErrorResponse,
   ) {
     if (isErrorResponse(resp)) {
-      throw new Error(resp.message);
+      throw new BusinessError(resp.message);
     }
     const groupModel = new GroupModel(resp);
     groupModel.setChatMessageCollection(

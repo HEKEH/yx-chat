@@ -1,3 +1,7 @@
+export enum SystemRequestType {
+  searchUsersAndGroups = 'searchUsersAndGroups',
+}
+
 export interface UserAndGroupSearchItem {
   id: string;
   name: string;
@@ -6,4 +10,8 @@ export interface UserAndGroupSearchItem {
 export interface UserAndGroupSearchResult {
   users: UserAndGroupSearchItem[];
   groups: UserAndGroupSearchItem[];
+}
+
+export interface UserAndGroupSearchRequestBody {
+  searchText: string;
 }

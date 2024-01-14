@@ -1,12 +1,14 @@
 import { Search } from '@icon-park/vue-next';
+import { UserAndGroupSearchResult } from '@yx-chat/shared/types';
 import { ElButton, ElDialog, ElInput } from 'element-plus';
 import { Ref, defineComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { UserAndGroupSearchResult } from '@yx-chat/shared/types';
-import { getGlobalStore } from '~/utils/vue';
-import { UserAndGroupSearchContent } from './UserAndGroupSearchContent';
+import { SocketIO } from '~/infra/socket-io';
+import { SearchUsersAndGroupsRequest } from '~/infra/socket-io/request/search-users-and-groups-request';
+import { isErrorResponse } from '@yx-chat/shared/utils';
 import st from './AddContactButton.module.sass';
 import s from './ContactAddItem.module.sass';
+import { UserAndGroupSearchContent } from './UserAndGroupSearchContent';
 
 const ContactSearchRow = defineComponent({
   name: 'ContactSearchRow',
@@ -51,17 +53,18 @@ const ContactSearchPanel = defineComponent({
   name: 'ContactSearchPanel',
   setup() {
     const searchResult: Ref<UserAndGroupSearchResult | undefined> = ref();
-    const globalStore = getGlobalStore();
     const onSearch = async (searchText: string) => {
       if (!searchText) {
         searchResult.value = undefined;
         return;
       }
-      const res = globalStore.contactManager.findByText(searchText);
-      searchResult.value = {
-        users: res.friends,
-        groups: res.groups,
-      };
+      const resp = await SocketIO.instance.fetch<UserAndGroupSearchResult>(
+        new SearchUsersAndGroupsRequest(searchText),
+      );
+      if (isErrorResponse(resp)) {
+        throw new Error(resp.message);
+      }
+      searchResult.value = resp;
     };
     return () => {
       return (

@@ -1,7 +1,6 @@
 import { RegisterRequestBody } from '@yx-chat/shared/types';
 import { AccountRequestType } from '@yx-chat/shared/types';
 import platform from 'platform';
-import i18n from '~/infra/i18n';
 import { AbstractSocketRequest } from './type';
 
 export class RegisterRequest extends AbstractSocketRequest<RegisterRequestBody> {
