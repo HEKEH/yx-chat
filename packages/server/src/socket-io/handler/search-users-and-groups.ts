@@ -28,7 +28,7 @@ let searchUsersAndGroups: EventHandler = async (
   );
   const groups = await GroupModel.find(
     { name: { $regex: escapedKeywords } },
-    { avatar: 1, name: 1, members: 1 },
+    { avatar: 1, name: 1 },
   );
 
   return {
