@@ -28,6 +28,7 @@ const en: I18nMessage = {
     add: 'Add',
     searchPlaceholder2: 'Search users/groups',
     toFindNewFriends: 'To find new friends!',
+    confirmToAdd: 'Confirm to add',
   },
   setting: {
     general: 'General',

@@ -27,6 +27,10 @@ export class ContactUnitCollection<T extends IContactUnit = IContactUnit> {
     //   this._selectedId = this._list[0].id;
     // }
   }
+
+  includes(id: string) {
+    return this._list.find(item => item.id === id);
+  }
   clear() {
     this._list = [];
     this._selectedId = undefined;

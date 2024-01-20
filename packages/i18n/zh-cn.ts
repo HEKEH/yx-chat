@@ -28,6 +28,7 @@ const cn: I18nMessage = {
     add: '添加',
     searchPlaceholder2: '搜索用户/群组',
     toFindNewFriends: '快来发现更多新朋友！',
+    confirmToAdd: '确认添加',
   },
   setting: {
     general: '通用',

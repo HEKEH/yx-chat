@@ -2,7 +2,7 @@ import {
   UserAndGroupSearchItem,
   UserAndGroupSearchResult,
 } from '@yx-chat/shared/types';
-import { ElButton } from 'element-plus';
+import { ElButton, ElPopconfirm } from 'element-plus';
 import { PropType, defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { Avatar } from '~/components/common/avatar';
@@ -35,6 +35,9 @@ const UserAndGroupSearchList = defineComponent(
     return () => {
       const { t } = useI18n();
       const { items, title } = props;
+      const onAddItem = (item: UserAndGroupSearchItem) => {
+        emit('addItem', item);
+      };
       return (
         <div class={s['search-list-container']}>
           <div class={s.title}>{title}</div>
@@ -42,7 +45,15 @@ const UserAndGroupSearchList = defineComponent(
             {items.map(item => (
               <div class={s['search-item-row']}>
                 <SearchItem key={item.id} value={item} />
-                <ElButton size="small">{t('common.add')}</ElButton>
+                <ElPopconfirm
+                  v-slots={{
+                    reference: () => (
+                      <ElButton size="small">{t('common.add')}</ElButton>
+                    ),
+                  }}
+                  title={`${t('common.confirmToAdd')}?`}
+                  onConfirm={() => onAddItem(item)}
+                ></ElPopconfirm>
               </div>
             ))}
           </div>
@@ -63,7 +74,8 @@ const UserAndGroupSearchList = defineComponent(
       },
     },
     emits: {
-      click: (item: UserAndGroupSearchItem) => item && typeof item === 'object',
+      addItem: (item: UserAndGroupSearchItem) =>
+        item && typeof item === 'object',
     },
   },
 );
@@ -75,8 +87,18 @@ export const UserAndGroupSearchContent = defineComponent({
       UserAndGroupSearchResult | undefined
     >,
   },
+  emits: {
+    addItem: (type: 'groups' | 'users', item: UserAndGroupSearchItem) =>
+      item && typeof item === 'object',
+  },
   setup(props, { emit }) {
     const { t } = useI18n();
+    const onAddItem = (
+      type: 'groups' | 'users',
+      item: UserAndGroupSearchItem,
+    ) => {
+      emit('addItem', type, item);
+    };
     return () => {
       const { searchResult } = props;
       if (!searchResult) {
@@ -98,7 +120,7 @@ export const UserAndGroupSearchContent = defineComponent({
       const lists = [
         { key: 'users', title: t('main.users'), items: users },
         { key: 'groups', title: t('main.groups'), items: groups },
-      ];
+      ] as const;
       for (let i = 0; i < lists.length; i++) {
         const list = lists[i];
         const { key, title, items } = list;
@@ -111,8 +133,8 @@ export const UserAndGroupSearchContent = defineComponent({
               key={key}
               title={title}
               items={items}
-              onClick={item => {
-                emit('click', item);
+              onAddItem={item => {
+                onAddItem(key, item);
               }}
             />,
           );

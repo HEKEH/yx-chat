@@ -1,11 +1,12 @@
 import { Search } from '@icon-park/vue-next';
-import { UserAndGroupSearchResult } from '@yx-chat/shared/types';
+import {
+  UserAndGroupSearchItem,
+  UserAndGroupSearchResult,
+} from '@yx-chat/shared/types';
 import { ElButton, ElDialog, ElInput } from 'element-plus';
 import { Ref, defineComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { SocketIO } from '~/infra/socket-io';
-import { SearchUsersAndGroupsRequest } from '~/infra/socket-io/request/search-users-and-groups-request';
-import { isErrorResponse } from '@yx-chat/shared/utils';
+import { getGlobalStore } from '~/utils/vue';
 import st from './AddContactButton.module.sass';
 import s from './ContactAddItem.module.sass';
 import { UserAndGroupSearchContent } from './UserAndGroupSearchContent';
@@ -51,26 +52,38 @@ const ContactSearchRow = defineComponent({
 
 const ContactSearchPanel = defineComponent({
   name: 'ContactSearchPanel',
-  setup() {
+  emits: {
+    finish: () => true,
+  },
+  setup(_, { emit }) {
+    const globalStore = getGlobalStore();
     const searchResult: Ref<UserAndGroupSearchResult | undefined> = ref();
     const onSearch = async (searchText: string) => {
       if (!searchText) {
         searchResult.value = undefined;
         return;
       }
-      const resp = await SocketIO.instance.fetch<UserAndGroupSearchResult>(
-        new SearchUsersAndGroupsRequest(searchText),
-      );
-      if (isErrorResponse(resp)) {
-        throw new Error(resp.message);
-      }
+      const resp = await globalStore.searchUsersAndGroups(searchText);
       searchResult.value = resp;
+    };
+    const onAddItem = async (
+      type: 'groups' | 'users',
+      item: UserAndGroupSearchItem,
+    ) => {
+      if (type === 'groups') {
+        await globalStore.joinGroup(item.id);
+      } else {
+      }
+      emit('finish');
     };
     return () => {
       return (
         <div class={s['search-panel']}>
           <ContactSearchRow onSearch={onSearch} />
-          <UserAndGroupSearchContent searchResult={searchResult.value} />
+          <UserAndGroupSearchContent
+            onAddItem={onAddItem}
+            searchResult={searchResult.value}
+          />
         </div>
       );
     };
@@ -101,7 +114,7 @@ const AddContactDialog = defineComponent({
           class={s.dialog}
           destroyOnClose
         >
-          <ContactSearchPanel />
+          <ContactSearchPanel onFinish={onClose} />
         </ElDialog>
       );
     };

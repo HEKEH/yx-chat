@@ -4,12 +4,13 @@ import type {
   LastMessagesResponse,
 } from '@yx-chat/shared/types';
 import HistoryModel from '../../database/mongoDB/model/history';
+import {
+  DEFAULT_MESSAGES_FETCH_NUMBER,
+  MAX_MESSAGES_FETCH_NUMBER,
+} from '../../const';
 import { shouldLogin } from './fn-decorators';
 import { EventHandler, EventHandlerContext } from './types';
 import { getMessagesByContactKey } from './utils';
-
-const DEFAULT_MESSAGES_FETCH_NUMBER = 20;
-const MAX_MESSAGES_FETCH_NUMBER = 100; // must surpass 99
 
 async function getHistoryMap(
   userId: string,

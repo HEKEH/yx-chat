@@ -13,6 +13,7 @@ import getHistoryChatMessages from './get-history-chat-messages';
 import sendChatMessage from './send-chat-message';
 import updateHistory from './update-history';
 import createGroup from './create-group';
+import joinGroup from './join-group';
 import searchUsersAndGroups from './search-users-and-groups';
 
 export const EventHandlerMap = {
@@ -24,6 +25,7 @@ export const EventHandlerMap = {
   [ChatMessageRequestType.sendChatMessage]: sendChatMessage,
   [ChatMessageRequestType.updateHistory]: updateHistory,
   [ContactRequestType.createGroup]: createGroup,
+  [ContactRequestType.joinGroup]: joinGroup,
   [SystemRequestType.searchUsersAndGroups]: searchUsersAndGroups,
 };
 export type EventHandlerMapType = typeof EventHandlerMap;

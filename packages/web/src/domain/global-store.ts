@@ -1,30 +1,36 @@
 import {
+  ChatMessagesRecord,
+  CreateGroupSuccessResponse,
+  ErrorResponse,
+  Group,
+  JoinGroupSuccessResponse,
   LastMessagesResponse,
   LoginSuccessResponse,
-  ErrorResponse,
-  CreateGroupSuccessResponse,
+  UserAndGroupSearchResult,
 } from '@yx-chat/shared/types';
 import { isErrorResponse } from '@yx-chat/shared/utils';
-import { SocketIO } from '~/infra/socket-io';
-import { LoginRequest } from '~/infra/socket-io/request/login-request';
 import { BusinessError } from '~/common/error';
 import { LocalStorageStore } from '~/infra/local-storage-store';
-import { LoginByTokenRequest } from '~/infra/socket-io/request/login-by-token-request';
-import { RegisterRequest } from '~/infra/socket-io/request/register-request';
-import { GetChatMessagesRequest } from '~/infra/socket-io/request/get-chat-messages-request';
+import { SocketIO } from '~/infra/socket-io';
 import { CreateGroupRequest } from '~/infra/socket-io/request/create-group-request';
-import Self from './models/self';
-import { MainMenu } from './types';
-import { ThemeManager } from './models/theme';
-import { ContactManager } from './models/contact';
+import { GetChatMessagesRequest } from '~/infra/socket-io/request/get-chat-messages-request';
+import { JoinGroupRequest } from '~/infra/socket-io/request/join-group-reques';
+import { LoginByTokenRequest } from '~/infra/socket-io/request/login-by-token-request';
+import { LoginRequest } from '~/infra/socket-io/request/login-request';
+import { RegisterRequest } from '~/infra/socket-io/request/register-request';
+import { SearchUsersAndGroupsRequest } from '~/infra/socket-io/request/search-users-and-groups-request';
 import {
   ChatMessageCollection,
   ChatMessageCollectionContext,
 } from './models/chat/chat-message-collection';
-import { IUser } from './models/typing';
 import { ChatMessageManager } from './models/chat/chat-message-manager';
+import { ContactManager } from './models/contact';
 import { FriendModel } from './models/contact/friend';
 import { GroupModel } from './models/contact/group';
+import Self from './models/self';
+import { ThemeManager } from './models/theme';
+import { IUser } from './models/typing';
+import { MainMenu } from './types';
 
 export default class GlobalStore implements ChatMessageCollectionContext {
   /** the user logged in */
@@ -119,11 +125,40 @@ export default class GlobalStore implements ChatMessageCollectionContext {
     const resp = await SocketIO.instance.fetch<
       CreateGroupSuccessResponse | ErrorResponse
     >(new CreateGroupRequest(groupName));
-    this._handleCreateGroupResponse(resp);
+    this._handleJoinGroupResponse(resp);
   }
 
-  private _handleCreateGroupResponse(
-    resp: CreateGroupSuccessResponse | ErrorResponse,
+  async joinGroup(groupId: string) {
+    const resp = await SocketIO.instance.fetch<
+      JoinGroupSuccessResponse | ErrorResponse
+    >(new JoinGroupRequest(groupId));
+    this._handleJoinGroupResponse(resp);
+  }
+
+  async searchUsersAndGroups(
+    searchText: string,
+  ): Promise<UserAndGroupSearchResult> {
+    let resp = await SocketIO.instance.fetch<UserAndGroupSearchResult>(
+      new SearchUsersAndGroupsRequest(searchText),
+    );
+    if (isErrorResponse(resp)) {
+      throw new Error(resp.message);
+    }
+    resp = {
+      groups: resp.groups.filter(
+        item => !this._contactManager.groupCollection.includes(item.id),
+      ),
+      users: resp.users.filter(
+        item =>
+          this._self.id !== item.id &&
+          !this._contactManager.friendCollection.includes(item.id),
+      ),
+    };
+    return resp;
+  }
+
+  private _handleJoinGroupResponse(
+    resp: (Group & { messagesRecord?: ChatMessagesRecord }) | ErrorResponse,
   ) {
     if (isErrorResponse(resp)) {
       throw new BusinessError(resp.message);
@@ -133,6 +168,7 @@ export default class GlobalStore implements ChatMessageCollectionContext {
       ChatMessageCollection.createByRawData({
         id: groupModel.messageOwnerKey,
         context: this,
+        messagesRecord: resp.messagesRecord,
       }),
     );
     this._contactManager.groupCollection.addItem(groupModel);

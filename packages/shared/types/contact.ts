@@ -1,3 +1,5 @@
+import { ChatMessagesRecord } from './chat';
+
 export interface Friend {
   id: string;
   createTime: string;
@@ -18,10 +20,18 @@ export interface Group {
 
 export enum ContactRequestType {
   createGroup = 'createGroup',
+  joinGroup = 'addGroup',
 }
 
 export interface CreateGroupRequestBody {
   name: string;
 }
+export interface JoinGroupRequestBody {
+  groupId: string;
+}
 
 export type CreateGroupSuccessResponse = Group; // is same currently
+
+export interface JoinGroupSuccessResponse extends Group {
+  messagesRecord: ChatMessagesRecord;
+}
