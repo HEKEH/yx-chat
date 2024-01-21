@@ -21,6 +21,7 @@ export interface Group {
 export enum ContactRequestType {
   createGroup = 'createGroup',
   joinGroup = 'addGroup',
+  sendAddFriendRequest = 'sendFriendAddRequest',
 }
 
 export interface CreateGroupRequestBody {
@@ -29,6 +30,16 @@ export interface CreateGroupRequestBody {
 export interface JoinGroupRequestBody {
   groupId: string;
 }
+
+export interface SendFriendAddRequestBody {
+  targetUserId: string;
+}
+
+export type SendFriendAddRequestResponse =
+  | {
+      success: true;
+    }
+  | { success: false; message: string };
 
 export type CreateGroupSuccessResponse = Group; // is same currently
 

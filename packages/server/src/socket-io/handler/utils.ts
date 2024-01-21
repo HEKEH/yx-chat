@@ -66,6 +66,11 @@ export async function findFriendsByUserId(userId: string): Promise<Friend[]> {
   return friends.map(friend => formatFriend(friend));
 }
 
+export async function findFriendIdsByUserId(userId: string): Promise<string[]> {
+  const friends = await FriendModel.find({ from: userId }, { to: 1 });
+  return friends.map(friend => friend.to as string);
+}
+
 export async function findGroupsByUserId(userId: string): Promise<Group[]> {
   const groups = await GroupModel.find(
     { members: userId },

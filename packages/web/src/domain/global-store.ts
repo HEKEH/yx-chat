@@ -1,7 +1,7 @@
 import {
+  SendFriendAddRequestResponse,
   ChatMessagesRecord,
   CreateGroupSuccessResponse,
-  ErrorResponse,
   Group,
   JoinGroupSuccessResponse,
   LastMessagesResponse,
@@ -9,16 +9,16 @@ import {
   UserAndGroupSearchResult,
 } from '@yx-chat/shared/types';
 import { isErrorResponse } from '@yx-chat/shared/utils';
-import { BusinessError } from '~/common/error';
 import { LocalStorageStore } from '~/infra/local-storage-store';
 import { SocketIO } from '~/infra/socket-io';
 import { CreateGroupRequest } from '~/infra/socket-io/request/create-group-request';
 import { GetChatMessagesRequest } from '~/infra/socket-io/request/get-chat-messages-request';
-import { JoinGroupRequest } from '~/infra/socket-io/request/join-group-reques';
+import { JoinGroupRequest } from '~/infra/socket-io/request/join-group-request';
 import { LoginByTokenRequest } from '~/infra/socket-io/request/login-by-token-request';
 import { LoginRequest } from '~/infra/socket-io/request/login-request';
 import { RegisterRequest } from '~/infra/socket-io/request/register-request';
 import { SearchUsersAndGroupsRequest } from '~/infra/socket-io/request/search-users-and-groups-request';
+import { SendFriendAddRequest } from '~/infra/socket-io/request/send-friend-add-request';
 import {
   ChatMessageCollection,
   ChatMessageCollectionContext,
@@ -89,9 +89,9 @@ export default class GlobalStore implements ChatMessageCollectionContext {
   }
 
   async login(userInfo: { username: string; password: string }): Promise<void> {
-    const resp = await SocketIO.instance.fetch<
-      LoginSuccessResponse | ErrorResponse
-    >(new LoginRequest(userInfo));
+    const resp = await SocketIO.instance.fetch<LoginSuccessResponse>(
+      new LoginRequest(userInfo),
+    );
     this._handleLoginResponse(resp);
     await this._initChatMessages();
   }
@@ -103,9 +103,9 @@ export default class GlobalStore implements ChatMessageCollectionContext {
     if (!token) {
       return;
     }
-    const resp = await SocketIO.instance.fetch<
-      LoginSuccessResponse | ErrorResponse
-    >(new LoginByTokenRequest(token));
+    const resp = await SocketIO.instance.fetch<LoginSuccessResponse>(
+      new LoginByTokenRequest(token),
+    );
     this._handleLoginResponse(resp);
     await this._initChatMessages();
   }
@@ -114,25 +114,31 @@ export default class GlobalStore implements ChatMessageCollectionContext {
     username: string;
     password: string;
   }): Promise<void> {
-    const resp = await SocketIO.instance.fetch<
-      LoginSuccessResponse | ErrorResponse
-    >(new RegisterRequest(userInfo));
+    const resp = await SocketIO.instance.fetch<LoginSuccessResponse>(
+      new RegisterRequest(userInfo),
+    );
     this._handleLoginResponse(resp);
     await this._initChatMessages();
   }
 
   async createGroup(groupName: string) {
-    const resp = await SocketIO.instance.fetch<
-      CreateGroupSuccessResponse | ErrorResponse
-    >(new CreateGroupRequest(groupName));
+    const resp = await SocketIO.instance.fetch<CreateGroupSuccessResponse>(
+      new CreateGroupRequest(groupName),
+    );
     this._handleJoinGroupResponse(resp);
   }
 
   async joinGroup(groupId: string) {
-    const resp = await SocketIO.instance.fetch<
-      JoinGroupSuccessResponse | ErrorResponse
-    >(new JoinGroupRequest(groupId));
+    const resp = await SocketIO.instance.fetch<JoinGroupSuccessResponse>(
+      new JoinGroupRequest(groupId),
+    );
     this._handleJoinGroupResponse(resp);
+  }
+
+  async sendFriendAddRequest(groupId: string) {
+    return await SocketIO.instance.fetch<SendFriendAddRequestResponse>(
+      new SendFriendAddRequest(groupId),
+    );
   }
 
   async searchUsersAndGroups(
@@ -158,11 +164,8 @@ export default class GlobalStore implements ChatMessageCollectionContext {
   }
 
   private _handleJoinGroupResponse(
-    resp: (Group & { messagesRecord?: ChatMessagesRecord }) | ErrorResponse,
+    resp: Group & { messagesRecord?: ChatMessagesRecord },
   ) {
-    if (isErrorResponse(resp)) {
-      throw new BusinessError(resp.message);
-    }
     const groupModel = new GroupModel(resp);
     groupModel.setChatMessageCollection(
       ChatMessageCollection.createByRawData({
@@ -188,11 +191,7 @@ export default class GlobalStore implements ChatMessageCollectionContext {
     this._selectedMenu = MainMenu.message;
   }
 
-  private _handleLoginResponse(resp: LoginSuccessResponse | ErrorResponse) {
-    // 和后端约定，返回string时，则为错误信息
-    if (isErrorResponse(resp)) {
-      throw new BusinessError(resp.message);
-    }
+  private _handleLoginResponse(resp: LoginSuccessResponse) {
     const { token, friends, groups, ...userInfo } = resp;
     if (token) {
       LocalStorageStore.instance.setItem('token', token);

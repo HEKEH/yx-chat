@@ -3,7 +3,7 @@ import {
   UserAndGroupSearchItem,
   UserAndGroupSearchResult,
 } from '@yx-chat/shared/types';
-import { ElButton, ElDialog, ElInput } from 'element-plus';
+import { ElButton, ElDialog, ElInput, ElMessage } from 'element-plus';
 import { Ref, defineComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { getGlobalStore } from '~/utils/vue';
@@ -56,6 +56,7 @@ const ContactSearchPanel = defineComponent({
     finish: () => true,
   },
   setup(_, { emit }) {
+    const { t } = useI18n();
     const globalStore = getGlobalStore();
     const searchResult: Ref<UserAndGroupSearchResult | undefined> = ref();
     const onSearch = async (searchText: string) => {
@@ -73,6 +74,12 @@ const ContactSearchPanel = defineComponent({
       if (type === 'groups') {
         await globalStore.joinGroup(item.id);
       } else {
+        const res = await globalStore.sendFriendAddRequest(item.id);
+        if (!res.success) {
+          ElMessage.error(t(res.message));
+          return;
+        }
+        ElMessage.success(t('common.sendFriendRequestSuccess'));
       }
       emit('finish');
     };

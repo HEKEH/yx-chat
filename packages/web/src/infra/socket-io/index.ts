@@ -1,7 +1,9 @@
-import clientConfig from '~/config';
 import { ServerMessage, ServerMessageType } from '@yx-chat/shared/types';
+import { isErrorResponse } from '@yx-chat/shared/utils';
 import { Subject, Subscription } from 'rxjs';
 import IO, { Socket } from 'socket.io-client';
+import { BusinessError } from '~/common/error';
+import clientConfig from '~/config';
 import i18n from '../i18n';
 import { AbstractSocketRequest } from './request/type';
 
@@ -70,7 +72,7 @@ export class SocketIO {
     if (!this._isConnected) {
       await this.onReady();
     }
-    return new Promise((resolve, reject) => {
+    const res = await new Promise((resolve, reject) => {
       this._io
         .timeout(TIMEOUT_MILLISECONDS)
         .emit(request.type, request.data, (err: any, response: T) => {
@@ -83,6 +85,10 @@ export class SocketIO {
           }
         });
     });
+    if (isErrorResponse(res)) {
+      throw new BusinessError(res.message);
+    }
+    return res as T;
   }
   /** 注册针对消息类型的消息处理者 */
   addMessageListener<T extends ServerMessage>(

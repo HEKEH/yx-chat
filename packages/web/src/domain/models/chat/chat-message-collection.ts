@@ -5,9 +5,7 @@ import {
   HistoryChatMessagesResponse,
   UpdateHistoryResponse,
 } from '@yx-chat/shared/types';
-import { isErrorResponse } from '@yx-chat/shared/utils';
 import { Subject } from 'rxjs';
-import { BusinessError } from '~/common/error';
 import { SocketIO } from '~/infra/socket-io';
 import { GetHistoryChatMessagesRequest } from '~/infra/socket-io/request/get-history-chat-messages-request';
 import { SendChatMessageRequest } from '~/infra/socket-io/request/send-chat-message-request';
@@ -125,16 +123,12 @@ export class ChatMessageCollection {
   async clearUnread() {
     if (this._unread && this.latestMessage) {
       this._unread = 0;
-      const updateHistoryResult =
-        await SocketIO.instance.fetch<UpdateHistoryResponse>(
-          new UpdateHistoryRequest({
-            contactKey: this.owner.messageOwnerKey,
-            messageId: this.latestMessage.id,
-          }),
-        );
-      if (isErrorResponse(updateHistoryResult)) {
-        throw new BusinessError(updateHistoryResult.message);
-      }
+      await SocketIO.instance.fetch<UpdateHistoryResponse>(
+        new UpdateHistoryRequest({
+          contactKey: this.owner.messageOwnerKey,
+          messageId: this.latestMessage.id,
+        }),
+      );
     }
   }
 

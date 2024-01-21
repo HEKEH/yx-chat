@@ -15,6 +15,7 @@ import updateHistory from './update-history';
 import createGroup from './create-group';
 import joinGroup from './join-group';
 import searchUsersAndGroups from './search-users-and-groups';
+import sendFriendAddRequest from './send-friend-add-request';
 
 export const EventHandlerMap = {
   [AccountRequestType.login]: login,
@@ -26,6 +27,7 @@ export const EventHandlerMap = {
   [ChatMessageRequestType.updateHistory]: updateHistory,
   [ContactRequestType.createGroup]: createGroup,
   [ContactRequestType.joinGroup]: joinGroup,
+  [ContactRequestType.sendAddFriendRequest]: sendFriendAddRequest,
   [SystemRequestType.searchUsersAndGroups]: searchUsersAndGroups,
 };
 export type EventHandlerMapType = typeof EventHandlerMap;

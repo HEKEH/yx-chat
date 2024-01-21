@@ -27,6 +27,7 @@ export interface I18nMessage {
     searchPlaceholder2: string;
     toFindNewFriends: string;
     confirmToAdd: string;
+    sendFriendRequestSuccess: string;
   };
   setting: {
     general: string;

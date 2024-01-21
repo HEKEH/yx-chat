@@ -17,7 +17,7 @@ function addSocketEventListeners(socketIO: SocketIO) {
 
   const onSocketDisconnect = (reason: string) => {
     ElNotification.error({
-      message: `${t('server.disconnect')}: ${reason}`,
+      message: `${t('server.disconnect')}: ${t(reason)}`,
     });
   };
 
@@ -42,7 +42,7 @@ export default defineComponent({
   setup() {
     onErrorCaptured(e => {
       ElNotification.error({
-        message: typeof e === 'string' ? e : (e as Error).message,
+        message: t(typeof e === 'string' ? e : (e as Error).message),
       });
       console.error(e);
       return false;
