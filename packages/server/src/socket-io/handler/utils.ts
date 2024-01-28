@@ -1,5 +1,12 @@
 import { encode, decode } from 'jwt-simple';
-import { ChatMessage, Friend, Group } from '@yx-chat/shared/types';
+import {
+  ChatMessage,
+  Friend,
+  FriendAddNotification,
+  Group,
+  NotificationType,
+  Notification,
+} from '@yx-chat/shared/types';
 import { Types } from 'mongoose';
 import config from '../../config';
 import FriendModel, {
@@ -8,6 +15,7 @@ import FriendModel, {
 import GroupModel from '../../database/mongoDB/model/group';
 import { UserDocument } from '../../database/mongoDB/model/user';
 import ChatMessageModel from '../../database/mongoDB/model/chat-message';
+import FriendAddRequestModel from '../../database/mongoDB/model/friend-add-request';
 
 export function generateToken(userId: string, environment: string) {
   return encode(
@@ -146,4 +154,36 @@ export async function getMessagesByContactKey(
  */
 export function isIdValid(id: string) {
   return Types.ObjectId.isValid(id);
+}
+
+export async function findFriendAddNotificationsByUserId(
+  userId: string,
+): Promise<FriendAddNotification[]> {
+  const list = await FriendAddRequestModel.find({
+    to: userId,
+    deleted: false,
+  }).populate('from', { username: 1, avatar: 1, _id: 1 });
+  return list.map(item => {
+    const from = item.from as UserDocument;
+    return {
+      type: NotificationType.FriendAddNotification,
+      id: item.id,
+      from: {
+        id: from._id, // user id
+        username: from.username,
+        avatar: from.avatar,
+      },
+      createTime: item.createTime.toString(),
+      message: item.message,
+    };
+  });
+}
+
+export async function findNotificationsByUserId(
+  userId: string,
+): Promise<Notification[]> {
+  const [friendAddNotifications] = await Promise.all([
+    findFriendAddNotificationsByUserId(userId),
+  ]);
+  return [...friendAddNotifications];
 }

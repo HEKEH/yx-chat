@@ -27,15 +27,8 @@ export type ChatMessage = {
     id: string; // user id
     username: string;
     avatar: string;
-  }; // user id
+  };
   to: string;
-};
-
-export type SystemMessage = {
-  id: string;
-  to: string;
-  content: string;
-  createTime: string;
 };
 
 /** Messages with an user or an group */

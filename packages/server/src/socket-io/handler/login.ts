@@ -9,7 +9,11 @@ import bcrypt from 'bcryptjs';
 import logger from '../../utils/logger';
 import UserModel from '../../database/mongoDB/model/user';
 import { EventHandler, EventHandlerContext } from './types';
-import { findFriendsAndGroupsByUserId, generateToken } from './utils';
+import {
+  findFriendsAndGroupsByUserId,
+  findNotificationsByUserId,
+  generateToken,
+} from './utils';
 
 const login: EventHandler = async (
   context: EventHandlerContext,
@@ -37,8 +41,9 @@ const login: EventHandler = async (
   assert(isPasswordCorrect, 'Password is incorrect');
   const userId = user.id;
   const token = generateToken(userId, environment);
-  const [{ groups, friends }] = await Promise.all([
+  const [{ groups, friends }, notifications] = await Promise.all([
     findFriendsAndGroupsByUserId(userId),
+    findNotificationsByUserId(userId),
     context.setUserInfo({ userId, os, browser, environment }),
   ]);
   context.joinToGroups(groups.map(({ id }) => id));
@@ -51,7 +56,7 @@ const login: EventHandler = async (
     isAdmin: context.isAdmin,
     groups,
     friends,
-    notificationTokens: [], // TODO
+    notifications,
   };
 };
 

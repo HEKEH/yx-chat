@@ -66,7 +66,7 @@ let sendChatMessage: EventHandler = async (
     message: chatMessage.id,
   });
   const message = {
-    type: ServerMessageType.chat,
+    type: ServerMessageType.chat as const,
     data: chatMessage,
   };
   if (isGroup) {

@@ -53,7 +53,7 @@ const register: EventHandler = async (
     isAdmin: context.isAdmin,
     groups: [],
     friends: [],
-    notificationTokens: [], // TODO
+    notifications: [],
   };
 };
 

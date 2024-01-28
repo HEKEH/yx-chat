@@ -6,7 +6,7 @@ import { Document, Schema, model } from 'mongoose';
 import { UserDocument } from './user';
 
 const ChatMessageSchema = new Schema({
-  createTime: { type: Date, default: Date.now, index: true },
+  createTime: { type: Date, default: Date.now },
 
   from: {
     type: Schema.Types.ObjectId,

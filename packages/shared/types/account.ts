@@ -1,4 +1,5 @@
 import { Friend, Group } from './contact';
+import { Notification } from './notification';
 import { UserBasicInfo } from './user';
 
 export enum AccountRequestType {
@@ -31,4 +32,5 @@ export interface LoginSuccessResponse extends UserBasicInfo {
   token?: string;
   friends: Friend[];
   groups: Group[];
+  notifications: Notification[];
 }

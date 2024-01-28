@@ -1,8 +1,9 @@
-import { ChatMessage, SystemMessage } from './chat';
+import { ChatMessage } from './chat';
+import { Notification } from './notification';
 
 export enum ServerMessageType {
   chat = 'chat',
-  system = 'system',
+  notification = 'notification',
 }
 
 export type ServerMessage =
@@ -11,6 +12,6 @@ export type ServerMessage =
       data: ChatMessage;
     }
   | {
-      type: ServerMessageType.system;
-      data: SystemMessage; // TODO
+      type: ServerMessageType.notification;
+      data: Notification;
     };

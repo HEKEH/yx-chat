@@ -31,6 +31,7 @@ import Self from './models/self';
 import { ThemeManager } from './models/theme';
 import { IUser } from './models/typing';
 import { MainMenu } from './types';
+import { NotificationManager } from './models/notification/notification-manager';
 
 export default class GlobalStore implements ChatMessageCollectionContext {
   /** the user logged in */
@@ -43,6 +44,7 @@ export default class GlobalStore implements ChatMessageCollectionContext {
   private _selectedMenu: MainMenu = MainMenu.message;
 
   private _chatMessageManager: ChatMessageManager = new ChatMessageManager();
+  private _notificationManager: NotificationManager = new NotificationManager();
 
   get self() {
     return this._self;
@@ -72,6 +74,10 @@ export default class GlobalStore implements ChatMessageCollectionContext {
 
   get chatMessageManager() {
     return this._chatMessageManager;
+  }
+
+  get notificationManager() {
+    return this._notificationManager;
   }
 
   selectMenu(menu: MainMenu) {
@@ -188,11 +194,12 @@ export default class GlobalStore implements ChatMessageCollectionContext {
     this.self.clear();
     this._contactManager.clear();
     this._chatMessageManager.clear();
+    this._notificationManager.clear();
     this._selectedMenu = MainMenu.message;
   }
 
   private _handleLoginResponse(resp: LoginSuccessResponse) {
-    const { token, friends, groups, ...userInfo } = resp;
+    const { token, friends, groups, notifications, ...userInfo } = resp;
     if (token) {
       LocalStorageStore.instance.setItem('token', token);
     }
@@ -202,6 +209,7 @@ export default class GlobalStore implements ChatMessageCollectionContext {
       groups,
       selfId: this._self.id,
     });
+    this._notificationManager.init(notifications);
   }
 
   get userMap() {

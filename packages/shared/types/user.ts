@@ -4,6 +4,4 @@ export interface UserBasicInfo {
   avatar: string;
   tag: string;
   isAdmin: boolean;
-  notificationTokens: string[];
-  // createTime: number;
 }
