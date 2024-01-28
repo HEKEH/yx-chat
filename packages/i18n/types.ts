@@ -48,6 +48,7 @@ export interface I18nMessage {
     createGroup: string;
     addFriendOrGroup: string;
     inputGroupName: string;
+    notifications: string;
   };
   time: {
     today: string;

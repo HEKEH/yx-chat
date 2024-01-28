@@ -45,6 +45,7 @@ const cn: I18nMessage = {
     chats: '聊天',
     contacts: '联系人',
     users: '用户',
+    notifications: '通知',
     friends: '好友',
     groups: '群组',
     createGroup: '创建群组',

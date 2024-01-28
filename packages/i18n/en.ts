@@ -44,6 +44,7 @@ const en: I18nMessage = {
   main: {
     chats: 'Chats',
     contacts: 'Contacts',
+    notifications: 'Notifications',
     users: 'Users',
     friends: 'Friends',
     groups: 'Groups',

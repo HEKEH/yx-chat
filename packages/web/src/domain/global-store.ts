@@ -63,15 +63,6 @@ export default class GlobalStore implements ChatMessageCollectionContext {
     return this._selectedMenu;
   }
 
-  get currentChatMessageCollection(): ChatMessageCollection | undefined {
-    if (this._selectedMenu === MainMenu.contact) {
-      return this._contactManager.currentContact?.chatMessageCollection;
-    }
-    if (this._selectedMenu === MainMenu.message) {
-      return this._chatMessageManager.selectedItem;
-    }
-  }
-
   get chatMessageManager() {
     return this._chatMessageManager;
   }
