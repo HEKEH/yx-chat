@@ -30,6 +30,7 @@ const cn: I18nMessage = {
     toFindNewFriends: '快来发现更多新朋友！',
     confirmToAdd: '确认添加',
     sendFriendRequestSuccess: '发送好友请求成功',
+    noNotification: '没有新的通知',
   },
   setting: {
     general: '通用',

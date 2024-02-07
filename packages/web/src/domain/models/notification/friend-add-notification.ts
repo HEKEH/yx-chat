@@ -1,7 +1,8 @@
 import { FriendAddNotification, NotificationType } from '@yx-chat/shared/types';
 import { GeneralTime } from '../common/time';
+import { NotificationModel } from './typing';
 
-export class FriendAddNotificationModel {
+export class FriendAddNotificationModel implements NotificationModel {
   readonly id: string;
   readonly from: {
     id: string;

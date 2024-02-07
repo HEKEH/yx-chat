@@ -1,4 +1,4 @@
-import { Mail } from '@icon-park/vue-next';
+import { Remind } from '@icon-park/vue-next';
 import { ElBadge, ElTooltip } from 'element-plus';
 import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -24,7 +24,7 @@ export const NotificationButton = defineComponent({
           placement="right"
         >
           <ElBadge value={unread} max={99} hidden={!unread} isDot>
-            <Mail
+            <Remind
               theme={isSelected ? 'filled' : 'outline'}
               class={[s.button, isSelected ? s['button-selected'] : undefined]}
               fill={
@@ -32,7 +32,7 @@ export const NotificationButton = defineComponent({
                   ? globalStore.themeManager.getThemeColor()
                   : undefined
               }
-              strokeWidth={2}
+              strokeWidth={3}
               onClick={onClick}
             />
           </ElBadge>

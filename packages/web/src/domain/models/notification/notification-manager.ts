@@ -1,12 +1,12 @@
 import { Notification, ServerMessageType } from '@yx-chat/shared/types';
 import { Subscription } from 'rxjs';
 import { SocketIO } from '~/infra/socket-io';
-import { FriendAddNotificationModel } from './friend-add-notification';
 import { notificationFactory } from './notification-factory';
+import { NotificationModel } from './typing';
 
 export class NotificationManager {
   private _notificationListenSubscription: Subscription | undefined;
-  private _notificationList: FriendAddNotificationModel[] = [];
+  private _notificationList: NotificationModel[] = [];
 
   get notificationList() {
     return this._notificationList;
@@ -19,7 +19,7 @@ export class NotificationManager {
   private _receiveNotification(notification: Notification) {
     console.log(notification, 'notification');
     if (!this._notificationList.some(item => item.id === notification.id)) {
-      this._notificationList.push(notificationFactory.create(notification));
+      this._notificationList.unshift(notificationFactory.create(notification));
       this._sortItems();
     }
   }

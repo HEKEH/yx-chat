@@ -2,6 +2,7 @@ import { defineComponent } from 'vue';
 import { MainMenu } from '~/domain/types';
 import { getGlobalStore } from '~/utils/vue';
 import { ChatPanel } from '../chat/chat-panel';
+import { NotificationList } from '../notification';
 import s from './index.module.sass';
 import { MiddlePage } from './middle-page';
 import { ContactTabs } from './middle-page/contact-tabs';
@@ -53,7 +54,13 @@ export const MainPanel = defineComponent({
             </>
           );
         case MainMenu.notification:
-          return <div class={s['right-container']}></div>;
+          return (
+            <div class={s['right-container']}>
+              <NotificationList
+                notificationManager={globalStore.notificationManager}
+              />
+            </div>
+          );
       }
     };
   },

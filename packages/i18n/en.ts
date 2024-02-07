@@ -30,6 +30,7 @@ const en: I18nMessage = {
     toFindNewFriends: 'To find new friends!',
     confirmToAdd: 'Confirm to add',
     sendFriendRequestSuccess: 'Successfully send friend request',
+    noNotification: 'No notification',
   },
   setting: {
     general: 'General',

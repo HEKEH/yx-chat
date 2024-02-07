@@ -28,6 +28,7 @@ export interface I18nMessage {
     toFindNewFriends: string;
     confirmToAdd: string;
     sendFriendRequestSuccess: string;
+    noNotification: string;
   };
   setting: {
     general: string;
