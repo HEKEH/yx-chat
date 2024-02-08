@@ -26,7 +26,10 @@ import {
   ChatMessageCollection,
   ChatMessageCollectionContext,
 } from './models/chat/chat-message-collection';
-import { ChatMessageManager } from './models/chat/chat-message-manager';
+import {
+  ChatMessageManagerContext,
+  ChatMessageManager,
+} from './models/chat/chat-message-manager';
 import { ContactManager } from './models/contact';
 import { FriendModel } from './models/contact/friend';
 import { GroupModel } from './models/contact/group';
@@ -37,7 +40,9 @@ import { ThemeManager } from './models/theme';
 import { IUser } from './models/typing';
 import { MainMenu } from './types';
 
-export default class GlobalStore implements ChatMessageCollectionContext {
+export default class GlobalStore
+  implements ChatMessageManagerContext, ChatMessageCollectionContext
+{
   /** the user logged in */
   private _self: Self = Self.createEmpty();
 
@@ -74,6 +79,15 @@ export default class GlobalStore implements ChatMessageCollectionContext {
 
   get notificationManager() {
     return this._notificationManager;
+  }
+
+  get currentChatMessageCollection() {
+    if (this._selectedMenu === MainMenu.contact) {
+      return this.contactManager.currentContact?.chatMessageCollection;
+    }
+    if (this._selectedMenu === MainMenu.message) {
+      return this.chatMessageManager.selectedItem;
+    }
   }
 
   selectMenu(menu: MainMenu) {
@@ -277,6 +291,6 @@ export default class GlobalStore implements ChatMessageCollectionContext {
       const messageCollection = chatMessageCollectionMap[key];
       contact.setChatMessageCollection(messageCollection);
     });
-    this._chatMessageManager.init(chatMessageCollectionList);
+    this._chatMessageManager.init(this, chatMessageCollectionList);
   }
 }

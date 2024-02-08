@@ -3,8 +3,14 @@ import { Subscription } from 'rxjs';
 import { SocketIO } from '~/infra/socket-io';
 import { ChatMessageCollection } from './chat-message-collection';
 
+export interface ChatMessageManagerContext {
+  /** global current chatMessageCollection */
+  readonly currentChatMessageCollection: ChatMessageCollection | undefined;
+}
+
 /** Model of chat menu */
 export class ChatMessageManager {
+  private _context: ChatMessageManagerContext | undefined;
   private _selectedId: string | undefined;
   private _list: ChatMessageCollection[] = [];
   private _messageListenSubscription: Subscription | undefined;
@@ -46,7 +52,10 @@ export class ChatMessageManager {
     });
     if (chatMessageCollection) {
       chatMessageCollection.receiveChatMessage(message);
-      if (chatMessageCollection === this.selectedItem) {
+      if (
+        // if is in current chat
+        chatMessageCollection === this._context?.currentChatMessageCollection
+      ) {
         await chatMessageCollection.clearUnread();
       }
     } else {
@@ -58,7 +67,11 @@ export class ChatMessageManager {
     item.onHasNewChatMessage.subscribe(() => this._sortList());
   }
 
-  init(chatMessageCollectionList: ChatMessageCollection[]) {
+  init(
+    context: ChatMessageManagerContext,
+    chatMessageCollectionList: ChatMessageCollection[],
+  ) {
+    this._context = context;
     this._list = chatMessageCollectionList;
     this._sortList();
     // this._selectedId = this._list[0]?.id;
@@ -78,6 +91,7 @@ export class ChatMessageManager {
   }
 
   clear() {
+    this._context = undefined;
     this._list.forEach(item => item.clear());
     this._messageListenSubscription!.unsubscribe();
     this._messageListenSubscription = undefined;
