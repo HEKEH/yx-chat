@@ -9,7 +9,7 @@ export type CommonResponse =
 export interface Friend {
   id: string;
   createTime: string;
-  to: {
+  userInfo: {
     id: string;
     username: string;
     avatar: string;
@@ -29,6 +29,7 @@ export enum ContactRequestType {
   joinGroup = 'addGroup',
   sendAddFriendRequest = 'sendFriendAddRequest',
   rejectAddFriendRequest = 'rejectAddFriendRequest',
+  acceptAddFriendRequest = 'acceptAddFriendRequest',
 }
 
 export interface CreateGroupRequestBody {
@@ -47,6 +48,10 @@ export interface RejectFriendAddRequestBody {
 }
 
 export type SendFriendAddRequestResponse = CommonResponse;
+export interface AcceptFriendAddRequestBody {
+  requestId: string;
+}
+export type AcceptFriendAddRequestResponse = Friend;
 
 export type CreateGroupSuccessResponse = Group; // is same currently
 

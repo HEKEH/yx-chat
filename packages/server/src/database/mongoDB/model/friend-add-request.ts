@@ -19,7 +19,7 @@ const FriendAddRequestSchema = new Schema({
     type: String,
     default: '',
   },
-  received: {
+  accepted: {
     type: Boolean,
   },
   /** finished, then soft deleted */
@@ -35,8 +35,8 @@ export interface FriendAddRequestDocument extends Document {
   /** Not used yet */
   message: string;
   createTime: Date;
-  /** receive or reject */
-  received?: boolean;
+  /** accept or reject */
+  accepted?: boolean;
   /** Has it been deleted */
   deleted: boolean;
 }

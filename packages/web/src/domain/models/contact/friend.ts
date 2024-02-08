@@ -3,11 +3,11 @@ import { AbstractContactUnit } from './abstract-contact-unit';
 
 export class FriendModel extends AbstractContactUnit {
   readonly messageOwnerKey: string;
-  constructor({ to, createTime }: Friend, selfId: string) {
+  constructor({ userInfo, createTime }: Friend, selfId: string) {
     super({
-      id: to.id,
-      avatar: to.avatar,
-      name: to.username,
+      id: userInfo.id,
+      avatar: userInfo.avatar,
+      name: userInfo.username,
       createTime,
     });
     this.messageOwnerKey =

@@ -1,4 +1,8 @@
-import { Environment, ServerMessage } from '@yx-chat/shared/types';
+import {
+  Environment,
+  ServerMessage,
+  UserBasicInfo,
+} from '@yx-chat/shared/types';
 
 export type EventHandler = (context: EventHandlerContext, data: any) => any;
 
@@ -6,7 +10,8 @@ export interface EventHandlerContext {
   readonly socketId: string;
   readonly socketIp: string;
   readonly userId: string | undefined;
-  setUserInfo: (userInfo: Environment & { userId: string }) => Promise<void>;
+  readonly userInfo: (Environment & UserBasicInfo) | undefined;
+  setUserInfo: (userInfo: Environment & UserBasicInfo) => Promise<void>;
   sendFriendMessage: (
     friendId: string,
     message: ServerMessage,

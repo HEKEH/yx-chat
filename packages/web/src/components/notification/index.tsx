@@ -15,8 +15,8 @@ export const NotificationList = defineComponent({
   },
   setup(props) {
     const { t } = useI18n();
-    const onRemoveNotification = async (item: NotificationModel) => {
-      await props.notificationManager.removeNotification(item);
+    const onRemoveNotification = (item: NotificationModel) => {
+      props.notificationManager.removeNotification(item);
     };
     return () => {
       const { notificationManager } = props;
@@ -32,7 +32,6 @@ export const NotificationList = defineComponent({
             <NotificationItem
               key={notificationModel.id}
               notificationModel={notificationModel}
-              remove={onRemoveNotification}
             />
           ))}
         </div>

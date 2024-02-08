@@ -41,19 +41,27 @@ const login: EventHandler = async (
   assert(isPasswordCorrect, 'Password is incorrect');
   const userId = user.id;
   const token = generateToken(userId, environment);
-  const [{ groups, friends }, notifications] = await Promise.all([
-    findFriendsAndGroupsByUserId(userId),
-    findNotificationsByUserId(userId),
-    context.setUserInfo({ userId, os, browser, environment }),
-  ]);
-  context.joinToGroups(groups.map(({ id }) => id));
-  return {
+  const userInfo = {
     id: user.id,
-    token,
     avatar: user.avatar,
     username: user.username,
     tag: user.tag,
     isAdmin: context.isAdmin,
+  };
+  const [{ groups, friends }, notifications] = await Promise.all([
+    findFriendsAndGroupsByUserId(userId),
+    findNotificationsByUserId(userId),
+    context.setUserInfo({
+      ...userInfo,
+      os,
+      browser,
+      environment,
+    }),
+  ]);
+  context.joinToGroups(groups.map(({ id }) => id));
+  return {
+    ...userInfo,
+    token,
     groups,
     friends,
     notifications,

@@ -43,14 +43,17 @@ const register: EventHandler = async (
   }
   const userId = newUser.id;
   const token = generateToken(userId, environment);
-  await context.setUserInfo({ userId, os, browser, environment });
-  return {
-    id: userId,
-    token,
+  const userInfo = {
+    id: newUser.id,
     avatar: newUser.avatar,
     username: newUser.username,
     tag: newUser.tag,
     isAdmin: context.isAdmin,
+  };
+  await context.setUserInfo({ ...userInfo, os, browser, environment });
+  return {
+    ...userInfo,
+    token,
     groups: [],
     friends: [],
     notifications: [],

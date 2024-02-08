@@ -2,9 +2,9 @@ import { Notification, ServerMessageType } from '@yx-chat/shared/types';
 import { Subscription } from 'rxjs';
 import { SocketIO } from '~/infra/socket-io';
 import { notificationFactory } from './notification-factory';
-import { NotificationModel } from './typing';
+import { NotificationContext, NotificationModel } from './typing';
 
-export class NotificationManager {
+export class NotificationManager implements NotificationContext {
   private _notificationListenSubscription: Subscription | undefined;
   private _notificationList: NotificationModel[] = [];
 
@@ -17,9 +17,10 @@ export class NotificationManager {
   }
 
   private _receiveNotification(notification: Notification) {
-    console.log(notification, 'notification');
     if (!this._notificationList.some(item => item.id === notification.id)) {
-      this._notificationList.unshift(notificationFactory.create(notification));
+      this._notificationList.unshift(
+        notificationFactory.create(this, notification),
+      );
       this._sortItems();
     }
   }
@@ -36,7 +37,9 @@ export class NotificationManager {
   }
 
   init(notifications: Notification[]) {
-    this._notificationList = notifications.map(notificationFactory.create);
+    this._notificationList = notifications.map(notification =>
+      notificationFactory.create(this, notification),
+    );
     this._sortItems();
     this._notificationListenSubscription =
       SocketIO.instance.addMessageListener<{
@@ -51,9 +54,7 @@ export class NotificationManager {
     this._receiveNotification(notification);
   }
 
-  async removeNotification(notification: NotificationModel) {
-    // remove from database
-    await notification.remove();
+  removeNotification(notification: NotificationModel) {
     this._notificationList = this._notificationList.filter(
       item => item.id !== notification.id,
     );

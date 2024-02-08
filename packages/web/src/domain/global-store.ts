@@ -1,14 +1,17 @@
 import {
-  SendFriendAddRequestResponse,
   ChatMessagesRecord,
   CreateGroupSuccessResponse,
+  Friend,
   Group,
   JoinGroupSuccessResponse,
   LastMessagesResponse,
   LoginSuccessResponse,
+  SendFriendAddRequestResponse,
+  ServerMessageType,
   UserAndGroupSearchResult,
 } from '@yx-chat/shared/types';
 import { isErrorResponse } from '@yx-chat/shared/utils';
+import { Subscription } from 'rxjs';
 import { LocalStorageStore } from '~/infra/local-storage-store';
 import { SocketIO } from '~/infra/socket-io';
 import { CreateGroupRequest } from '~/infra/socket-io/request/create-group-request';
@@ -27,11 +30,12 @@ import { ChatMessageManager } from './models/chat/chat-message-manager';
 import { ContactManager } from './models/contact';
 import { FriendModel } from './models/contact/friend';
 import { GroupModel } from './models/contact/group';
+import { FriendAddNotificationModel } from './models/notification/friend-add-notification';
+import { NotificationManager } from './models/notification/notification-manager';
 import Self from './models/self';
 import { ThemeManager } from './models/theme';
 import { IUser } from './models/typing';
 import { MainMenu } from './types';
-import { NotificationManager } from './models/notification/notification-manager';
 
 export default class GlobalStore implements ChatMessageCollectionContext {
   /** the user logged in */
@@ -45,6 +49,7 @@ export default class GlobalStore implements ChatMessageCollectionContext {
 
   private _chatMessageManager: ChatMessageManager = new ChatMessageManager();
   private _notificationManager: NotificationManager = new NotificationManager();
+  private _friendAcceptedSubscription: Subscription | undefined;
 
   get self() {
     return this._self;
@@ -81,6 +86,9 @@ export default class GlobalStore implements ChatMessageCollectionContext {
     if (this._selectedMenu === MainMenu.contact) {
       this.contactManager.selectContact(contact);
     } else if (this._selectedMenu === MainMenu.message) {
+      this.chatMessageManager.selectById(contact.chatMessageCollection.id);
+    } else {
+      this.selectMenu(MainMenu.message);
       this.chatMessageManager.selectById(contact.chatMessageCollection.id);
     }
   }
@@ -138,6 +146,11 @@ export default class GlobalStore implements ChatMessageCollectionContext {
     );
   }
 
+  async acceptFriendAddRequest(notification: FriendAddNotificationModel) {
+    const friend = await notification.accept();
+    this._addFriend(friend);
+  }
+
   async searchUsersAndGroups(
     searchText: string,
   ): Promise<UserAndGroupSearchResult> {
@@ -181,12 +194,27 @@ export default class GlobalStore implements ChatMessageCollectionContext {
     this._clear();
   }
 
+  private _addFriend(friend: Friend & { messagesRecord?: ChatMessagesRecord }) {
+    const friendModel = new FriendModel(friend, this._self.id);
+    friendModel.setChatMessageCollection(
+      ChatMessageCollection.createByRawData({
+        id: friendModel.messageOwnerKey,
+        context: this,
+        messagesRecord: friend.messagesRecord,
+      }),
+    );
+    this._contactManager.friendCollection.addItem(friendModel);
+    this._chatMessageManager.addItem(friendModel.chatMessageCollection);
+    this.selectContactInCurrentMenu(friendModel);
+  }
+
   private _clear() {
     this.self.clear();
     this._contactManager.clear();
     this._chatMessageManager.clear();
     this._notificationManager.clear();
     this._selectedMenu = MainMenu.message;
+    this._friendAcceptedSubscription?.unsubscribe();
   }
 
   private _handleLoginResponse(resp: LoginSuccessResponse) {
@@ -201,6 +229,12 @@ export default class GlobalStore implements ChatMessageCollectionContext {
       selfId: this._self.id,
     });
     this._notificationManager.init(notifications);
+    this._friendAcceptedSubscription = SocketIO.instance.addMessageListener<{
+      type: ServerMessageType.friendAccepted;
+      data: Friend;
+    }>(ServerMessageType.friendAccepted, (friend: Friend) => {
+      this._addFriend(friend);
+    });
   }
 
   get userMap() {

@@ -12,10 +12,6 @@ export const NotificationItem = defineComponent({
       type: Object as PropType<NotificationModel>,
       required: true,
     },
-    remove: {
-      type: Function as PropType<(model: NotificationModel) => Promise<void>>,
-      required: true,
-    },
   },
   setup(props) {
     const contentRef = ref<{ click: () => void } | null>(null);
@@ -23,7 +19,7 @@ export const NotificationItem = defineComponent({
       contentRef.value?.click();
     };
     return () => {
-      const { notificationModel, remove } = props;
+      const { notificationModel } = props;
       let content: JSX.Element;
       switch (notificationModel.type) {
         case NotificationType.FriendAddNotification:
@@ -31,7 +27,6 @@ export const NotificationItem = defineComponent({
             <FriendAddNotificationItem
               ref={contentRef}
               model={notificationModel as FriendAddNotificationModel}
-              remove={remove}
             />
           );
           break;

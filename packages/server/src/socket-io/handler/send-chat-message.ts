@@ -25,13 +25,7 @@ let sendChatMessage: EventHandler = async (
 
   const { type, to } = data;
   const userId = context.userId!;
-  const user = await UserModel.findOne(
-    { _id: userId },
-    { username: 1, avatar: 1, tag: 1 },
-  );
-  if (!user) {
-    return errorResponse('User not exist');
-  }
+  const user = context.userInfo!;
   const isGroup = isIdValid(to); // If to is valid id，then the target is group, else is friend; TODO nasty design
   const targetUserId = isGroup ? to : to.replace(userId, ''); // group id or friend id
   if (isGroup) {

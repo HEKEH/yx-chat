@@ -56,15 +56,11 @@ let sendFriendAddRequest: EventHandler = async (
       message: 'Already requested before',
     };
   }
-  const [request, user] = await Promise.all([
-    FriendAddRequestModel.create({
-      from: userId,
-      to: targetUserId,
-    }),
-    UserModel.findOne({
-      _id: userId,
-    }),
-  ]);
+  const request = await FriendAddRequestModel.create({
+    from: userId,
+    to: targetUserId,
+  });
+  const user = context.userInfo!;
   context.sendFriendMessage(targetUserId, {
     type: ServerMessageType.notification,
     data: {
@@ -72,10 +68,10 @@ let sendFriendAddRequest: EventHandler = async (
       id: request.id,
       from: {
         id: userId,
-        username: user!.username,
-        avatar: user!.avatar,
+        username: user.username,
+        avatar: user.avatar,
       },
-      createTime: new Date().toISOString(),
+      createTime: new Date().toString(),
       message: 'Send a friend request',
     },
   });

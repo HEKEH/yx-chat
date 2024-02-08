@@ -1,5 +1,9 @@
 import { AssertionError } from 'assert';
-import { Environment, ServerMessage } from '@yx-chat/shared/types';
+import {
+  Environment,
+  ServerMessage,
+  UserBasicInfo,
+} from '@yx-chat/shared/types';
 import { errorResponse } from '@yx-chat/shared/utils';
 import { Socket } from 'socket.io';
 import { uniq } from 'lodash';
@@ -10,7 +14,7 @@ import { EventHandler, EventHandlerContext } from './handler/types';
 
 export class SocketContext implements EventHandlerContext {
   private _socket: Socket;
-  private _userId: string | undefined;
+  private _userInfo: (Environment & UserBasicInfo) | undefined;
 
   get socketId() {
     return this._socket.id;
@@ -19,15 +23,18 @@ export class SocketContext implements EventHandlerContext {
     return this._socket.request.socket.remoteAddress || '';
   }
   get userId() {
-    return this._userId;
+    return this._userInfo?.id;
   }
-  async setUserInfo(userInfo: Environment & { userId: string }) {
-    const { userId, os, browser, environment } = userInfo;
-    this._userId = userInfo.userId;
+  get userInfo() {
+    return this._userInfo;
+  }
+  async setUserInfo(userInfo: Environment & UserBasicInfo) {
+    this._userInfo = userInfo;
+    const { os, browser, environment } = userInfo;
     await SocketModel.updateOne(
       { id: this.socketId },
       {
-        user: userId,
+        user: userInfo.id,
         ip: this.socketIp,
         os,
         browser,
@@ -36,12 +43,10 @@ export class SocketContext implements EventHandlerContext {
     );
   }
   get isAdmin(): boolean {
-    return Boolean(
-      this._userId && config.administrators.includes(this._userId),
-    );
+    return Boolean(this.userId && config.administrators.includes(this.userId));
   }
   get isLogin(): boolean {
-    return Boolean(this._userId);
+    return Boolean(this._userInfo);
   }
   on(eventName: string, handler: EventHandler) {
     this._socket.on(eventName, async (data, callback) => {
@@ -74,7 +79,7 @@ export class SocketContext implements EventHandlerContext {
   ) {
     const [targetSockets, selfSockets] = await Promise.all([
       SocketModel.find({ user: friendId }, { id: 1 }),
-      toSelf ? SocketModel.find({ user: this._userId }, { id: 1 }) : [],
+      toSelf ? SocketModel.find({ user: this.userId }, { id: 1 }) : [],
     ]);
     const socketIds = uniq([
       ...targetSockets.map(item => item.id),

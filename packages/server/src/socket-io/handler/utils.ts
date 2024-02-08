@@ -45,7 +45,7 @@ function formatFriend(friend: FriendDocument): Friend {
   return {
     id: friend.id,
     createTime: friend.createTime.toString(),
-    to: {
+    userInfo: {
       id: to.id,
       username: to.username,
       avatar: to.avatar,

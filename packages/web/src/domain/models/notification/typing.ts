@@ -8,3 +8,7 @@ export type NotificationModel = {
   /** remove from database */
   remove: () => Promise<void>;
 };
+
+export interface NotificationContext {
+  removeNotification(notification: NotificationModel): void;
+}

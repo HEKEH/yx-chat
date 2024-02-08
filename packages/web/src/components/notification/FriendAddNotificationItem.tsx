@@ -1,7 +1,8 @@
+import { ElButton, ElDialog, ElPopconfirm } from 'element-plus';
 import { PropType, defineComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { FriendAddNotificationModel } from '~/domain/models/notification/friend-add-notification';
-import { ElButton, ElDialog, ElPopconfirm } from 'element-plus';
+import { getGlobalStore } from '~/utils/vue';
 import { Avatar } from '../common/avatar';
 import s from './FriendAddNotificationItem.module.sass';
 
@@ -12,16 +13,11 @@ export const FriendAddNotificationItem = defineComponent({
       type: Object as PropType<FriendAddNotificationModel>,
       required: true,
     },
-    remove: {
-      type: Function as PropType<
-        (model: FriendAddNotificationModel) => Promise<void>
-      >,
-      required: true,
-    },
   },
   setup(props, { expose }) {
     const { t } = useI18n();
     const isDialogOpen = ref(false);
+    const globalStore = getGlobalStore();
 
     expose({
       click: () => {
@@ -33,7 +29,11 @@ export const FriendAddNotificationItem = defineComponent({
       isDialogOpen.value = false;
     };
     const onReject = async () => {
-      await props.remove(props.model);
+      await props.model.remove();
+      onClose();
+    };
+    const onAccept = async () => {
+      await globalStore.acceptFriendAddRequest(props.model);
       onClose();
     };
     return () => {
@@ -68,7 +68,7 @@ export const FriendAddNotificationItem = defineComponent({
               ></ElPopconfirm>
               <ElButton
                 type="primary"
-                // onClick={onReject}
+                onClick={onAccept}
                 class={s['agree-button']}
               >
                 {t('common.agree')}

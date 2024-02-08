@@ -14,7 +14,7 @@ import { UserAndGroupSearchContent } from './UserAndGroupSearchContent';
 const ContactSearchRow = defineComponent({
   name: 'ContactSearchRow',
   emits: {
-    search: (val: string) => true,
+    search: (val: string) => typeof val === 'string',
   },
   setup(_, { emit }) {
     const searchText = ref('');
