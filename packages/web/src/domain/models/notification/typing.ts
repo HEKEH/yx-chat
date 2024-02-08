@@ -5,4 +5,6 @@ export type NotificationModel = {
   readonly id: string;
   readonly createTime: GeneralTime;
   readonly type: NotificationType;
+  /** remove from database */
+  remove: () => Promise<void>;
 };

@@ -1,5 +1,11 @@
 import { ChatMessagesRecord } from './chat';
 
+export type CommonResponse =
+  | {
+      success: true;
+    }
+  | { success: false; message: string };
+
 export interface Friend {
   id: string;
   createTime: string;
@@ -22,6 +28,7 @@ export enum ContactRequestType {
   createGroup = 'createGroup',
   joinGroup = 'addGroup',
   sendAddFriendRequest = 'sendFriendAddRequest',
+  rejectAddFriendRequest = 'rejectAddFriendRequest',
 }
 
 export interface CreateGroupRequestBody {
@@ -35,11 +42,11 @@ export interface SendFriendAddRequestBody {
   targetUserId: string;
 }
 
-export type SendFriendAddRequestResponse =
-  | {
-      success: true;
-    }
-  | { success: false; message: string };
+export interface RejectFriendAddRequestBody {
+  requestId: string;
+}
+
+export type SendFriendAddRequestResponse = CommonResponse;
 
 export type CreateGroupSuccessResponse = Group; // is same currently
 

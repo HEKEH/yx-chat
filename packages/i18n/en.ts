@@ -31,6 +31,10 @@ const en: I18nMessage = {
     confirmToAdd: 'Confirm to add',
     sendFriendRequestSuccess: 'Successfully send friend request',
     noNotification: 'No notification',
+    addYouAsFriend: 'request to add you as friend',
+    reject: 'Reject',
+    agree: 'Agree',
+    confirm: 'Confirm {text}?',
   },
   setting: {
     general: 'General',
@@ -52,6 +56,7 @@ const en: I18nMessage = {
     createGroup: 'Create group',
     addFriendOrGroup: 'Add friend/group',
     inputGroupName: 'Input group name',
+    whetherAcceptFriend: 'Whether accept  {username}  as friend?',
   },
   time: {
     today: 'Today',

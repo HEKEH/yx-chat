@@ -1,4 +1,4 @@
-import { PropType, defineComponent } from 'vue';
+import { PropType, defineComponent, ref } from 'vue';
 import { NotificationModel } from '~/domain/models/notification/typing';
 import { NotificationType } from '@yx-chat/shared/types';
 import { FriendAddNotificationModel } from '~/domain/models/notification/friend-add-notification';
@@ -12,21 +12,38 @@ export const NotificationItem = defineComponent({
       type: Object as PropType<NotificationModel>,
       required: true,
     },
+    remove: {
+      type: Function as PropType<(model: NotificationModel) => Promise<void>>,
+      required: true,
+    },
   },
   setup(props) {
+    const contentRef = ref<{ click: () => void } | null>(null);
+    const onClick = () => {
+      contentRef.value?.click();
+    };
     return () => {
-      const { notificationModel } = props;
+      const { notificationModel, remove } = props;
       let content: JSX.Element;
       switch (notificationModel.type) {
         case NotificationType.FriendAddNotification:
           content = (
             <FriendAddNotificationItem
+              ref={contentRef}
               model={notificationModel as FriendAddNotificationModel}
+              remove={remove}
             />
           );
           break;
       }
-      return <div class={s['notification-item-container']}>{content}</div>;
+      return (
+        <div class={s['notification-item-container']} onClick={onClick}>
+          {content}
+          <div class={s['create-time']}>
+            {notificationModel.createTime.format()}
+          </div>
+        </div>
+      );
     };
   },
 });

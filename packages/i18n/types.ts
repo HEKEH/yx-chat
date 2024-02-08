@@ -29,6 +29,10 @@ export interface I18nMessage {
     confirmToAdd: string;
     sendFriendRequestSuccess: string;
     noNotification: string;
+    addYouAsFriend: string;
+    reject: string;
+    agree: string;
+    confirm: string;
   };
   setting: {
     general: string;
@@ -50,6 +54,7 @@ export interface I18nMessage {
     addFriendOrGroup: string;
     inputGroupName: string;
     notifications: string;
+    whetherAcceptFriend: string;
   };
   time: {
     today: string;

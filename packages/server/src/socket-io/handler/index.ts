@@ -16,6 +16,7 @@ import createGroup from './create-group';
 import joinGroup from './join-group';
 import searchUsersAndGroups from './search-users-and-groups';
 import sendFriendAddRequest from './send-friend-add-request';
+import rejectFriendAddRequest from './reject-friend-add-request';
 
 export const EventHandlerMap = {
   [AccountRequestType.login]: login,
@@ -28,6 +29,7 @@ export const EventHandlerMap = {
   [ContactRequestType.createGroup]: createGroup,
   [ContactRequestType.joinGroup]: joinGroup,
   [ContactRequestType.sendAddFriendRequest]: sendFriendAddRequest,
+  [ContactRequestType.rejectAddFriendRequest]: rejectFriendAddRequest,
   [SystemRequestType.searchUsersAndGroups]: searchUsersAndGroups,
 };
 export type EventHandlerMapType = typeof EventHandlerMap;

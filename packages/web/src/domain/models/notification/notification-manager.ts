@@ -51,6 +51,14 @@ export class NotificationManager {
     this._receiveNotification(notification);
   }
 
+  async removeNotification(notification: NotificationModel) {
+    // remove from database
+    await notification.remove();
+    this._notificationList = this._notificationList.filter(
+      item => item.id !== notification.id,
+    );
+  }
+
   clear() {
     this._notificationList = [];
     this._notificationListenSubscription!.unsubscribe();

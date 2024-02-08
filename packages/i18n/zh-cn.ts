@@ -31,6 +31,10 @@ const cn: I18nMessage = {
     confirmToAdd: '确认添加',
     sendFriendRequestSuccess: '发送好友请求成功',
     noNotification: '没有新的通知',
+    addYouAsFriend: '请求添加你为好友',
+    reject: '拒绝',
+    agree: '同意',
+    confirm: '确认{text}？',
   },
   setting: {
     general: '通用',
@@ -52,6 +56,7 @@ const cn: I18nMessage = {
     createGroup: '创建群组',
     addFriendOrGroup: '加好友/群组',
     inputGroupName: '请输入群组名称',
+    whetherAcceptFriend: '是否同意添加 {username} 为好友？',
   },
   time: {
     today: '今天',
