@@ -7,7 +7,6 @@ import {
 import { errorResponse } from '@yx-chat/shared/utils';
 import { Socket } from 'socket.io';
 import { uniq } from 'lodash';
-import config from '../config';
 import SocketModel from '../database/mongoDB/model/socket';
 import logger from '../utils/logger';
 import { EventHandler, EventHandlerContext } from './handler/types';
@@ -43,7 +42,7 @@ export class SocketContext implements EventHandlerContext {
     );
   }
   get isAdmin(): boolean {
-    return Boolean(this.userId && config.administrators.includes(this.userId));
+    return Boolean(this.userInfo?.isAdmin);
   }
   get isLogin(): boolean {
     return Boolean(this._userInfo);

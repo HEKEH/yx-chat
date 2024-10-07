@@ -46,7 +46,7 @@ const login: EventHandler = async (
     avatar: user.avatar,
     username: user.username,
     tag: user.tag,
-    isAdmin: context.isAdmin,
+    isAdmin: user.isAdmin,
   };
   const [{ groups, friends }, notifications] = await Promise.all([
     findFriendsAndGroupsByUserId(userId),

@@ -15,5 +15,6 @@ export default {
   jwtTokenExpiresTime: env.JWT_TOKEN_EXPIRES_TIME
     ? parseInt(env.JWT_TOKEN_EXPIRES_TIME, 10)
     : 1000 * 60 * 60 * 24 * 30, // 30 days
-  administrators: env.ADMINISTRATORS ? env.ADMINISTRATORS.split(',') : [],
+  adminUser: env.ADMIN_USER,
+  adminPassword: env.ADMIN_PASSWORD,
 };

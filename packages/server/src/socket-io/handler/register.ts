@@ -1,14 +1,13 @@
 import assert from 'assert';
 import type {
-  RegisterRequestBody,
-  LoginSuccessResponse,
   ErrorResponse,
+  LoginSuccessResponse,
+  RegisterRequestBody,
 } from '@yx-chat/shared/types';
 import { errorResponse } from '@yx-chat/shared/utils';
-import bcrypt from 'bcryptjs';
-import logger from '../../utils/logger';
+import { createNewUser } from '../../biz-utils/create-new-user';
 import UserModel, { UserDocument } from '../../database/mongoDB/model/user';
-import { getRandomAvatarPath } from '../../utils/get-avatar-path';
+import logger from '../../utils/logger';
 import { EventHandler, EventHandlerContext } from './types';
 import { generateToken } from './utils';
 
@@ -24,14 +23,11 @@ const register: EventHandler = async (
   if (user) {
     return errorResponse('Username is already registered');
   }
-  const salt = await bcrypt.genSalt();
-  const hash = await bcrypt.hash(password, salt);
   let newUser: UserDocument | undefined;
   try {
-    newUser = await UserModel.create({
+    newUser = await createNewUser({
       username,
-      password: hash,
-      avatar: getRandomAvatarPath(),
+      password,
     });
   } catch (err) {
     if ((err as Error).name === 'ValidationError') {
@@ -48,7 +44,7 @@ const register: EventHandler = async (
     avatar: newUser.avatar,
     username: newUser.username,
     tag: newUser.tag,
-    isAdmin: context.isAdmin,
+    isAdmin: newUser.isAdmin,
   };
   await context.setUserInfo({ ...userInfo, os, browser, environment });
   return {

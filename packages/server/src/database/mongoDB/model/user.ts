@@ -1,4 +1,4 @@
-import { Schema, model, Document } from 'mongoose';
+import { Document, Schema, model } from 'mongoose';
 import { NAME_REGEXP } from '../../../const';
 
 const UserSchema = new Schema({
@@ -25,6 +25,10 @@ const UserSchema = new Schema({
       type: String,
     },
   ],
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
   lastLoginIp: String,
 });
 
@@ -43,6 +47,7 @@ export interface UserDocument extends Document {
   createTime: Date;
   /** 最后登录时间 */
   lastLoginTime: Date;
+  isAdmin: boolean;
   /** 最后登录IP */
   lastLoginIp: string;
 }
