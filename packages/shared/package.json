@@ -4,6 +4,26 @@
   "description": "The shared utils and types of all packages",
   "license": "MIT",
   "exports": {
+    "./types": {
+      "import": {
+        "default": "./dist/types/index.mjs",
+        "type": "./dist/types/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/types/index.js",
+        "type": "./dist/types/index.d.ts"
+      }
+    },
+    "./utils": {
+      "import": {
+        "default": "./dist/utils/index.mjs",
+        "type": "./dist/utils/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/utils/index.js",
+        "type": "./dist/utils/index.d.ts"
+      }
+    },
     "./*": {
       "import": {
         "default": "./dist/*.mjs",
