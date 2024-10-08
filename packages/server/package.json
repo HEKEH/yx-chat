@@ -23,7 +23,7 @@
   "scripts": {
     "dev": "cross-env --NODE_ENV=development DOTENV_CONFIG_PATH=../../.env.development nodemon",
     "build": "rm -rf dist && tsup ./src/index.ts --format cjs,esm --dts",
-    "start": "cross-env DOTENV_CONFIG_PATH=../../.env.production NODE_ENV=production node -r dotenv/config dist/index.js",
+    "start": "cross-env DOTENV_CONFIG_PATH=../../.env.production NODE_ENV=production node dist/index.js",
     "prod:start": "cross-env DOTENV_CONFIG_PATH=../../.env.production pm2 start ecosystem.config.js --env production",
     "prod:restart": "cross-env DOTENV_CONFIG_PATH=../../.env.production pm2 restart ecosystem.config.js --env production",
     "prod:stop": "cross-env pm2 stop ecosystem.config.js",

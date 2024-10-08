@@ -1,10 +1,11 @@
 import logger from './utils/logger';
-import app from './app';
+import initApp from './app';
 import serverConfig from './config';
 import initMongoDB from './database/mongoDB';
 import UserModel from './database/mongoDB/model/user';
 import config from './config';
 import { createNewUser } from './biz-utils/create-new-user';
+import 'dotenv/config'; // 加载.env文件
 
 const { env } = process;
 logger.trace('node env:', env.NODE_ENV);
@@ -30,7 +31,7 @@ logger.trace('env port:', env.PUBLIC_SERVER_PORT);
       process.exit(1);
     }
   }
-  app.listen(serverConfig.port, async () => {
+  initApp().listen(serverConfig.port, async () => {
     logger.info(`>>> server listen on http://localhost:${serverConfig.port}`);
   });
 
