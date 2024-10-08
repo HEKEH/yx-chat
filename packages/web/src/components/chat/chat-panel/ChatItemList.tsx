@@ -65,7 +65,7 @@ export const ChatItemList = defineComponent({
         }
       }
     };
-    const handleScroll = (e: UIEvent) => {
+    const handleScroll = (e: Event) => {
       fetchHistoryMessages(e.target as HTMLDivElement);
     };
     let scrollSubscription: Subscription | undefined;

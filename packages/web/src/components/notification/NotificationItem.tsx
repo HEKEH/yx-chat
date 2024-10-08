@@ -14,13 +14,13 @@ export const NotificationItem = defineComponent({
     },
   },
   setup(props) {
-    const contentRef = ref<{ click: () => void } | null>(null);
+    const contentRef = ref<any>(null);
     const onClick = () => {
       contentRef.value?.click();
     };
     return () => {
       const { notificationModel } = props;
-      let content: JSX.Element;
+      let content: any;
       switch (notificationModel.type) {
         case NotificationType.FriendAddNotification:
           content = (

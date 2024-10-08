@@ -26,7 +26,10 @@ async function loadLocaleMessages(locale: Exclude<Locale, 'zh-cn'>) {
   const messages = await LoadLocaleMap[locale]();
 
   // set locale and locale message
-  i18n.global.setLocaleMessage(locale, messages.default);
+  i18n.global.setLocaleMessage(
+    locale,
+    messages.default as unknown as I18nMessage,
+  );
 }
 
 export async function setI18nLanguage(locale: Locale) {
