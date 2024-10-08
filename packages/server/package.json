@@ -10,19 +10,12 @@
   ],
   "exports": {
     ".": {
-      "import": {
-        "default": "./dist/index.mjs",
-        "type": "./dist/index.d.mts"
-      },
-      "require": {
-        "default": "./dist/index.js",
-        "type": "./dist/index.d.ts"
-      }
+      "require": "./dist/index.js"
     }
   },
   "scripts": {
     "dev": "cross-env --NODE_ENV=development DOTENV_CONFIG_PATH=../../.env.development nodemon",
-    "build": "rm -rf dist && tsup ./src/index.ts --format cjs,esm --dts",
+    "build": "rm -rf dist && tsup ./src/index.ts --format cjs --minify",
     "start": "cross-env DOTENV_CONFIG_PATH=../../.env.production NODE_ENV=production node dist/index.js",
     "prod:start": "cross-env DOTENV_CONFIG_PATH=../../.env.production pm2 start ecosystem.config.js --env production",
     "prod:restart": "cross-env DOTENV_CONFIG_PATH=../../.env.production pm2 restart ecosystem.config.js --env production",
