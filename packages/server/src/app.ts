@@ -35,6 +35,13 @@ export default function initApp() {
   io.on('connection', async socket => {
     const context = new SocketContext(socket);
     logger.info(`connection ${socket.id} ${context.socketIp}`);
+    registerSocketEventHandlers(context);
+    // socket.use(seal(socket));
+    // socket.use(isLogin(socket));
+    // socket.use(isAdmin(socket));
+    // socket.use(frequency(socket));
+    // socket.use(registerRoutes(socket, routes));
+
     await SocketModel.create({
       id: socket.id,
       ip: context.socketIp,
@@ -46,14 +53,6 @@ export default function initApp() {
         id: socket.id,
       });
     });
-
-    registerSocketEventHandlers(context);
-
-    // socket.use(seal(socket));
-    // socket.use(isLogin(socket));
-    // socket.use(isAdmin(socket));
-    // socket.use(frequency(socket));
-    // socket.use(registerRoutes(socket, routes));
   });
   return httpServer;
 }
