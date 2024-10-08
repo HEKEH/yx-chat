@@ -2,10 +2,22 @@
   "name": "@yx-chat/i18n",
   "version": "0.0.0",
   "license": "MIT",
+  "exports": {
+    "./*": {
+      "import": {
+        "default": "./dist/*.mjs",
+        "type": "./dist/*.d.mts"
+      },
+      "require": {
+        "default": "./dist/*.js",
+        "type": "./dist/*.d.ts"
+      }
+    }
+  },
   "scripts": {
+    "build": "rm -rf dist && tsup ./src --format cjs,esm --dts",
     "lint": "eslint",
     "preinstall": "npx only-allow pnpm"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
