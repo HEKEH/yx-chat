@@ -1,4 +1,5 @@
 import { PropType, defineComponent } from 'vue';
+import clientConfig from '~/config';
 import s from './index.module.sass';
 
 export const Avatar = defineComponent({
@@ -19,9 +20,13 @@ export const Avatar = defineComponent({
   },
   setup(props) {
     return () => {
-      const { url } = props;
+      let { url } = props;
       if (!url) {
         return null;
+      }
+      if (url.startsWith('/') && clientConfig.server !== '/') {
+        // redirect to server path
+        url = `${clientConfig.server}${url}`;
       }
       const { status, statusSize = 14 } = props;
       return (

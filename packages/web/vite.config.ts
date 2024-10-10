@@ -11,8 +11,6 @@ export default defineConfig(({ mode }) => {
   if (path && env.PUBLIC_SERVER_PORT) {
     path = `${path}:${env.PUBLIC_SERVER_PORT}`;
   }
-  const serverPath =
-    path || (mode === 'development' ? 'http://localhost:6870' : '/');
   const alias: AliasOptions = {
     '~': resolve(__dirname, './src/'),
     '@': resolve(__dirname, './'),
@@ -21,6 +19,10 @@ export default defineConfig(({ mode }) => {
     alias['@yx-chat/i18n'] = resolve(__dirname, '../i18n/src'); // develop mode redirect
     alias['@yx-chat'] = resolve(__dirname, '../'); // develop mode redirect
   }
+
+  // const serverPath =
+  //   path || (mode === 'development' ? 'http://localhost:6870' : '/');
+
   return {
     define: {
       // see https://stackoverflow.com/questions/66140411/you-are-running-the-esm-bundler-build-of-vue-i18n-it-is-recommended-to-configur
@@ -34,15 +36,15 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias,
     },
-    server: {
-      proxy: {
-        '/avatar': serverPath,
-        '/GroupAvatar': serverPath,
-        '/Avatar': {
-          target: serverPath,
-          rewrite: path => path.replace(/^\/Avatar/, '/avatar'),
-        },
-      },
-    },
+    // server: {
+    //   proxy: {
+    //     '/avatar': serverPath,
+    //     '/GroupAvatar': serverPath,
+    //     '/Avatar': {
+    //       target: serverPath,
+    //       rewrite: path => path.replace(/^\/Avatar/, '/avatar'),
+    //     },
+    //   },
+    // },
   };
 });
