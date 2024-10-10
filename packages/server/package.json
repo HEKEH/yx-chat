@@ -16,9 +16,9 @@
   "scripts": {
     "dev": "cross-env --NODE_ENV=development DOTENV_CONFIG_PATH=../../.env.development nodemon",
     "build": "rm -rf dist && tsup ./src/index.ts --format cjs --minify",
-    "start": "cross-env DOTENV_CONFIG_PATH=../../.env.production NODE_ENV=production node dist/index.js",
-    "prod:start": "cross-env DOTENV_CONFIG_PATH=../../.env.production pm2 start ecosystem.config.js --env production",
-    "prod:restart": "cross-env DOTENV_CONFIG_PATH=../../.env.production pm2 restart ecosystem.config.js --env production",
+    "start": "cross-env NODE_ENV=production DOTENV_CONFIG_PATH=${DOTENV_CONFIG_PATH:-../../.env.production} node -r dotenv/config dist/index.js",
+    "prod:start": "cross-env DOTENV_CONFIG_PATH=${DOTENV_CONFIG_PATH:-../../.env.production} pm2-runtime start ecosystem.config.js --env production",
+    "prod:restart": "cross-env DOTENV_CONFIG_PATH=${DOTENV_CONFIG_PATH:-../../.env.production} pm2 restart ecosystem.config.js --env production",
     "prod:stop": "cross-env pm2 stop ecosystem.config.js",
     "prod:delete": "cross-env pm2 delete ecosystem.config.js",
     "prod:log": "cross-env pm2 logs",
@@ -27,10 +27,10 @@
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.202",
     "@yx-chat/shared": "workspace:*",
     "assert": "^2.1.0",
     "bcryptjs": "^2.4.3",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "jwt-simple": "^0.5.6",
     "koa": "^2.14.2",
@@ -40,6 +40,7 @@
     "lodash": "^4.17.21",
     "log4js": "^6.9.1",
     "mongoose": "^8.0.1",
+    "pm2": "^5.3.0",
     "socket.io": "^4.8.0",
     "xss": "^1.0.14"
   },
@@ -49,8 +50,8 @@
     "@types/koa-bodyparser": "^4.3.10",
     "@types/koa-router": "^7.4.4",
     "@types/koa-static": "^4.0.4",
+    "@types/lodash": "^4.14.202",
     "nodemon": "^3.0.1",
-    "pm2": "^5.3.0",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0"
   }
