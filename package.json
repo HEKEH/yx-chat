@@ -4,13 +4,14 @@
   "packageManager": "^pnpm@7.13.0",
   "scripts": {
     "dev:web": "cross-env pnpm --filter @yx-chat/web run dev",
-    "build:web": "cross-env pnpm --filter @yx-chat/web run build",
+    "build:web": "cross-env turbo build --filter @yx-chat/web",
     "dev:server": "cross-env pnpm --filter @yx-chat/server run dev",
-    "build:server": "cross-env pnpm --filter @yx-chat/server run build",
+    "build:server": "cross-env turbo build --filter @yx-chat/server",
     "dev": "cross-env turbo dev",
     "build": "cross-env turbo build",
     "lint": "eslint",
     "prepare": "husky install",
+    "build:docker:web": "./scripts/docker/web/build-docker-image.sh",
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
