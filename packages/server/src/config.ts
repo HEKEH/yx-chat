@@ -1,3 +1,4 @@
+import 'dotenv/config'; // 加载.env文件，在config export之前运行
 import type { TAlgorithm } from 'jwt-simple';
 
 const { env } = process;
