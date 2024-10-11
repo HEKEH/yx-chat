@@ -18,7 +18,7 @@ function remove_image() {
 
 function build_image() {
     # build docker
-    docker build . -f ${SCRIPT_DIR}/Dockerfile -t ${IMAGE_NAME} || ERROR="build_image failed"
+    docker build . -f "${SCRIPT_DIR}/Dockerfile" -t "${IMAGE_NAME}" || ERROR="build_image failed"
 }
 
 function log_message() {

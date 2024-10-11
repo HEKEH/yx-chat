@@ -3,8 +3,11 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 LOG_FILE=${SCRIPT_DIR}/build-local-image.log
 ERROR=""
-IMAGE_NAME="yx-chat-server"
 
+IMAGE_NAME="yx-chat-server"
+# # get version from package.json
+# VERSION=$(node -p "require('./packages/server/package.json').version")
+# IMAGE_TAG="${IMAGE_NAME}:${VERSION}"
 
 PORT=""
 function load_port_from_env_file() {
@@ -58,9 +61,6 @@ if ! load_port_from_env_file; then
     exit 1
 fi
 
-# echo "PORT: $PORT"
-# exit 0;
-
 function stop_and_remove_container() {
     # Stop and remove the existing container
     docker stop ${IMAGE_NAME} >/dev/null 2>&1
@@ -74,7 +74,7 @@ function remove_image() {
 
 function build_image() {
     # build docker
-    docker build . -f ${SCRIPT_DIR}/Dockerfile --build-arg PORT=${PORT} -t ${IMAGE_NAME} || ERROR="build_image failed"
+    docker build . -f "${SCRIPT_DIR}/Dockerfile" --build-arg PORT="${PORT}" -t "${IMAGE_NAME}" || ERROR="build_image failed"
 }
 
 function log_message() {
