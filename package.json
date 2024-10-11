@@ -13,7 +13,9 @@
     "prepare": "husky install",
     "build:docker:web": "./scripts/docker/web/build-docker-image.sh",
     "build:docker:server": "./scripts/docker/server/build-docker-image.sh",
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "mongodb:dev:start": "cross-env ./scripts/docker/mongodb/dev/mongo-start.sh",
+    "mongodb:prod:start": "cross-env ./scripts/docker/mongodb/prod/mongo-start.sh"
   },
   "dependencies": {
     "dayjs": "^1.11.9",

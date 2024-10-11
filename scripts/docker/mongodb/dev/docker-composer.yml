@@ -1,0 +1,31 @@
+# TODO:in production, copy this file to prod/docker-composer.yml and handle the TODOs
+
+version: '3.8'
+
+services: # Define services
+  mongodb: # Service name
+    image: mongo:8.0.1
+    restart: always
+    container_name: yx-chat-mongodb-dev
+    # environment:  # Set environment variables
+    #   MONGO_INITDB_ROOT_USERNAME: XX # TODO: Uncomment and set value in production
+    #   MONGO_INITDB_ROOT_PASSWORD: XX # TODO: Uncomment and set value in production
+    ports: # Port mapping
+      - '27017:27017' # Map container's 27017 port to host's 27017 port
+    volumes: # Define volume mounts
+      - mongo-data-dev:/data/db # Mount mongo-data-dev volume to container's /data/db
+      - mongo-config-dev:/data/configdb # Mount mongo-config-dev volume to container's /data/configdb
+    #  - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro  # TODO: Mount initialization script, Uncomment and config mongo-init.js in production
+    # networks:  # Specify network
+    #   - mongo-network  # Use mongo-network
+    # command: ["--auth"]  # TODO: Uncomment in production
+
+# networks:  # Define networks
+#   mongo-network:
+#     external: true  # Use externally created network
+
+volumes: # Define volumes
+  mongo-data-dev: # TODO: change name as mongo-data-prod in production
+    external: true # Use externally created volume
+  mongo-config-dev: # TODO: change name as mongo-config-prod in production
+    external: true # Use externally created volume
