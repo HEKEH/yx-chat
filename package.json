@@ -41,7 +41,7 @@
     "typescript": "^5.2.2"
   },
   "lint-staged": {
-    "{packages}/**/*.{js,ts,tsx}": [
+    "{packages,apps}/**/*.{js,ts,tsx}": [
       "eslint --fix --color"
     ]
   },

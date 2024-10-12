@@ -21,7 +21,7 @@ RUN echo "Builder Success 🎉"
 FROM nginx:1.26.2-alpine AS production
 
 RUN echo "types { application/javascript js mjs; }" >/etc/nginx/conf.d/mjs.conf
-COPY --from=builder /app/packages/web/dist /usr/share/nginx/html
+COPY --from=builder /app/apps/web/dist /usr/share/nginx/html
 
 RUN rm -f /etc/nginx/nginx.conf
 COPY --from=builder /app/scripts/docker/web/nginx.conf /etc/nginx/nginx.conf

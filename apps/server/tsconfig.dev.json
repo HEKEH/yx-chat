@@ -2,7 +2,7 @@
   "extends": "./tsconfig",
   "compilerOptions": {
     "paths": {
-      "@yx-chat/*": ["../*"],
+      "@yx-chat/*": ["../../packages/*"],
     }
   }
 }

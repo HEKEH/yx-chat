@@ -11,7 +11,7 @@ cd "${PROJECT_ROOT}" # assure current dir is the exact project root directory
 PORT=""
 
 # get version from package.json
-# VERSION=$(node -p "require('./packages/server/package.json').version")
+# VERSION=$(node -p "require('./apps/server/package.json').version")
 # IMAGE_TAG="${IMAGE_NAME}:${VERSION}"
 
 function log() {
