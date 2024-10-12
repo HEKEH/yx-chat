@@ -4,7 +4,6 @@ let path = env.PUBLIC_SERVER_BASE_URL;
 if (path && env.PUBLIC_SERVER_PORT) {
   path = `${path}:${env.PUBLIC_SERVER_PORT}`;
 }
-console.log(env, 'env');
 
 export default {
   server: path || (env.MODE === 'development' ? 'http://localhost:6870' : '/'),

@@ -6,11 +6,12 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const envPrefix = 'PUBLIC_';
-  const env = loadEnv(mode, '../../', envPrefix);
-  let path = env.PUBLIC_SERVER_BASE_URL;
-  if (path && env.PUBLIC_SERVER_PORT) {
-    path = `${path}:${env.PUBLIC_SERVER_PORT}`;
-  }
+  loadEnv(mode, '../../', envPrefix);
+  // const env = loadEnv(mode, '../../', envPrefix);
+  // let path = env.PUBLIC_SERVER_BASE_URL;
+  // if (path && env.PUBLIC_SERVER_PORT) {
+  //   path = `${path}:${env.PUBLIC_SERVER_PORT}`;
+  // }
   const alias: AliasOptions = {
     '~': resolve(__dirname, './src/'),
     '@': resolve(__dirname, './'),
