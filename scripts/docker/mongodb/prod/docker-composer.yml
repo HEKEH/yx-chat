@@ -1,0 +1,26 @@
+version: '3.8'
+
+services: # Define services
+  mongodb: # Service name
+    image: mongo:8.0.1
+    restart: always
+    container_name: ${CONTAINER_NAME:-yx-chat-mongodb}
+    ports: # Port mapping
+      - '${MONGO_PORT:-27017}:27017' # Map host's port to container's port
+    volumes: # Define volume mounts
+      - mongo-data-prod:/data/db # Mount mongo-data-prod volume to container's /data/db
+      - mongo-config-prod:/data/configdb # Mount mongo-config-prod volume to container's /data/configdb
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro # Mount initialization script
+    # networks:  # Specify network
+    #   - mongo-network  # Use mongo-network
+    command: ['--auth'] # Startup command, enable authentication
+
+# networks:  # Define networks
+#   mongo-network:
+#     external: true  # Use externally created network
+
+volumes: # Define volumes
+  mongo-data-prod:
+    external: true # Use externally created volume
+  mongo-config-prod:
+    external: true # Use externally created volume
