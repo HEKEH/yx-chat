@@ -1,5 +1,3 @@
-ARG PORT
-
 FROM node:20.11.1-slim AS builder
 
 # First stage: Build stage
@@ -30,5 +28,8 @@ ENV NODE_OPTIONS="--max-old-space-size=8192" \
 COPY --from=builder /deploy /app
 
 WORKDIR /app/@yx-chat/server
+
+ARG PORT
+EXPOSE ${PORT}
 
 CMD ["npm", "run", "start"]

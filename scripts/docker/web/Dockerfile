@@ -2,9 +2,9 @@
 FROM node:20.11.1-slim AS builder
 
 ENV PNPM_HOME="/pnpm" \
-    PATH="$PNPM_HOME:$PATH" \
-    NODE_OPTIONS="--max-old-space-size=8192" \
-    TZ="Asia/Shanghai"
+  PATH="$PNPM_HOME:$PATH" \
+  NODE_OPTIONS="--max-old-space-size=8192" \
+  TZ="Asia/Shanghai"
 
 RUN corepack enable
 RUN npm install -g pnpm@8.15.8 --force
@@ -12,7 +12,7 @@ RUN npm install -g pnpm@8.15.8 --force
 COPY . /app
 WORKDIR /app
 
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile --ignore-scripts
 RUN pnpm run build:web
 
 RUN echo "Builder Success 🎉"
