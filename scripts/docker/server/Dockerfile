@@ -15,7 +15,6 @@ COPY . .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile --ignore-scripts
 RUN pnpm run build:server
 RUN pnpm --filter @yx-chat/server --prod deploy /deploy/@yx-chat/server
-RUN rm -rf /deploy/@yx-chat/server/src
 RUN cp -r .env.production /deploy
 RUN echo "Builder Success 🎉"
 
