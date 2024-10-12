@@ -1,49 +1,61 @@
 #!/bin/bash
+
 IMAGE_NAME="yx-chat-web"
-ERROR=""
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 PROJECT_ROOT="${SCRIPT_DIR}/../../../"
 cd "${PROJECT_ROOT}" # assure current dir is the exact project root directory
-LOG_FILE=${SCRIPT_DIR}/build-local-image.log
+LOG_FILE="${SCRIPT_DIR}/build-local-image.log"
 
-function stop_and_remove_container() {
-  # Stop and remove the existing container
-  docker stop ${IMAGE_NAME} >/dev/null 2>&1
-  docker rm ${IMAGE_NAME} >/dev/null 2>&1
+if [ -f "${LOG_FILE}" ]; then
+  rm "${LOG_FILE}"
+fi
+function log() {
+  echo "$1" | tee -a ${LOG_FILE}
 }
 
 function remove_image() {
+  log "Info: Stopping and removing existing image"
   # Remove the existing image
   docker rmi ${IMAGE_NAME} >/dev/null 2>&1
 }
 
 function build_image() {
+  log "Info: Building docker image"
   # build docker
-  docker build . -f "${SCRIPT_DIR}/Dockerfile" -t "${IMAGE_NAME}" || ERROR="build_image failed"
-}
-
-function log_message() {
-  if [[ ${ERROR} != "" ]]; then
-    echo >&2 "build failed, Please check build-local-docker-image.log for more details"
-    echo >&2 "ERROR: ${ERROR}"
-    exit 1
+  docker build . -f "${SCRIPT_DIR}/Dockerfile" -t "${IMAGE_NAME}" 1>>${LOG_FILE} 2>>${LOG_FILE}
+  if [ $? -eq 0 ]; then
+    log "docker image with tag '${IMAGE_NAME}' built sussessfully."
   else
-    echo "docker image with tag '${IMAGE_NAME}' built sussessfully. Use below sample command to run the container"
-    echo "docker run -d -p 8010:8080 --name ${IMAGE_NAME} ${IMAGE_NAME}"
-    echo ""
-    echo "Use below sample command to see logs"
-    echo "docker logs ${IMAGE_NAME}"
+    echo >&2 "build failed, Please check build-local-image.log for more details"
+    exit 1
   fi
 }
 
-echo "Info: Stopping and removing existing container and image" | tee ${LOG_FILE}
-stop_and_remove_container
+function stop_and_remove_container() {
+  log "Info: Stopping and removing existing container"
+  # Stop and remove the existing container
+  docker stop ${IMAGE_NAME} >/dev/null 2>&1
+  docker rm ${IMAGE_NAME} >/dev/null 2>&1
+}
+
+function run_container() {
+  log "Info: Running new container"
+  docker run -d -p 8010:8080 --name ${IMAGE_NAME} ${IMAGE_NAME} 1>>${LOG_FILE} 2>>${LOG_FILE}
+  if [ $? -eq 0 ]; then
+    log "Container started successfully."
+    log "Use below sample command to see container logs"
+    log "docker logs ${IMAGE_NAME}"
+  else
+    log "Failed to start the container. Please check the logs for details."
+    exit 1
+  fi
+}
+
 remove_image
 
-if [[ ${ERROR} == "" ]]; then
-  echo "Info: Building docker image" | tee -a ${LOG_FILE}
-  build_image 1>>${LOG_FILE} 2>>${LOG_FILE}
-fi
+build_image
 
-log_message | tee -a ${LOG_FILE}
+stop_and_remove_container
+
+run_container
