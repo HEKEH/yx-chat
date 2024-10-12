@@ -19,5 +19,9 @@
     "lint": "eslint",
     "preinstall": "npx only-allow pnpm"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "files": [
+    "dist",
+    "package.json"
+  ]
 }
