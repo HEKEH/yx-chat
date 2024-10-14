@@ -1,0 +1,64 @@
+{
+  "name": "@yx-chat/auth-center",
+  "version": "0.0.0",
+  "description": "The auth center of @yx-chat",
+  "license": "MIT",
+  "tags": [
+    "typescript",
+    "koa"
+  ],
+  "exports": {
+    ".": {
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development dotenv -e ../../.env.development -e .env.development nodemon",
+    "build": "rm -rf dist && tsup ./src/index.ts --format cjs --minify",
+    "start": "cross-env NODE_ENV=production dotenv -e ${GLOBAL_DOTENV_CONFIG_PATH:-../../.env.production} -e .env.production node dist/index.js",
+    "prod:start": "cross-env dotenv -e ${GLOBAL_DOTENV_CONFIG_PATH:-../../.env.production} -e .env.production pm2-runtime start ecosystem.config.js --env production",
+    "prod:restart": "cross-env dotenv -e ${GLOBAL_DOTENV_CONFIG_PATH:-../../.env.production} -e .env.production pm2 restart ecosystem.config.js --env production",
+    "prod:stop": "cross-env pm2 stop ecosystem.config.js",
+    "prod:delete": "cross-env pm2 delete ecosystem.config.js",
+    "prod:log": "cross-env pm2 logs",
+    "prod:flush": "cross-env pm2 flush",
+    "lint": "eslint",
+    "preinstall": "npx only-allow pnpm"
+  },
+  "dependencies": {
+    "@yx-chat/shared": "workspace:*",
+    "assert": "^2.1.0",
+    "bcryptjs": "^2.4.3",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.3.1",
+    "dotenv-cli": "^7.4.2",
+    "jwt-simple": "^0.5.6",
+    "koa": "^2.14.2",
+    "koa-bodyparser": "^4.4.1",
+    "koa-router": "^12.0.0",
+    "koa-static": "^5.0.0",
+    "lodash": "^4.17.21",
+    "log4js": "^6.9.1",
+    "mongoose": "^8.0.1",
+    "pm2": "^5.3.0",
+    "socket.io": "^4.8.0",
+    "xss": "^1.0.14"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/koa": "^2.13.8",
+    "@types/koa-bodyparser": "^4.3.10",
+    "@types/koa-router": "^7.4.4",
+    "@types/koa-static": "^4.0.4",
+    "@types/lodash": "^4.14.202",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0"
+  },
+  "files": [
+    "dist",
+    "public",
+    "ecosystem.config.js",
+    "package.json"
+  ]
+}

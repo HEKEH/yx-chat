@@ -11,7 +11,7 @@ import SocketModel from './database/mongoDB/model/socket';
 
 export default function initApp() {
   const app = new Koa();
-  app.proxy = true;
+  // app.proxy = true;
 
   // serve public static files
   app.use(
