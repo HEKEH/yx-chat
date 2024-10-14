@@ -1,9 +1,8 @@
-import 'dotenv/config'; // 加载.env文件，在config export之前运行
 import type { TAlgorithm } from 'jwt-simple';
 
 const { env } = process;
 
-export default {
+const config = {
   /** service port */
   port: env.PUBLIC_SERVER_PORT ? parseInt(env.PUBLIC_SERVER_PORT, 10) : 6870,
   allowOrigin: env.ALLOW_ORIGIN,
@@ -19,3 +18,7 @@ export default {
   adminUser: env.ADMIN_USER,
   adminPassword: env.ADMIN_PASSWORD,
 };
+
+// console.log('config', config);
+
+export default config;
