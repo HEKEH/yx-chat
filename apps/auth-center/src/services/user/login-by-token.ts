@@ -8,7 +8,7 @@ import { errorResponse } from '@yx-chat/shared/utils';
 import UserModel from '../../database/mongoDB/model/user';
 import { parseToken } from '../utils';
 
-const loginByToken = async (
+export const loginByToken = async (
   data: LoginByTokenRequestBody,
 ): Promise<UserBasicInfo | ErrorResponse> => {
   const { token, environment } = data;
@@ -44,5 +44,3 @@ const loginByToken = async (
   };
   return userInfo;
 };
-
-export default loginByToken;

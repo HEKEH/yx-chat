@@ -2,6 +2,8 @@
   "extends": "./tsconfig",
   "compilerOptions": {
     "paths": {
+      "~/*": ["./src/*"], // must add, otherwise tsconfig-paths/register cannot work properly
+      "@/*": ["./*"],
       "@yx-chat/*": ["../../packages/*"],
     }
   }

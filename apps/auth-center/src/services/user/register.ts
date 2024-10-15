@@ -10,7 +10,7 @@ import UserModel, { UserDocument } from '../../database/mongoDB/model/user';
 import logger from '../../utils/logger';
 import { generateToken } from '../utils';
 
-const register = async (
+export const register = async (
   data: RegisterRequestBody,
 ): Promise<(UserBasicInfo & { token: string }) | ErrorResponse> => {
   const { username, password, environment } = data;
@@ -46,5 +46,3 @@ const register = async (
     token,
   };
 };
-
-export default register;

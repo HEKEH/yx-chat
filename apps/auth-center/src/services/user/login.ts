@@ -10,7 +10,7 @@ import UserModel from '../../database/mongoDB/model/user';
 import logger from '../../utils/logger';
 import { generateToken } from '../utils';
 
-const login = async (
+export const login = async (
   data: LoginRequestBody,
 ): Promise<(UserBasicInfo & { token: string }) | ErrorResponse> => {
   const { username, password, environment } = data;
@@ -44,5 +44,3 @@ const login = async (
     token,
   };
 };
-
-export default login;
