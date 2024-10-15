@@ -15,7 +15,7 @@
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development dotenv -e ../../.env.development -e .env.development nodemon",
-    "build": "rm -rf dist && tsup ./src/index.ts --format cjs --minify",
+    "build": "rm -rf dist && tsup --config tsconfig.build.json ./src/index.ts --format cjs --minify",
     "start": "cross-env NODE_ENV=production dotenv -e ${GLOBAL_DOTENV_CONFIG_PATH:-../../.env.production} -e .env.production node dist/index.js",
     "prod:start": "cross-env dotenv -e ${GLOBAL_DOTENV_CONFIG_PATH:-../../.env.production} -e .env.production pm2-runtime start ecosystem.config.js --env production",
     "prod:restart": "cross-env dotenv -e ${GLOBAL_DOTENV_CONFIG_PATH:-../../.env.production} -e .env.production pm2 restart ecosystem.config.js --env production",
@@ -29,11 +29,11 @@
   "dependencies": {
     "@yx-chat/shared": "workspace:*",
     "assert": "^2.1.0",
+    "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "dotenv-cli": "^7.4.2",
-    "jwt-simple": "^0.5.6",
     "koa": "^2.14.2",
     "koa-static": "^5.0.0",
     "lodash": "^4.17.21",

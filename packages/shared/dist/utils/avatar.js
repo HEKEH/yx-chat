@@ -17,19 +17,18 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// types/response.ts
-var response_exports = {};
-__export(response_exports, {
-  RESPONSE_CODE: () => RESPONSE_CODE
+// utils/avatar.ts
+var avatar_exports = {};
+__export(avatar_exports, {
+  getRandomAvatarPath: () => getRandomAvatarPath
 });
-module.exports = __toCommonJS(response_exports);
-var RESPONSE_CODE = /* @__PURE__ */ ((RESPONSE_CODE2) => {
-  RESPONSE_CODE2[RESPONSE_CODE2["SUCCESS"] = 0] = "SUCCESS";
-  RESPONSE_CODE2[RESPONSE_CODE2["BIZ_ERROR"] = 1] = "BIZ_ERROR";
-  RESPONSE_CODE2[RESPONSE_CODE2["SERVER_ERROR"] = 2] = "SERVER_ERROR";
-  return RESPONSE_CODE2;
-})(RESPONSE_CODE || {});
+module.exports = __toCommonJS(avatar_exports);
+var AVATAR_COUNT = 15;
+function getRandomAvatarPath() {
+  const number = Math.floor(Math.random() * AVATAR_COUNT);
+  return `/avatar/${number}.jpg`;
+}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  RESPONSE_CODE
+  getRandomAvatarPath
 });

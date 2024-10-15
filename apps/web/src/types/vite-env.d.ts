@@ -1,5 +1,5 @@
 interface ImportMetaEnv {
-  PUBLIC_SERVER_BASE_PATH?: string;
+  PUBLIC_SERVER_HOSTNAME?: string;
   PUBLIC_SERVER_PORT?: string;
 }
 

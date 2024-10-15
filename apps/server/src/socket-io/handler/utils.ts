@@ -1,42 +1,19 @@
-import { encode, decode } from 'jwt-simple';
 import {
   ChatMessage,
   Friend,
   FriendAddNotification,
   Group,
-  NotificationType,
   Notification,
+  NotificationType,
 } from '@yx-chat/shared/types';
 import { Types } from 'mongoose';
-import config from '../../config';
+import ChatMessageModel from '../../database/mongoDB/model/chat-message';
 import FriendModel, {
   FriendDocument,
 } from '../../database/mongoDB/model/friend';
+import FriendAddRequestModel from '../../database/mongoDB/model/friend-add-request';
 import GroupModel from '../../database/mongoDB/model/group';
 import { UserDocument } from '../../database/mongoDB/model/user';
-import ChatMessageModel from '../../database/mongoDB/model/chat-message';
-import FriendAddRequestModel from '../../database/mongoDB/model/friend-add-request';
-
-export function generateToken(userId: string, environment: string) {
-  return encode(
-    {
-      userId,
-      environment,
-      expires: Date.now() + config.jwtTokenExpiresTime,
-    },
-    config.jwtSecret,
-    config.jwtAlgorithm,
-  );
-}
-
-export function parseToken(token: string): {
-  userId: string;
-  environment: string;
-  expires: number;
-} {
-  return decode(token, config.jwtSecret, false, config.jwtAlgorithm);
-}
-
 function formatFriend(friend: FriendDocument): Friend {
   const { to } = friend;
   if (typeof to === 'string') {

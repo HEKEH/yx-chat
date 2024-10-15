@@ -4,9 +4,8 @@ import {
   CreateGroupSuccessResponse,
   type ErrorResponse,
 } from '@yx-chat/shared/types';
-import { errorResponse } from '@yx-chat/shared/utils';
+import { errorResponse, getRandomAvatarPath } from '@yx-chat/shared/utils';
 import GroupModel, { GroupDocument } from '../../database/mongoDB/model/group';
-import { getRandomAvatarPath } from '../../biz-utils/get-avatar-path';
 import { shouldLogin } from './fn-decorators';
 import { EventHandler, EventHandlerContext } from './types';
 

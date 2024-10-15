@@ -5,9 +5,9 @@ import {
   SystemRequestType,
 } from '@yx-chat/shared/types';
 import { SocketContext } from '../context';
-import login from './login';
-import loginByToken from './login-by-token';
-import register from './register';
+import loginHandler from './login';
+import loginByTokenHandler from './login-by-token';
+import registerHandler from './register';
 import getLastChatMessages from './get-last-chat-messages';
 import getHistoryChatMessages from './get-history-chat-messages';
 import sendChatMessage from './send-chat-message';
@@ -20,9 +20,9 @@ import rejectFriendAddRequest from './reject-friend-add-request';
 import acceptFriendAddRequest from './accept-friend-add-request';
 
 export const EventHandlerMap = {
-  [AccountRequestType.login]: login,
-  [AccountRequestType.loginByToken]: loginByToken,
-  [AccountRequestType.register]: register,
+  [AccountRequestType.login]: loginHandler,
+  [AccountRequestType.loginByToken]: loginByTokenHandler,
+  [AccountRequestType.register]: registerHandler,
   [ChatMessageRequestType.getLastChatMessages]: getLastChatMessages,
   [ChatMessageRequestType.getHistoryChatMessages]: getHistoryChatMessages,
   [ChatMessageRequestType.sendChatMessage]: sendChatMessage,

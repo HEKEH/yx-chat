@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
   const envPrefix = 'PUBLIC_';
   loadEnv(mode, '../../', envPrefix);
   // const env = loadEnv(mode, '../../', envPrefix);
-  // let path = env.PUBLIC_SERVER_BASE_PATH;
+  // let path = env.PUBLIC_SERVER_HOSTNAME;
   // if (path && env.PUBLIC_SERVER_PORT) {
   //   path = `${path}:${env.PUBLIC_SERVER_PORT}`;
   // }

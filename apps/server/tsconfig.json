@@ -1,10 +1,10 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "outDir": "./dist",
     "paths": {
-      "~/*": ["./src/*"],
-      "@/*": ["./*"]
+      "~/*": ["./src/*"], // must add, otherwise tsconfig-paths/register cannot work properly
+      "@/*": ["./*"],
+      "@yx-chat/*": ["../../packages/*"],
     }
   }
 }

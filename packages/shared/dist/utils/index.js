@@ -23,6 +23,7 @@ __export(utils_exports, {
   enum2KeyArray: () => enum2KeyArray,
   enum2ValueArray: () => enum2ValueArray,
   errorResponse: () => errorResponse,
+  getRandomAvatarPath: () => getRandomAvatarPath,
   isErrorResponse: () => isErrorResponse,
   regexEscape: () => regexEscape
 });
@@ -50,11 +51,19 @@ function enum2KeyArray(obj) {
 function regexEscape(input) {
   return input.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
 }
+
+// utils/avatar.ts
+var AVATAR_COUNT = 15;
+function getRandomAvatarPath() {
+  const number = Math.floor(Math.random() * AVATAR_COUNT);
+  return `/avatar/${number}.jpg`;
+}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   enum2KeyArray,
   enum2ValueArray,
   errorResponse,
+  getRandomAvatarPath,
   isErrorResponse,
   regexEscape
 });

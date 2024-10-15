@@ -14,7 +14,7 @@
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development dotenv -e ../../.env.development -e .env.development nodemon",
-    "build": "rm -rf dist && tsup ./src/index.ts --format cjs --minify",
+    "build": "rm -rf dist && tsup --config tsconfig.build.json ./src/index.ts --format cjs --minify",
     "start": "cross-env NODE_ENV=production dotenv -e ${GLOBAL_DOTENV_CONFIG_PATH:-../../.env.production} -e .env.production node dist/index.js",
     "prod:start": "cross-env dotenv -e ${GLOBAL_DOTENV_CONFIG_PATH:-../../.env.production} -e .env.production pm2-runtime start ecosystem.config.js --env production",
     "prod:restart": "cross-env dotenv -e ${GLOBAL_DOTENV_CONFIG_PATH:-../../.env.production} -e .env.production pm2 restart ecosystem.config.js --env production",

@@ -6,6 +6,7 @@ import bodyParser from 'koa-bodyparser';
 import config from './config';
 import router from './routes';
 import { BusinessError } from './biz-utils/business-error';
+import logger from './utils/logger';
 
 function corsMiddleware() {
   return async (ctx: Koa.Context, next: Koa.Next) => {
@@ -48,7 +49,13 @@ export const responseWrapMiddleware = async (
       };
       return;
     }
-    throw error;
+    ctx.status = 500;
+    ctx.body = {
+      status: RESPONSE_CODE.SERVER_ERROR,
+      message: 'An unexpected error occurred',
+    };
+    // Log the actual error for debugging purposes
+    logger.error('Unhandled error:', error);
   }
 };
 

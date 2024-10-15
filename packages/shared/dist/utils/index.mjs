@@ -1,4 +1,7 @@
-import "../chunk-M2SFOZJM.mjs";
+import "../chunk-VSBLHWR5.mjs";
+import {
+  getRandomAvatarPath
+} from "../chunk-GK6VSPA7.mjs";
 import {
   enum2KeyArray,
   enum2ValueArray
@@ -14,6 +17,7 @@ export {
   enum2KeyArray,
   enum2ValueArray,
   errorResponse,
+  getRandomAvatarPath,
   isErrorResponse,
   regexEscape
 };
