@@ -5,8 +5,8 @@ import type {
   UserBasicInfo,
 } from '@yx-chat/shared/types';
 import { errorResponse } from '@yx-chat/shared/utils';
-import UserModel from '../database/mongoDB/model/user';
-import { parseToken } from './utils';
+import UserModel from '../../database/mongoDB/model/user';
+import { parseToken } from '../utils';
 
 const loginByToken = async (
   data: LoginByTokenRequestBody,

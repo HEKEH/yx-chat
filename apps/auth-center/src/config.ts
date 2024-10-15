@@ -4,7 +4,7 @@ const { env } = process;
 
 export default {
   /** service port */
-  port: env.AUTH_CENTER_PORT ? parseInt(env.AUTH_CENTER_PORT, 10) : 6870,
+  port: env.AUTH_CENTER_PORT ? parseInt(env.AUTH_CENTER_PORT, 10) : 7089,
   allowOrigin: env.ALLOW_ORIGIN,
   /** mongodb url */
   mongoDBUrl: env.MONGO_DB_URL || 'mongodb://localhost:27017/yx-chat',

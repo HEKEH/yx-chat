@@ -6,9 +6,9 @@ import type {
 } from '@yx-chat/shared/types';
 import { errorResponse } from '@yx-chat/shared/utils';
 import bcrypt from 'bcryptjs';
-import UserModel from '../database/mongoDB/model/user';
-import logger from '../utils/logger';
-import { generateToken } from './utils';
+import UserModel from '../../database/mongoDB/model/user';
+import logger from '../../utils/logger';
+import { generateToken } from '../utils';
 
 const login = async (
   data: LoginRequestBody,

@@ -5,10 +5,10 @@ import type {
   UserBasicInfo,
 } from '@yx-chat/shared/types';
 import { errorResponse } from '@yx-chat/shared/utils';
-import { createNewUser } from '../biz-utils/create-new-user';
-import UserModel, { UserDocument } from '../database/mongoDB/model/user';
-import logger from '../utils/logger';
-import { generateToken } from './utils';
+import { createNewUser } from '../../biz-utils/create-new-user';
+import UserModel, { UserDocument } from '../../database/mongoDB/model/user';
+import logger from '../../utils/logger';
+import { generateToken } from '../utils';
 
 const register = async (
   data: RegisterRequestBody,

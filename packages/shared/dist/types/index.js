@@ -26,6 +26,7 @@ __export(types_exports, {
   ChatMessageRequestType: () => ChatMessageRequestType,
   ContactRequestType: () => ContactRequestType,
   NotificationType: () => NotificationType,
+  RESPONSE_CODE: () => RESPONSE_CODE,
   ServerMessageType: () => ServerMessageType,
   SystemRequestType: () => SystemRequestType
 });
@@ -88,6 +89,13 @@ var SystemRequestType = /* @__PURE__ */ ((SystemRequestType2) => {
   SystemRequestType2["searchUsersAndGroups"] = "searchUsersAndGroups";
   return SystemRequestType2;
 })(SystemRequestType || {});
+
+// types/response.ts
+var RESPONSE_CODE = /* @__PURE__ */ ((RESPONSE_CODE2) => {
+  RESPONSE_CODE2[RESPONSE_CODE2["SUCCESS"] = 0] = "SUCCESS";
+  RESPONSE_CODE2[RESPONSE_CODE2["BIZ_ERROR"] = 1] = "BIZ_ERROR";
+  return RESPONSE_CODE2;
+})(RESPONSE_CODE || {});
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   AccountRequestType,
@@ -96,6 +104,7 @@ var SystemRequestType = /* @__PURE__ */ ((SystemRequestType2) => {
   ChatMessageRequestType,
   ContactRequestType,
   NotificationType,
+  RESPONSE_CODE,
   ServerMessageType,
   SystemRequestType
 });

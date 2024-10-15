@@ -1,0 +1,10 @@
+// types/response.ts
+var RESPONSE_CODE = /* @__PURE__ */ ((RESPONSE_CODE2) => {
+  RESPONSE_CODE2[RESPONSE_CODE2["SUCCESS"] = 0] = "SUCCESS";
+  RESPONSE_CODE2[RESPONSE_CODE2["BIZ_ERROR"] = 1] = "BIZ_ERROR";
+  return RESPONSE_CODE2;
+})(RESPONSE_CODE || {});
+
+export {
+  RESPONSE_CODE
+};

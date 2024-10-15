@@ -7,3 +7,4 @@ export { AllRequestTypes } from './request-types.js';
 export { ServerMessage, ServerMessageType } from './server-message.js';
 export { ErrorResponse } from './error.js';
 export { SystemRequestType, UserAndGroupSearchItem, UserAndGroupSearchRequestBody, UserAndGroupSearchResult } from './system.js';
+export { RESPONSE_CODE } from './response.js';

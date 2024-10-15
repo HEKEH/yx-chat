@@ -7,3 +7,4 @@ export { AllRequestTypes } from './request-types.mjs';
 export { ServerMessage, ServerMessageType } from './server-message.mjs';
 export { ErrorResponse } from './error.mjs';
 export { SystemRequestType, UserAndGroupSearchItem, UserAndGroupSearchRequestBody, UserAndGroupSearchResult } from './system.mjs';
+export { RESPONSE_CODE } from './response.mjs';
