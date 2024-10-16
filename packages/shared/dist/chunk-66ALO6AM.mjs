@@ -1,4 +1,4 @@
-// types/contact.ts
+// src/types/contact.ts
 var ContactRequestType = /* @__PURE__ */ ((ContactRequestType2) => {
   ContactRequestType2["createGroup"] = "createGroup";
   ContactRequestType2["joinGroup"] = "addGroup";

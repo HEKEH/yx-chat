@@ -1,4 +1,4 @@
-// constants/language.ts
+// src/constants/language.ts
 var LANGUAGE = /* @__PURE__ */ ((LANGUAGE2) => {
   LANGUAGE2["EN"] = "en";
   LANGUAGE2["ZH_CN"] = "zh-cn";

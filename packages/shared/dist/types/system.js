@@ -17,7 +17,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// types/system.ts
+// src/types/system.ts
 var system_exports = {};
 __export(system_exports, {
   SystemRequestType: () => SystemRequestType

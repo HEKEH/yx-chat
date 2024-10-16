@@ -17,7 +17,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// types/index.ts
+// src/types/index.ts
 var types_exports = {};
 __export(types_exports, {
   AccountRequestType: () => AccountRequestType,
@@ -32,7 +32,7 @@ __export(types_exports, {
 });
 module.exports = __toCommonJS(types_exports);
 
-// types/account.ts
+// src/types/account.ts
 var AccountRequestType = /* @__PURE__ */ ((AccountRequestType2) => {
   AccountRequestType2["login"] = "login";
   AccountRequestType2["loginByToken"] = "loginByToken";
@@ -40,13 +40,13 @@ var AccountRequestType = /* @__PURE__ */ ((AccountRequestType2) => {
   return AccountRequestType2;
 })(AccountRequestType || {});
 
-// utils/enum.ts
+// src/utils/enum.ts
 function enum2ValueArray(obj) {
   const values = Object.values(obj);
   return values;
 }
 
-// types/chat.ts
+// src/types/chat.ts
 var ChatMessageRequestType = /* @__PURE__ */ ((ChatMessageRequestType2) => {
   ChatMessageRequestType2["getLastChatMessages"] = "getLastChatMessages";
   ChatMessageRequestType2["getHistoryChatMessages"] = "getHistoryChatMessages";
@@ -60,13 +60,13 @@ var ChatMessageFormat = /* @__PURE__ */ ((ChatMessageFormat2) => {
 })(ChatMessageFormat || {});
 var ChatMessageFormatList = enum2ValueArray(ChatMessageFormat);
 
-// types/notification.ts
+// src/types/notification.ts
 var NotificationType = /* @__PURE__ */ ((NotificationType2) => {
   NotificationType2["FriendAddNotification"] = "FriendAddNotification";
   return NotificationType2;
 })(NotificationType || {});
 
-// types/contact.ts
+// src/types/contact.ts
 var ContactRequestType = /* @__PURE__ */ ((ContactRequestType2) => {
   ContactRequestType2["createGroup"] = "createGroup";
   ContactRequestType2["joinGroup"] = "addGroup";
@@ -76,7 +76,7 @@ var ContactRequestType = /* @__PURE__ */ ((ContactRequestType2) => {
   return ContactRequestType2;
 })(ContactRequestType || {});
 
-// types/server-message.ts
+// src/types/server-message.ts
 var ServerMessageType = /* @__PURE__ */ ((ServerMessageType2) => {
   ServerMessageType2["chat"] = "chat";
   ServerMessageType2["notification"] = "notification";
@@ -84,13 +84,13 @@ var ServerMessageType = /* @__PURE__ */ ((ServerMessageType2) => {
   return ServerMessageType2;
 })(ServerMessageType || {});
 
-// types/system.ts
+// src/types/system.ts
 var SystemRequestType = /* @__PURE__ */ ((SystemRequestType2) => {
   SystemRequestType2["searchUsersAndGroups"] = "searchUsersAndGroups";
   return SystemRequestType2;
 })(SystemRequestType || {});
 
-// types/response.ts
+// src/types/response.ts
 var RESPONSE_CODE = /* @__PURE__ */ ((RESPONSE_CODE2) => {
   RESPONSE_CODE2[RESPONSE_CODE2["SUCCESS"] = 0] = "SUCCESS";
   RESPONSE_CODE2[RESPONSE_CODE2["BIZ_ERROR"] = 1] = "BIZ_ERROR";

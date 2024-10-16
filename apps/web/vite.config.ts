@@ -18,8 +18,9 @@ export default defineConfig(({ mode }) => {
   };
   const packagesDir = resolve(__dirname, '../../packages/');
   if (mode === 'development') {
-    alias['@yx-chat/i18n'] = resolve(packagesDir, './i18n/src'); // develop mode redirect
-    alias['@yx-chat'] = packagesDir; // develop mode redirect
+    // develop mode redirect
+    alias['@yx-chat/i18n'] = resolve(packagesDir, './i18n/src');
+    alias['@yx-chat/shared'] = resolve(packagesDir, './shared/src');
   }
 
   // const serverPath =

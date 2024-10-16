@@ -17,7 +17,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// utils/avatar.ts
+// src/utils/avatar.ts
 var avatar_exports = {};
 __export(avatar_exports, {
   getRandomAvatarPath: () => getRandomAvatarPath

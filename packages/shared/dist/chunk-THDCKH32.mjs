@@ -1,4 +1,4 @@
-// types/server-message.ts
+// src/types/server-message.ts
 var ServerMessageType = /* @__PURE__ */ ((ServerMessageType2) => {
   ServerMessageType2["chat"] = "chat";
   ServerMessageType2["notification"] = "notification";

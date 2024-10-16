@@ -17,7 +17,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// types/contact.ts
+// src/types/contact.ts
 var contact_exports = {};
 __export(contact_exports, {
   ContactRequestType: () => ContactRequestType

@@ -1,4 +1,4 @@
-// utils/error.ts
+// src/utils/error.ts
 function isErrorResponse(response) {
   return response && response instanceof Object && response.status === "error" && typeof response.message === "string";
 }

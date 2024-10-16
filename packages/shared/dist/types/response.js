@@ -17,7 +17,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// types/response.ts
+// src/types/response.ts
 var response_exports = {};
 __export(response_exports, {
   RESPONSE_CODE: () => RESPONSE_CODE

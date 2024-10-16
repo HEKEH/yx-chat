@@ -1,6 +1,6 @@
 import {
   ContactRequestType
-} from "../chunk-V2722QVA.mjs";
+} from "../chunk-66ALO6AM.mjs";
 export {
   ContactRequestType
 };

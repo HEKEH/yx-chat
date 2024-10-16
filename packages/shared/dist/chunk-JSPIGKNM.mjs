@@ -1,4 +1,4 @@
-// types/account.ts
+// src/types/account.ts
 var AccountRequestType = /* @__PURE__ */ ((AccountRequestType2) => {
   AccountRequestType2["login"] = "login";
   AccountRequestType2["loginByToken"] = "loginByToken";

@@ -17,7 +17,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// types/notification.ts
+// src/types/notification.ts
 var notification_exports = {};
 __export(notification_exports, {
   NotificationType: () => NotificationType

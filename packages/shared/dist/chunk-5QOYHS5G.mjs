@@ -1,4 +1,4 @@
-// utils/enum.ts
+// src/utils/enum.ts
 function enum2ValueArray(obj) {
   const values = Object.values(obj);
   return values;

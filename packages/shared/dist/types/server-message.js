@@ -17,7 +17,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// types/server-message.ts
+// src/types/server-message.ts
 var server_message_exports = {};
 __export(server_message_exports, {
   ServerMessageType: () => ServerMessageType

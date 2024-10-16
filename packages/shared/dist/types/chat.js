@@ -17,7 +17,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// types/chat.ts
+// src/types/chat.ts
 var chat_exports = {};
 __export(chat_exports, {
   ChatMessageFormat: () => ChatMessageFormat,
@@ -26,13 +26,13 @@ __export(chat_exports, {
 });
 module.exports = __toCommonJS(chat_exports);
 
-// utils/enum.ts
+// src/utils/enum.ts
 function enum2ValueArray(obj) {
   const values = Object.values(obj);
   return values;
 }
 
-// types/chat.ts
+// src/types/chat.ts
 var ChatMessageRequestType = /* @__PURE__ */ ((ChatMessageRequestType2) => {
   ChatMessageRequestType2["getLastChatMessages"] = "getLastChatMessages";
   ChatMessageRequestType2["getHistoryChatMessages"] = "getHistoryChatMessages";

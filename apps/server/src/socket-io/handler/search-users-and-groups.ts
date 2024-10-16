@@ -1,5 +1,4 @@
 import {
-  ErrorResponse,
   UserAndGroupSearchRequestBody,
   UserAndGroupSearchResult,
 } from '@yx-chat/shared/types';

@@ -4,49 +4,19 @@
   "description": "The shared utils and types of all packages",
   "license": "MIT",
   "exports": {
-    "./types": {
-      "import": {
-        "default": "./dist/types/index.mjs",
-        "type": "./dist/types/index.d.mts"
-      },
-      "require": {
-        "default": "./dist/types/index.js",
-        "type": "./dist/types/index.d.ts"
-      }
-    },
-    "./utils": {
-      "import": {
-        "default": "./dist/utils/index.mjs",
-        "type": "./dist/utils/index.d.mts"
-      },
-      "require": {
-        "default": "./dist/utils/index.js",
-        "type": "./dist/utils/index.d.ts"
-      }
-    },
-    "./constants": {
-      "import": {
-        "default": "./dist/constants/index.mjs",
-        "type": "./dist/constants/index.d.mts"
-      },
-      "require": {
-        "default": "./dist/constants/index.js",
-        "type": "./dist/constants/index.d.ts"
-      }
-    },
     "./*": {
       "import": {
-        "default": "./dist/*.mjs",
-        "type": "./dist/*.d.mts"
+        "default": "./dist/*/index.mjs",
+        "type": "./dist/*/index.d.mts"
       },
       "require": {
-        "default": "./dist/*.js",
-        "type": "./dist/*.d.ts"
+        "default": "./dist/*/index.js",
+        "type": "./dist/*/index.d.ts"
       }
     }
   },
   "scripts": {
-    "build": "rm -rf dist && tsup ./types ./utils ./constants --format cjs,esm --dts",
+    "build": "rm -rf dist && tsup ./src --format cjs,esm --dts",
     "lint": "eslint",
     "preinstall": "npx only-allow pnpm"
   },

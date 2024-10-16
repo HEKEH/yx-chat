@@ -17,7 +17,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// types/account.ts
+// src/types/account.ts
 var account_exports = {};
 __export(account_exports, {
   AccountRequestType: () => AccountRequestType

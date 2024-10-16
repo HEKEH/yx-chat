@@ -1,8 +1,8 @@
 import {
   enum2ValueArray
-} from "./chunk-4TAFVIFX.mjs";
+} from "./chunk-5QOYHS5G.mjs";
 
-// types/chat.ts
+// src/types/chat.ts
 var ChatMessageRequestType = /* @__PURE__ */ ((ChatMessageRequestType2) => {
   ChatMessageRequestType2["getLastChatMessages"] = "getLastChatMessages";
   ChatMessageRequestType2["getHistoryChatMessages"] = "getHistoryChatMessages";

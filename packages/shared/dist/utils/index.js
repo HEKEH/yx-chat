@@ -17,7 +17,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// utils/index.ts
+// src/utils/index.ts
 var utils_exports = {};
 __export(utils_exports, {
   enum2KeyArray: () => enum2KeyArray,
@@ -29,7 +29,7 @@ __export(utils_exports, {
 });
 module.exports = __toCommonJS(utils_exports);
 
-// utils/error.ts
+// src/utils/error.ts
 function isErrorResponse(response) {
   return response && response instanceof Object && response.status === "error" && typeof response.message === "string";
 }
@@ -37,7 +37,7 @@ function errorResponse(message) {
   return { status: "error", message };
 }
 
-// utils/enum.ts
+// src/utils/enum.ts
 function enum2ValueArray(obj) {
   const values = Object.values(obj);
   return values;
@@ -47,12 +47,12 @@ function enum2KeyArray(obj) {
   return values;
 }
 
-// utils/regex.ts
+// src/utils/regex.ts
 function regexEscape(input) {
   return input.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
 }
 
-// utils/avatar.ts
+// src/utils/avatar.ts
 var AVATAR_COUNT = 15;
 function getRandomAvatarPath() {
   const number = Math.floor(Math.random() * AVATAR_COUNT);

@@ -1,6 +1,6 @@
 import {
   getRandomAvatarPath
-} from "../chunk-GK6VSPA7.mjs";
+} from "../chunk-PL2YQ75I.mjs";
 export {
   getRandomAvatarPath
 };

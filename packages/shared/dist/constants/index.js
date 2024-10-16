@@ -17,7 +17,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// constants/index.ts
+// src/constants/index.ts
 var constants_exports = {};
 __export(constants_exports, {
   ACCEPT_LANGUAGES: () => ACCEPT_LANGUAGES,
@@ -25,7 +25,7 @@ __export(constants_exports, {
 });
 module.exports = __toCommonJS(constants_exports);
 
-// constants/language.ts
+// src/constants/language.ts
 var LANGUAGE = /* @__PURE__ */ ((LANGUAGE2) => {
   LANGUAGE2["EN"] = "en";
   LANGUAGE2["ZH_CN"] = "zh-cn";
