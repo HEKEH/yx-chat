@@ -10,6 +10,11 @@ export const addContextPropsMiddleware = async (ctx: Context, next: Next) => {
       this.method === 'GET' ? this.request.query : this.request.body
     ) as T;
   };
+  Object.defineProperty(ctx, 'lng', {
+    get: function () {
+      return this.params?.lng;
+    },
+  });
   await next();
 };
 
