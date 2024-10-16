@@ -1,9 +1,5 @@
 import assert from 'assert';
-import type {
-  ErrorResponse,
-  RegisterRequestBody,
-  UserBasicInfo,
-} from '@yx-chat/shared/types';
+import type { RegisterRequestBody, UserBasicInfo } from '@yx-chat/shared/types';
 import { BusinessError } from '~/biz-utils/business-error';
 import { createNewUser } from '../../biz-utils/create-new-user';
 import UserModel, { UserDocument } from '../../database/mongoDB/model/user';
@@ -12,7 +8,7 @@ import { generateToken } from '../utils';
 
 export const register = async (
   data: RegisterRequestBody,
-): Promise<(UserBasicInfo & { token: string }) | ErrorResponse> => {
+): Promise<UserBasicInfo & { token: string }> => {
   const { username, password, environment } = data;
   logger.trace(`register ${username}`);
   assert(username, "Username can't be empty");

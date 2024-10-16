@@ -12,7 +12,7 @@ const MESSAGES_FETCH_NUMBER = 30;
 let getHistoryChatMessages: EventHandler = (
   context: EventHandlerContext,
   data: HistoryChatMessagesRequestBody,
-): Promise<HistoryChatMessagesResponse | ErrorResponse> => {
+): Promise<HistoryChatMessagesResponse> => {
   const { contactKey, offset } = data;
   return getMessagesByContactKey(contactKey, MESSAGES_FETCH_NUMBER, offset);
 };

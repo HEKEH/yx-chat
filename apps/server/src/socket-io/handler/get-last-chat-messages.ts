@@ -34,7 +34,7 @@ async function getHistoryMap(
 let getLastChatMessages: EventHandler = async (
   context: EventHandlerContext,
   data: LastMessagesRequestBody,
-): Promise<LastMessagesResponse | ErrorResponse> => {
+): Promise<LastMessagesResponse> => {
   const { contactKeys } = data;
   const historyMap = await getHistoryMap(context.userId!, contactKeys);
   const messagesList = await Promise.all(

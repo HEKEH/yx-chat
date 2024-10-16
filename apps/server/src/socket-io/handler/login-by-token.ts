@@ -1,10 +1,9 @@
 import {
   RESPONSE_CODE,
-  type ErrorResponse,
   type LoginByTokenRequestBody,
   type LoginSuccessResponse,
 } from '@yx-chat/shared/types';
-import { errorResponse } from '@yx-chat/shared/utils';
+import { BusinessError } from '~/biz-utils/business-error';
 import { loginByToken } from '~/request/auth-center';
 import { EventHandler, EventHandlerContext } from './types';
 import {
@@ -15,11 +14,11 @@ import {
 const loginByTokenHandler: EventHandler = async (
   context: EventHandlerContext,
   data: LoginByTokenRequestBody,
-): Promise<LoginSuccessResponse | ErrorResponse> => {
+): Promise<LoginSuccessResponse> => {
   const { os, browser, environment } = data;
   const res = await loginByToken(data);
   if (res.status !== RESPONSE_CODE.SUCCESS) {
-    return errorResponse(res.message);
+    throw new BusinessError(res.message);
   }
   const userInfo = res.data;
   const [{ groups, friends }, notifications] = await Promise.all([

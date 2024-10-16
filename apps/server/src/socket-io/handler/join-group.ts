@@ -2,7 +2,6 @@ import assert from 'assert';
 import type {
   JoinGroupRequestBody,
   JoinGroupSuccessResponse,
-  ErrorResponse,
 } from '@yx-chat/shared/types';
 import GroupModel from '../../database/mongoDB/model/group';
 import { DEFAULT_MESSAGES_FETCH_NUMBER } from '../../const';
@@ -13,7 +12,7 @@ import { getMessagesByContactKey } from './utils';
 let joinGroup: EventHandler = async (
   context: EventHandlerContext,
   data: JoinGroupRequestBody,
-): Promise<JoinGroupSuccessResponse | ErrorResponse> => {
+): Promise<JoinGroupSuccessResponse> => {
   const { groupId } = data;
   assert(groupId, "Group id can't be empty");
 

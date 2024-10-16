@@ -1,10 +1,10 @@
-import { errorResponse } from '@yx-chat/shared/utils';
+import { BusinessError } from '~/biz-utils/business-error';
 import { EventHandler, EventHandlerContext } from './types';
 
 export function shouldLogin(eventHandler: EventHandler) {
   return async (context: EventHandlerContext, data: any) => {
     if (!context.isLogin) {
-      return errorResponse('Please login first');
+      throw new BusinessError('Please login first');
     }
     return await eventHandler(context, data);
   };

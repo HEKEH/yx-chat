@@ -5,7 +5,7 @@ import {
   type SendFriendAddRequestResponse,
   NotificationType,
 } from '@yx-chat/shared/types';
-import { errorResponse } from '@yx-chat/shared/utils';
+import { BusinessError } from '~/biz-utils/business-error';
 import FriendAddRequestModel from '../../database/mongoDB/model/friend-add-request';
 import UserModel from '../../database/mongoDB/model/user';
 import { shouldLogin } from './fn-decorators';
@@ -15,10 +15,10 @@ import { findFriendIdsByUserId, isIdValid } from './utils';
 let sendFriendAddRequest: EventHandler = async (
   context: EventHandlerContext,
   data: SendFriendAddRequestBody,
-): Promise<SendFriendAddRequestResponse | ErrorResponse> => {
+): Promise<SendFriendAddRequestResponse> => {
   const { targetUserId } = data;
   if (!isIdValid(targetUserId)) {
-    return errorResponse('Invalid target user id');
+    throw new BusinessError('Invalid target user id');
   }
   const userId = context.userId!;
   if (userId === targetUserId) {

@@ -12,7 +12,7 @@ import { shouldLogin } from './fn-decorators';
 let searchUsersAndGroups: EventHandler = async (
   _: EventHandlerContext,
   data: UserAndGroupSearchRequestBody,
-): Promise<UserAndGroupSearchResult | ErrorResponse> => {
+): Promise<UserAndGroupSearchResult> => {
   const { searchText } = data;
   if (searchText === '') {
     return {

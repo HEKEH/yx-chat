@@ -1,6 +1,5 @@
 import assert from 'assert';
 import type {
-  ErrorResponse,
   LoginByTokenRequestBody,
   UserBasicInfo,
 } from '@yx-chat/shared/types';
@@ -10,7 +9,7 @@ import { parseToken } from '../utils';
 
 export const loginByToken = async (
   data: LoginByTokenRequestBody,
-): Promise<UserBasicInfo | ErrorResponse> => {
+): Promise<UserBasicInfo> => {
   const { token, environment } = data;
   assert(token, "Token can't be empty");
   let payload: ReturnType<typeof parseToken> | undefined;

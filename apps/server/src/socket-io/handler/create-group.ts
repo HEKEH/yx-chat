@@ -2,9 +2,9 @@ import assert from 'assert';
 import {
   CreateGroupRequestBody,
   CreateGroupSuccessResponse,
-  type ErrorResponse,
 } from '@yx-chat/shared/types';
-import { errorResponse, getRandomAvatarPath } from '@yx-chat/shared/utils';
+import { getRandomAvatarPath } from '@yx-chat/shared/utils';
+import { BusinessError } from '~/biz-utils/business-error';
 import GroupModel, { GroupDocument } from '../../database/mongoDB/model/group';
 import { shouldLogin } from './fn-decorators';
 import { EventHandler, EventHandlerContext } from './types';
@@ -12,7 +12,7 @@ import { EventHandler, EventHandlerContext } from './types';
 let createGroup: EventHandler = async (
   context: EventHandlerContext,
   data: CreateGroupRequestBody,
-): Promise<CreateGroupSuccessResponse | ErrorResponse> => {
+): Promise<CreateGroupSuccessResponse> => {
   const { name } = data;
   assert(name, "GroupName can't be empty");
 
@@ -29,7 +29,7 @@ let createGroup: EventHandler = async (
     });
   } catch (err) {
     if ((err as Error).name === 'ValidationError') {
-      return errorResponse(
+      throw new BusinessError(
         'Group name contains unsupported characters or exceeds the length limit',
       );
     }

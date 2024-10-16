@@ -1,10 +1,9 @@
 import {
   AcceptFriendAddRequestBody,
   AcceptFriendAddRequestResponse,
-  ErrorResponse,
   ServerMessageType,
 } from '@yx-chat/shared/types';
-import { errorResponse } from '@yx-chat/shared/utils';
+import { BusinessError } from '~/biz-utils/business-error';
 import FriendModel from '../../database/mongoDB/model/friend';
 import FriendAddRequestModel from '../../database/mongoDB/model/friend-add-request';
 import UserModel from '../../database/mongoDB/model/user';
@@ -15,34 +14,34 @@ import { isIdValid } from './utils';
 let acceptFriendAddRequest: EventHandler = async (
   context: EventHandlerContext,
   data: AcceptFriendAddRequestBody,
-): Promise<AcceptFriendAddRequestResponse | ErrorResponse> => {
+): Promise<AcceptFriendAddRequestResponse> => {
   const { requestId } = data;
   if (!isIdValid(requestId)) {
-    return errorResponse('Invalid request id');
+    throw new BusinessError('Invalid request id');
   }
   const request = await FriendAddRequestModel.findOne({
     _id: requestId,
   });
   if (!request) {
-    return errorResponse("Request doesn't exists");
+    throw new BusinessError("Request doesn't exists");
   }
   const to = request.to.toString();
   if (to !== context.userId) {
-    return errorResponse('Not your request');
+    throw new BusinessError('Not your request');
   }
   const from = request.from.toString();
   const fromUser = await UserModel.findOne({
     _id: from,
   });
   if (!fromUser) {
-    return errorResponse("Friend doesn't exists");
+    throw new BusinessError("Friend doesn't exists");
   }
   const friendItem = await FriendModel.findOne({
     from,
     to,
   });
   if (friendItem) {
-    return errorResponse('You are already friends');
+    throw new BusinessError('You are already friends');
   }
   // double write
   const [friend, friendBack] = await FriendModel.create([

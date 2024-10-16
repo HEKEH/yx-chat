@@ -7,8 +7,9 @@ import {
 import { errorResponse } from '@yx-chat/shared/utils';
 import { Socket } from 'socket.io';
 import { uniq } from 'lodash';
-import SocketModel from '../database/mongoDB/model/socket';
-import logger from '../utils/logger';
+import { BusinessError } from '~/biz-utils/business-error';
+import logger from '~/utils/logger';
+import SocketModel from '~/database/mongoDB/model/socket';
 import { EventHandler, EventHandlerContext } from './handler/types';
 
 export class SocketContext implements EventHandlerContext {
@@ -58,14 +59,16 @@ export class SocketContext implements EventHandlerContext {
           after - before,
           this.socketId,
           this.userId || 'null',
+          data,
           JSON.stringify(res),
         );
         callback(res);
       } catch (err) {
-        if (err instanceof AssertionError) {
+        if (err instanceof AssertionError || err instanceof BusinessError) {
+          logger.error(`[${eventName} Business Error]`, data, err);
           callback(errorResponse(err.message));
         } else {
-          logger.error(`[${eventName}]`, (err as Error).message);
+          logger.error(`[${eventName} System Error]`, data, err);
           callback(errorResponse(`Server Error: ${(err as Error).message}`));
         }
       }

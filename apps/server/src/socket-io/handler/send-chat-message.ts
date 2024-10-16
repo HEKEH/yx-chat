@@ -6,7 +6,7 @@ import {
   type SendChatMessageBody,
 } from '@yx-chat/shared/types';
 import xss from 'xss';
-import { errorResponse } from '@yx-chat/shared/utils';
+import { BusinessError } from '~/biz-utils/business-error';
 import UserModel from '../../database/mongoDB/model/user';
 import ChatMessageModel from '../../database/mongoDB/model/chat-message';
 import { createOrUpdateHistory } from '../../database/mongoDB/model/history';
@@ -18,7 +18,7 @@ import { isIdValid } from './utils';
 let sendChatMessage: EventHandler = async (
   context: EventHandlerContext,
   data: SendChatMessageBody,
-): Promise<ChatMessage | ErrorResponse> => {
+): Promise<ChatMessage> => {
   let { content } = data;
   assert(content.length <= 2048, 'Message content is too long');
   content = xss(content);

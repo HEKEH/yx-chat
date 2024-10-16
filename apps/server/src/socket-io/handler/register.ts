@@ -1,21 +1,20 @@
 import {
   RESPONSE_CODE,
-  type ErrorResponse,
   type LoginSuccessResponse,
   type RegisterRequestBody,
 } from '@yx-chat/shared/types';
-import { errorResponse } from '@yx-chat/shared/utils';
+import { BusinessError } from '~/biz-utils/business-error';
 import { register } from '~/request/auth-center';
 import { EventHandler, EventHandlerContext } from './types';
 
 const registerHandler: EventHandler = async (
   context: EventHandlerContext,
   data: RegisterRequestBody,
-): Promise<LoginSuccessResponse | ErrorResponse> => {
+): Promise<LoginSuccessResponse> => {
   const { os, browser, environment } = data;
   const res = await register(data);
   if (res.status !== RESPONSE_CODE.SUCCESS) {
-    return errorResponse(res.message);
+    throw new BusinessError(res.message);
   }
   const { token, ...userInfo } = res.data;
   await context.setUserInfo({ ...userInfo, os, browser, environment });
