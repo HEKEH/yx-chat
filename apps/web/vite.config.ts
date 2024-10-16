@@ -32,6 +32,15 @@ export default defineConfig(({ mode }) => {
       __VUE_I18N_LEGACY_API__: false,
       __INTLIFY_PROD_DEVTOOLS__: false,
     },
+    server: {
+      watch: {
+        ignored: [
+          '**/node_modules/**',
+          '**/dist/**',
+          resolve(__dirname, '../!(web)/**'), // ignore all apps except web
+        ],
+      },
+    },
     plugins: [vue(), vueJsx()],
     envDir: resolve(__dirname, '../../'),
     envPrefix,
