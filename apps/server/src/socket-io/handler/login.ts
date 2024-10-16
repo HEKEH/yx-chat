@@ -5,7 +5,8 @@ import {
 } from '@yx-chat/shared/types';
 import { BusinessError } from '~/biz-utils/business-error';
 import { login } from '~/request/auth-center';
-import logger from '../../utils/logger';
+import logger from '~/utils/logger';
+import { WithLng } from '~/types';
 import { EventHandler, EventHandlerContext } from './types';
 import {
   findFriendsAndGroupsByUserId,
@@ -14,7 +15,7 @@ import {
 
 const loginHandler: EventHandler = async (
   context: EventHandlerContext,
-  data: LoginRequestBody,
+  data: WithLng<LoginRequestBody>,
 ): Promise<LoginSuccessResponse> => {
   const { username, os, browser, environment } = data;
   logger.trace(`login ${username}`);

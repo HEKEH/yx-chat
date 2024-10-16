@@ -75,15 +75,18 @@ export class SocketIO {
     const res = await new Promise((resolve, reject) => {
       this._io
         .timeout(TIMEOUT_MILLISECONDS)
-        .emit(request.type, request.data, (err: any, response: T) => {
-          console.log(err, response, 'fetch result');
-          // TODO 暂时不确定会不会生效
-          if (err) {
-            reject(err);
-          } else {
-            resolve(response);
-          }
-        });
+        .emit(
+          request.type,
+          { ...request.data, lng: i18n.global.locale.value },
+          (err: any, response: T) => {
+            console.log(err, response, 'fetch result');
+            if (err) {
+              reject(err);
+            } else {
+              resolve(response);
+            }
+          },
+        );
     });
     if (isErrorResponse(res)) {
       throw new BusinessError(res.message);

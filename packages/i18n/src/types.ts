@@ -68,7 +68,3 @@ export interface I18nMessage {
     notSameWithPassword: string;
   };
 }
-
-export type Locale = 'en' | 'zh-cn';
-
-export const SUPPORT_LOCALES: Locale[] = ['en', 'zh-cn'];

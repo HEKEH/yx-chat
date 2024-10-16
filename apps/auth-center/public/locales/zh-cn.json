@@ -8,5 +8,6 @@
   "Token can't be empty": "Token不能为空",
   "Illegal token": "非法Token",
   "Token expires": "Token已过期",
-  "Illegal login": "非法登录"
+  "Illegal login": "非法登录",
+  "An unexpected error occurred": "发生了一个意外的错误"
 }

@@ -5,6 +5,7 @@ import {
 } from '@yx-chat/shared/types';
 import { BusinessError } from '~/biz-utils/business-error';
 import { loginByToken } from '~/request/auth-center';
+import { WithLng } from '~/types';
 import { EventHandler, EventHandlerContext } from './types';
 import {
   findFriendsAndGroupsByUserId,
@@ -13,7 +14,7 @@ import {
 
 const loginByTokenHandler: EventHandler = async (
   context: EventHandlerContext,
-  data: LoginByTokenRequestBody,
+  data: WithLng<LoginByTokenRequestBody>,
 ): Promise<LoginSuccessResponse> => {
   const { os, browser, environment } = data;
   const res = await loginByToken(data);

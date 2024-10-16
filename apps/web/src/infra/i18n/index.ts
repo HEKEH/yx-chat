@@ -1,15 +1,16 @@
-import { I18nMessage, Locale } from '@yx-chat/i18n/types';
+import { I18nMessage } from '@yx-chat/i18n/types';
 import zhCn from '@yx-chat/i18n/zh-cn';
 import { createI18n } from 'vue-i18n';
+import { LANGUAGE } from '@yx-chat/shared/constants';
 import { LocalStorageStore } from '../local-storage-store';
 
-const initialMessages: { [x in Locale]?: I18nMessage } = {
-  'zh-cn': zhCn,
+const initialMessages: { [x in LANGUAGE]?: I18nMessage } = {
+  [LANGUAGE.ZH_CN]: zhCn,
 };
 
 const i18n = createI18n({
   legacy: false,
-  fallbackLocale: 'zh-cn',
+  fallbackLocale: LANGUAGE.ZH_CN,
   messages: initialMessages,
 });
 
@@ -17,7 +18,7 @@ const LoadLocaleMap = {
   en: () => import('@yx-chat/i18n/en'),
 };
 
-async function loadLocaleMessages(locale: Exclude<Locale, 'zh-cn'>) {
+async function loadLocaleMessages(locale: Exclude<LANGUAGE, LANGUAGE.ZH_CN>) {
   if (i18n.global.availableLocales.includes(locale)) {
     return;
   }
@@ -32,8 +33,8 @@ async function loadLocaleMessages(locale: Exclude<Locale, 'zh-cn'>) {
   );
 }
 
-export async function setI18nLanguage(locale: Locale) {
-  if (locale !== 'zh-cn') {
+export async function setI18nLanguage(locale: LANGUAGE) {
+  if (locale !== LANGUAGE.ZH_CN) {
     await loadLocaleMessages(locale);
   }
   i18n.global.locale.value = locale;
@@ -50,13 +51,14 @@ export async function setI18nLanguage(locale: Locale) {
 
 export async function initI18n() {
   await setI18nLanguage(
-    LocalStorageStore.instance.getItem<Locale | undefined>('locale') || 'zh-cn',
+    LocalStorageStore.instance.getItem<LANGUAGE | undefined>('locale') ||
+      LANGUAGE.ZH_CN,
   );
 }
 
-export const I18N_OPTIONS: { value: Locale; label: string }[] = [
-  { value: 'en', label: 'English' },
-  { value: 'zh-cn', label: '中文' },
+export const I18N_OPTIONS: { value: LANGUAGE; label: string }[] = [
+  { value: LANGUAGE.EN, label: 'English' },
+  { value: LANGUAGE.ZH_CN, label: '中文' },
 ];
 
 export default i18n;

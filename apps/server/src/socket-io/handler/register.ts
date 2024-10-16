@@ -5,11 +5,12 @@ import {
 } from '@yx-chat/shared/types';
 import { BusinessError } from '~/biz-utils/business-error';
 import { register } from '~/request/auth-center';
+import { WithLng } from '~/types';
 import { EventHandler, EventHandlerContext } from './types';
 
 const registerHandler: EventHandler = async (
   context: EventHandlerContext,
-  data: RegisterRequestBody,
+  data: WithLng<RegisterRequestBody>,
 ): Promise<LoginSuccessResponse> => {
   const { os, browser, environment } = data;
   const res = await register(data);

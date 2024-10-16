@@ -10,6 +10,8 @@ import { uniq } from 'lodash';
 import { BusinessError } from '~/biz-utils/business-error';
 import logger from '~/utils/logger';
 import SocketModel from '~/database/mongoDB/model/socket';
+import { LANGUAGE } from '@yx-chat/shared/constants';
+import { t } from '~/i18n';
 import { EventHandler, EventHandlerContext } from './handler/types';
 
 export class SocketContext implements EventHandlerContext {
@@ -50,6 +52,7 @@ export class SocketContext implements EventHandlerContext {
   }
   on(eventName: string, handler: EventHandler) {
     this._socket.on(eventName, async (data, callback) => {
+      const lng = data?.lng as LANGUAGE | undefined;
       try {
         const before = Date.now();
         const res = await handler(this, data);
@@ -66,10 +69,10 @@ export class SocketContext implements EventHandlerContext {
       } catch (err) {
         if (err instanceof AssertionError || err instanceof BusinessError) {
           logger.error(`[${eventName} Business Error]`, data, err);
-          callback(errorResponse(err.message));
+          callback(errorResponse(t(err.message, { lng })));
         } else {
           logger.error(`[${eventName} Internal Error]`, data, err);
-          callback(errorResponse(`Server Error: ${(err as Error).message}`));
+          callback(errorResponse(t('An unexpected error occurred', { lng })));
         }
       }
     });
