@@ -1,5 +1,5 @@
 import Router from 'koa-router';
-import { ACCEPT_LANGUAGES } from '~/constants/lng';
+import { ACCEPT_LANGUAGES } from '@yx-chat/shared/constants';
 import userRouter from './user';
 import authRouter from './auth';
 

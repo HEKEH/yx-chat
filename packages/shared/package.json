@@ -24,6 +24,16 @@
         "type": "./dist/utils/index.d.ts"
       }
     },
+    "./constants": {
+      "import": {
+        "default": "./dist/constants/index.mjs",
+        "type": "./dist/constants/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/constants/index.js",
+        "type": "./dist/constants/index.d.ts"
+      }
+    },
     "./*": {
       "import": {
         "default": "./dist/*.mjs",
@@ -36,7 +46,7 @@
     }
   },
   "scripts": {
-    "build": "rm -rf dist && tsup ./types ./utils --format cjs,esm --dts",
+    "build": "rm -rf dist && tsup ./types ./utils ./constants --format cjs,esm --dts",
     "lint": "eslint",
     "preinstall": "npx only-allow pnpm"
   },

@@ -28,7 +28,7 @@ export const login = async (
     throw new BusinessError("User doesn't exist");
   }
   const isPasswordCorrect = bcrypt.compareSync(password, user.password);
-  assert(isPasswordCorrect, 'Password is incorrect');
+  assert(isPasswordCorrect, 'Incorrect Password');
   const userId = user.id;
   const token = generateToken(userId, environment);
   return {

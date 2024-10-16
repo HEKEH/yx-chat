@@ -32,7 +32,7 @@ export const loginByToken = async (
     },
   );
   if (!user) {
-    throw new BusinessError('User does not exist');
+    throw new BusinessError("User does't exist");
   }
   const userInfo = {
     id: user.id,

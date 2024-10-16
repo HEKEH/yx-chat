@@ -3,7 +3,7 @@
 
 import Koa from 'koa';
 import { TOptions } from 'i18next';
-import type { LANGUAGE } from '~/constants/lng';
+import type { LANGUAGE } from '@yx-chat/shared/constants';
 
 interface CustomContext {
   readonly logId: string;

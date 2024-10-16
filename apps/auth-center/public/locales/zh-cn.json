@@ -1,4 +1,12 @@
 {
+  "Username can't be empty": "用户名不能为空",
+  "Password can't be empty": "密码不能为空",
+  "User doesn't exist": "用户不存在",
+  "Incorrect password": "密码错误",
+  "Username is already registered": "用户名已注册",
+  "Username contains unsupported characters or exceeds the length limit": "用户名包含不支持的字符或超出长度限制",
   "Token can't be empty": "Token不能为空",
-  "Illegal token": "非法Token"
+  "Illegal token": "非法Token",
+  "Token expires": "Token已过期",
+  "Illegal login": "非法登录"
 }

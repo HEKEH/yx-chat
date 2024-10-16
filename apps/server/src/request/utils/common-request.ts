@@ -1,22 +1,37 @@
 import { RESPONSE_CODE } from '@yx-chat/shared/types';
 import axios, { AxiosRequestConfig } from 'axios';
 import logger from '~/utils/logger';
+import { LANGUAGE } from '@yx-chat/shared/constants';
 import { ResponseDataWrapper } from '../types';
+
+interface CommonRequestParams<RequestParams> {
+  baseURL: string;
+  method: 'get' | 'post';
+  path: string;
+  params: RequestParams;
+  lng?: LANGUAGE;
+}
 
 const commonRequest = async <
   ResponseData,
   RequestParams extends Record<string, any> = Record<string, any>,
->(
-  baseURL: string,
-  method: 'get' | 'post',
-  path: string,
-  params: RequestParams,
-): Promise<ResponseDataWrapper<ResponseData>> => {
+>({
+  baseURL,
+  method,
+  path,
+  params,
+  lng,
+}: CommonRequestParams<RequestParams>): Promise<
+  ResponseDataWrapper<ResponseData>
+> => {
   try {
     const config: AxiosRequestConfig = {
       method,
       baseURL,
       url: path,
+      headers: {
+        'X-Language': lng,
+      },
     };
 
     if (method === 'get') {

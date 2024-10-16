@@ -1,7 +1,7 @@
 import path from 'path';
 import i18n from 'i18next';
 import Backend from 'i18next-fs-backend';
-import { ACCEPT_LANGUAGES } from '~/constants/lng';
+import { ACCEPT_LANGUAGES } from '@yx-chat/shared/constants';
 
 i18n.use(Backend).init({
   backend: {

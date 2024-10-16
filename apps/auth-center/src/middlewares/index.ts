@@ -5,7 +5,7 @@ import { BusinessError } from '~/biz-utils/business-error';
 import logger from '~/utils/logger';
 import i18n from '~/i18n';
 import { v4 as uuid } from 'uuid';
-import { ACCEPT_LANGUAGES, LANGUAGE } from '~/constants/lng';
+import { ACCEPT_LANGUAGES, LANGUAGE } from '@yx-chat/shared/constants';
 import config from '~/config';
 
 export const addContextPropsMiddleware = async (ctx: Context, next: Next) => {
@@ -25,6 +25,10 @@ export const addContextPropsMiddleware = async (ctx: Context, next: Next) => {
       // 首先检查 URL 参数
       if (this.params?.lng) {
         return this.params.lng;
+      }
+      const customLng = this.headers['x-language'];
+      if (ACCEPT_LANGUAGES.includes(customLng)) {
+        return customLng;
       }
       if (config.defaultLanguage) {
         return config.defaultLanguage;
