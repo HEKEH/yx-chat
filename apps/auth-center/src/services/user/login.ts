@@ -4,8 +4,8 @@ import type {
   LoginRequestBody,
   UserBasicInfo,
 } from '@yx-chat/shared/types';
-import { errorResponse } from '@yx-chat/shared/utils';
 import bcrypt from 'bcryptjs';
+import { BusinessError } from '~/biz-utils/business-error';
 import UserModel from '../../database/mongoDB/model/user';
 import logger from '../../utils/logger';
 import { generateToken } from '../utils';
@@ -29,7 +29,7 @@ export const login = async (
     },
   );
   if (!user) {
-    return errorResponse("User doesn't exist");
+    throw new BusinessError("User doesn't exist");
   }
   const isPasswordCorrect = bcrypt.compareSync(password, user.password);
   assert(isPasswordCorrect, 'Password is incorrect');

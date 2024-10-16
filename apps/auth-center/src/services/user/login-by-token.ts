@@ -4,7 +4,7 @@ import type {
   LoginByTokenRequestBody,
   UserBasicInfo,
 } from '@yx-chat/shared/types';
-import { errorResponse } from '@yx-chat/shared/utils';
+import { BusinessError } from '~/biz-utils/business-error';
 import UserModel from '../../database/mongoDB/model/user';
 import { parseToken } from '../utils';
 
@@ -17,7 +17,7 @@ export const loginByToken = async (
   try {
     payload = parseToken(token);
   } catch (e) {
-    return errorResponse('Illegal token');
+    throw new BusinessError('Illegal token');
   }
   assert(Date.now() < payload.expires, 'Token expires');
   assert.equal(environment, payload.environment, 'Illegal login');
@@ -33,7 +33,7 @@ export const loginByToken = async (
     },
   );
   if (!user) {
-    return errorResponse("User doesn't exist");
+    throw new BusinessError("User doesn't exist");
   }
   const userInfo = {
     id: user.id,

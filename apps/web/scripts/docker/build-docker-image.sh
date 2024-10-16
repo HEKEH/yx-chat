@@ -3,9 +3,9 @@
 IMAGE_NAME="yx-chat-web"
 
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
-LOG_FILE="${SCRIPT_DIR}/build-local-image.log"
+LOG_FILE="${SCRIPT_DIR}/build-image.log"
 
-PROJECT_ROOT="${SCRIPT_DIR}/../../../"
+PROJECT_ROOT="${SCRIPT_DIR}/../../../../"
 cd "${PROJECT_ROOT}" # assure current dir is the exact project root directory
 
 function log() {

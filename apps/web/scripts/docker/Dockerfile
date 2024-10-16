@@ -24,7 +24,7 @@ RUN echo "types { application/javascript js mjs; }" >/etc/nginx/conf.d/mjs.conf
 COPY --from=builder /app/apps/web/dist /usr/share/nginx/html
 
 RUN rm -f /etc/nginx/nginx.conf
-COPY --from=builder /app/scripts/docker/web/nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /app/apps/web/scripts/docker/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 8080
 

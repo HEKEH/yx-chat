@@ -4,7 +4,7 @@ import type {
   RegisterRequestBody,
   UserBasicInfo,
 } from '@yx-chat/shared/types';
-import { errorResponse } from '@yx-chat/shared/utils';
+import { BusinessError } from '~/biz-utils/business-error';
 import { createNewUser } from '../../biz-utils/create-new-user';
 import UserModel, { UserDocument } from '../../database/mongoDB/model/user';
 import logger from '../../utils/logger';
@@ -19,7 +19,7 @@ export const register = async (
   assert(password, "Password can't be empty");
   const user = await UserModel.findOne({ username });
   if (user) {
-    return errorResponse('Username is already registered');
+    throw new BusinessError('Username is already registered');
   }
   let newUser: UserDocument | undefined;
   try {
@@ -29,7 +29,7 @@ export const register = async (
     });
   } catch (err) {
     if ((err as Error).name === 'ValidationError') {
-      return errorResponse(
+      throw new BusinessError(
         'Username contains unsupported characters or exceeds the length limit',
       );
     }
