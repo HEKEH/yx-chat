@@ -4,7 +4,7 @@ import bodyParser from 'koa-bodyparser';
 import config from './config';
 import {
   addContextPropsMiddleware,
-  responseWrapMiddleware,
+  requestWrapMiddleware,
 } from './middlewares';
 import router from './routes';
 
@@ -34,7 +34,7 @@ export default function initApp() {
   app.use(corsMiddleware());
 
   app.use(addContextPropsMiddleware);
-  app.use(responseWrapMiddleware);
+  app.use(requestWrapMiddleware);
   // use router
   app.use(router.routes());
   app.use(router.allowedMethods());

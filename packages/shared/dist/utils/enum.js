@@ -26,11 +26,11 @@ __export(enum_exports, {
 module.exports = __toCommonJS(enum_exports);
 function enum2ValueArray(obj) {
   const values = Object.values(obj);
-  return values.slice(values.length / 2);
+  return values;
 }
 function enum2KeyArray(obj) {
-  const values = Object.values(obj);
-  return values.slice(0, values.length / 2);
+  const values = Object.keys(obj);
+  return values;
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

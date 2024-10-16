@@ -40,11 +40,11 @@ function errorResponse(message) {
 // utils/enum.ts
 function enum2ValueArray(obj) {
   const values = Object.values(obj);
-  return values.slice(values.length / 2);
+  return values;
 }
 function enum2KeyArray(obj) {
-  const values = Object.values(obj);
-  return values.slice(0, values.length / 2);
+  const values = Object.keys(obj);
+  return values;
 }
 
 // utils/regex.ts

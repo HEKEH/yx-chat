@@ -29,7 +29,7 @@ module.exports = __toCommonJS(chat_exports);
 // utils/enum.ts
 function enum2ValueArray(obj) {
   const values = Object.values(obj);
-  return values.slice(values.length / 2);
+  return values;
 }
 
 // types/chat.ts

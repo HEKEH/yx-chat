@@ -68,7 +68,7 @@ export class SocketContext implements EventHandlerContext {
           logger.error(`[${eventName} Business Error]`, data, err);
           callback(errorResponse(err.message));
         } else {
-          logger.error(`[${eventName} System Error]`, data, err);
+          logger.error(`[${eventName} Internal Error]`, data, err);
           callback(errorResponse(`Server Error: ${(err as Error).message}`));
         }
       }

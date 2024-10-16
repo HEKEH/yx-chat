@@ -4,28 +4,22 @@ import type {
   UserBasicInfo,
 } from '@yx-chat/shared/types';
 import { BusinessError } from '~/biz-utils/business-error';
-import i18next from '~/i18n';
 import UserModel from '../../database/mongoDB/model/user';
 import { parseToken } from '../utils';
 
 export const loginByToken = async (
   data: LoginByTokenRequestBody,
 ): Promise<UserBasicInfo> => {
-  const lng = 'zh-cn';
   const { token, environment } = data;
-  assert(token, i18next.t("Token can't be empty", { lng }));
+  assert(token, "Token can't be empty");
   let payload: ReturnType<typeof parseToken> | undefined;
   try {
     payload = parseToken(token);
   } catch (e) {
-    throw new BusinessError(i18next.t('Illegal token', { lng }));
+    throw new BusinessError('Illegal token');
   }
-  assert(Date.now() < payload.expires, i18next.t('Token expires', { lng }));
-  assert.equal(
-    environment,
-    payload.environment,
-    i18next.t('Illegal login', { lng }),
-  );
+  assert(Date.now() < payload.expires, 'Token expires');
+  assert.equal(environment, payload.environment, 'Illegal login');
   const { userId } = payload;
   const user = await UserModel.findOne(
     { _id: userId },
@@ -38,7 +32,7 @@ export const loginByToken = async (
     },
   );
   if (!user) {
-    throw new BusinessError(i18next.t('User does not exist', { lng }));
+    throw new BusinessError('User does not exist');
   }
   const userInfo = {
     id: user.id,

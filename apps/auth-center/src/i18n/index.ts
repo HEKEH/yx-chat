@@ -1,14 +1,13 @@
 import path from 'path';
-import i18next from 'i18next';
+import i18n from 'i18next';
 import Backend from 'i18next-fs-backend';
-import config from '~/config';
+import { ACCEPT_LANGUAGES } from '~/constants/lng';
 
-i18next.use(Backend).init({
+i18n.use(Backend).init({
   backend: {
     loadPath: path.join(process.cwd(), 'public/locales/{{lng}}.json'),
   },
-  fallbackLng: config.defaultLanguage,
-  preload: ['en', 'zh-cn'],
+  preload: ACCEPT_LANGUAGES,
 });
 
-export default i18next;
+export default i18n;

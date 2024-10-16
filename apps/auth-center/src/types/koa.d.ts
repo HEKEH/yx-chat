@@ -1,10 +1,15 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import Koa from 'koa';
+import { TOptions } from 'i18next';
+import type { LANGUAGE } from '~/constants/lng';
 
 interface CustomContext {
+  readonly logId: string;
   getRequestData<T = any>(): T;
-  readonly lng: 'en' | 'zh-cn' | undefined;
+  readonly lng: LANGUAGE | undefined;
+  t: (key: string, options?: TOptions) => string;
 }
 
 declare module 'koa' {
