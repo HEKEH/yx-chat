@@ -1,6 +1,5 @@
 import {
   ServerMessageType,
-  type ErrorResponse,
   type SendFriendAddRequestBody,
   type SendFriendAddRequestResponse,
   NotificationType,
@@ -47,7 +46,7 @@ let sendFriendAddRequest: EventHandler = async (
   if (friendIds.includes(targetUserId)) {
     return {
       success: false,
-      message: 'Already friend',
+      message: 'You are already friends',
     };
   }
   if (prevRequest) {

@@ -1,5 +1,4 @@
 import type {
-  ErrorResponse,
   HistoryChatMessagesRequestBody,
   HistoryChatMessagesResponse,
 } from '@yx-chat/shared/types';

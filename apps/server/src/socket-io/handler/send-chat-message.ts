@@ -2,15 +2,13 @@ import assert from 'assert';
 import {
   ServerMessageType,
   type ChatMessage,
-  type ErrorResponse,
   type SendChatMessageBody,
 } from '@yx-chat/shared/types';
 import xss from 'xss';
-import { BusinessError } from '~/biz-utils/business-error';
-import UserModel from '../../database/mongoDB/model/user';
 import ChatMessageModel from '../../database/mongoDB/model/chat-message';
-import { createOrUpdateHistory } from '../../database/mongoDB/model/history';
 import GroupModel from '../../database/mongoDB/model/group';
+import { createOrUpdateHistory } from '../../database/mongoDB/model/history';
+import UserModel from '../../database/mongoDB/model/user';
 import { shouldLogin } from './fn-decorators';
 import { EventHandler, EventHandlerContext } from './types';
 import { isIdValid } from './utils';

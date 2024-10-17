@@ -1,7 +1,4 @@
-import {
-  ErrorResponse,
-  RejectFriendAddRequestBody,
-} from '@yx-chat/shared/types';
+import { RejectFriendAddRequestBody } from '@yx-chat/shared/types';
 import { BusinessError } from '~/biz-utils/business-error';
 import FriendAddRequestModel from '../../database/mongoDB/model/friend-add-request';
 import { shouldLogin } from './fn-decorators';
