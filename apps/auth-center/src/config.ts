@@ -17,5 +17,5 @@ export default {
     : 1000 * 60 * 60 * 24 * 30, // 30 days
   adminUser: env.ADMIN_USER,
   adminPassword: env.ADMIN_PASSWORD,
-  defaultLanguage: env.DEFAULT_LANGUAGE,
+  defaultLanguage: env.PUBLIC_DEFAULT_LANGUAGE,
 };

@@ -1,7 +1,7 @@
 {
-  "name": "@yx-chat/auth-center",
+  "name": "@yx-chat/file-center",
   "version": "0.0.0",
-  "description": "The auth center of @yx-chat",
+  "description": "The file upload and management center of @yx-chat",
   "license": "MIT",
   "tags": [
     "typescript",
@@ -28,24 +28,19 @@
   "dependencies": {
     "@yx-chat/shared": "workspace:*",
     "assert": "^2.1.0",
-    "bcryptjs": "^2.4.3",
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "dotenv-cli": "^7.4.2",
     "i18next": "^23.16.0",
     "i18next-fs-backend": "^2.3.2",
-    "jwt-simple": "^0.5.6",
     "koa": "^2.14.2",
     "koa-bodyparser": "^4.4.1",
     "koa-router": "^12.0.0",
     "koa-static": "^5.0.0",
     "log4js": "^6.9.1",
-    "mongoose": "^8.0.1",
-    "pm2": "^5.3.0",
-    "uuid": "^10.0.0"
+    "pm2": "^5.3.0"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
     "@types/koa": "^2.13.8",
     "@types/koa-bodyparser": "^4.3.10",
     "@types/koa-router": "^7.4.4",

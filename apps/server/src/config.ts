@@ -20,7 +20,7 @@ const config = {
   adminUser: env.ADMIN_USER,
   adminPassword: env.ADMIN_PASSWORD,
   authCenterUrl,
-  defaultLanguage: env.DEFAULT_LANGUAGE,
+  defaultLanguage: env.PUBLIC_DEFAULT_LANGUAGE,
 };
 
 // console.log('config', config);
