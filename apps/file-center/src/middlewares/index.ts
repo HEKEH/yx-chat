@@ -8,8 +8,10 @@ import { v4 as uuid } from 'uuid';
 import { ACCEPT_LANGUAGES, LANGUAGE } from '@yx-chat/shared/constants';
 import config from '~/config';
 
+const LOG_ID_HEADER = 'x-log-id';
+
 export const addContextPropsMiddleware = async (ctx: Context, next: Next) => {
-  const logId = uuid();
+  const logId = ctx.request.header[LOG_ID_HEADER] || uuid();
   Object.defineProperty(ctx, 'logId', {
     get: function () {
       return logId;
@@ -81,6 +83,6 @@ export const requestWrapMiddleware = async (ctx: Context, next: Next) => {
     logger.error(`[logId: ${ctx.logId}] [Internal Error]`, error);
   } finally {
     // add logId to response header
-    ctx.set('x-log-id', ctx.logId);
+    ctx.set(LOG_ID_HEADER, ctx.logId);
   }
 };
