@@ -1,12 +1,10 @@
 import Router from 'koa-router';
-import { ACCEPT_LANGUAGES } from '@yx-chat/shared/constants';
+import Controller from '~/controllers';
+import { uploadMulter } from '~/services/upload';
 
-const router = new Router({
-  prefix: `/:lng(${ACCEPT_LANGUAGES.join('|')})?`,
-});
+const router = new Router();
 
-// router.use(userRouter.routes(), userRouter.allowedMethods());
-
-// router.use(authRouter.routes(), authRouter.allowedMethods());
+// 文件上传路由
+router.post('/upload', uploadMulter.single('file'), Controller.upload);
 
 export default router;
