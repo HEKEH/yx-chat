@@ -4,7 +4,7 @@ import { uploadMulter } from '~/services/upload';
 
 const router = new Router();
 
-// 文件上传路由
+// file upload
 router.post('/upload', uploadMulter.single('file'), Controller.upload);
 
 export default router;
