@@ -4,7 +4,7 @@ import {
   RESPONSE_CODE,
 } from '@yx-chat/shared/types';
 import { BusinessError } from '~/biz-utils/business-error';
-import { login } from '~/request/auth-center';
+import { login } from '~/requests/auth-center';
 import logger from '~/utils/logger';
 import { WithLng } from '~/types';
 import { EventHandler, EventHandlerContext } from './types';

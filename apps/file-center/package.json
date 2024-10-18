@@ -29,6 +29,7 @@
     "@koa/multer": "^3.0.2",
     "@yx-chat/shared": "workspace:*",
     "assert": "^2.1.0",
+    "axios": "^1.7.7",
     "cross-env": "^7.0.3",
     "crypto": "^1.0.1",
     "dotenv": "^16.3.1",

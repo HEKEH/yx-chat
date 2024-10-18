@@ -8,6 +8,15 @@ if (!uploadDir) {
   process.exit(1);
 }
 
+let authCenterUrl = env.AUTH_CENTER_HOSTNAME;
+if (authCenterUrl && env.AUTH_CENTER_PORT) {
+  authCenterUrl = `${authCenterUrl}:${env.AUTH_CENTER_PORT}`;
+}
+if (!authCenterUrl) {
+  logger.error('AUTH_CENTER_HOSTNAME is required');
+  process.exit(1);
+}
+
 export default {
   /** service port */
   port: env.PUBLIC_FILE_CENTER_PORT
@@ -16,4 +25,5 @@ export default {
   allowOrigin: env.ALLOW_ORIGIN,
   defaultLanguage: env.PUBLIC_DEFAULT_LANGUAGE,
   uploadDir,
+  authCenterUrl,
 };

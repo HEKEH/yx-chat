@@ -1,15 +1,14 @@
 import { RESPONSE_CODE } from '@yx-chat/shared/types';
 import axios, { AxiosRequestConfig } from 'axios';
 import logger from '~/utils/logger';
-import { LANGUAGE } from '@yx-chat/shared/constants';
 import { ResponseDataWrapper } from '../types';
 
 interface CommonRequestParams<RequestParams> {
   baseURL: string;
   method: 'get' | 'post';
   path: string;
-  params: RequestParams;
-  lng?: LANGUAGE;
+  params?: RequestParams;
+  headers?: Record<string, string | undefined>;
 }
 
 const commonRequest = async <
@@ -20,7 +19,7 @@ const commonRequest = async <
   method,
   path,
   params,
-  lng,
+  headers,
 }: CommonRequestParams<RequestParams>): Promise<
   ResponseDataWrapper<ResponseData>
 > => {
@@ -29,15 +28,14 @@ const commonRequest = async <
       method,
       baseURL,
       url: path,
-      headers: {
-        'X-Language': lng,
-      },
+      headers,
     };
-
-    if (method === 'get') {
-      config.params = params;
-    } else if (method === 'post') {
-      config.data = params;
+    if (params) {
+      if (method === 'get') {
+        config.params = params;
+      } else if (method === 'post') {
+        config.data = params;
+      }
     }
     logger.log('[request] config:', config);
     const { data } = await axios<ResponseDataWrapper<ResponseData>>(config);

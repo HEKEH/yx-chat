@@ -5,13 +5,16 @@ import { BusinessError } from '~/biz-utils/business-error';
 import logger from '~/utils/logger';
 import i18n from '~/i18n';
 import { v4 as uuid } from 'uuid';
-import { ACCEPT_LANGUAGES, LANGUAGE } from '@yx-chat/shared/constants';
+import {
+  ACCEPT_LANGUAGES,
+  LANGUAGE,
+  LANGUAGE_HEADER_KEY,
+  LOG_ID_HEADER_KEY,
+} from '@yx-chat/shared/constants';
 import config from '~/config';
 
-const LOG_ID_HEADER = 'x-log-id';
-
 export const addContextPropsMiddleware = async (ctx: Context, next: Next) => {
-  const logId = ctx.request.header[LOG_ID_HEADER] || uuid();
+  const logId = ctx.request.header[LOG_ID_HEADER_KEY] || uuid();
   Object.defineProperty(ctx, 'logId', {
     get: function () {
       return logId;
@@ -28,7 +31,7 @@ export const addContextPropsMiddleware = async (ctx: Context, next: Next) => {
       if (this.params?.lng) {
         return this.params.lng;
       }
-      const customLng = this.headers['x-language'];
+      const customLng = this.headers[LANGUAGE_HEADER_KEY];
       if (ACCEPT_LANGUAGES.includes(customLng)) {
         return customLng;
       }
@@ -83,6 +86,6 @@ export const requestWrapMiddleware = async (ctx: Context, next: Next) => {
     logger.error(`[logId: ${ctx.logId}] [Internal Error]`, error);
   } finally {
     // add logId to response header
-    ctx.set(LOG_ID_HEADER, ctx.logId);
+    ctx.set(LOG_ID_HEADER_KEY, ctx.logId);
   }
 };

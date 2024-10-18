@@ -8,3 +8,4 @@ export * from './server-message';
 export * from './error';
 export * from './system';
 export * from './response';
+export * from './auth';

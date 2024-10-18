@@ -4,7 +4,7 @@ import {
   type RegisterRequestBody,
 } from '@yx-chat/shared/types';
 import { BusinessError } from '~/biz-utils/business-error';
-import { register } from '~/request/auth-center';
+import { register } from '~/requests/auth-center';
 import { WithLng } from '~/types';
 import { EventHandler, EventHandlerContext } from './types';
 

@@ -1,3 +1,4 @@
+import { LANGUAGE_HEADER_KEY } from '@yx-chat/shared/constants';
 import {
   LoginByTokenRequestBody,
   LoginRequestBody,
@@ -14,7 +15,9 @@ export const login = async ({ lng, ...params }: WithLng<LoginRequestBody>) => {
     method: 'get',
     path: '/user/login',
     params,
-    lng,
+    headers: {
+      [LANGUAGE_HEADER_KEY]: lng,
+    },
   });
 };
 
@@ -25,9 +28,11 @@ export const loginByToken = async ({
   return commonRequest<UserBasicInfo>({
     baseURL: config.authCenterUrl,
     method: 'get',
-    path: '/user/loginByToken',
+    path: '/user/login-by-token',
     params,
-    lng,
+    headers: {
+      [LANGUAGE_HEADER_KEY]: lng,
+    },
   });
 };
 
@@ -40,6 +45,8 @@ export const register = async ({
     method: 'post',
     path: '/user/register',
     params,
-    lng,
+    headers: {
+      [LANGUAGE_HEADER_KEY]: lng,
+    },
   });
 };

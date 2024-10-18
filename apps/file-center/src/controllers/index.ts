@@ -15,9 +15,11 @@ export default class Controller {
   static async getFile(ctx: Context, next: Next) {
     const { filename } = ctx.params;
     const file = await getFile(filename);
-    ctx.set('Content-Type', 'application/octet-stream');
-    ctx.set('Content-Disposition', `attachment; filename=${filename}`);
-    ctx.body = file;
+    if (file) {
+      ctx.set('Content-Type', 'application/octet-stream');
+      ctx.set('Content-Disposition', `attachment; filename=${filename}`);
+      ctx.body = file;
+    }
     await next();
   }
 }
