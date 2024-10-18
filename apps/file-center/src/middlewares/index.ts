@@ -56,13 +56,6 @@ export const requestWrapMiddleware = async (ctx: Context, next: Next) => {
   try {
     logger.info(`[logId: ${ctx.logId}] [Request]`, ctx.request);
     await next();
-    if (ctx.status === 200) {
-      const body = ctx.body;
-      ctx.body = {
-        status: RESPONSE_CODE.SUCCESS,
-        data: body,
-      };
-    }
     logger.info(`[logId: ${ctx.logId}] [Response]`, ctx.body);
   } catch (error) {
     if (error instanceof AssertionError || error instanceof BusinessError) {

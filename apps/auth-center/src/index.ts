@@ -1,7 +1,6 @@
 import config from './config';
 import logger from './utils/logger';
 import initApp from './app';
-import serverConfig from './config';
 import initMongoDB from './database/mongoDB';
 import UserModel from './database/mongoDB/model/user';
 import { createNewUser } from './biz-utils/create-new-user';
@@ -30,8 +29,8 @@ logger.info('[port]', env.AUTH_CENTER_PORT);
       process.exit(1);
     }
   }
-  initApp().listen(serverConfig.port, async () => {
-    logger.info(`>>> server listen on http://localhost:${serverConfig.port}`);
+  initApp().listen(config.port, async () => {
+    logger.info(`>>> server listen on http://localhost:${config.port}`);
   });
 
   return null;

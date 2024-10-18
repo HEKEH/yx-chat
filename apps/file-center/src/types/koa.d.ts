@@ -18,5 +18,8 @@ declare module 'koa' {
 }
 
 declare module 'koa-router' {
-  export interface IRouterParamContext extends CustomContext {}
+  export interface IRouterParamContext extends CustomContext {
+    file: Context['file'];
+    files: Context['files'];
+  }
 }

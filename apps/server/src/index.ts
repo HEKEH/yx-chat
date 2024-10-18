@@ -1,5 +1,5 @@
 import initApp from './app';
-import serverConfig from './config';
+import config from './config';
 import initMongoDB from './database/mongoDB';
 import logger from './utils/logger';
 
@@ -9,8 +9,8 @@ logger.info('[port]', env.PUBLIC_SERVER_PORT);
 
 (async () => {
   await initMongoDB();
-  initApp().listen(serverConfig.port, async () => {
-    logger.info(`>>> server listen on http://localhost:${serverConfig.port}`);
+  initApp().listen(config.port, async () => {
+    logger.info(`>>> server listen on http://localhost:${config.port}`);
   });
 
   return null;

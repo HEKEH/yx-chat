@@ -7,4 +7,6 @@ const router = new Router();
 // file upload
 router.post('/upload', uploadMulter.single('file'), Controller.upload);
 
+router.get('/file/:filename', Controller.getFile);
+
 export default router;

@@ -1,5 +1,4 @@
 import fs from 'fs/promises';
-import fsSync from 'fs';
 import crypto from 'crypto';
 import path from 'path';
 import multer from '@koa/multer';
@@ -7,23 +6,20 @@ import config from '~/config';
 import { BusinessError } from '~/biz-utils/business-error';
 import logger from '~/utils/logger';
 
-const TEMP_FILE_PREFIX = 'temp_yx_';
-let isUploadDirInit = false;
+const TEMP_FILE_PREFIX = 'yx';
 
 // 自定义存储引擎
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    if (!isUploadDirInit) {
-      !fsSync.existsSync(config.uploadDir) &&
-        fsSync.mkdirSync(config.uploadDir, { recursive: true });
-      isUploadDirInit = true;
-    }
     cb(null, config.uploadDir);
   },
   filename: function (req, file, cb) {
     logger.info('[upload file]', file.originalname);
     // 暂时使用原始文件名，稍后我们会替换它
-    cb(null, `${TEMP_FILE_PREFIX}${file.originalname}`);
+    cb(
+      null,
+      `${TEMP_FILE_PREFIX}_${new Date().valueOf()}_${file.originalname}`,
+    );
   },
 });
 
