@@ -1,10 +1,10 @@
-import { MessageOne } from '@icon-park/vue-next';
 import { ElTooltip } from 'element-plus';
 import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { getGlobalStore } from '~/utils/vue';
 import { MainMenu } from '~/domain/types';
 import s from './style.module.sass';
+import Message from '@/assets/icons/message.svg';
 
 export const ChatButton = defineComponent({
   name: 'ChatButton',
@@ -16,17 +16,21 @@ export const ChatButton = defineComponent({
     };
     return () => {
       const isSelected = globalStore.selectedMenu === MainMenu.message;
+      const themeColor = globalStore.themeManager.getThemeColor();
       return (
         <ElTooltip effect="dark" content={t('main.chats')} placement="right">
-          <MessageOne
-            theme={isSelected ? 'filled' : 'outline'}
+          <div
             class={[s.button, isSelected ? s['button-selected'] : undefined]}
-            fill={
-              isSelected ? globalStore.themeManager.getThemeColor() : undefined
-            }
-            strokeWidth={3}
             onClick={onClick}
-          />
+          >
+            <Message
+              width={28}
+              height={28}
+              fill={isSelected ? themeColor : 'none'}
+              stroke={isSelected ? themeColor : 'currentColor'}
+              strokeWidth={3}
+            />
+          </div>
         </ElTooltip>
       );
     };
