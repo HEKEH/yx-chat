@@ -21,7 +21,11 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 var constants_exports = {};
 __export(constants_exports, {
   ACCEPT_LANGUAGES: () => ACCEPT_LANGUAGES,
-  LANGUAGE: () => LANGUAGE
+  LANGUAGE: () => LANGUAGE,
+  LANGUAGE_HEADER_KEY: () => LANGUAGE_HEADER_KEY,
+  LOG_ID_HEADER_KEY: () => LOG_ID_HEADER_KEY,
+  NAME_REGEXP: () => NAME_REGEXP,
+  TOKEN_HEADER_KEY: () => TOKEN_HEADER_KEY
 });
 module.exports = __toCommonJS(constants_exports);
 
@@ -32,8 +36,20 @@ var LANGUAGE = /* @__PURE__ */ ((LANGUAGE2) => {
   return LANGUAGE2;
 })(LANGUAGE || {});
 var ACCEPT_LANGUAGES = Object.values(LANGUAGE);
+
+// src/constants/name.ts
+var NAME_REGEXP = /^([0-9a-zA-Z]{1,2}|[\u4e00-\u9eff]|[\u3040-\u309Fー]|[\u30A0-\u30FF]){1,8}$/;
+
+// src/constants/index.ts
+var TOKEN_HEADER_KEY = "x-yx-token";
+var LOG_ID_HEADER_KEY = "x-yx-log-id";
+var LANGUAGE_HEADER_KEY = "x-language";
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ACCEPT_LANGUAGES,
-  LANGUAGE
+  LANGUAGE,
+  LANGUAGE_HEADER_KEY,
+  LOG_ID_HEADER_KEY,
+  NAME_REGEXP,
+  TOKEN_HEADER_KEY
 });

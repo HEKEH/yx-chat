@@ -1,4 +1,4 @@
-import logger from './utils/logger';
+import { logger } from '@yx-chat/shared/logger';
 
 const { env } = process;
 

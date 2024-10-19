@@ -1,10 +1,10 @@
 import fs from 'fs/promises';
 import crypto from 'crypto';
 import path from 'path';
+import { logger } from '@yx-chat/shared/logger';
 import multer from '@koa/multer';
 import config from '~/config';
 import { BusinessError } from '~/biz-utils/business-error';
-import logger from '~/utils/logger';
 
 const TEMP_FILE_PREFIX = 'yx';
 

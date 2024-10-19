@@ -4,7 +4,7 @@ import {
 } from "../chunk-ZXDGLSLJ.mjs";
 import {
   getRandomAvatarPath
-} from "../chunk-PL2YQ75I.mjs";
+} from "../chunk-EBF52PDV.mjs";
 import {
   enum2KeyArray,
   enum2ValueArray

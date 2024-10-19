@@ -1,12 +1,11 @@
+import { GroupModel, UserModel } from '@yx-chat/database';
 import {
   UserAndGroupSearchRequestBody,
   UserAndGroupSearchResult,
 } from '@yx-chat/shared/types';
 import { regexEscape } from '@yx-chat/shared/utils';
-import GroupModel from '../../database/mongoDB/model/group';
-import UserModel from '../../database/mongoDB/model/user';
-import { EventHandler, EventHandlerContext } from './types';
 import { shouldLogin } from './fn-decorators';
+import { EventHandler, EventHandlerContext } from './types';
 
 let searchUsersAndGroups: EventHandler = async (
   _: EventHandlerContext,

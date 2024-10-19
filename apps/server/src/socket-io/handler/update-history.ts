@@ -1,8 +1,8 @@
+import { createOrUpdateHistory } from '@yx-chat/database';
 import type {
   UpdateHistoryRequestBody,
   UpdateHistoryResponse,
 } from '@yx-chat/shared/types';
-import { createOrUpdateHistory } from '../../database/mongoDB/model/history';
 import { shouldLogin } from './fn-decorators';
 import { EventHandler, EventHandlerContext } from './types';
 

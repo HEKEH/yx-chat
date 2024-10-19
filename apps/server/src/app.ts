@@ -1,10 +1,10 @@
 import http from 'http';
 import { Server } from 'socket.io';
-import logger from './utils/logger';
+import { SocketModel } from '@yx-chat/database';
+import { logger } from '@yx-chat/shared/logger';
 import config from './config';
 import { registerSocketEventHandlers } from './socket-io/handler';
 import { SocketContext } from './socket-io/context';
-import SocketModel from './database/mongoDB/model/socket';
 
 export default function initApp() {
   const httpServer = http.createServer((req, res) => {

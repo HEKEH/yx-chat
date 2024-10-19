@@ -6,14 +6,15 @@ import {
   Notification,
   NotificationType,
 } from '@yx-chat/shared/types';
-import { Types } from 'mongoose';
-import ChatMessageModel from '../../database/mongoDB/model/chat-message';
-import FriendModel, {
+import {
+  ChatMessageModel,
+  GroupModel,
+  FriendModel,
   FriendDocument,
-} from '../../database/mongoDB/model/friend';
-import FriendAddRequestModel from '../../database/mongoDB/model/friend-add-request';
-import GroupModel from '../../database/mongoDB/model/group';
-import { UserDocument } from '../../database/mongoDB/model/user';
+  FriendAddRequestModel,
+  UserDocument,
+} from '@yx-chat/database';
+import { Types } from 'mongoose';
 function formatFriend(friend: FriendDocument): Friend {
   const { to } = friend;
   if (typeof to === 'string') {

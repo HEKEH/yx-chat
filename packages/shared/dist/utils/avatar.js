@@ -26,7 +26,7 @@ module.exports = __toCommonJS(avatar_exports);
 var AVATAR_COUNT = 15;
 function getRandomAvatarPath() {
   const number = Math.floor(Math.random() * AVATAR_COUNT);
-  return `/avatar/${number}.jpg`;
+  return `/default-avatar/${number}.jpg`;
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

@@ -1,9 +1,10 @@
 import assert from 'assert';
+import { logger } from '@yx-chat/shared/logger';
 import type { RegisterRequestBody, UserBasicInfo } from '@yx-chat/shared/types';
 import { BusinessError } from '~/biz-utils/business-error';
-import { createNewUser } from '../../biz-utils/create-new-user';
-import UserModel, { UserDocument } from '../../database/mongoDB/model/user';
-import logger from '../../utils/logger';
+import { UserDocument, UserModel } from '@yx-chat/database';
+import { createNewUser } from '~/biz-utils/create-new-user';
+
 import { generateToken } from '../utils';
 
 export const register = async (

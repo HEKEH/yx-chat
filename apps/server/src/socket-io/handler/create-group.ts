@@ -1,11 +1,11 @@
 import assert from 'assert';
+import { GroupDocument, GroupModel } from '@yx-chat/database';
 import {
   CreateGroupRequestBody,
   CreateGroupSuccessResponse,
 } from '@yx-chat/shared/types';
 import { getRandomAvatarPath } from '@yx-chat/shared/utils';
 import { BusinessError } from '~/biz-utils/business-error';
-import GroupModel, { GroupDocument } from '../../database/mongoDB/model/group';
 import { shouldLogin } from './fn-decorators';
 import { EventHandler, EventHandlerContext } from './types';
 

@@ -1,9 +1,9 @@
 import assert from 'assert';
+import { GroupModel } from '@yx-chat/database';
 import type {
   JoinGroupRequestBody,
   JoinGroupSuccessResponse,
 } from '@yx-chat/shared/types';
-import GroupModel from '../../database/mongoDB/model/group';
 import { DEFAULT_MESSAGES_FETCH_NUMBER } from '../../const';
 import { shouldLogin } from './fn-decorators';
 import { EventHandler, EventHandlerContext } from './types';

@@ -1,6 +1,6 @@
 import { RESPONSE_CODE } from '@yx-chat/shared/types';
+import { logger } from '@yx-chat/shared/logger';
 import axios, { AxiosRequestConfig } from 'axios';
-import logger from '~/utils/logger';
 import { ResponseDataWrapper } from '../types';
 
 interface CommonRequestParams<RequestParams> {

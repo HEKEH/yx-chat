@@ -1,12 +1,11 @@
+import { FriendAddRequestModel, UserModel } from '@yx-chat/database';
 import {
+  NotificationType,
   ServerMessageType,
   type SendFriendAddRequestBody,
   type SendFriendAddRequestResponse,
-  NotificationType,
 } from '@yx-chat/shared/types';
 import { BusinessError } from '~/biz-utils/business-error';
-import FriendAddRequestModel from '../../database/mongoDB/model/friend-add-request';
-import UserModel from '../../database/mongoDB/model/user';
 import { shouldLogin } from './fn-decorators';
 import { EventHandler, EventHandlerContext } from './types';
 import { findFriendIdsByUserId, isIdValid } from './utils';

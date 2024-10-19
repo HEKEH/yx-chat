@@ -8,3 +8,4 @@ export { ServerMessage, ServerMessageType } from './server-message.js';
 export { ErrorResponse } from './error.js';
 export { SystemRequestType, UserAndGroupSearchItem, UserAndGroupSearchRequestBody, UserAndGroupSearchResult } from './system.js';
 export { RESPONSE_CODE } from './response.js';
+export { AuthTokenSuccessResponse } from './auth.js';

@@ -2,8 +2,8 @@ import assert from 'assert';
 import type { LoginRequestBody, UserBasicInfo } from '@yx-chat/shared/types';
 import bcrypt from 'bcryptjs';
 import { BusinessError } from '~/biz-utils/business-error';
-import UserModel from '../../database/mongoDB/model/user';
-import logger from '../../utils/logger';
+import { logger } from '@yx-chat/shared/logger';
+import { UserModel } from '@yx-chat/database';
 import { generateToken } from '../utils';
 
 export const login = async (

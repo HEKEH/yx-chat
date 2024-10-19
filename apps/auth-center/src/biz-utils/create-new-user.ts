@@ -1,6 +1,6 @@
 import { getRandomAvatarPath } from '@yx-chat/shared/utils';
+import { UserModel } from '@yx-chat/database';
 import bcrypt from 'bcryptjs';
-import UserModel from '../database/mongoDB/model/user';
 
 export async function createNewUser(userInfo: {
   username: string;

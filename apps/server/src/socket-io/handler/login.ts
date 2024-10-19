@@ -5,7 +5,7 @@ import {
 } from '@yx-chat/shared/types';
 import { BusinessError } from '~/biz-utils/business-error';
 import { login } from '~/requests/auth-center';
-import logger from '~/utils/logger';
+import { logger } from '@yx-chat/shared/logger';
 import { WithLng } from '~/types';
 import { EventHandler, EventHandlerContext } from './types';
 import {

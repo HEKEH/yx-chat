@@ -5,7 +5,8 @@
       "~/*": ["./src/*"],
       "@/*": ["./*"],
       "@yx-chat/i18n/*": ["../../packages/i18n/src/*"],
-      "@yx-chat/shared/*": ["../../packages/shared/src/*"]
+      "@yx-chat/shared/*": ["../../packages/shared/src/*"],
+      "@yx-chat/database": ["../../packages/database/src"]
     }
   },
   "include": ["./src"]

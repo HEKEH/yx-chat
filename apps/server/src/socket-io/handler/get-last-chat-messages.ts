@@ -1,9 +1,8 @@
+import { HistoryModel } from '@yx-chat/database';
 import type {
-  ErrorResponse,
   LastMessagesRequestBody,
   LastMessagesResponse,
 } from '@yx-chat/shared/types';
-import HistoryModel from '../../database/mongoDB/model/history';
 import {
   DEFAULT_MESSAGES_FETCH_NUMBER,
   MAX_MESSAGES_FETCH_NUMBER,

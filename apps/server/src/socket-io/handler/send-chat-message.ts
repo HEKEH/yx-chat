@@ -5,10 +5,12 @@ import {
   type SendChatMessageBody,
 } from '@yx-chat/shared/types';
 import xss from 'xss';
-import ChatMessageModel from '../../database/mongoDB/model/chat-message';
-import GroupModel from '../../database/mongoDB/model/group';
-import { createOrUpdateHistory } from '../../database/mongoDB/model/history';
-import UserModel from '../../database/mongoDB/model/user';
+import {
+  ChatMessageModel,
+  GroupModel,
+  UserModel,
+  createOrUpdateHistory,
+} from '@yx-chat/database';
 import { shouldLogin } from './fn-decorators';
 import { EventHandler, EventHandlerContext } from './types';
 import { isIdValid } from './utils';

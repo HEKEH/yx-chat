@@ -1,7 +1,7 @@
 import fs from 'fs';
+import { logger } from '@yx-chat/shared/logger';
 import config from './config';
 import initApp from './app';
-import logger from './utils/logger';
 
 const { env } = process;
 logger.info('[env]', env.NODE_ENV);

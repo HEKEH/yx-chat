@@ -1,8 +1,8 @@
+import { logger } from '@yx-chat/shared/logger';
+import { initMongoDB, UserModel } from '@yx-chat/database';
+
 import config from './config';
-import logger from './utils/logger';
 import initApp from './app';
-import initMongoDB from './database/mongoDB';
-import UserModel from './database/mongoDB/model/user';
 import { createNewUser } from './biz-utils/create-new-user';
 
 const { env } = process;

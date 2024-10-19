@@ -1,8 +1,8 @@
 import { AssertionError } from 'assert';
 import { RESPONSE_CODE } from '@yx-chat/shared/types';
+import { logger } from '@yx-chat/shared/logger';
 import { Context, Next } from 'koa';
 import { BusinessError } from '~/biz-utils/business-error';
-import logger from '~/utils/logger';
 import i18n from '~/i18n';
 import { v4 as uuid } from 'uuid';
 import {
