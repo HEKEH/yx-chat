@@ -24,9 +24,9 @@ export const Avatar = defineComponent({
       if (!url) {
         return null;
       }
-      if (url.startsWith('/') && clientConfig.server !== '/') {
-        // redirect to server path
-        url = `${clientConfig.server}${url}`;
+      // redirect to file center path
+      if (url.startsWith('/default-avatar')) {
+        url = `${clientConfig.fileCenterUrl}${url}`;
       }
       const { status, statusSize = 14 } = props;
       return (

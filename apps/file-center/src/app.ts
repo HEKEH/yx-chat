@@ -1,6 +1,8 @@
 import http from 'http';
+import path from 'path';
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
+import koaStatic from 'koa-static';
 import config from './config';
 import {
   addContextPropsMiddleware,
@@ -29,7 +31,16 @@ function corsMiddleware() {
 
 export default function initApp() {
   const app = new Koa();
-  app.use(bodyParser()); // app.proxy = true;
+  // app.proxy = true;
+
+  // serve public static files
+  app.use(
+    koaStatic(path.join(__dirname, '../public/assets'), {
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+      gzip: true,
+    }),
+  );
+  app.use(bodyParser());
 
   app.use(corsMiddleware());
 

@@ -1,7 +1,4 @@
 import http from 'http';
-import path from 'path';
-import Koa from 'koa';
-import koaStatic from 'koa-static';
 import { Server } from 'socket.io';
 import logger from './utils/logger';
 import config from './config';
@@ -10,18 +7,10 @@ import { SocketContext } from './socket-io/context';
 import SocketModel from './database/mongoDB/model/socket';
 
 export default function initApp() {
-  const app = new Koa();
-  // app.proxy = true;
-
-  // serve public static files
-  app.use(
-    koaStatic(path.join(__dirname, '../public'), {
-      maxAge: 1000 * 60 * 60 * 24 * 7,
-      gzip: true,
-    }),
-  );
-
-  const httpServer = http.createServer(app.callback());
+  const httpServer = http.createServer((req, res) => {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('404 Not Found');
+  });
 
   const io = new Server(httpServer, {
     cors: {

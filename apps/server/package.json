@@ -35,8 +35,6 @@
     "dotenv-cli": "^7.4.2",
     "i18next": "^23.16.0",
     "i18next-fs-backend": "^2.3.2",
-    "koa": "^2.14.2",
-    "koa-static": "^5.0.0",
     "lodash": "^4.17.21",
     "log4js": "^6.9.1",
     "mongoose": "^8.0.1",
@@ -45,10 +43,6 @@
     "xss": "^1.0.14"
   },
   "devDependencies": {
-    "@types/koa": "^2.13.8",
-    "@types/koa-bodyparser": "^4.3.10",
-    "@types/koa-router": "^7.4.4",
-    "@types/koa-static": "^4.0.4",
     "@types/lodash": "^4.14.202",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
