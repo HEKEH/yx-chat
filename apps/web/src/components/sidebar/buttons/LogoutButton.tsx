@@ -1,9 +1,9 @@
-import { Power } from '@icon-park/vue-next';
 import { ElPopconfirm, ElTooltip } from 'element-plus';
 import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { getGlobalStore } from '~/utils/vue';
 import s from './style.module.sass';
+import Power from '@/assets/icons/power.svg';
 
 export const LogoutButton = defineComponent({
   name: 'LogoutButton',
@@ -29,7 +29,9 @@ export const LogoutButton = defineComponent({
                   content={t('account.logout')}
                   placement="right"
                 >
-                  <Power theme="outline" class={s.button} strokeWidth={3} />
+                  <div class={s.button}>
+                    <Power />
+                  </div>
                 </ElTooltip>
               </span>
             ),

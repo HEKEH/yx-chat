@@ -1,8 +1,8 @@
-import { GithubOne } from '@icon-park/vue-next';
 import { ElTooltip } from 'element-plus';
 import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
 import s from './style.module.sass';
+import Github from '@/assets/icons/github.svg';
 
 export const SourceCodeButton = defineComponent({
   name: 'SourceCodeButton',
@@ -18,12 +18,9 @@ export const SourceCodeButton = defineComponent({
           content={t('common.sourceCode')}
           placement="right"
         >
-          <GithubOne
-            theme="outline"
-            class={s.button}
-            strokeWidth={3}
-            onClick={openSourceCodePage}
-          />
+          <div class={s.button} onClick={openSourceCodePage}>
+            <Github />
+          </div>
         </ElTooltip>
       );
     };

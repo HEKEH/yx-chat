@@ -1,4 +1,3 @@
-import { Search } from '@icon-park/vue-next';
 import {
   UserAndGroupSearchItem,
   UserAndGroupSearchResult,
@@ -10,6 +9,7 @@ import { getGlobalStore } from '~/utils/vue';
 import st from './AddContactButton.module.sass';
 import s from './ContactAddItem.module.sass';
 import { UserAndGroupSearchContent } from './UserAndGroupSearchContent';
+import Search from '@/assets/icons/search.svg';
 
 const ContactSearchRow = defineComponent({
   name: 'ContactSearchRow',
@@ -31,7 +31,17 @@ const ContactSearchRow = defineComponent({
               v-model={searchText.value}
               placeholder={t('common.searchPlaceholder2')}
               clearable
-              prefix-icon={<Search />}
+              prefix-icon={
+                <span
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: '18px',
+                  }}
+                >
+                  <Search />
+                </span>
+              }
             />
           </div>
           <div class={s['search-button-container']}>

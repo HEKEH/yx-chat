@@ -16,7 +16,7 @@ export const ChatButton = defineComponent({
     };
     return () => {
       const isSelected = globalStore.selectedMenu === MainMenu.message;
-      const themeColor = globalStore.themeManager.getThemeColor();
+      const themeColor = 'var(--primary-color-10)';
       return (
         <ElTooltip effect="dark" content={t('main.chats')} placement="right">
           <div
@@ -24,11 +24,8 @@ export const ChatButton = defineComponent({
             onClick={onClick}
           >
             <Message
-              width={28}
-              height={28}
               fill={isSelected ? themeColor : 'none'}
               stroke={isSelected ? themeColor : 'currentColor'}
-              strokeWidth={3}
             />
           </div>
         </ElTooltip>

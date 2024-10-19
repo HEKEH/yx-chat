@@ -1,4 +1,3 @@
-import { Search } from '@icon-park/vue-next';
 import { ElInput, ElPopover } from 'element-plus';
 import { computed, defineComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -7,6 +6,7 @@ import { GroupModel } from '~/domain/models/contact/group';
 import { getGlobalStore } from '~/utils/vue';
 import { SearchContent } from './SearchContent';
 import s from './SearchBar.module.sass';
+import Search from '@/assets/icons/search.svg';
 
 export const SearchBar = defineComponent({
   name: 'SearchBar',
@@ -30,7 +30,17 @@ export const SearchBar = defineComponent({
           size="large"
           v-model={searchText.value}
           clearable
-          prefix-icon={<Search />}
+          prefix-icon={
+            <span
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                fontSize: '18px',
+              }}
+            >
+              <Search />
+            </span>
+          }
           placeholder={t('common.searchPlaceholder')}
           onFocus={() => {
             isPopoverVisible.value = true;

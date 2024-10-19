@@ -1,8 +1,8 @@
-import { Lark } from '@icon-park/vue-next';
 import { ElInput } from 'element-plus';
 import { PropType, defineComponent } from 'vue';
 import { ChatMessageCollection } from '~/domain/models/chat/chat-message-collection';
 import s from './index.module.sass';
+import PaperAirplane from '@/assets/icons/paper-airplane.svg';
 
 export const ChatInputContainer = defineComponent({
   name: 'ChatInputContainer',
@@ -32,7 +32,11 @@ export const ChatInputContainer = defineComponent({
               }
             }}
           />
-          <Lark class={s.icon} theme="filled" size="28" onClick={sendMessage} />
+          <PaperAirplane
+            class={s.icon}
+            onClick={sendMessage}
+            fill="var(--primary-color-6)"
+          />
         </div>
       );
     };
