@@ -33,6 +33,11 @@ export default class Self implements IUser {
     this._userInfo = userInfo;
   }
 
+  async updateAvatar(file: File): Promise<{ success: boolean }> {
+    // TODO
+    return { success: true };
+  }
+
   clear() {
     this._userInfo = undefined;
   }

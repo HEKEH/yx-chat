@@ -1,0 +1,32 @@
+.avatar-edit-box
+  cursor: pointer
+  position: relative
+  color: #555555
+  height: fit-content
+  width: fit-content
+  overflow: hidden
+  .actions
+    margin-top: 4px
+  .avatar
+    width: 80px
+    height: 80px
+    border-radius: 4px!important
+  .camera
+    display: none
+    position: absolute
+    width: 40px
+    height: 40px
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    cursor: pointer
+  &:hover
+    .avatar
+      filter: blur(3px)
+    .camera
+      display: block
+  .editing-avatar
+    width: 80px
+    height: 80px
+    border-radius: 4px
+    display: block

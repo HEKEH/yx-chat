@@ -1,4 +1,4 @@
-import { PropType, defineComponent } from 'vue';
+import { CSSProperties, PropType, defineComponent } from 'vue';
 import clientConfig from '~/config';
 import s from './index.module.sass';
 
@@ -17,6 +17,14 @@ export const Avatar = defineComponent({
       type: Number,
       required: false,
     },
+    imgStyle: {
+      type: Object as PropType<CSSProperties>,
+      required: false,
+    },
+    imgClass: {
+      type: String,
+      required: false,
+    },
   },
   setup(props) {
     return () => {
@@ -30,10 +38,10 @@ export const Avatar = defineComponent({
       } else {
         url = `${clientConfig.fileCenterUrl}/file/${url}`;
       }
-      const { status, statusSize = 14 } = props;
+      const { status, imgClass, imgStyle, statusSize = 14 } = props;
       return (
         <div class={s.container}>
-          <img class={s.avatar} src={url} />
+          <img class={[s.avatar, imgClass]} style={imgStyle} src={url} />
           {status && (
             <div
               style={{ width: `${statusSize}px` }}

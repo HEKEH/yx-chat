@@ -1,10 +1,5 @@
 import { ChatMessagesRecord } from './chat';
-
-export type CommonResponse =
-  | {
-      success: true;
-    }
-  | { success: false; message: string };
+import { CommonResult } from './common';
 
 export interface Friend {
   id: string;
@@ -47,7 +42,7 @@ export interface RejectFriendAddRequestBody {
   requestId: string;
 }
 
-export type SendFriendAddRequestResponse = CommonResponse;
+export type SendFriendAddRequestResponse = CommonResult;
 export interface AcceptFriendAddRequestBody {
   requestId: string;
 }
