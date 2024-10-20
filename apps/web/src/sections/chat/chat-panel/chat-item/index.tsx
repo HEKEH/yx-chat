@@ -1,5 +1,5 @@
 import { PropType, defineComponent } from 'vue';
-import { Avatar } from '~/components/common/avatar';
+import { Avatar } from '~/components/avatar';
 import { IChatMessageModel } from '~/domain/models/chat/chat-message';
 import Self from '~/domain/models/self';
 import s from './index.module.sass';

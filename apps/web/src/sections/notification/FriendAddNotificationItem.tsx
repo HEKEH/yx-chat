@@ -3,7 +3,7 @@ import { PropType, defineComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { FriendAddNotificationModel } from '~/domain/models/notification/friend-add-notification';
 import { getGlobalStore } from '~/utils/vue';
-import { Avatar } from '../common/avatar';
+import { Avatar } from '../../components/avatar';
 import s from './FriendAddNotificationItem.module.sass';
 
 export const FriendAddNotificationItem = defineComponent({

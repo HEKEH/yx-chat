@@ -5,7 +5,7 @@ import {
 import { ElButton, ElPopconfirm } from 'element-plus';
 import { PropType, defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { Avatar } from '~/components/common/avatar';
+import { Avatar } from '~/components/avatar';
 import s from './UserAndGroupSearchContent.module.sass';
 
 export const SearchItem = defineComponent({

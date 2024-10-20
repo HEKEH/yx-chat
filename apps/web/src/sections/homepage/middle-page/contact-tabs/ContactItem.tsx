@@ -1,7 +1,7 @@
 import { PropType, defineComponent } from 'vue';
 import { IContactUnit } from '~/domain/models/contact/typing';
 import { IUser } from '~/domain/models/typing';
-import { Avatar } from '../../../common/avatar';
+import { Avatar } from '~/components/avatar';
 import s from './ContactItem.module.sass';
 
 export const ContactItem = defineComponent({

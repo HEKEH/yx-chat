@@ -2,7 +2,7 @@ import { ElNotification } from 'element-plus';
 import 'element-plus/dist/index.css';
 import { defineComponent, onBeforeUnmount, onErrorCaptured, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { HomePage } from '~/components/homepage';
+import { HomePage } from '~/sections/homepage';
 import { SocketEventType, SocketIO } from '~/infra/socket-io';
 import { initI18n as _initI18n } from './infra/i18n';
 import { provideGlobalStore } from './utils/vue';

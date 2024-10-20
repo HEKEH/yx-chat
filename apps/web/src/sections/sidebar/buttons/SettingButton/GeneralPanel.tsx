@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { LanguageSelect } from '../../../../components/LanguageSelect';
 import s from './style.module.sass';
-import { LanguageSelect } from './LanguageSelect';
 
 export const GeneralPanel = defineComponent({
   name: 'GeneralPanel',
