@@ -45,7 +45,7 @@ export class SocketIO {
   };
   /** 连接服务端 */
   connect() {
-    this._io = IO(clientConfig.server, options);
+    this._io = IO(clientConfig.serverUrl, options);
     this._bindEvents();
     this._io.connect();
   }

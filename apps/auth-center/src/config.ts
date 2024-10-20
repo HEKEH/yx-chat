@@ -1,6 +1,15 @@
+import { LANGUAGE } from '@yx-chat/shared/constants';
+import { logger } from '@yx-chat/shared/logger';
 import type { TAlgorithm } from 'jwt-simple';
 
 const { env } = process;
+
+const defaultLanguage = env.PUBLIC_DEFAULT_LANGUAGE as LANGUAGE | undefined;
+
+if (!defaultLanguage) {
+  logger.error('PUBLIC_DEFAULT_LANGUAGE is not set');
+  process.exit(1);
+}
 
 export default {
   /** service port */
@@ -17,5 +26,5 @@ export default {
     : 1000 * 60 * 60 * 24 * 30, // 30 days
   adminUser: env.ADMIN_USER,
   adminPassword: env.ADMIN_PASSWORD,
-  defaultLanguage: env.PUBLIC_DEFAULT_LANGUAGE,
+  defaultLanguage,
 };

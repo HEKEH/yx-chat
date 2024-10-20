@@ -1,3 +1,4 @@
+import { LANGUAGE } from '@yx-chat/shared/constants';
 import { logger } from '@yx-chat/shared/logger';
 
 const { env } = process;
@@ -17,13 +18,20 @@ if (!authCenterUrl) {
   process.exit(1);
 }
 
+const defaultLanguage = env.PUBLIC_DEFAULT_LANGUAGE as LANGUAGE | undefined;
+
+if (!defaultLanguage) {
+  logger.error('PUBLIC_DEFAULT_LANGUAGE is not set');
+  process.exit(1);
+}
+
 export default {
   /** service port */
   port: env.PUBLIC_FILE_CENTER_PORT
     ? parseInt(env.PUBLIC_FILE_CENTER_PORT, 10)
     : 7090,
   allowOrigin: env.ALLOW_ORIGIN,
-  defaultLanguage: env.PUBLIC_DEFAULT_LANGUAGE,
+  defaultLanguage,
   uploadDir,
   authCenterUrl,
 };

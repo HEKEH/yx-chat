@@ -1,3 +1,4 @@
+import { LANGUAGE } from '@yx-chat/shared/constants';
 import { logger } from '@yx-chat/shared/logger';
 
 const { env } = process;
@@ -11,6 +12,13 @@ if (!authCenterUrl) {
   process.exit(1);
 }
 
+const defaultLanguage = env.PUBLIC_DEFAULT_LANGUAGE as LANGUAGE | undefined;
+
+if (!defaultLanguage) {
+  logger.error('PUBLIC_DEFAULT_LANGUAGE is not set');
+  process.exit(1);
+}
+
 const config = {
   /** service port */
   port: env.PUBLIC_SERVER_PORT ? parseInt(env.PUBLIC_SERVER_PORT, 10) : 6870,
@@ -20,7 +28,7 @@ const config = {
   adminUser: env.ADMIN_USER,
   adminPassword: env.ADMIN_PASSWORD,
   authCenterUrl,
-  defaultLanguage: env.PUBLIC_DEFAULT_LANGUAGE,
+  defaultLanguage,
 };
 
 // console.log('config', config);
