@@ -26,6 +26,7 @@ export default class UserController {
   static async updateAvatar(ctx: Context, next: Next) {
     const data = ctx.getRequestData<UpdateAvatarRequestBody>();
     await updateAvatar(data);
+    ctx.body = ctx.t('Success');
     await next();
   }
 }

@@ -3,6 +3,7 @@ import {
   LoginByTokenRequestBody,
   LoginRequestBody,
   RegisterRequestBody,
+  UpdateAvatarRequestBody,
   UserBasicInfo,
 } from '@yx-chat/shared/types';
 import { WithLng } from '~/types';
@@ -44,6 +45,21 @@ export const register = async ({
     baseURL: config.authCenterUrl,
     method: 'post',
     path: '/user/register',
+    params,
+    headers: {
+      [LANGUAGE_HEADER_KEY]: lng,
+    },
+  });
+};
+
+export const updateAvatar = async ({
+  lng,
+  ...params
+}: WithLng<UpdateAvatarRequestBody>) => {
+  return commonRequest<void>({
+    baseURL: config.authCenterUrl,
+    method: 'post',
+    path: '/user/update-avatar',
     params,
     headers: {
       [LANGUAGE_HEADER_KEY]: lng,

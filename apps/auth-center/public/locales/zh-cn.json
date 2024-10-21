@@ -10,5 +10,6 @@
   "Token expires": "Token已过期",
   "Illegal login": "非法登录",
   "An unexpected error occurred": "发生了一个意外的错误",
-  "Avatar is invalid": "头像链接不合法"
+  "Avatar is invalid": "头像链接不合法",
+  "Success": "成功"
 }

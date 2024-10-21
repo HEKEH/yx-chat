@@ -1,19 +1,19 @@
 import { AssertionError } from 'assert';
-import { RESPONSE_CODE } from '@yx-chat/shared/types';
-import { logger } from '@yx-chat/shared/logger';
-import { Context, Next } from 'koa';
-import { BusinessError } from '~/utils/error';
-import i18n from '~/i18n';
-import { v4 as uuid } from 'uuid';
 import {
   ACCEPT_LANGUAGES,
   LANGUAGE,
-  TOKEN_HEADER_KEY,
-  LOG_ID_HEADER_KEY,
   LANGUAGE_HEADER_KEY,
+  LOG_ID_HEADER_KEY,
+  TOKEN_HEADER_KEY,
 } from '@yx-chat/shared/constants';
+import { logger } from '@yx-chat/shared/logger';
+import { RESPONSE_CODE } from '@yx-chat/shared/types';
+import { Context, Next } from 'koa';
+import { v4 as uuid } from 'uuid';
 import config from '~/config';
-import authToken, { AuthTokenRequestHeaders } from '~/requests/auth-token';
+import i18n from '~/i18n';
+import authToken from '~/requests/auth-token';
+import { BusinessError } from '~/utils/error';
 
 export const addContextPropsMiddleware = async (ctx: Context, next: Next) => {
   const logId = ctx.request.header[LOG_ID_HEADER_KEY] || uuid();
@@ -87,13 +87,23 @@ export const requestWrapMiddleware = async (ctx: Context, next: Next) => {
 
 /** Token authentication */
 export const tokenAuthMiddleware = async (ctx: Context, next: Next) => {
-  const token = ctx.request.headers[TOKEN_HEADER_KEY];
+  const token =
+    ctx.request.headers[TOKEN_HEADER_KEY] ||
+    ctx.getRequestData<{ [TOKEN_HEADER_KEY]: string }>()[TOKEN_HEADER_KEY];
+  const lng =
+    ctx.request.headers[LANGUAGE_HEADER_KEY] ||
+    ctx.getRequestData<{ [LANGUAGE_HEADER_KEY]: string }>()[
+      LANGUAGE_HEADER_KEY
+    ];
+  logger.trace('tokenAuthMiddleware token', token);
   if (!token) {
     throw new BusinessError('Token is required');
   }
-  const authTokenResponse = await authToken(
-    ctx.request.headers as unknown as AuthTokenRequestHeaders,
-  );
+  const authTokenResponse = await authToken({
+    [TOKEN_HEADER_KEY]: token as string,
+    [LOG_ID_HEADER_KEY]: ctx.logId,
+    [LANGUAGE_HEADER_KEY]: lng as LANGUAGE,
+  });
   if (authTokenResponse.status === RESPONSE_CODE.SUCCESS) {
     await next();
   } else {

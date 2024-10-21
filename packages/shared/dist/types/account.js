@@ -27,6 +27,7 @@ var AccountRequestType = /* @__PURE__ */ ((AccountRequestType2) => {
   AccountRequestType2["login"] = "login";
   AccountRequestType2["loginByToken"] = "loginByToken";
   AccountRequestType2["register"] = "register";
+  AccountRequestType2["updateAvatar"] = "updateAvatar";
   return AccountRequestType2;
 })(AccountRequestType || {});
 // Annotate the CommonJS export names for ESM import in node:

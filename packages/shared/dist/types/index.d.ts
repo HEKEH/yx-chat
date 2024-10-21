@@ -1,5 +1,5 @@
 export { UserBasicInfo } from './user.js';
-export { AccountRequestType, Environment, LoginByTokenRequestBody, LoginRequestBody, LoginSuccessResponse, RegisterRequestBody } from './account.js';
+export { AccountRequestType, Environment, LoginByTokenRequestBody, LoginRequestBody, LoginSuccessResponse, RegisterRequestBody, UpdateAvatarRequestBody } from './account.js';
 export { ChatMessage, ChatMessageFormat, ChatMessageFormatList, ChatMessageRequestType, ChatMessagesRecord, HistoryChatMessagesRequestBody, HistoryChatMessagesResponse, LastMessagesRequestBody, LastMessagesResponse, SendChatMessageBody, UpdateHistoryRequestBody, UpdateHistoryResponse } from './chat.js';
 export { FriendAddNotification, Notification, NotificationType } from './notification.js';
 export { AcceptFriendAddRequestBody, AcceptFriendAddRequestResponse, ContactRequestType, CreateGroupRequestBody, CreateGroupSuccessResponse, Friend, Group, JoinGroupRequestBody, JoinGroupSuccessResponse, RejectFriendAddRequestBody, SendFriendAddRequestBody, SendFriendAddRequestResponse } from './contact.js';

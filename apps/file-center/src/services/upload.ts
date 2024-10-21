@@ -50,6 +50,8 @@ const upload = async (file: multer.File | undefined): Promise<string> => {
 
   // rename file
   await fs.rename(oldPath, newPath);
+  // set file permission to readonly
+  await fs.chmod(newPath, 0o444);
   logger.info('[upload file] success', newFilename);
   return newFilename;
 };

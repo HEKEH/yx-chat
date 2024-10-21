@@ -18,6 +18,7 @@ const registerHandler: EventHandler = async (
     throw new BusinessError(res.message);
   }
   const { token, ...userInfo } = res.data;
+  context.setToken(token);
   await context.setUserInfo({ ...userInfo, os, browser, environment });
   return {
     ...userInfo,

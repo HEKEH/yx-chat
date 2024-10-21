@@ -7,7 +7,8 @@ import './common.js';
 declare enum AccountRequestType {
     login = "login",
     loginByToken = "loginByToken",
-    register = "register"
+    register = "register",
+    updateAvatar = "updateAvatar"
 }
 interface Environment {
     /** 客户端系统 */
@@ -31,5 +32,9 @@ interface LoginSuccessResponse extends UserBasicInfo {
     groups: Group[];
     notifications: Notification[];
 }
+interface UpdateAvatarRequestBody {
+    avatar: string;
+    token: string;
+}
 
-export { AccountRequestType, Environment, LoginByTokenRequestBody, LoginRequestBody, LoginSuccessResponse, RegisterRequestBody };
+export { AccountRequestType, Environment, LoginByTokenRequestBody, LoginRequestBody, LoginSuccessResponse, RegisterRequestBody, UpdateAvatarRequestBody };

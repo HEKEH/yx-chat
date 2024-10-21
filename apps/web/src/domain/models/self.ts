@@ -2,6 +2,8 @@
 
 import { RESPONSE_CODE, UserBasicInfo } from '@yx-chat/shared/types';
 import uploadFile from '~/infra/requests/upload-file';
+import { UpdateAvatarRequest } from '~/infra/socket-io/request/update-avatar-request';
+import { SocketIO } from '~/infra/socket-io';
 import { IUser } from './typing';
 
 export default class Self implements IUser {
@@ -38,7 +40,11 @@ export default class Self implements IUser {
     const response = await uploadFile(file);
     if (response.status === RESPONSE_CODE.SUCCESS) {
       const { filename } = response.data;
-      console.log('filename', filename);
+      const request = new UpdateAvatarRequest({
+        avatar: filename,
+      });
+      await SocketIO.instance.fetch<void>(request);
+      this._userInfo!.avatar = filename;
       return { success: true };
     }
     return { success: false };

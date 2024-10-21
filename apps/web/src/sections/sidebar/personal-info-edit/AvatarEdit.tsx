@@ -75,7 +75,7 @@ const AvatarEdit = defineComponent({
           ) : (
             <>
               <label for="avatar-upload" class={s['camera-label']}>
-                <Avatar url={url} imgClass={s.avatar} />
+                <Avatar url={url} imgClass={s.avatar} shape="square" />
                 <Camera class={s.camera} stroke-width={2} />
               </label>
               <input

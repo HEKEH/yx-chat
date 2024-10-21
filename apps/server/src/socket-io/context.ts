@@ -17,6 +17,7 @@ import { EventHandler, EventHandlerContext } from './handler/types';
 export class SocketContext implements EventHandlerContext {
   private _socket: Socket;
   private _userInfo: (Environment & UserBasicInfo) | undefined;
+  private _token = '';
 
   get socketId() {
     return this._socket.id;
@@ -29,6 +30,12 @@ export class SocketContext implements EventHandlerContext {
   }
   get userInfo() {
     return this._userInfo;
+  }
+  get token() {
+    return this._token;
+  }
+  setToken(token: string) {
+    this._token = token;
   }
   async setUserInfo(userInfo: Environment & UserBasicInfo) {
     this._userInfo = userInfo;

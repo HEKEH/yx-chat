@@ -5,6 +5,7 @@ import {
 import { Context, Next } from 'koa';
 import getFile from '~/services/file';
 import upload from '~/services/upload';
+import { getContentTypeByFilename } from '~/utils/content-type';
 
 export default class Controller {
   static async upload(ctx: Context, next: Next) {
@@ -18,11 +19,20 @@ export default class Controller {
     await next();
   }
   static async getFile(ctx: Context, next: Next) {
-    const { filename } = ctx.params;
+    const filename = ctx.params.filename as string;
     const file = await getFile(filename);
     if (file) {
-      ctx.set('Content-Type', 'application/octet-stream');
-      ctx.set('Content-Disposition', `attachment; filename=${filename}`);
+      const contentType = getContentTypeByFilename(filename);
+      ctx.set('Content-Type', contentType);
+      if (
+        contentType.startsWith('image/') ||
+        contentType.startsWith('video/') ||
+        contentType.startsWith('audio/')
+      ) {
+        ctx.set('Content-Disposition', `inline; filename=${filename}`);
+      } else {
+        ctx.set('Content-Disposition', `attachment; filename=${filename}`);
+      }
       ctx.body = file;
     }
     await next();

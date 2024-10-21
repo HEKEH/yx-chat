@@ -11,7 +11,9 @@ export interface EventHandlerContext {
   readonly socketIp: string;
   readonly userId: string | undefined;
   readonly userInfo: (Environment & UserBasicInfo) | undefined;
+  readonly token: string;
   setUserInfo: (userInfo: Environment & UserBasicInfo) => Promise<void>;
+  setToken: (token: string) => void;
   sendFriendMessage: (
     friendId: string,
     message: ServerMessage,

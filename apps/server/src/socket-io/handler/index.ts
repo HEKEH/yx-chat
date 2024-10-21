@@ -18,11 +18,13 @@ import searchUsersAndGroups from './search-users-and-groups';
 import sendFriendAddRequest from './send-friend-add-request';
 import rejectFriendAddRequest from './reject-friend-add-request';
 import acceptFriendAddRequest from './accept-friend-add-request';
+import updateAvatarHandler from './update-avatar';
 
 export const EventHandlerMap = {
   [AccountRequestType.login]: loginHandler,
   [AccountRequestType.loginByToken]: loginByTokenHandler,
   [AccountRequestType.register]: registerHandler,
+  [AccountRequestType.updateAvatar]: updateAvatarHandler,
   [ChatMessageRequestType.getLastChatMessages]: getLastChatMessages,
   [ChatMessageRequestType.getHistoryChatMessages]: getHistoryChatMessages,
   [ChatMessageRequestType.sendChatMessage]: sendChatMessage,

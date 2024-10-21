@@ -22,6 +22,7 @@ const loginByTokenHandler: EventHandler = async (
     throw new BusinessError(res.message);
   }
   const userInfo = res.data;
+  context.setToken(data.token);
   const [{ groups, friends }, notifications] = await Promise.all([
     findFriendsAndGroupsByUserId(userInfo.id),
     findNotificationsByUserId(userInfo.id),
