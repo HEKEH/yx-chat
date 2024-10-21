@@ -1,6 +1,7 @@
 /** Info of the login user */
 
-import { UserBasicInfo } from '@yx-chat/shared/types';
+import { RESPONSE_CODE, UserBasicInfo } from '@yx-chat/shared/types';
+import uploadFile from '~/infra/requests/upload-file';
 import { IUser } from './typing';
 
 export default class Self implements IUser {
@@ -34,8 +35,13 @@ export default class Self implements IUser {
   }
 
   async updateAvatar(file: File): Promise<{ success: boolean }> {
-    // TODO
-    return { success: true };
+    const response = await uploadFile(file);
+    if (response.status === RESPONSE_CODE.SUCCESS) {
+      const { filename } = response.data;
+      console.log('filename', filename);
+      return { success: true };
+    }
+    return { success: false };
   }
 
   clear() {

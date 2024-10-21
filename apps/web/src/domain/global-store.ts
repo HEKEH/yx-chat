@@ -22,6 +22,7 @@ import { LoginRequest } from '~/infra/socket-io/request/login-request';
 import { RegisterRequest } from '~/infra/socket-io/request/register-request';
 import { SearchUsersAndGroupsRequest } from '~/infra/socket-io/request/search-users-and-groups-request';
 import { SendFriendAddRequest } from '~/infra/socket-io/request/send-friend-add-request';
+import getToken from '~/infra/local-storage-store/get-token';
 import {
   ChatMessageCollection,
   ChatMessageCollectionContext,
@@ -116,9 +117,7 @@ export default class GlobalStore
   }
 
   async loginByToken() {
-    const token = LocalStorageStore.instance.getItem<string | undefined>(
-      'token',
-    );
+    const token = getToken();
     if (!token) {
       return;
     }

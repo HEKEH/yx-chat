@@ -26,5 +26,8 @@
   "files": [
     "dist",
     "package.json"
-  ]
+  ],
+  "devDependencies": {
+    "@types/koa": "^2.13.8"
+  }
 }

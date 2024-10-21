@@ -1,14 +1,19 @@
-import { RESPONSE_CODE } from '@yx-chat/shared/types';
+import {
+  RESPONSE_CODE,
+  UploadFileSuccessResponse,
+} from '@yx-chat/shared/types';
 import { Context, Next } from 'koa';
 import getFile from '~/services/file';
 import upload from '~/services/upload';
 
 export default class Controller {
   static async upload(ctx: Context, next: Next) {
-    await upload(ctx.file);
+    const filename = await upload(ctx.file);
     ctx.body = {
       status: RESPONSE_CODE.SUCCESS,
-      data: ctx.t('File uploaded successfully'),
+      data: {
+        filename,
+      } as UploadFileSuccessResponse,
     };
     await next();
   }

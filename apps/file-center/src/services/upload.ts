@@ -33,21 +33,24 @@ async function generateFileHash(filepath: string) {
   return hashSum.digest('hex');
 }
 
-const upload = async (file: multer.File | undefined) => {
+/** @returns filename */
+const upload = async (file: multer.File | undefined): Promise<string> => {
   if (!file) {
     throw new BusinessError('No file uploaded');
   }
   const oldPath = file.path;
   const fileExtension = path.extname(file.originalname);
 
-  // 生成文件哈希
+  // generate file hash
   const fileHash = await generateFileHash(oldPath);
 
-  // 新的文件名 = 哈希值 + 原始扩展名
+  // new filename = hash + original extension
   const newFilename = `${fileHash}${fileExtension}`;
   const newPath = path.join(config.uploadDir, newFilename);
 
-  // 重命名文件
+  // rename file
   await fs.rename(oldPath, newPath);
+  logger.info('[upload file] success', newFilename);
+  return newFilename;
 };
 export default upload;

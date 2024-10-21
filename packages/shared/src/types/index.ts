@@ -10,3 +10,4 @@ export * from './system';
 export * from './response';
 export * from './auth';
 export * from './common';
+export * from './file-center';

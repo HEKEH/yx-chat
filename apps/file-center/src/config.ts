@@ -30,7 +30,7 @@ export default {
   port: env.PUBLIC_FILE_CENTER_PORT
     ? parseInt(env.PUBLIC_FILE_CENTER_PORT, 10)
     : 7090,
-  allowOrigin: env.ALLOW_ORIGIN,
+  allowOrigin: env.ALLOW_ORIGIN || '*',
   defaultLanguage,
   uploadDir,
   authCenterUrl,

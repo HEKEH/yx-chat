@@ -17,48 +17,12 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/utils/index.ts
-var utils_exports = {};
-__export(utils_exports, {
-  corsMiddleware: () => corsMiddleware,
-  enum2KeyArray: () => enum2KeyArray,
-  enum2ValueArray: () => enum2ValueArray,
-  errorResponse: () => errorResponse,
-  getRandomAvatarPath: () => getRandomAvatarPath,
-  isErrorResponse: () => isErrorResponse,
-  regexEscape: () => regexEscape
+// src/utils/middlewares.ts
+var middlewares_exports = {};
+__export(middlewares_exports, {
+  corsMiddleware: () => corsMiddleware
 });
-module.exports = __toCommonJS(utils_exports);
-
-// src/utils/error.ts
-function isErrorResponse(response) {
-  return response && response instanceof Object && response.status === "error" && typeof response.message === "string";
-}
-function errorResponse(message) {
-  return { status: "error", message };
-}
-
-// src/utils/enum.ts
-function enum2ValueArray(obj) {
-  const values = Object.values(obj);
-  return values;
-}
-function enum2KeyArray(obj) {
-  const values = Object.keys(obj);
-  return values;
-}
-
-// src/utils/regex.ts
-function regexEscape(input) {
-  return input.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
-}
-
-// src/utils/avatar.ts
-var AVATAR_COUNT = 15;
-function getRandomAvatarPath() {
-  const number = Math.floor(Math.random() * AVATAR_COUNT);
-  return `/default-avatar/${number}.jpg`;
-}
+module.exports = __toCommonJS(middlewares_exports);
 
 // src/constants/language.ts
 var LANGUAGE = /* @__PURE__ */ ((LANGUAGE2) => {
@@ -96,11 +60,5 @@ function corsMiddleware(allowOrigin) {
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  corsMiddleware,
-  enum2KeyArray,
-  enum2ValueArray,
-  errorResponse,
-  getRandomAvatarPath,
-  isErrorResponse,
-  regexEscape
+  corsMiddleware
 });

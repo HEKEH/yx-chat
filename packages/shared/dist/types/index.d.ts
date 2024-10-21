@@ -10,3 +10,4 @@ export { SystemRequestType, UserAndGroupSearchItem, UserAndGroupSearchRequestBod
 export { RESPONSE_CODE } from './response.js';
 export { AuthTokenSuccessResponse } from './auth.js';
 export { CommonResult } from './common.js';
+export { UploadFileSuccessResponse } from './file-center.js';
