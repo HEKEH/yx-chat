@@ -1,7 +1,7 @@
 import assert from 'assert';
 import type { LoginRequestBody, UserBasicInfo } from '@yx-chat/shared/types';
 import bcrypt from 'bcryptjs';
-import { BusinessError } from '~/biz-utils/business-error';
+import { BusinessError } from '~/utils/error';
 import { logger } from '@yx-chat/shared/logger';
 import { UserModel } from '@yx-chat/database';
 import { generateToken } from '../utils';

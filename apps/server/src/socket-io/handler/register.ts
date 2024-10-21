@@ -3,7 +3,7 @@ import {
   type LoginSuccessResponse,
   type RegisterRequestBody,
 } from '@yx-chat/shared/types';
-import { BusinessError } from '~/biz-utils/business-error';
+import { BusinessError } from '~/utils/error';
 import { register } from '~/requests/auth-center';
 import { WithLng } from '~/types';
 import { EventHandler, EventHandlerContext } from './types';

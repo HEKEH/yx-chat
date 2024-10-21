@@ -5,7 +5,7 @@ import {
   CreateGroupSuccessResponse,
 } from '@yx-chat/shared/types';
 import { getRandomAvatarPath } from '@yx-chat/shared/utils';
-import { BusinessError } from '~/biz-utils/business-error';
+import { BusinessError } from '~/utils/error';
 import { shouldLogin } from './fn-decorators';
 import { EventHandler, EventHandlerContext } from './types';
 

@@ -1,7 +1,7 @@
 import assert from 'assert';
 import { logger } from '@yx-chat/shared/logger';
 import type { RegisterRequestBody, UserBasicInfo } from '@yx-chat/shared/types';
-import { BusinessError } from '~/biz-utils/business-error';
+import { BusinessError } from '~/utils/error';
 import { UserDocument, UserModel } from '@yx-chat/database';
 import { createNewUser } from '~/biz-utils/create-new-user';
 

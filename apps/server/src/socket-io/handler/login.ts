@@ -3,7 +3,7 @@ import {
   type LoginSuccessResponse,
   RESPONSE_CODE,
 } from '@yx-chat/shared/types';
-import { BusinessError } from '~/biz-utils/business-error';
+import { BusinessError } from '~/utils/error';
 import { login } from '~/requests/auth-center';
 import { logger } from '@yx-chat/shared/logger';
 import { WithLng } from '~/types';

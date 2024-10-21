@@ -4,7 +4,7 @@ import path from 'path';
 import { logger } from '@yx-chat/shared/logger';
 import multer from '@koa/multer';
 import config from '~/config';
-import { BusinessError } from '~/biz-utils/business-error';
+import { BusinessError } from '~/utils/error';
 
 const TEMP_FILE_PREFIX = 'yx';
 

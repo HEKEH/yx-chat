@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { BusinessError } from '~/biz-utils/business-error';
+import { BusinessError } from '~/utils/error';
 import config from '~/config';
 
 const getFile = async (filename: string | undefined) => {

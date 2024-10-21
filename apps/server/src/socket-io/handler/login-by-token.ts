@@ -3,7 +3,7 @@ import {
   type LoginByTokenRequestBody,
   type LoginSuccessResponse,
 } from '@yx-chat/shared/types';
-import { BusinessError } from '~/biz-utils/business-error';
+import { BusinessError } from '~/utils/error';
 import { loginByToken } from '~/requests/auth-center';
 import { WithLng } from '~/types';
 import { EventHandler, EventHandlerContext } from './types';

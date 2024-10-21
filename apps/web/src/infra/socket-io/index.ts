@@ -2,7 +2,7 @@ import { ServerMessage, ServerMessageType } from '@yx-chat/shared/types';
 import { isErrorResponse } from '@yx-chat/shared/utils';
 import { Subject, Subscription } from 'rxjs';
 import IO, { Socket } from 'socket.io-client';
-import { BusinessError } from '~/common/error';
+import { BusinessError } from '~/utils/error';
 import clientConfig from '~/config';
 import i18n from '../i18n';
 import { AbstractSocketRequest } from './request/type';

@@ -3,7 +3,7 @@ import type {
   LoginByTokenRequestBody,
   UserBasicInfo,
 } from '@yx-chat/shared/types';
-import { BusinessError } from '~/biz-utils/business-error';
+import { BusinessError } from '~/utils/error';
 import { UserModel } from '@yx-chat/database';
 import { parseToken } from '../utils';
 

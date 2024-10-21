@@ -1,4 +1,4 @@
-import { BusinessError } from '~/biz-utils/business-error';
+import { BusinessError } from '~/utils/error';
 import { EventHandler, EventHandlerContext } from './types';
 
 export function shouldLogin(eventHandler: EventHandler) {
