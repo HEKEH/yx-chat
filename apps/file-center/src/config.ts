@@ -34,4 +34,5 @@ export default {
   defaultLanguage,
   uploadDir,
   authCenterUrl,
+  fileCompression: env.FILE_COMPRESSION === 'true',
 };
