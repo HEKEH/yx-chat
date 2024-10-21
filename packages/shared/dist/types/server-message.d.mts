@@ -1,6 +1,7 @@
 import { ChatMessage } from './chat.mjs';
 import { Friend } from './contact.mjs';
 import { Notification } from './notification.mjs';
+import './common.mjs';
 
 declare enum ServerMessageType {
     chat = "chat",

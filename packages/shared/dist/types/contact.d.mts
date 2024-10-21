@@ -1,11 +1,6 @@
 import { ChatMessagesRecord } from './chat.mjs';
+import { CommonResult } from './common.mjs';
 
-type CommonResponse = {
-    success: true;
-} | {
-    success: false;
-    message: string;
-};
 interface Friend {
     id: string;
     createTime: string;
@@ -41,7 +36,7 @@ interface SendFriendAddRequestBody {
 interface RejectFriendAddRequestBody {
     requestId: string;
 }
-type SendFriendAddRequestResponse = CommonResponse;
+type SendFriendAddRequestResponse = CommonResult;
 interface AcceptFriendAddRequestBody {
     requestId: string;
 }
@@ -51,4 +46,4 @@ interface JoinGroupSuccessResponse extends Group {
     messagesRecord: ChatMessagesRecord;
 }
 
-export { AcceptFriendAddRequestBody, AcceptFriendAddRequestResponse, CommonResponse, ContactRequestType, CreateGroupRequestBody, CreateGroupSuccessResponse, Friend, Group, JoinGroupRequestBody, JoinGroupSuccessResponse, RejectFriendAddRequestBody, SendFriendAddRequestBody, SendFriendAddRequestResponse };
+export { AcceptFriendAddRequestBody, AcceptFriendAddRequestResponse, ContactRequestType, CreateGroupRequestBody, CreateGroupSuccessResponse, Friend, Group, JoinGroupRequestBody, JoinGroupSuccessResponse, RejectFriendAddRequestBody, SendFriendAddRequestBody, SendFriendAddRequestResponse };

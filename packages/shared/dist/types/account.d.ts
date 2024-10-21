@@ -2,6 +2,7 @@ import { Friend, Group } from './contact.js';
 import { Notification } from './notification.js';
 import { UserBasicInfo } from './user.js';
 import './chat.js';
+import './common.js';
 
 declare enum AccountRequestType {
     login = "login",

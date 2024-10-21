@@ -2,6 +2,7 @@ import { Friend, Group } from './contact.mjs';
 import { Notification } from './notification.mjs';
 import { UserBasicInfo } from './user.mjs';
 import './chat.mjs';
+import './common.mjs';
 
 declare enum AccountRequestType {
     login = "login",
