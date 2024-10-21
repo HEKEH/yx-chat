@@ -34,3 +34,8 @@ export interface LoginSuccessResponse extends UserBasicInfo {
   groups: Group[];
   notifications: Notification[];
 }
+
+export interface UpdateAvatarRequestBody {
+  avatar: string;
+  token: string;
+}

@@ -11,7 +11,7 @@ export const register = async (
   data: RegisterRequestBody,
 ): Promise<UserBasicInfo & { token: string }> => {
   const { username, password, environment } = data;
-  logger.trace(`register ${username}`);
+  logger.log('[register]', username);
   assert(username, "Username can't be empty");
   assert(password, "Password can't be empty");
   const user = await UserModel.findOne({ username });

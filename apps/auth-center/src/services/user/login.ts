@@ -10,7 +10,7 @@ export const login = async (
   data: LoginRequestBody,
 ): Promise<UserBasicInfo & { token: string }> => {
   const { username, password, environment } = data;
-  logger.trace(`login ${username}`);
+  logger.info('[login]', username);
   assert(username, "Username can't be empty");
   assert(password, "Password can't be empty");
   const user = await UserModel.findOne(
