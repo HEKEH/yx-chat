@@ -17,6 +17,7 @@ const getFile = async (
 
   try {
     if (decompress) {
+      // decompress file
       const filePath = path.join(config.uploadDir, `${filename}.br`);
       const compressedFile = await fs.readFile(filePath);
       const decompressedFile = await brotliDecompress(compressedFile);

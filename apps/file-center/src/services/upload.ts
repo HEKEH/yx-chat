@@ -1,12 +1,11 @@
 import fs from 'fs/promises';
 import crypto from 'crypto';
 import path from 'path';
-import zlib from 'zlib';
-import { promisify } from 'util';
 import { logger } from '@yx-chat/shared/logger';
 import multer from '@koa/multer';
 import config from '~/config';
 import { BusinessError } from '~/utils/error';
+import { compressFile } from '~/utils/compress';
 
 const TEMP_FILE_PREFIX = 'yx';
 
@@ -32,20 +31,6 @@ async function generateFileHash(fileBuffer: Buffer) {
   const hashSum = crypto.createHash('sha256');
   hashSum.update(fileBuffer);
   return hashSum.digest('hex');
-}
-
-// Compress file
-const brotliCompress = promisify(zlib.brotliCompress);
-async function compressFile(fileBuffer: Buffer, outputPath: string) {
-  const compressionOptions = {
-    [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
-    [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT,
-  };
-  const compressed = await brotliCompress(fileBuffer, compressionOptions);
-  // // compare compression ratio
-  // const compressionRatio = compressed.length / fileBuffer.length;
-  // logger.trace('[upload file] compression ratio', compressionRatio);
-  await fs.writeFile(`${outputPath}.br`, compressed);
 }
 
 /** @returns filename */
