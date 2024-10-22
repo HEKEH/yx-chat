@@ -8,8 +8,6 @@ LOG_FILE=${SCRIPT_DIR}/build-image.log
 PROJECT_ROOT="${SCRIPT_DIR}/../../../../"
 cd "${PROJECT_ROOT}" # assure current dir is the exact project root directory
 
-PORT=""
-
 # get version from package.json
 # VERSION=$(node -p "require('./apps/file-center/package.json').version")
 # IMAGE_TAG="${IMAGE_NAME}:${VERSION}"
@@ -22,20 +20,30 @@ function log_error() {
   echo "Error: $1" | tee -a "${LOG_FILE}" >&2
 }
 
-function load_port_from_env_file() {
-  local ENV_FILE="./.env.production"
-  local PORT_VAR_NAME="PUBLIC_FILE_CENTER_PORT"
+function load_from_env_file() {
+  local ENV_FILE="$1"
+  if [ -f "$ENV_FILE" ]; then
+    while IFS= read -r line || [[ -n "$line" ]]; do
+      # Remove leading/trailing whitespace and trailing comments
+      line=$(echo "$line" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*#.*$//' -e 's/[[:space:]]*$//')
 
-  if [ ! -f "$ENV_FILE" ]; then
-    log_error "$ENV_FILE file not found"
-    exit 1
-  fi
+      # Ignore empty lines
+      if [[ -n $line ]]; then
+        # Extract key and value
+        key=$(echo "$line" | cut -d '=' -f 1)
+        value=$(echo "$line" | cut -d '=' -f 2-)
 
-  PORT=$(grep -E "^[[:space:]]*$PORT_VAR_NAME[[:space:]]*=" "$ENV_FILE" | sed -E "s/^[[:space:]]*$PORT_VAR_NAME[[:space:]]*=[[:space:]]*[\"']?([^\"']+)[\"']?[[:space:]]*$/\1/" | tr -d '\n\r')
+        # # Remove quotes from the value if present
+        # value=$(echo "$value" | sed -e 's/^["\x27]//' -e 's/["\x27]$//')
 
-  if [ -z "$PORT" ]; then
-    log_error "$PORT_VAR_NAME not found in $ENV_FILE"
-    exit 1
+        # Export all environment variables as strings
+        export "${key}=${value}"
+        log "Exported env: ${key}=${value}"
+      fi
+    done <"$ENV_FILE"
+  else
+    echo "$ENV_FILE file not found"
+    return 1
   fi
 }
 
@@ -60,9 +68,24 @@ function stop_and_remove_container() {
   docker rm ${IMAGE_NAME} >/dev/null 2>&1
 }
 
+function create_volume_if_not_exists() {
+  local volume_name=$1
+  if ! docker volume inspect $volume_name >/dev/null 2>&1; then
+    echo "Creating volume: $volume_name"
+    docker volume create $volume_name
+  else
+    echo "Volume $volume_name already exists"
+  fi
+}
+
 function run_container() {
+  local volume_name="yx-file-center"
+  create_volume_if_not_exists $volume_name
+
   log "Info: Running new container"
-  if docker run -d -p "${PORT}:${PORT}" --name ${IMAGE_NAME} ${IMAGE_NAME} >>${LOG_FILE} 2>&1; then
+  local command="docker run -d -p ${PORT}:${PORT} --name ${IMAGE_NAME} --mount source=${volume_name},target=${FILE_UPLOAD_DIR} ${IMAGE_NAME}"
+  log "command: ${command}"
+  if ${command} >>${LOG_FILE} 2>&1; then
     log "Container started successfully."
     log "To see container logs, use: docker logs ${IMAGE_NAME}"
   else
@@ -73,7 +96,10 @@ function run_container() {
 
 function main() {
   : >"${LOG_FILE}"
-  load_port_from_env_file
+  load_from_env_file "${PROJECT_ROOT}/.env.production"
+  load_from_env_file "${SCRIPT_DIR}/../../.env.production"
+  PORT=${PUBLIC_FILE_CENTER_PORT}
+
   remove_image
   build_image
 

@@ -1,1 +1,46 @@
 $mobile: "only screen and (max-device-width: 640px)"
+
+// $breakpoints: (
+//   'xs': 0,
+//   'sm': 576px,
+//   'md': 768px,
+//   'lg': 992px,
+//   'xl': 1200px,
+//   'xxl': 1400px
+// )
+
+// @function breakpoint-min($name)
+//   @return map-get($breakpoints, $name)
+
+// @function breakpoint-max($name)
+//   $next: breakpoint-next($name)
+//   @return if($next, breakpoint-min($next) - 0.02, null)
+
+// @function breakpoint-next($name)
+//   $breakpoint-names: map-keys($breakpoints)
+//   $n: index($breakpoint-names, $name)
+//   @return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null)
+
+// @mixin up($breakpoint)
+//   @if map-has-key($breakpoints, $breakpoint)
+//     @media (min-width: breakpoint-min($breakpoint))
+//       @content
+
+//   @else
+//     @warn "未知的断点: #{$breakpoint}。"
+
+// @mixin down($breakpoint)
+//   @if map-has-key($breakpoints, $breakpoint)
+//     @media (max-width: breakpoint-max($breakpoint))
+//       @content
+
+//   @else
+//     @warn "未知的断点: #{$breakpoint}。"
+
+// @mixin between($lower, $upper)
+//   @if map-has-key($breakpoints, $lower) and map-has-key($breakpoints, $upper)
+//     @media (min-width: breakpoint-min($lower)) and (max-width: breakpoint-max($upper))
+//       @content
+
+//   @else
+//     @warn "未知的断点: #{$lower} 或 #{$upper}。"

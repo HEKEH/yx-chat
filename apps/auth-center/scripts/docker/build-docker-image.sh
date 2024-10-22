@@ -62,7 +62,9 @@ function stop_and_remove_container() {
 
 function run_container() {
   log "Info: Running new container"
-  if docker run -d -p "${PORT}:${PORT}" --name ${IMAGE_NAME} ${IMAGE_NAME} >>${LOG_FILE} 2>&1; then
+  local command="docker run -d -p ${PORT}:${PORT} --name ${IMAGE_NAME} ${IMAGE_NAME}"
+  log "command: ${command}"
+  if ${command} >>${LOG_FILE} 2>&1; then
     log "Container started successfully."
     log "To see container logs, use: docker logs ${IMAGE_NAME}"
   else

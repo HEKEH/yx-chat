@@ -37,33 +37,6 @@ function load_port_from_env_file() {
     log_error "$PORT_VAR_NAME not found in $ENV_FILE"
     exit 1
   fi
-
-  # local ENV_FILE="$1"
-  # if [ -f "$ENV_FILE" ]; then
-  #   while IFS= read -r line || [[ -n "$line" ]]; do
-  #     # 去除行首尾的空白字符
-  #     line=$(echo "$line" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
-
-  #     # 忽略注释和空行
-  #     if [[ ! $line =~ ^\# && -n $line ]]; then
-  #       # 提取键和值
-  #       key=$(echo "$line" | cut -d '=' -f 1)
-  #       value=$(echo "$line" | cut -d '=' -f 2-)
-
-  #       # 去除值两端的引号
-  #       value=$(echo "$value" | sed -e 's/^["\x27]//' -e 's/["\x27]$//')
-
-  #       # 导出变量
-  #       if [[ -n "$key" && -n "$value" && "$key" = 'PUBLIC_SERVER_PORT' ]]; then
-  #         PORT=$value
-  #         return 0
-  #       fi
-  #     fi
-  #   done <"$ENV_FILE"
-  # else
-  #   echo "$ENV_FILE file not found"
-  #   return 1
-  # fi
 }
 
 function remove_image() {
@@ -89,7 +62,9 @@ function stop_and_remove_container() {
 
 function run_container() {
   log "Info: Running new container"
-  if docker run -d -p "${PORT}:${PORT}" --name ${IMAGE_NAME} ${IMAGE_NAME} >>${LOG_FILE} 2>&1; then
+  local command="docker run -d -p ${PORT}:${PORT} --name ${IMAGE_NAME} ${IMAGE_NAME}"
+  log "command: ${command}"
+  if ${command} >>${LOG_FILE} 2>&1; then
     log "Container started successfully."
     log "To see container logs, use: docker logs ${IMAGE_NAME}"
   else
