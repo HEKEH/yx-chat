@@ -2,7 +2,7 @@
 
 import { RESPONSE_CODE, UserBasicInfo } from '@yx-chat/shared/types';
 import uploadFile from '~/infra/requests/upload-file';
-import { UpdateAvatarRequest } from '~/infra/socket-io/request/update-avatar-request';
+import { UpdateUserInfoRequest } from '~/infra/socket-io/request/update-user-info-request';
 import { SocketIO } from '~/infra/socket-io';
 import { IUser } from './typing';
 
@@ -40,7 +40,7 @@ export default class Self implements IUser {
     const response = await uploadFile(file);
     if (response.status === RESPONSE_CODE.SUCCESS) {
       const { filename } = response.data;
-      const request = new UpdateAvatarRequest({
+      const request = new UpdateUserInfoRequest({
         avatar: filename,
       });
       await SocketIO.instance.fetch<void>(request);

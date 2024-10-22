@@ -6,7 +6,7 @@ export enum AccountRequestType {
   login = 'login', // 登录账号
   loginByToken = 'loginByToken', // 根据token来登录
   register = 'register', // 注册账号
-  updateAvatar = 'updateAvatar', // 更新头像
+  updateUserInfo = 'updateUserInfo', // 更新头像
 }
 
 export interface Environment {
@@ -36,7 +36,8 @@ export interface LoginSuccessResponse extends UserBasicInfo {
   notifications: Notification[];
 }
 
-export interface UpdateAvatarRequestBody {
-  avatar: string;
+export interface UpdateUserInfoRequestBody {
+  username?: string;
+  avatar?: string;
   token: string;
 }

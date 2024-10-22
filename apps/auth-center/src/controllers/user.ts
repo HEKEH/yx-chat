@@ -2,10 +2,10 @@ import {
   LoginByTokenRequestBody,
   LoginRequestBody,
   RegisterRequestBody,
-  UpdateAvatarRequestBody,
+  UpdateUserInfoRequestBody,
 } from '@yx-chat/shared/types';
 import { Context, Next } from 'koa';
-import { login, register, loginByToken, updateAvatar } from '~/services/user';
+import { login, register, loginByToken, updateUserInfo } from '~/services/user';
 
 export default class UserController {
   static async login(ctx: Context, next: Next) {
@@ -23,9 +23,9 @@ export default class UserController {
     ctx.body = await register(data);
     await next();
   }
-  static async updateAvatar(ctx: Context, next: Next) {
-    const data = ctx.getRequestData<UpdateAvatarRequestBody>();
-    await updateAvatar(data);
+  static async updateUserInfo(ctx: Context, next: Next) {
+    const data = ctx.getRequestData<UpdateUserInfoRequestBody>();
+    await updateUserInfo(data);
     ctx.body = ctx.t('Success');
     await next();
   }

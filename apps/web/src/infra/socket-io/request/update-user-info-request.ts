@@ -1,19 +1,19 @@
 import {
   AccountRequestType,
-  UpdateAvatarRequestBody,
+  UpdateUserInfoRequestBody,
 } from '@yx-chat/shared/types';
 import { AbstractSocketRequest } from './type';
 
-type RequestBody = Pick<UpdateAvatarRequestBody, 'avatar'>;
-export class UpdateAvatarRequest extends AbstractSocketRequest<RequestBody> {
+type RequestBody = Omit<UpdateUserInfoRequestBody, 'token'>;
+export class UpdateUserInfoRequest extends AbstractSocketRequest<RequestBody> {
   readonly data: RequestBody;
 
   get type() {
-    return AccountRequestType.updateAvatar;
+    return AccountRequestType.updateUserInfo;
   }
 
   get name() {
-    return 'Update avatar';
+    return 'Update user info';
   }
   constructor(props: RequestBody) {
     super();
