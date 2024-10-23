@@ -39,5 +39,6 @@ export interface LoginSuccessResponse extends UserBasicInfo {
 export interface UpdateUserInfoRequestBody {
   username?: string;
   avatar?: string;
+  password?: string;
   token: string;
 }

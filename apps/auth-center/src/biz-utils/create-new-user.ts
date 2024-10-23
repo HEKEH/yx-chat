@@ -1,6 +1,6 @@
-import { getRandomAvatarPath } from '@yx-chat/shared/utils';
 import { UserModel } from '@yx-chat/database';
-import bcrypt from 'bcryptjs';
+import { getRandomAvatarPath } from '@yx-chat/shared/utils';
+import hashPassword from './hash-password';
 
 export async function createNewUser(userInfo: {
   username: string;
@@ -8,11 +8,10 @@ export async function createNewUser(userInfo: {
   isAdmin?: boolean;
 }) {
   const { password, ...rest } = userInfo;
-  const salt = await bcrypt.genSalt();
-  const hash = await bcrypt.hash(password, salt);
+  const hashedPassword = await hashPassword(password);
   const user = await UserModel.create({
     ...rest,
-    password: hash,
+    password: hashedPassword,
     avatar: getRandomAvatarPath(),
   });
   return user;

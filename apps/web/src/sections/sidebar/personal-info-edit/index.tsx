@@ -5,6 +5,7 @@ import { getGlobalStore } from '~/utils/vue';
 import AvatarEdit from './AvatarEdit';
 import s from './index.module.sass';
 import UsernameEdit from './UsernameEdit';
+import PasswordEdit from './PasswordEdit';
 
 const PersonalInfoEditDialog = defineComponent({
   props: {
@@ -25,6 +26,9 @@ const PersonalInfoEditDialog = defineComponent({
     };
     const updateUsername = async (newUsername: string) => {
       return await globalStore.self.updateUsername(newUsername);
+    };
+    const updatePassword = async (newPassword: string) => {
+      return await globalStore.self.updatePassword(newPassword);
     };
     return () => {
       return (
@@ -50,6 +54,10 @@ const PersonalInfoEditDialog = defineComponent({
               currentUsername={globalStore.self.name}
               updateUsername={updateUsername}
             />
+          </div>
+          <div>
+            <div class={s.title}>{t('修改密码')}</div>
+            <PasswordEdit updatePassword={updatePassword} />
           </div>
         </ElDialog>
       );

@@ -59,6 +59,14 @@ export default class Self implements IUser {
     return { success: true };
   }
 
+  async updatePassword(newPassword: string): Promise<{ success: boolean }> {
+    const request = new UpdateUserInfoRequest({
+      password: newPassword,
+    });
+    await SocketIO.instance.fetch<void>(request);
+    return { success: true };
+  }
+
   clear() {
     this._userInfo = undefined;
   }
