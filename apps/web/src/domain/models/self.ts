@@ -50,6 +50,15 @@ export default class Self implements IUser {
     return { success: false };
   }
 
+  async updateUsername(newUsername: string): Promise<{ success: boolean }> {
+    const request = new UpdateUserInfoRequest({
+      username: newUsername,
+    });
+    await SocketIO.instance.fetch<void>(request);
+    this._userInfo!.username = newUsername;
+    return { success: true };
+  }
+
   clear() {
     this._userInfo = undefined;
   }

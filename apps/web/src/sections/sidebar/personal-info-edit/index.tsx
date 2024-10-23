@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n';
 import { getGlobalStore } from '~/utils/vue';
 import AvatarEdit from './AvatarEdit';
 import s from './index.module.sass';
+import UsernameEdit from './UsernameEdit';
 
 const PersonalInfoEditDialog = defineComponent({
   props: {
@@ -22,6 +23,9 @@ const PersonalInfoEditDialog = defineComponent({
     const updateAvatar = async (file: File) => {
       return await globalStore.self.updateAvatar(file);
     };
+    const updateUsername = async (newUsername: string) => {
+      return await globalStore.self.updateUsername(newUsername);
+    };
     return () => {
       return (
         <ElDialog
@@ -38,6 +42,13 @@ const PersonalInfoEditDialog = defineComponent({
             <AvatarEdit
               url={globalStore.self.avatar}
               updateAvatar={updateAvatar}
+            />
+          </div>
+          <div>
+            <div class={s.title}>{t('修改用户名')}</div>
+            <UsernameEdit
+              currentUsername={globalStore.self.name}
+              updateUsername={updateUsername}
             />
           </div>
         </ElDialog>

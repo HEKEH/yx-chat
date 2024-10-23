@@ -1,5 +1,5 @@
 // Start Generation Here
-import { ElButton } from 'element-plus';
+import { ElButton, ElMessage } from 'element-plus';
 import { defineComponent, PropType, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { Avatar } from '~/components/avatar';
@@ -32,6 +32,7 @@ const AvatarEdit = defineComponent({
         if (currentFile.value) {
           const { success } = await props.updateAvatar(currentFile.value);
           if (success) {
+            ElMessage.success(t('头像修改成功'));
             onCancel();
           }
         }
@@ -62,14 +63,12 @@ const AvatarEdit = defineComponent({
                 <ElButton
                   loading={isSubmitting.value}
                   type="primary"
-                  size="small"
                   onClick={onSubmit}
+                  class={s['save-button']}
                 >
-                  {t('提交修改')}
+                  {t('确认修改')}
                 </ElButton>
-                <ElButton size="small" onClick={onCancel}>
-                  {t('取消')}
-                </ElButton>
+                <ElButton onClick={onCancel}>{t('取消')}</ElButton>
               </div>
             </>
           ) : (

@@ -3,18 +3,18 @@ import { Notification } from './notification';
 import { UserBasicInfo } from './user';
 
 export enum AccountRequestType {
-  login = 'login', // 登录账号
-  loginByToken = 'loginByToken', // 根据token来登录
-  register = 'register', // 注册账号
-  updateUserInfo = 'updateUserInfo', // 更新头像
+  login = 'login', // Login account
+  loginByToken = 'loginByToken', // Login using token
+  register = 'register', // Register account
+  updateUserInfo = 'updateUserInfo', // Update user information such as avatar, username, etc.
 }
 
 export interface Environment {
-  /** 客户端系统 */
+  /** Client operating system */
   os: string;
-  /** 客户端浏览器 */
+  /** Client browser */
   browser: string;
-  /** 客户端环境信息 */
+  /** Client environment information */
   environment: string;
 }
 
