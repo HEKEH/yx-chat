@@ -1,6 +1,5 @@
 import {
   ChatMessage,
-  ChatMessageFormat,
   ChatMessagesRecord,
   HistoryChatMessagesResponse,
   UpdateHistoryResponse,
@@ -14,6 +13,7 @@ import { IContactUnit } from '../contact/typing';
 import Self from '../self';
 import { IUser } from '../typing';
 import { IChatMessageModel, chatMessageFactory } from './chat-message';
+import MessageDraft from './massage-draft';
 
 export interface ChatMessageCollectionContext {
   readonly self: Self;
@@ -28,15 +28,13 @@ export class ChatMessageCollection {
 
   private readonly _context: ChatMessageCollectionContext;
 
-  private _draftMessageType: ChatMessageFormat = ChatMessageFormat.text;
-
   private _list: IChatMessageModel[];
 
   private _unread: number;
 
   private _owner: IContactUnit | undefined;
 
-  private _draft: string | undefined;
+  private _draft = new MessageDraft();
 
   private _isAllHistoryChatMessagesFetched = false;
 
@@ -99,23 +97,19 @@ export class ChatMessageCollection {
     return this._draft;
   }
 
-  setDraft(draft: string) {
-    this._draft = draft;
-  }
-
   async sendChatMessage() {
-    if (!this._draft) {
+    const requestBody = this._draft.requestBody;
+    if (!requestBody) {
       return;
     }
     const request = new SendChatMessageRequest({
       to: this.owner,
-      content: this._draft,
-      type: this._draftMessageType,
+      ...requestBody,
     });
     const response = await SocketIO.instance.fetch<ChatMessage>(request);
     const message = chatMessageFactory.create(response, this._context.self);
     this._list.push(message);
-    this._draft = undefined;
+    this._draft.clear();
     this._sortMessages();
     this.onHasNewChatMessage.next();
   }

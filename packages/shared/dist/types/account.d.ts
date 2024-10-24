@@ -8,14 +8,14 @@ declare enum AccountRequestType {
     login = "login",
     loginByToken = "loginByToken",
     register = "register",
-    updateAvatar = "updateAvatar"
+    updateUserInfo = "updateUserInfo"
 }
 interface Environment {
-    /** 客户端系统 */
+    /** Client operating system */
     os: string;
-    /** 客户端浏览器 */
+    /** Client browser */
     browser: string;
-    /** 客户端环境信息 */
+    /** Client environment information */
     environment: string;
 }
 interface LoginRequestBody extends Environment {
@@ -32,9 +32,11 @@ interface LoginSuccessResponse extends UserBasicInfo {
     groups: Group[];
     notifications: Notification[];
 }
-interface UpdateAvatarRequestBody {
-    avatar: string;
+interface UpdateUserInfoRequestBody {
+    username?: string;
+    avatar?: string;
+    password?: string;
     token: string;
 }
 
-export { AccountRequestType, Environment, LoginByTokenRequestBody, LoginRequestBody, LoginSuccessResponse, RegisterRequestBody, UpdateAvatarRequestBody };
+export { AccountRequestType, Environment, LoginByTokenRequestBody, LoginRequestBody, LoginSuccessResponse, RegisterRequestBody, UpdateUserInfoRequestBody };

@@ -17,20 +17,22 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/types/account.ts
-var account_exports = {};
-__export(account_exports, {
-  AccountRequestType: () => AccountRequestType
+// src/utils/random.ts
+var random_exports = {};
+__export(random_exports, {
+  getRandomId: () => getRandomId
 });
-module.exports = __toCommonJS(account_exports);
-var AccountRequestType = /* @__PURE__ */ ((AccountRequestType2) => {
-  AccountRequestType2["login"] = "login";
-  AccountRequestType2["loginByToken"] = "loginByToken";
-  AccountRequestType2["register"] = "register";
-  AccountRequestType2["updateUserInfo"] = "updateUserInfo";
-  return AccountRequestType2;
-})(AccountRequestType || {});
+module.exports = __toCommonJS(random_exports);
+function getRandomId() {
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  AccountRequestType
+  getRandomId
 });

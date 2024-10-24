@@ -25,6 +25,7 @@ __export(utils_exports, {
   enum2ValueArray: () => enum2ValueArray,
   errorResponse: () => errorResponse,
   getRandomAvatarPath: () => getRandomAvatarPath,
+  getRandomId: () => getRandomId,
   isErrorResponse: () => isErrorResponse,
   regexEscape: () => regexEscape
 });
@@ -94,6 +95,17 @@ function corsMiddleware(allowOrigin) {
     await next();
   };
 }
+
+// src/utils/random.ts
+function getRandomId() {
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   corsMiddleware,
@@ -101,6 +113,7 @@ function corsMiddleware(allowOrigin) {
   enum2ValueArray,
   errorResponse,
   getRandomAvatarPath,
+  getRandomId,
   isErrorResponse,
   regexEscape
 });
