@@ -1,8 +1,9 @@
 import { PropType, defineComponent } from 'vue';
-import MessageDraft from '~/domain/models/chat/massage-draft';
+import MessageDraft, { DraftItem } from '~/domain/models/chat/massage-draft';
 import { DraftContentType } from '~/domain/models/chat/massage-draft/types';
 import s from './index.module.sass';
 import { TextDraftInput } from './TextDraftInput';
+import { ImageDraftInput } from './ImageDraftInput';
 
 export const DraftInput = defineComponent({
   name: 'DraftInput',
@@ -26,6 +27,9 @@ export const DraftInput = defineComponent({
         }
       }
     };
+    const onDelete = (item: DraftItem) => {
+      props.draft.removeItem(item);
+    };
     return () => {
       const { draft } = props;
       return (
@@ -40,8 +44,16 @@ export const DraftInput = defineComponent({
           {draft.items.map(item => {
             if (item.type === DraftContentType.Text) {
               return <TextDraftInput key={item.key} item={item} />;
+            } else if (item.type === DraftContentType.Image) {
+              return (
+                <ImageDraftInput
+                  key={item.key}
+                  item={item}
+                  onDelete={onDelete}
+                />
+              );
             }
-            return <div key={item.key}>TODO: ImageDraftInput</div>;
+            return null;
           })}
         </div>
       );

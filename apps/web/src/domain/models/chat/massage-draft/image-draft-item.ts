@@ -13,7 +13,7 @@ export class ImageDraftItem {
     return this._content;
   }
   constructor(file: File) {
-    this._content = file;
+    this.setContent(file);
   }
   setContent(image: File) {
     this._content = image;

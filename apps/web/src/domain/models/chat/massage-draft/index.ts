@@ -3,7 +3,7 @@ import { ImageDraftItem } from './image-draft-item';
 import { TextDraftItem } from './text-draft-item';
 import { DraftContentType } from './types';
 
-type DraftItem = TextDraftItem | ImageDraftItem;
+export type DraftItem = TextDraftItem | ImageDraftItem;
 
 export default class MessageDraft {
   private _items: DraftItem[] = [new TextDraftItem()];
@@ -48,6 +48,23 @@ export default class MessageDraft {
       type: this._contentType,
     };
   }
+
+  /** if the last item is text, combine it with the previous text item */
+  private _removeAbundantTextItem() {
+    for (let i = this._items.length - 1; i >= 1; i--) {
+      const currentItem = this._items[i];
+      const previousItem = this._items[i - 1];
+      if (
+        currentItem.type === DraftContentType.Text &&
+        previousItem.type === DraftContentType.Text
+      ) {
+        const content = previousItem.content + '\n' + currentItem.content;
+        previousItem.setContent(content);
+        this._items.splice(i, 1);
+      }
+    }
+  }
+
   addImage(file: File) {
     if (this._items[this._items.length - 1].type !== DraftContentType.Text) {
       // insert a text item before image
@@ -56,5 +73,10 @@ export default class MessageDraft {
     this._items.push(new ImageDraftItem(file));
     // insert a text item after image
     this._items.push(new TextDraftItem());
+  }
+
+  removeItem(item: DraftItem) {
+    this._items = this._items.filter(i => i !== item);
+    this._removeAbundantTextItem();
   }
 }

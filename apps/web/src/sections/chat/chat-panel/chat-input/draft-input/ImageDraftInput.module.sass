@@ -1,0 +1,26 @@
+.image-wrapper
+  position: relative
+  width: 160px
+  padding: 0 5px
+  &:hover
+    .delete-icon
+      visibility: visible
+  .image
+    width: 100%
+    height: auto
+  .delete-icon
+    position: absolute
+    padding: 3px
+    border-radius: 50%
+    background-color: #606266
+    top: 0
+    right: 5px
+    display: flex
+    visibility: hidden
+    align-items: center
+    justify-content: center
+    color: rgba(255, 255, 255, 0.8)
+    cursor: pointer
+    transition: background-color 0.3s
+    &:hover
+      color: #FFFFFF

@@ -1,4 +1,4 @@
-export function getRandomId() {
+export function getRandomId(length = 20) {
   const characters =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let result = '';

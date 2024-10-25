@@ -1,6 +1,7 @@
 import { ElInput } from 'element-plus';
 import {
   PropType,
+  computed,
   defineComponent,
   onBeforeUnmount,
   onMounted,
@@ -19,23 +20,32 @@ export const TextDraftInput = defineComponent({
   },
   setup(props) {
     const inputRef = ref<HTMLInputElement | null>(null);
+    const textareaRef = computed(() => (inputRef.value as any)?.textarea);
     const focus = () => {
-      const input = inputRef.value;
-      if (input) {
-        input.focus();
-        // Position cursor at the end of the input
-        const textarea = (input as any).textarea;
-        const length = textarea?.value?.length;
-        if (length) {
-          textarea.setSelectionRange(length, length);
-        }
+      inputRef.value?.focus();
+      // Position cursor at the end of the input
+      const textarea = textareaRef.value;
+      const length = textarea?.value?.length;
+      if (length) {
+        textarea.setSelectionRange(length, length);
       }
     };
     const subscription = props.item.focusSubject.subscribe(focus);
-    onMounted(focus);
+    onMounted(() => {
+      focus();
+      textareaRef.value?.addEventListener('paste', handlePaste);
+    });
     onBeforeUnmount(() => {
       subscription.unsubscribe();
+      textareaRef.value?.removeEventListener('paste', handlePaste);
     });
+    const handlePaste = (e: ClipboardEvent) => {
+      const text = e.clipboardData?.getData('text/plain');
+      if (!text) {
+        // Prevent paste file name
+        e.preventDefault();
+      }
+    };
     return () => {
       const { item } = props;
       return (
