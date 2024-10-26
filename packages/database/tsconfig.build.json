@@ -3,8 +3,7 @@
   "compilerOptions": {
     "paths": {
       "~/*": ["./src/*"],
-      "@/*": ["./*"],
-      "@yx-chat/shared/*": ["../../packages/shared/src/*"]
+      "@/*": ["./*"]
     }
   },
   "include": ["./src"]

@@ -1,9 +1,8 @@
-import {
-  ChatMessageFormat,
-  ChatMessageFormatList,
-} from '@yx-chat/shared/types';
+import { ChatMessageFormatList, ChatMessageItem } from '@yx-chat/shared/types';
 import { Document, Schema, model } from 'mongoose';
 import { UserDocument } from './user';
+
+const MAX_CONTENT_LENGTH = 2048;
 
 const ChatMessageSchema = new Schema({
   createTime: { type: Date, default: Date.now },
@@ -16,14 +15,36 @@ const ChatMessageSchema = new Schema({
     type: String,
     index: true,
   },
-  type: {
-    type: String,
-    enum: ChatMessageFormatList,
-    default: ChatMessageFormat.text,
-  },
-  content: {
-    type: String,
-    default: '',
+  /** ChatItems */
+  items: {
+    type: [
+      {
+        type: {
+          type: String,
+          enum: ChatMessageFormatList,
+          required: true,
+        },
+        data: { type: String, required: true },
+      },
+    ],
+    default: [],
+    validate: [
+      {
+        validator: function (v: ChatMessageItem[]) {
+          let length = 0;
+          for (const item of v) {
+            length += item.data.length;
+            if (length > MAX_CONTENT_LENGTH) {
+              return false;
+            }
+          }
+          return true;
+        },
+        message: () =>
+          `Content exceeds maximum length of ${MAX_CONTENT_LENGTH}`,
+      },
+    ],
+    required: true,
   },
   deleted: {
     type: Boolean,
@@ -36,10 +57,8 @@ export interface ChatMessageDocument extends Document {
   from: string;
   /** 接受者, 发送给群时为群_id, 发送给个人时为俩人的_id按大小序拼接后值 */
   to: UserDocument | string;
-  /** 消息类型 */
-  type: ChatMessageFormat;
   /** 内容, 某些消息类型会存成JSON */
-  content: string;
+  items: ChatMessageItem[];
   /** 创建时间 */
   createTime: Date;
   /** Has it been deleted */

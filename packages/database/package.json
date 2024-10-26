@@ -17,7 +17,7 @@
     }
   },
   "scripts": {
-    "build": "rm -rf dist && tsup ./src --format cjs,esm --dts",
+    "build": "rm -rf dist && tsup --config tsconfig.build.json ./src --format cjs,esm --dts",
     "lint": "eslint",
     "preinstall": "npx only-allow pnpm"
   },

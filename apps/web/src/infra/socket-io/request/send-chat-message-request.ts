@@ -1,5 +1,5 @@
 import {
-  ChatMessageFormat,
+  ChatMessageItem,
   ChatMessageRequestType,
   SendChatMessageBody,
 } from '@yx-chat/shared/types';
@@ -16,16 +16,11 @@ export class SendChatMessageRequest extends AbstractSocketRequest<SendChatMessag
   get name() {
     return 'Send chat message';
   }
-  constructor(props: {
-    content: string;
-    to: IContactUnit;
-    type: ChatMessageFormat;
-  }) {
+  constructor(props: { to: IContactUnit; items: ChatMessageItem[] }) {
     super();
     this.data = {
-      content: props.content,
       to: props.to.messageOwnerKey,
-      type: props.type,
+      items: props.items,
     };
   }
 }

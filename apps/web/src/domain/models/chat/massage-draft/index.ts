@@ -1,7 +1,6 @@
-import { ChatMessageFormat } from '@yx-chat/shared/types';
+import { ChatMessageFormat, ChatMessageItem } from '@yx-chat/shared/types';
 import { ImageDraftItem } from './image-draft-item';
 import { TextDraftItem } from './text-draft-item';
-import { DraftContentType } from './types';
 
 export type DraftItem = TextDraftItem | ImageDraftItem;
 
@@ -24,29 +23,10 @@ export default class MessageDraft {
     item.onFocus();
   }
 
-  async save() {
-    await Promise.all(this._items.map(item => item.save()));
-  }
-
-  private _contentType: ChatMessageFormat = ChatMessageFormat.text;
-
-  private _content = '';
-
-  get content() {
-    return this._content;
-  }
-  setContent(draft: string) {
-    this._content = draft;
-  }
-
-  get requestBody() {
-    if (!this._content) {
-      return;
-    }
-    return {
-      content: this._content,
-      type: this._contentType,
-    };
+  async generateChatItems(): Promise<ChatMessageItem[]> {
+    return (
+      await Promise.all(this._items.map(item => item.generateChatItem()))
+    ).filter(item => item) as ChatMessageItem[];
   }
 
   /** if the last item is text, combine it with the previous text item */
@@ -55,8 +35,8 @@ export default class MessageDraft {
       const currentItem = this._items[i];
       const previousItem = this._items[i - 1];
       if (
-        currentItem.type === DraftContentType.Text &&
-        previousItem.type === DraftContentType.Text
+        currentItem.type === ChatMessageFormat.text &&
+        previousItem.type === ChatMessageFormat.text
       ) {
         const content = previousItem.content + '\n' + currentItem.content;
         previousItem.setContent(content);
@@ -66,7 +46,7 @@ export default class MessageDraft {
   }
 
   addImage(file: File) {
-    if (this._items[this._items.length - 1].type !== DraftContentType.Text) {
+    if (this._items[this._items.length - 1].type !== ChatMessageFormat.text) {
       // insert a text item before image
       this._items.push(new TextDraftItem());
     }

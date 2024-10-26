@@ -12,7 +12,7 @@ import { UpdateHistoryRequest } from '~/infra/socket-io/request/update-history-r
 import { IContactUnit } from '../contact/typing';
 import Self from '../self';
 import { IUser } from '../typing';
-import { IChatMessageModel, chatMessageFactory } from './chat-message';
+import { ChatMessageModel, chatMessageFactory } from './chat-message';
 import MessageDraft from './massage-draft';
 
 export interface ChatMessageCollectionContext {
@@ -28,7 +28,7 @@ export class ChatMessageCollection {
 
   private readonly _context: ChatMessageCollectionContext;
 
-  private _list: IChatMessageModel[];
+  private _list: ChatMessageModel[];
 
   private _unread: number;
 
@@ -98,13 +98,13 @@ export class ChatMessageCollection {
   }
 
   async sendChatMessage() {
-    const requestBody = this._draft.requestBody;
-    if (!requestBody) {
+    const chatItems = await this._draft.generateChatItems();
+    if (!chatItems.length) {
       return;
     }
     const request = new SendChatMessageRequest({
       to: this.owner,
-      ...requestBody,
+      items: chatItems,
     });
     const response = await SocketIO.instance.fetch<ChatMessage>(request);
     const message = chatMessageFactory.create(response, this._context.self);
@@ -126,7 +126,7 @@ export class ChatMessageCollection {
     }
   }
 
-  private _createChatMessageModel(message: ChatMessage): IChatMessageModel {
+  private _createChatMessageModel(message: ChatMessage): ChatMessageModel {
     const fromId = message.from.id;
     return chatMessageFactory.create(message, this._context.userMap[fromId]);
   }
@@ -156,7 +156,7 @@ export class ChatMessageCollection {
 
   private constructor(props: {
     id: string;
-    chatMessages: IChatMessageModel[];
+    chatMessages: ChatMessageModel[];
     context: ChatMessageCollectionContext;
     unread: number;
     owner?: IContactUnit;

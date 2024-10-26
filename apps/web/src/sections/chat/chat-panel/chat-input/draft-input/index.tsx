@@ -1,6 +1,6 @@
 import { PropType, defineComponent } from 'vue';
 import MessageDraft, { DraftItem } from '~/domain/models/chat/massage-draft';
-import { DraftContentType } from '~/domain/models/chat/massage-draft/types';
+import { ChatMessageFormat } from '@yx-chat/shared/types';
 import s from './index.module.sass';
 import { TextDraftInput } from './TextDraftInput';
 import { ImageDraftInput } from './ImageDraftInput';
@@ -42,9 +42,9 @@ export const DraftInput = defineComponent({
           }}
         >
           {draft.items.map(item => {
-            if (item.type === DraftContentType.Text) {
+            if (item.type === ChatMessageFormat.text) {
               return <TextDraftInput key={item.key} item={item} />;
-            } else if (item.type === DraftContentType.Image) {
+            } else if (item.type === ChatMessageFormat.image) {
               return (
                 <ImageDraftInput
                   key={item.key}

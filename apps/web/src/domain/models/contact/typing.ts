@@ -1,4 +1,4 @@
-import { IChatMessageModel } from '../chat/chat-message';
+import { ChatMessageModel } from '../chat/chat-message';
 import { ChatMessageCollection } from '../chat/chat-message-collection';
 import { GeneralTime } from '../common/time';
 import { IUser } from '../typing';
@@ -8,7 +8,7 @@ export interface IContactUnit extends IUser {
   setChatMessageCollection(chatMessageCollection: ChatMessageCollection): void;
   /** For friend, the key is selfId + friend's id. for group, it is the group id */
   readonly messageOwnerKey: string;
-  readonly latestMessage: IChatMessageModel | undefined;
+  readonly latestMessage: ChatMessageModel | undefined;
   readonly latestMessageBrief: string | undefined;
   /** Time for display, message time or create time */
   readonly displayTime: GeneralTime;

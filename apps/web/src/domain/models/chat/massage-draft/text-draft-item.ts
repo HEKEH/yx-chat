@@ -1,15 +1,12 @@
 import { Subject } from 'rxjs';
 import { getRandomId } from '@yx-chat/shared/utils';
-import { DraftContentType } from './types';
+import { ChatMessageFormat, ChatMessageItem } from '@yx-chat/shared/types';
 
 export class TextDraftItem {
   readonly key = getRandomId();
   readonly focusSubject = new Subject<void>();
-  readonly type = DraftContentType.Text;
+  readonly type = ChatMessageFormat.text;
   private _content = '';
-  get shouldIgnore() {
-    return !this._content.trim();
-  }
   get content() {
     return this._content;
   }
@@ -21,5 +18,14 @@ export class TextDraftItem {
   }
   async save() {
     // do nothing
+  }
+  generateChatItem(): ChatMessageItem | undefined {
+    if (!this._content) {
+      return;
+    }
+    return {
+      data: this._content,
+      type: this.type,
+    };
   }
 }

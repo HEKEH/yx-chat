@@ -12,16 +12,17 @@ export enum ChatMessageRequestType {
 export enum ChatMessageFormat {
   // text message
   text = 'text',
+  image = 'image',
+  file = 'file',
 }
 
 export const ChatMessageFormatList: ChatMessageFormat[] =
   enum2ValueArray(ChatMessageFormat);
 
 export type ChatMessage = {
-  content: string;
+  items: ChatMessageItem[];
   createTime: string;
   deleted: boolean;
-  type: ChatMessageFormat;
   id: string;
   from: {
     id: string; // user id
@@ -48,10 +49,14 @@ export type HistoryChatMessagesRequestBody = {
 
 export type HistoryChatMessagesResponse = ChatMessage[];
 
-export type SendChatMessageBody = {
-  content: string;
+export type ChatMessageItem = {
+  data: string;
   type: ChatMessageFormat;
+};
+
+export type SendChatMessageBody = {
   to: string;
+  items: ChatMessageItem[];
 };
 
 export type UpdateHistoryRequestBody = {

@@ -19,11 +19,13 @@ let sendChatMessage: EventHandler = async (
   context: EventHandlerContext,
   data: SendChatMessageBody,
 ): Promise<ChatMessage> => {
-  let { content } = data;
-  assert(content.length <= 2048, 'Message content is too long');
-  content = xss(content);
+  assert(data.items.length, 'Message cannot be empty');
+  const items = data.items.map(item => ({
+    type: item.type,
+    data: xss(item.data),
+  }));
 
-  const { type, to } = data;
+  const { to } = data;
   const userId = context.userId!;
   const user = context.userInfo!;
   const isGroup = isIdValid(to); // If to is valid id，then the target is group, else is friend; TODO nasty design
@@ -38,15 +40,13 @@ let sendChatMessage: EventHandler = async (
   const messageData = await ChatMessageModel.create({
     from: userId,
     to,
-    type,
-    content,
+    items,
   });
   const chatMessage: ChatMessage = {
     id: messageData.id!,
-    content,
+    items,
     createTime: messageData.createTime.toString(),
     deleted: false,
-    type,
     from: {
       id: userId,
       username: user.username,

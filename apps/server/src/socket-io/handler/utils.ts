@@ -96,7 +96,7 @@ export async function getMessagesByContactKey(
     { to: contactKey },
     {
       type: 1,
-      content: 1,
+      items: 1,
       from: 1,
       createTime: 1,
       deleted: 1,
@@ -111,10 +111,9 @@ export async function getMessagesByContactKey(
     .map(item => {
       const from = item.from as unknown as UserDocument;
       return {
-        content: item.content,
+        items: item.items,
         createTime: item.createTime.toString(),
         deleted: item.deleted,
-        type: item.type,
         id: item.id,
         from: {
           id: from.id,

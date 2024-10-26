@@ -1,4 +1,8 @@
-import { ChatMessage, ChatMessageFormat } from '@yx-chat/shared/types';
+import {
+  ChatMessage,
+  ChatMessageFormat,
+  ChatMessageItem,
+} from '@yx-chat/shared/types';
 import { GeneralTime } from '../common/time';
 
 interface MessageFrom {
@@ -6,18 +10,7 @@ interface MessageFrom {
   readonly name: string;
   readonly avatar: string;
 }
-
-export interface IChatMessageModel {
-  readonly id: string;
-  readonly deleted: boolean;
-  readonly createTime: GeneralTime;
-  readonly type: ChatMessageFormat;
-  readonly content: string;
-  readonly brief: string;
-  readonly from: MessageFrom;
-}
-
-abstract class AbstractChatMessageModel implements IChatMessageModel {
+export class ChatMessageModel {
   protected _deleted: boolean;
 
   readonly from: MessageFrom;
@@ -30,27 +23,34 @@ abstract class AbstractChatMessageModel implements IChatMessageModel {
 
   readonly id: string;
 
-  readonly content: string;
+  readonly items: ChatMessageItem[];
 
   constructor(from: MessageFrom, message: ChatMessage) {
     this.from = from;
     this.id = message.id;
     this._deleted = message.deleted;
-    this.content = message.content;
+    this.items = message.items;
     this.createTime = new GeneralTime(message.createTime);
   }
 
-  abstract readonly type: ChatMessageFormat;
-  abstract readonly brief: string;
-}
-
-class TextChatMessageModel extends AbstractChatMessageModel {
-  readonly type = ChatMessageFormat.text;
-  constructor(from: MessageFrom, message: ChatMessage) {
-    super(from, message);
-  }
   get brief() {
-    return this.content;
+    const briefs = this.items.map(item => {
+      switch (item.type) {
+        case ChatMessageFormat.text:
+          return item.data;
+        case ChatMessageFormat.image:
+          // TODO
+          return '[图片]';
+        case ChatMessageFormat.file:
+          // TODO
+          return '[文件]';
+      }
+    });
+    const brief = briefs.join(' ');
+    if (brief.length > 10) {
+      return brief.slice(0, 10) + '...';
+    }
+    return brief;
   }
 }
 
@@ -58,16 +58,14 @@ export const chatMessageFactory = {
   create(
     message: ChatMessage,
     messageFrom: MessageFrom | undefined,
-  ): IChatMessageModel {
+  ): ChatMessageModel {
     // if not designate, just like a strange group member, then fetch info from message itself
     const from = messageFrom || {
       id: message.from.id,
       name: message.from.username,
       avatar: message.from.avatar,
     };
-    switch (message.type) {
-      case ChatMessageFormat.text:
-        return new TextChatMessageModel(from, message);
-    }
+
+    return new ChatMessageModel(from, message);
   },
 };

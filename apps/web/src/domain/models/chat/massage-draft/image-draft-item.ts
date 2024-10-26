@@ -1,14 +1,13 @@
+import { ChatMessageFormat, ChatMessageItem } from '@yx-chat/shared/types';
 import { getRandomId } from '@yx-chat/shared/utils';
-import { DraftContentType } from './types';
 
 export class ImageDraftItem {
   readonly key = getRandomId();
-  readonly type = DraftContentType.Image;
+  readonly type = ChatMessageFormat.image;
   private _content: File | null = null;
 
-  get shouldIgnore() {
-    return !this._content;
-  }
+  private _uploadedFilename = '';
+
   get content() {
     return this._content;
   }
@@ -17,9 +16,25 @@ export class ImageDraftItem {
   }
   setContent(image: File) {
     this._content = image;
+    this._uploadedFilename = '';
   }
 
-  async save() {
+  async generateChatItem(): Promise<ChatMessageItem | undefined> {
+    if (!this._content) {
+      return;
+    }
+    if (!this._uploadedFilename) {
+      await this._save();
+      // TODO
+      return;
+    }
+    return {
+      data: this._uploadedFilename,
+      type: this.type,
+    };
+  }
+
+  private async _save() {
     // TODO: upload image
   }
 }

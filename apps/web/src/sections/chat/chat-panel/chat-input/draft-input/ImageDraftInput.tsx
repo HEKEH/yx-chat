@@ -1,5 +1,11 @@
-import { PropType, defineComponent, ref, watchEffect } from 'vue';
 import { ElImage } from 'element-plus';
+import {
+  PropType,
+  defineComponent,
+  onBeforeUnmount,
+  ref,
+  watchEffect,
+} from 'vue';
 import { ImageDraftItem } from '~/domain/models/chat/massage-draft/image-draft-item';
 import s from './ImageDraftInput.module.sass';
 import Close from '@/assets/icons/close.svg';
@@ -19,24 +25,38 @@ export const ImageDraftInput = defineComponent({
     delete: (item: ImageDraftItem) => typeof item === 'object',
   },
   setup(props, { emit }) {
-    const base64 = ref<string | null>(null);
+    const objectUrl = ref<string | null>(null);
 
     watchEffect(() => {
       const file = props.item.content;
       if (file) {
-        base64.value = URL.createObjectURL(file);
+        // Revoke the previous object URL if it exists
+        if (objectUrl.value) {
+          URL.revokeObjectURL(objectUrl.value);
+        }
+        objectUrl.value = URL.createObjectURL(file);
       } else {
-        base64.value = null;
+        if (objectUrl.value) {
+          URL.revokeObjectURL(objectUrl.value);
+        }
+        objectUrl.value = null;
+      }
+    });
+
+    // Clean up the object URL when the component is unmounted
+    onBeforeUnmount(() => {
+      if (objectUrl.value) {
+        URL.revokeObjectURL(objectUrl.value);
       }
     });
 
     return () => {
-      return base64.value ? (
+      return objectUrl.value ? (
         <div class={s['image-wrapper']} onClick={e => e.stopPropagation()}>
           <ElImage
             class={s.image}
-            src={base64.value}
-            preview-src-list={[base64.value]}
+            src={objectUrl.value}
+            preview-src-list={[objectUrl.value]}
             fit="cover"
             hide-on-click-modal
           />
