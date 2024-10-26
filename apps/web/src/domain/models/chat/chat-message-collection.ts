@@ -99,7 +99,7 @@ export class ChatMessageCollection {
 
   async sendChatMessage() {
     const chatItems = await this._draft.generateChatItems();
-    if (!chatItems.length) {
+    if (!chatItems?.length) {
       return;
     }
     const request = new SendChatMessageRequest({

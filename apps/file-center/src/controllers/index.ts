@@ -1,20 +1,32 @@
+import multer from '@koa/multer';
 import {
   RESPONSE_CODE,
+  UploadFilesSuccessResponse,
   UploadFileSuccessResponse,
 } from '@yx-chat/shared/types';
 import { Context, Next } from 'koa';
 import getFile from '~/services/file';
-import upload from '~/services/upload';
+import { uploadSingleFile, uploadFiles } from '~/services/upload';
 import { getContentTypeByFilename } from '~/utils/content-type';
 
 export default class Controller {
   static async upload(ctx: Context, next: Next) {
-    const filename = await upload(ctx.file);
+    const filename = await uploadSingleFile(ctx.file);
     ctx.body = {
       status: RESPONSE_CODE.SUCCESS,
       data: {
         filename,
       } as UploadFileSuccessResponse,
+    };
+    await next();
+  }
+  static async uploadFiles(ctx: Context, next: Next) {
+    const filenames = await uploadFiles(ctx.files as multer.File[]);
+    ctx.body = {
+      status: RESPONSE_CODE.SUCCESS,
+      data: {
+        filenames,
+      } as UploadFilesSuccessResponse,
     };
     await next();
   }

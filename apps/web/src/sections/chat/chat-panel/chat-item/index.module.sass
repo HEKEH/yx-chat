@@ -44,7 +44,27 @@
           border-width: 7px 3px
 
 $left-background: rgba(255, 255, 255, 0.8)
-$right-background: var(--primary-color-10)
+$right-background: var(--primary-color-7)
+$image-max-width: 200px
+$image-max-height: 300px
+
+.content
+  display: flex
+  flex-direction: column
+  row-gap: 4px
+  .text-message
+    white-space: pre-wrap
+    line-height: 1.2
+  .image-message
+    overflow: hidden
+    height: fit-content
+    .image
+      vertical-align: bottom
+      img
+        max-width: $image-max-width
+        max-height: $image-max-height
+        width: auto
+        object-fit: contain
 
 .left
   flex-direction: row
@@ -59,8 +79,9 @@ $right-background: var(--primary-color-10)
       .message
         .content
           background: $left-background
-          color: #333
           border-top-left-radius: 0px
+          .text-message
+            color: #333
         .arrow
           border-color: $left-background $left-background transparent transparent
           left: 6px
@@ -78,13 +99,9 @@ $right-background: var(--primary-color-10)
       .message
         .content
           background: $right-background
-          color: var(--primary-text-color-10)
           border-top-right-radius: 0px
-          display: flex
-          flex-direction: column
-          column-gap: 4px
           .text-message
-            width: 100%
+            color: var(--primary-text-color-10)
         .arrow
           border-color: $right-background transparent transparent $right-background
           right: 6px

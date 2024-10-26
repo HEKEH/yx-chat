@@ -3,6 +3,8 @@ import { Avatar } from '~/components/avatar';
 import { ChatMessageModel } from '~/domain/models/chat/chat-message';
 import Self from '~/domain/models/self';
 import { ChatMessageFormat, ChatMessageItem } from '@yx-chat/shared/types';
+import { getFileUrl } from '~/utils/get-file-url';
+import { ElImage } from 'element-plus';
 import s from './index.module.sass';
 
 const MessageBody = defineComponent({
@@ -28,8 +30,18 @@ const MessageBody = defineComponent({
                 );
               }
               if (item.type === ChatMessageFormat.image) {
-                // TODO
-                return null;
+                const url = getFileUrl(item.data);
+                return (
+                  <div key={index} class={s['image-message']}>
+                    <ElImage
+                      class={s.image}
+                      src={url}
+                      preview-src-list={[url]}
+                      fit="cover"
+                      hide-on-click-modal
+                    />
+                  </div>
+                );
               }
               if (item.type === ChatMessageFormat.file) {
                 return null;

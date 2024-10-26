@@ -6,6 +6,7 @@ import multer from '@koa/multer';
 import config from '~/config';
 import { BusinessError } from '~/utils/error';
 import { compressFile } from '~/utils/compress';
+import { getRandomId } from '@yx-chat/shared/utils';
 
 const TEMP_FILE_PREFIX = 'yx';
 
@@ -17,10 +18,7 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     logger.info('[upload file]', file.originalname);
     // Temporarily use the original filename, we'll replace it later
-    cb(
-      null,
-      `${TEMP_FILE_PREFIX}_${new Date().valueOf()}_${file.originalname}`,
-    );
+    cb(null, `${TEMP_FILE_PREFIX}_${getRandomId(10)}_${file.originalname}`);
   },
 });
 
@@ -34,7 +32,7 @@ async function generateFileHash(fileBuffer: Buffer) {
 }
 
 /** @returns filename */
-const upload = async (
+export const uploadSingleFile = async (
   file: multer.File | undefined,
   shouldCompress = config.fileCompression,
 ): Promise<string> => {
@@ -66,4 +64,6 @@ const upload = async (
   return newFilename;
 };
 
-export default upload;
+export const uploadFiles = async (files: multer.File[]) => {
+  return await Promise.all(files.map(file => uploadSingleFile(file)));
+};

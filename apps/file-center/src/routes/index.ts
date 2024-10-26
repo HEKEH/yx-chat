@@ -13,6 +13,14 @@ router.post(
   Controller.upload,
 );
 
+// files upload
+router.post(
+  '/upload-files',
+  tokenAuthMiddleware,
+  uploadMulter.array('files'),
+  Controller.uploadFiles,
+);
+
 router.get('/file/:filename', tokenAuthMiddleware, Controller.getFile);
 
 export default router;

@@ -16,9 +16,6 @@ export class TextDraftItem {
   onFocus() {
     this.focusSubject.next();
   }
-  async save() {
-    // do nothing
-  }
   generateChatItem(): ChatMessageItem | undefined {
     if (!this._content) {
       return;

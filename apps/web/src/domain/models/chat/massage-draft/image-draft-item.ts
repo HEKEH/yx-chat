@@ -6,7 +6,7 @@ export class ImageDraftItem {
   readonly type = ChatMessageFormat.image;
   private _content: File | null = null;
 
-  private _uploadedFilename = '';
+  uploadedFilename = '';
 
   get content() {
     return this._content;
@@ -16,25 +16,16 @@ export class ImageDraftItem {
   }
   setContent(image: File) {
     this._content = image;
-    this._uploadedFilename = '';
+    this.uploadedFilename = '';
   }
 
   async generateChatItem(): Promise<ChatMessageItem | undefined> {
     if (!this._content) {
       return;
     }
-    if (!this._uploadedFilename) {
-      await this._save();
-      // TODO
-      return;
-    }
     return {
-      data: this._uploadedFilename,
+      data: this.uploadedFilename,
       type: this.type,
     };
-  }
-
-  private async _save() {
-    // TODO: upload image
   }
 }
