@@ -35,4 +35,8 @@ export default {
   uploadDir,
   authCenterUrl,
   fileCompression: env.FILE_COMPRESSION === 'true',
+  /** size is in MB */
+  uploadFileSizeLimit: env.PUBLIC_UPLOAD_FILE_SIZE_LIMIT
+    ? parseInt(env.PUBLIC_UPLOAD_FILE_SIZE_LIMIT, 10)
+    : undefined,
 };

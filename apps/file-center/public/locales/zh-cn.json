@@ -1,3 +1,4 @@
 {
-  "File uploaded successfully": "文件上传成功"
+  "File uploaded successfully": "文件上传成功",
+  "File size limit is {{limit}} MB": "文件大小限制为 {{limit}} MB"
 }

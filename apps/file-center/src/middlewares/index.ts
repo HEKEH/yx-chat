@@ -72,6 +72,19 @@ export const requestWrapMiddleware = async (ctx: Context, next: Next) => {
       logger.error(`[logId: ${ctx.logId}] [Business Error]`, error);
       return;
     }
+    if ((error as Error)?.name === 'MulterError') {
+      // size limit error handle
+      if ((error as any).code === 'LIMIT_FILE_SIZE') {
+        ctx.status = 200;
+        ctx.body = {
+          status: RESPONSE_CODE.BIZ_ERROR,
+          message: ctx.t('File size limit is {{limit}} MB', {
+            limit: config.uploadFileSizeLimit,
+          }),
+        };
+        return;
+      }
+    }
     ctx.status = 500;
     ctx.body = {
       status: RESPONSE_CODE.SERVER_ERROR,
@@ -107,6 +120,7 @@ export const tokenAuthMiddleware = async (ctx: Context, next: Next) => {
   if (authTokenResponse.status === RESPONSE_CODE.SUCCESS) {
     await next();
   } else {
+    ctx.status = 200;
     ctx.body = authTokenResponse;
     return;
   }

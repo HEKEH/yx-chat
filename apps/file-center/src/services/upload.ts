@@ -22,7 +22,14 @@ const storage = multer.diskStorage({
   },
 });
 
-export const uploadMulter = multer({ storage });
+export const uploadMulter = multer({
+  storage,
+  limits: {
+    fileSize: config.uploadFileSizeLimit
+      ? config.uploadFileSizeLimit * 1024 * 1024
+      : undefined,
+  },
+});
 
 // Generate file hash
 async function generateFileHash(fileBuffer: Buffer) {

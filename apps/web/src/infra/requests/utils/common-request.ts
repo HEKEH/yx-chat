@@ -1,6 +1,8 @@
 import { RESPONSE_CODE } from '@yx-chat/shared/types';
 import axios, { AxiosRequestConfig } from 'axios';
 import { ElNotification } from 'element-plus';
+import { LANGUAGE_HEADER_KEY } from '@yx-chat/shared/constants';
+import i18n from '~/infra/i18n';
 import { ResponseDataWrapper } from '../types';
 
 interface CommonRequestParams<RequestParams> {
@@ -29,11 +31,10 @@ const commonRequest = async <
     method,
     baseURL,
     url: path,
-    headers,
-    // {
-    //   ...headers,
-    //   'Access-Control-Allow-Origin': '*', // 添加跨域头
-    // },
+    headers: {
+      [LANGUAGE_HEADER_KEY]: i18n.global.locale.value,
+      ...headers,
+    },
   };
   if (params) {
     if (method === 'get') {

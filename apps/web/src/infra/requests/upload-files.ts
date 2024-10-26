@@ -1,7 +1,4 @@
-import {
-  LANGUAGE_HEADER_KEY,
-  TOKEN_HEADER_KEY,
-} from '@yx-chat/shared/constants';
+import { TOKEN_HEADER_KEY } from '@yx-chat/shared/constants';
 import { UploadFilesSuccessResponse } from '@yx-chat/shared/types';
 import config from '~/config';
 import getToken from '../local-storage-store/get-token';
@@ -18,7 +15,6 @@ const uploadFiles = async (files: File[]) => {
     method: 'post',
     path: '/upload-files',
     headers: {
-      [LANGUAGE_HEADER_KEY]: config.defaultLanguage,
       [TOKEN_HEADER_KEY]: getToken(),
     },
     data: formData,

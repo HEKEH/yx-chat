@@ -15,6 +15,10 @@ export default function initApp() {
   const app = new Koa();
   // app.proxy = true;
 
+  // app.use(async (ctx, next) => {
+  //   await next();
+  //   debugger;
+  // });
   // serve public static files
   app.use(
     koaStatic(path.join(__dirname, '../public/assets'), {
@@ -24,7 +28,6 @@ export default function initApp() {
   );
   app.use(corsMiddleware(config.allowOrigin));
   app.use(bodyParser());
-
   app.use(addContextPropsMiddleware);
   app.use(requestWrapMiddleware);
   // use router
