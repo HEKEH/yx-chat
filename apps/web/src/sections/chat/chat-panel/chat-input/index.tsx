@@ -1,5 +1,7 @@
 import { PropType, defineComponent } from 'vue';
 import { ChatMessageCollection } from '~/domain/models/chat/chat-message-collection';
+import { useAsyncOperation } from '~/hooks/use-async-operation';
+import Loading from '~/components/Loading';
 import s from './index.module.sass';
 import { DraftInput } from './draft-input';
 import PaperAirplane from '@/assets/icons/paper-airplane.svg';
@@ -13,23 +15,31 @@ export const ChatInputContainer = defineComponent({
     },
   },
   setup(props) {
+    const { isProcessing: isSending, execute: sendMessage } = useAsyncOperation(
+      async () => {
+        await props.chatMessageCollection?.sendChatMessage();
+      },
+    );
     return () => {
       const { chatMessageCollection } = props;
       if (!chatMessageCollection) {
         return null;
       }
-      const sendMessage = async () => {
-        await chatMessageCollection.sendChatMessage();
-      };
+      const iconSize = 28;
       return (
         <div class={s['chat-input-container']}>
           <DraftInput draft={chatMessageCollection.draft} />
           <div class={s.actions}>
-            <PaperAirplane
-              class={s.icon}
-              onClick={sendMessage}
-              fill="var(--primary-color-6)"
-            />
+            {!isSending.value ? (
+              <PaperAirplane
+                width={iconSize}
+                height={iconSize}
+                class={s.icon}
+                onClick={sendMessage}
+              />
+            ) : (
+              <Loading class={s.icon} size={iconSize} />
+            )}
           </div>
         </div>
       );

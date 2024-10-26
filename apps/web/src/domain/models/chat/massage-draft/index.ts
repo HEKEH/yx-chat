@@ -29,19 +29,24 @@ export default class MessageDraft {
   }
 
   async generateChatItems(): Promise<ChatMessageItem[] | undefined> {
+    if (!this._items.length) {
+      return;
+    }
     const draftWithFileItems = this._items.filter(
       item => item.content instanceof File,
     ) as ImageDraftItem[];
-    const uploadResult = await uploadFiles(
-      draftWithFileItems.map(item => item.content as File),
-    );
-    if (uploadResult.status !== RESPONSE_CODE.SUCCESS) {
-      return;
+    if (draftWithFileItems.length) {
+      const uploadResult = await uploadFiles(
+        draftWithFileItems.map(item => item.content as File),
+      );
+      if (uploadResult.status !== RESPONSE_CODE.SUCCESS) {
+        return;
+      }
+      const { filenames } = uploadResult.data;
+      draftWithFileItems.forEach((item, index) => {
+        item.uploadedFilename = filenames[index];
+      });
     }
-    const { filenames } = uploadResult.data;
-    draftWithFileItems.forEach((item, index) => {
-      item.uploadedFilename = filenames[index];
-    });
     return (
       await Promise.all(this._items.map(item => item.generateChatItem()))
     ).filter(item => item) as ChatMessageItem[];
