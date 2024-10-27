@@ -3,12 +3,12 @@ import { logger } from '@yx-chat/shared/logger';
 
 const { env } = process;
 
-let authCenterUrl = env.AUTH_CENTER_HOSTNAME;
-if (authCenterUrl && env.AUTH_CENTER_PORT) {
-  authCenterUrl = `${authCenterUrl}:${env.AUTH_CENTER_PORT}`;
+let authCenterUrl = env.PUBLIC_AUTH_CENTER_HOSTNAME;
+if (authCenterUrl && env.PUBLIC_AUTH_CENTER_PORT) {
+  authCenterUrl = `${authCenterUrl}:${env.PUBLIC_AUTH_CENTER_PORT}`;
 }
 if (!authCenterUrl) {
-  logger.error('AUTH_CENTER_HOSTNAME is required');
+  logger.error('PUBLIC_AUTH_CENTER_HOSTNAME is required');
   process.exit(1);
 }
 

@@ -97,7 +97,6 @@ function run_container() {
 function main() {
   : >"${LOG_FILE}"
   load_from_env_file "${PROJECT_ROOT}/.env.production"
-  load_from_env_file "${SCRIPT_DIR}/../../.env.production"
   PORT=${PUBLIC_FILE_CENTER_PORT}
 
   remove_image

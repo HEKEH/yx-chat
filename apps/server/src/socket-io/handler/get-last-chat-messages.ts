@@ -49,7 +49,7 @@ let getLastChatMessages: EventHandler = async (
   const responseData = contactKeys.reduce((prev, cur, index) => {
     const messages = messagesList[index];
     let unread = 0;
-    if (historyMap[cur]) {
+    if (messages.length > 0 && historyMap[cur]) {
       const lastReadMessageIndex = messages.findIndex(
         msg => msg.id === historyMap[cur],
       );

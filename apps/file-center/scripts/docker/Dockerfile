@@ -16,7 +16,6 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build:file-center
 RUN pnpm --filter @yx-chat/file-center --prod deploy /deploy/@yx-chat/file-center
 RUN cp -r .env.production /deploy
-RUN cp -r /app/apps/file-center/.env.production /deploy/@yx-chat/file-center
 RUN echo "Builder Success 🎉"
 
 # Second stage: Production stage

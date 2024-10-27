@@ -39,7 +39,7 @@ function stop_and_remove_container() {
 
 function run_container() {
   log "Info: Running new container"
-  local command="docker run -d -p ${PORT}:${PORT} --name ${IMAGE_NAME} ${IMAGE_NAME}"
+  local command="docker run -d -p 8010:8080 --name ${IMAGE_NAME} ${IMAGE_NAME}"
   log "command: ${command}"
   if ${command} >>${LOG_FILE} 2>&1; then
     log "Container started successfully."

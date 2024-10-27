@@ -24,7 +24,7 @@ function log_error() {
 
 function load_port_from_env_file() {
   local ENV_FILE="./.env.production"
-  local PORT_VAR_NAME="AUTH_CENTER_PORT"
+  local PORT_VAR_NAME="PUBLIC_AUTH_CENTER_PORT"
 
   if [ ! -f "$ENV_FILE" ]; then
     log_error "$ENV_FILE file not found"

@@ -16,7 +16,6 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build:auth-center
 RUN pnpm --filter @yx-chat/auth-center --prod deploy /deploy/@yx-chat/auth-center
 RUN cp -r .env.production /deploy
-RUN cp -r /app/apps/auth-center/.env.production /deploy/@yx-chat/auth-center
 RUN echo "Builder Success 🎉"
 
 # Second stage: Production stage
