@@ -34,6 +34,7 @@ module.exports = __toCommonJS(model_exports);
 // src/model/chat-message.ts
 var import_types = require("@yx-chat/shared/types");
 var import_mongoose = require("mongoose");
+var MAX_CONTENT_LENGTH = 2048;
 var ChatMessageSchema = new import_mongoose.Schema({
   createTime: { type: Date, default: Date.now },
   from: {
@@ -44,14 +45,35 @@ var ChatMessageSchema = new import_mongoose.Schema({
     type: String,
     index: true
   },
-  type: {
-    type: String,
-    enum: import_types.ChatMessageFormatList,
-    default: import_types.ChatMessageFormat.text
-  },
-  content: {
-    type: String,
-    default: ""
+  /** ChatItems */
+  items: {
+    type: [
+      {
+        type: {
+          type: String,
+          enum: import_types.ChatMessageFormatList,
+          required: true
+        },
+        data: { type: String, required: true }
+      }
+    ],
+    default: [],
+    validate: [
+      {
+        validator: function(v) {
+          let length = 0;
+          for (const item of v) {
+            length += item.data.length;
+            if (length > MAX_CONTENT_LENGTH) {
+              return false;
+            }
+          }
+          return true;
+        },
+        message: () => `Content exceeds maximum length of ${MAX_CONTENT_LENGTH}`
+      }
+    ],
+    required: true
   },
   deleted: {
     type: Boolean,

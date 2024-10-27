@@ -97,7 +97,7 @@ function corsMiddleware(allowOrigin) {
 }
 
 // src/utils/random.ts
-function getRandomId() {
+function getRandomId(length = 20) {
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let result = "";
   const charactersLength = characters.length;

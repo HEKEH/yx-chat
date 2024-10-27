@@ -1,4 +1,5 @@
 import { readFileSync } from 'fs';
+import path from 'path';
 import { optimize } from 'svgo';
 import { compileTemplate } from '@vue/compiler-sfc';
 import removeColor from './svgo-remove-color';
@@ -31,9 +32,15 @@ export default function svgVueComponentPlugin() {
         transformAssetUrls: false,
       });
 
+      const fileName = path.basename(id, '.svg');
+      const componentName = fileName.replace(/[^a-zA-Z0-9]/g, '');
+
       const componentCode = `
         ${templateCode}
-        export default { render: render }
+        export default {
+          name: '${componentName}Icon',
+          render: render,
+        }
       `;
 
       return {

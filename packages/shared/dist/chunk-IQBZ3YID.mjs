@@ -12,6 +12,8 @@ var ChatMessageRequestType = /* @__PURE__ */ ((ChatMessageRequestType2) => {
 })(ChatMessageRequestType || {});
 var ChatMessageFormat = /* @__PURE__ */ ((ChatMessageFormat2) => {
   ChatMessageFormat2["text"] = "text";
+  ChatMessageFormat2["image"] = "image";
+  ChatMessageFormat2["file"] = "file";
   return ChatMessageFormat2;
 })(ChatMessageFormat || {});
 var ChatMessageFormatList = enum2ValueArray(ChatMessageFormat);

@@ -18,7 +18,7 @@ export const AddContactButton = defineComponent({
           placement="bottom-start"
           popperStyle={{
             padding: '10px',
-            width: '140px',
+            width: 'fit-content',
             minWidth: '140px',
           }}
           showArrow={false}

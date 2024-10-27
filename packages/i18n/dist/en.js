@@ -33,7 +33,14 @@ var en = {
     confirmPassword: "Confirm Password",
     logoutConfirm: "Are you sure to log out?",
     loginSuccess: "Login successful",
-    registerSuccess: "Register successful"
+    registerSuccess: "Register successful",
+    personalSetting: "Personal Setting",
+    updateAvatar: "Update Avatar",
+    updateUsername: "Update Username",
+    updatePassword: "Update Password",
+    pleaseEnterNewPassword: "Please enter new password",
+    pleaseEnterConfirmPassword: "Please enter confirm password",
+    pleaseEnterNewUsername: "Please enter new username"
   },
   server: {
     connectError: "Server connect error",
@@ -57,7 +64,13 @@ var en = {
     addYouAsFriend: "request to add you as friend",
     reject: "Reject",
     agree: "Agree",
-    confirm: "Confirm {text}?"
+    confirm: "Confirm {text}?",
+    confirmUpdate: "Confirm Update",
+    cancel: "Cancel",
+    updateSuccessful: "Update successful",
+    send: "Send",
+    image: "Image",
+    file: "File"
   },
   setting: {
     general: "General",
@@ -77,7 +90,7 @@ var en = {
     friends: "Friends",
     groups: "Groups",
     createGroup: "Create group",
-    addFriendOrGroup: "Add friend/group",
+    addFriendOrGroup: "Add friend / Join group",
     inputGroupName: "Input group name",
     whetherAcceptFriend: "Whether accept  {username}  as friend?"
   },

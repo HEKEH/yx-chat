@@ -9,6 +9,13 @@ interface I18nMessage {
         logoutConfirm: string;
         loginSuccess: string;
         registerSuccess: string;
+        personalSetting: string;
+        updateAvatar: string;
+        updateUsername: string;
+        updatePassword: string;
+        pleaseEnterNewPassword: string;
+        pleaseEnterConfirmPassword: string;
+        pleaseEnterNewUsername: string;
     };
     server: {
         connectError: string;
@@ -33,6 +40,12 @@ interface I18nMessage {
         reject: string;
         agree: string;
         confirm: string;
+        confirmUpdate: string;
+        cancel: string;
+        updateSuccessful: string;
+        send: string;
+        image: string;
+        file: string;
     };
     setting: {
         general: string;

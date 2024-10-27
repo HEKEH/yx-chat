@@ -67,7 +67,7 @@ const en: I18nMessage = {
     friends: 'Friends',
     groups: 'Groups',
     createGroup: 'Create group',
-    addFriendOrGroup: 'Add friend/group',
+    addFriendOrGroup: 'Add friend / Join group',
     inputGroupName: 'Input group name',
     whetherAcceptFriend: 'Whether accept  {username}  as friend?',
   },

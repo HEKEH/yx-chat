@@ -1,6 +1,6 @@
 import {
   ChatMessageModel
-} from "../chunk-YGBBRQAS.mjs";
+} from "../chunk-PENEJJFK.mjs";
 export {
   ChatMessageModel
 };

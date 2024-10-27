@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
-import { ChatMessageFormat } from '@yx-chat/shared/types';
+import { ChatMessageItem } from '@yx-chat/shared/types';
 import { UserDocument } from './user.js';
 
 interface ChatMessageDocument extends Document {
@@ -8,10 +8,8 @@ interface ChatMessageDocument extends Document {
     from: string;
     /** 接受者, 发送给群时为群_id, 发送给个人时为俩人的_id按大小序拼接后值 */
     to: UserDocument | string;
-    /** 消息类型 */
-    type: ChatMessageFormat;
     /** 内容, 某些消息类型会存成JSON */
-    content: string;
+    items: ChatMessageItem[];
     /** 创建时间 */
     createTime: Date;
     /** Has it been deleted */

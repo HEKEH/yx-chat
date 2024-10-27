@@ -23,7 +23,7 @@ __export(random_exports, {
   getRandomId: () => getRandomId
 });
 module.exports = __toCommonJS(random_exports);
-function getRandomId() {
+function getRandomId(length = 20) {
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let result = "";
   const charactersLength = characters.length;

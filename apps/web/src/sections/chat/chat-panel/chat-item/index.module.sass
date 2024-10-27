@@ -61,11 +61,14 @@ $image-max-height: 300px
     .image
       background: #FFFFFF
       vertical-align: bottom
+      height: fit-content
+      width: fit-content
       img
         max-width: $image-max-width
         max-height: $image-max-height
         width: auto
-        object-fit: contain
+        height: auto
+        object-fit: contain !important
 
 .left
   flex-direction: row

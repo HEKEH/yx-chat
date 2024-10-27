@@ -1,6 +1,6 @@
 export { UserBasicInfo } from './user.js';
 export { AccountRequestType, Environment, LoginByTokenRequestBody, LoginRequestBody, LoginSuccessResponse, RegisterRequestBody, UpdateUserInfoRequestBody } from './account.js';
-export { ChatMessage, ChatMessageFormat, ChatMessageFormatList, ChatMessageRequestType, ChatMessagesRecord, HistoryChatMessagesRequestBody, HistoryChatMessagesResponse, LastMessagesRequestBody, LastMessagesResponse, SendChatMessageBody, UpdateHistoryRequestBody, UpdateHistoryResponse } from './chat.js';
+export { ChatMessage, ChatMessageFormat, ChatMessageFormatList, ChatMessageItem, ChatMessageRequestType, ChatMessagesRecord, HistoryChatMessagesRequestBody, HistoryChatMessagesResponse, LastMessagesRequestBody, LastMessagesResponse, SendChatMessageBody, UpdateHistoryRequestBody, UpdateHistoryResponse } from './chat.js';
 export { FriendAddNotification, Notification, NotificationType } from './notification.js';
 export { AcceptFriendAddRequestBody, AcceptFriendAddRequestResponse, ContactRequestType, CreateGroupRequestBody, CreateGroupSuccessResponse, Friend, Group, JoinGroupRequestBody, JoinGroupSuccessResponse, RejectFriendAddRequestBody, SendFriendAddRequestBody, SendFriendAddRequestResponse } from './contact.js';
 export { AllRequestTypes } from './request-types.js';
@@ -10,4 +10,4 @@ export { SystemRequestType, UserAndGroupSearchItem, UserAndGroupSearchRequestBod
 export { RESPONSE_CODE } from './response.js';
 export { AuthTokenSuccessResponse } from './auth.js';
 export { CommonResult } from './common.js';
-export { UploadFileSuccessResponse } from './file-center.js';
+export { UploadFileSuccessResponse, UploadFilesSuccessResponse } from './file-center.js';

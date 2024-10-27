@@ -7,14 +7,15 @@ declare enum ChatMessageRequestType {
     updateHistory = "updateHistory"
 }
 declare enum ChatMessageFormat {
-    text = "text"
+    text = "text",
+    image = "image",
+    file = "file"
 }
 declare const ChatMessageFormatList: ChatMessageFormat[];
 type ChatMessage = {
-    content: string;
+    items: ChatMessageItem[];
     createTime: string;
     deleted: boolean;
-    type: ChatMessageFormat;
     id: string;
     from: {
         id: string;
@@ -36,10 +37,13 @@ type HistoryChatMessagesRequestBody = {
     offset: number;
 };
 type HistoryChatMessagesResponse = ChatMessage[];
-type SendChatMessageBody = {
-    content: string;
+type ChatMessageItem = {
+    data: string;
     type: ChatMessageFormat;
+};
+type SendChatMessageBody = {
     to: string;
+    items: ChatMessageItem[];
 };
 type UpdateHistoryRequestBody = {
     contactKey: string;
@@ -51,4 +55,4 @@ type UpdateHistoryResponse = {
 /** Key is connection of two user ids or a group id */
 type LastMessagesResponse = Record<string, ChatMessagesRecord>;
 
-export { ChatMessage, ChatMessageFormat, ChatMessageFormatList, ChatMessageRequestType, ChatMessagesRecord, HistoryChatMessagesRequestBody, HistoryChatMessagesResponse, LastMessagesRequestBody, LastMessagesResponse, SendChatMessageBody, UpdateHistoryRequestBody, UpdateHistoryResponse };
+export { ChatMessage, ChatMessageFormat, ChatMessageFormatList, ChatMessageItem, ChatMessageRequestType, ChatMessagesRecord, HistoryChatMessagesRequestBody, HistoryChatMessagesResponse, LastMessagesRequestBody, LastMessagesResponse, SendChatMessageBody, UpdateHistoryRequestBody, UpdateHistoryResponse };

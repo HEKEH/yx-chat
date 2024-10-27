@@ -9,7 +9,14 @@ var cn = {
     confirmPassword: "\u786E\u8BA4\u5BC6\u7801",
     logoutConfirm: "\u662F\u5426\u8981\u9000\u51FA\u767B\u5F55?",
     loginSuccess: "\u767B\u5F55\u6210\u529F",
-    registerSuccess: "\u6CE8\u518C\u6210\u529F"
+    registerSuccess: "\u6CE8\u518C\u6210\u529F",
+    personalSetting: "\u4E2A\u4EBA\u4FE1\u606F\u8BBE\u7F6E",
+    updateAvatar: "\u4FEE\u6539\u5934\u50CF",
+    updateUsername: "\u4FEE\u6539\u7528\u6237\u540D",
+    updatePassword: "\u4FEE\u6539\u5BC6\u7801",
+    pleaseEnterNewPassword: "\u8BF7\u8F93\u5165\u65B0\u5BC6\u7801",
+    pleaseEnterConfirmPassword: "\u8BF7\u8F93\u5165\u786E\u8BA4\u5BC6\u7801",
+    pleaseEnterNewUsername: "\u8BF7\u8F93\u5165\u65B0\u7684\u7528\u6237\u540D"
   },
   server: {
     connectError: "\u670D\u52A1\u5668\u8FDE\u63A5\u5931\u8D25",
@@ -33,7 +40,13 @@ var cn = {
     addYouAsFriend: "\u8BF7\u6C42\u6DFB\u52A0\u4F60\u4E3A\u597D\u53CB",
     reject: "\u62D2\u7EDD",
     agree: "\u540C\u610F",
-    confirm: "\u786E\u8BA4{text}\uFF1F"
+    confirm: "\u786E\u8BA4{text}\uFF1F",
+    confirmUpdate: "\u786E\u8BA4\u4FEE\u6539",
+    cancel: "\u53D6\u6D88",
+    updateSuccessful: "\u4FEE\u6539\u6210\u529F",
+    send: "\u53D1\u9001",
+    image: "\u56FE\u7247",
+    file: "\u6587\u4EF6"
   },
   setting: {
     general: "\u901A\u7528",
