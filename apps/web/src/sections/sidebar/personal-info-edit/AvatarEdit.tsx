@@ -32,7 +32,7 @@ const AvatarEdit = defineComponent({
         if (currentFile.value) {
           const { success } = await props.updateAvatar(currentFile.value);
           if (success) {
-            ElMessage.success(t('头像修改成功'));
+            ElMessage.success(t('common.updateSuccessful'));
             onCancel();
           }
         }
@@ -66,9 +66,9 @@ const AvatarEdit = defineComponent({
                   onClick={onSubmit}
                   class={s['save-button']}
                 >
-                  {t('确认修改')}
+                  {t('common.confirmUpdate')}
                 </ElButton>
-                <ElButton onClick={onCancel}>{t('取消')}</ElButton>
+                <ElButton onClick={onCancel}>{t('common.cancel')}</ElButton>
               </div>
             </>
           ) : (

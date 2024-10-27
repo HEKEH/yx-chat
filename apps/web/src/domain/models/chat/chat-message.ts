@@ -3,6 +3,7 @@ import {
   ChatMessageFormat,
   ChatMessageItem,
 } from '@yx-chat/shared/types';
+import i18n from '~/infra/i18n';
 import { GeneralTime } from '../common/time';
 
 interface MessageFrom {
@@ -34,16 +35,15 @@ export class ChatMessageModel {
   }
 
   get brief() {
+    const t = i18n.global.t;
     const briefs = this.items.map(item => {
       switch (item.type) {
         case ChatMessageFormat.text:
           return item.data;
         case ChatMessageFormat.image:
-          // TODO
-          return '[图片]';
+          return `[${t('common.image')}]`;
         case ChatMessageFormat.file:
-          // TODO
-          return '[文件]';
+          return `[${t('common.file')}]`;
       }
     });
     const brief = briefs.join(' ');

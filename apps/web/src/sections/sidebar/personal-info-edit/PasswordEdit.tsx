@@ -21,12 +21,11 @@ const PasswordEdit = defineComponent({
     const { isProcessing: isSubmitting, execute: onSubmit } = useAsyncOperation(
       async () => {
         if (newPassword.value !== confirmPassword.value) {
-          ElMessage.error(t('两次输入的密码不一致'));
-          return;
+          ElMessage.error(t('validate.notSameWithPassword'));
         }
         const { success } = await props.updatePassword(newPassword.value);
         if (success) {
-          ElMessage.success(t('密码修改成功'));
+          ElMessage.success(t('common.updateSuccessful'));
           newPassword.value = '';
           confirmPassword.value = '';
         }
@@ -40,7 +39,7 @@ const PasswordEdit = defineComponent({
           type="password"
           showPassword
           autocomplete="off"
-          placeholder={t('请输入新密码')}
+          placeholder={t('account.pleaseEnterNewPassword')}
           class={s.input}
         />
         <ElInput
@@ -48,7 +47,7 @@ const PasswordEdit = defineComponent({
           type="password"
           showPassword
           autocomplete="off"
-          placeholder={t('请确认新密码')}
+          placeholder={t('account.pleaseEnterConfirmPassword')}
           class={s.input}
         />
         <ElButton
@@ -58,7 +57,7 @@ const PasswordEdit = defineComponent({
           onClick={onSubmit}
           class={s.button}
         >
-          {t('确认修改')}
+          {t('common.confirmUpdate')}
         </ElButton>
       </div>
     );

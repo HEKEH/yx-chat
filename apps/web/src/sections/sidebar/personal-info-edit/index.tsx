@@ -34,7 +34,7 @@ const PersonalInfoEditDialog = defineComponent({
       return (
         <ElDialog
           modelValue={props.modelValue}
-          title={t('个人信息设置')}
+          title={t('account.personalSetting')}
           onClose={onClose}
           width="400px"
           align-center
@@ -42,21 +42,21 @@ const PersonalInfoEditDialog = defineComponent({
           class={s.dialog}
         >
           <div>
-            <div class={s.title}>{t('修改头像')}</div>
+            <div class={s.title}>{t('account.updateAvatar')}</div>
             <AvatarEdit
               url={globalStore.self.avatar}
               updateAvatar={updateAvatar}
             />
           </div>
           <div>
-            <div class={s.title}>{t('修改用户名')}</div>
+            <div class={s.title}>{t('account.updateUsername')}</div>
             <UsernameEdit
               currentUsername={globalStore.self.name}
               updateUsername={updateUsername}
             />
           </div>
           <div>
-            <div class={s.title}>{t('修改密码')}</div>
+            <div class={s.title}>{t('account.updatePassword')}</div>
             <PasswordEdit updatePassword={updatePassword} />
           </div>
         </ElDialog>

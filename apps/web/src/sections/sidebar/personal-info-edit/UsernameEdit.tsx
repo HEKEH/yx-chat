@@ -25,7 +25,7 @@ const UsernameEdit = defineComponent({
       async () => {
         const { success } = await props.updateUsername(newUsername.value);
         if (success) {
-          ElMessage.success(t('用户名修改成功'));
+          ElMessage.success(t('common.updateSuccessful'));
         }
       },
     );
@@ -34,7 +34,7 @@ const UsernameEdit = defineComponent({
       <div class={s.usernameEdit}>
         <ElInput
           v-model={newUsername.value}
-          placeholder={t('请输入新的用户名')}
+          placeholder={t('account.pleaseEnterNewUsername')}
           class={s.input}
         />
         <ElButton
@@ -46,7 +46,7 @@ const UsernameEdit = defineComponent({
           onClick={onSubmit}
           class={s.button}
         >
-          {t('确认修改')}
+          {t('common.confirmUpdate')}
         </ElButton>
       </div>
     );
