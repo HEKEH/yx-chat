@@ -4,6 +4,8 @@ import {
   RESPONSE_CODE,
 } from '@yx-chat/shared/types';
 import uploadFiles from '~/infra/requests/upload-files';
+import config from '~/config';
+import i18n from '~/infra/i18n';
 import { ImageDraftItem } from './image-draft-item';
 import { TextDraftItem } from './text-draft-item';
 
@@ -17,6 +19,28 @@ export default class MessageDraft {
   }
   clear() {
     this._items = [new TextDraftItem()];
+  }
+
+  get globalErrorMsg() {
+    if (config.maxMessageLength) {
+      let maxTextLength = 0;
+      for (const item of this._items) {
+        if (item.type === ChatMessageFormat.text) {
+          maxTextLength += item.content.length;
+        }
+      }
+      if (maxTextLength > config.maxMessageLength) {
+        return i18n.global.t('validate.messageLengthExceedsLimit', {
+          limit: config.maxMessageLength,
+        });
+      }
+    }
+  }
+
+  get hasError() {
+    return Boolean(
+      this.globalErrorMsg || this._items.some(item => item.errorMsg),
+    );
   }
 
   onFocus() {

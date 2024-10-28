@@ -79,5 +79,7 @@ export interface I18nMessage {
     minLength: string;
     noWhitespace: string;
     notSameWithPassword: string;
+    fileSizeExceedsLimit: string;
+    messageLengthExceedsLimit: string;
   };
 }

@@ -103,7 +103,9 @@ var cn = {
     maxLength: "\u957F\u5EA6\u4E0D\u80FD\u8D85\u8FC7{len}\u4E2A\u5B57\u7B26",
     minLength: "\u957F\u5EA6\u4E0D\u80FD\u5C11\u4E8E{len}\u4E2A\u5B57\u7B26",
     noWhitespace: "\u4E0D\u80FD\u5305\u542B\u7A7A\u683C",
-    notSameWithPassword: "\u4E0E\u5BC6\u7801\u4E0D\u4E00\u81F4"
+    notSameWithPassword: "\u4E0E\u5BC6\u7801\u4E0D\u4E00\u81F4",
+    fileSizeExceedsLimit: "\u6587\u4EF6\u5927\u5C0F\u8D85\u8FC7 {limit}MB \u7684\u9650\u5236",
+    messageLengthExceedsLimit: "\u6D88\u606F\u957F\u5EA6\u8D85\u8FC7 {limit} \u7684\u9650\u5236"
   }
 };
 var zh_cn_default = cn;

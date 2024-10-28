@@ -1,13 +1,19 @@
 .image-wrapper
   position: relative
-  width: 160px
+  width: 140px
   padding: 0 5px
+  white-space: nowrap
   &:hover
     .delete-icon
       visibility: visible
   .image
     width: 100%
     height: auto
+    vertical-align: bottom
+  .error
+    margin-left: 4px
+    font-size: 12px
+    color: var(--yx-error-color)
   .delete-icon
     position: absolute
     padding: 3px

@@ -1,8 +1,14 @@
-import { ChatMessageFormatList, ChatMessageItem } from '@yx-chat/shared/types';
+import {
+  ChatMessageFormat,
+  ChatMessageFormatList,
+  ChatMessageItem,
+} from '@yx-chat/shared/types';
 import { Document, Schema, model } from 'mongoose';
 import { UserDocument } from './user';
 
-const MAX_CONTENT_LENGTH = 2048;
+const MAX_TEXT_MESSAGE_LENGTH = process.env.PUBLIC_MAX_MESSAGE_LENGTH
+  ? Number(process.env.PUBLIC_MAX_MESSAGE_LENGTH)
+  : 2000;
 
 const ChatMessageSchema = new Schema({
   createTime: { type: Date, default: Date.now },
@@ -33,15 +39,17 @@ const ChatMessageSchema = new Schema({
         validator: function (v: ChatMessageItem[]) {
           let length = 0;
           for (const item of v) {
-            length += item.data.length;
-            if (length > MAX_CONTENT_LENGTH) {
-              return false;
+            if (item.type === ChatMessageFormat.text) {
+              length += item.data.length;
+              if (length > MAX_TEXT_MESSAGE_LENGTH) {
+                return false;
+              }
             }
           }
           return true;
         },
         message: () =>
-          `Content exceeds maximum length of ${MAX_CONTENT_LENGTH}`,
+          `Content exceeds maximum length of ${MAX_TEXT_MESSAGE_LENGTH}`,
       },
     ],
     required: true,

@@ -14,5 +14,8 @@
   .icon
     cursor: pointer
     margin-left: 4px
-    &:hover
+    &.disabled
+      color: #cccccc
+      cursor: not-allowed
+    &:hover:not(.disabled)
       color: var(--primary-color-8)

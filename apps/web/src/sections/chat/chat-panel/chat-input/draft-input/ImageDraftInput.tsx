@@ -60,6 +60,9 @@ export const ImageDraftInput = defineComponent({
             fit="cover"
             hide-on-click-modal
           />
+          {props.item.errorMsg ? (
+            <span class={s.error}>{`(${props.item.errorMsg})`}</span>
+          ) : null}
           <div
             class={s['delete-icon']}
             onClick={() => {

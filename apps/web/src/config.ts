@@ -17,8 +17,17 @@ if (!defaultLanguage) {
   throw new Error('PUBLIC_DEFAULT_LANGUAGE is not set');
 }
 
+const uploadFileSizeLimit = env.PUBLIC_UPLOAD_FILE_SIZE_LIMIT
+  ? Number(env.PUBLIC_UPLOAD_FILE_SIZE_LIMIT)
+  : undefined;
+const maxMessageLength = env.PUBLIC_MAX_MESSAGE_LENGTH
+  ? Number(env.PUBLIC_MAX_MESSAGE_LENGTH)
+  : undefined;
+
 export default {
   serverUrl,
   defaultLanguage,
   fileCenterUrl,
+  uploadFileSizeLimit,
+  maxMessageLength,
 };

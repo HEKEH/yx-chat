@@ -81,6 +81,8 @@ const en: I18nMessage = {
     minLength: 'Length of this field cannot be less than {len}',
     noWhitespace: 'This field cannot contain whitespace',
     notSameWithPassword: "It's not same with the password",
+    fileSizeExceedsLimit: 'File size exceeds the limit of {limit} MB',
+    messageLengthExceedsLimit: 'Message length exceeds the limit of {limit}',
   },
 };
 export default en;

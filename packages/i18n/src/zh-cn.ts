@@ -81,6 +81,8 @@ const cn: I18nMessage = {
     minLength: '长度不能少于{len}个字符',
     noWhitespace: '不能包含空格',
     notSameWithPassword: '与密码不一致',
+    fileSizeExceedsLimit: '文件大小超过 {limit}MB 的限制',
+    messageLengthExceedsLimit: '消息长度超过 {limit} 的限制',
   },
 };
 export default cn;

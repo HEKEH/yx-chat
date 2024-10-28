@@ -28,6 +28,7 @@ export const ChatInputContainer = defineComponent({
       if (!chatMessageCollection) {
         return null;
       }
+      const hasInputError = chatMessageCollection.draft.hasError;
       const iconSize = 28;
       return (
         <div class={s['chat-input-container']}>
@@ -38,8 +39,8 @@ export const ChatInputContainer = defineComponent({
                 <PaperAirplane
                   width={iconSize}
                   height={iconSize}
-                  class={s.icon}
-                  onClick={sendMessage}
+                  class={{ [s.icon]: true, [s.disabled]: hasInputError }}
+                  onClick={hasInputError ? undefined : sendMessage}
                 />
               </ElTooltip>
             ) : (

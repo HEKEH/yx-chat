@@ -7,7 +7,7 @@ import {
 } from "../chunk-6U4ECM6C.mjs";
 import {
   ChatMessageModel
-} from "../chunk-PENEJJFK.mjs";
+} from "../chunk-VKI7JWNZ.mjs";
 import {
   FriendAddRequestModel
 } from "../chunk-YAIQIYRU.mjs";

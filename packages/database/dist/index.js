@@ -55,7 +55,7 @@ var config_default = config;
 // src/model/chat-message.ts
 var import_types = require("@yx-chat/shared/types");
 var import_mongoose = require("mongoose");
-var MAX_CONTENT_LENGTH = 2048;
+var MAX_TEXT_MESSAGE_LENGTH = process.env.PUBLIC_MAX_MESSAGE_LENGTH ? Number(process.env.PUBLIC_MAX_MESSAGE_LENGTH) : 2e3;
 var ChatMessageSchema = new import_mongoose.Schema({
   createTime: { type: Date, default: Date.now },
   from: {
@@ -84,14 +84,16 @@ var ChatMessageSchema = new import_mongoose.Schema({
         validator: function(v) {
           let length = 0;
           for (const item of v) {
-            length += item.data.length;
-            if (length > MAX_CONTENT_LENGTH) {
-              return false;
+            if (item.type === import_types.ChatMessageFormat.text) {
+              length += item.data.length;
+              if (length > MAX_TEXT_MESSAGE_LENGTH) {
+                return false;
+              }
             }
           }
           return true;
         },
-        message: () => `Content exceeds maximum length of ${MAX_CONTENT_LENGTH}`
+        message: () => `Content exceeds maximum length of ${MAX_TEXT_MESSAGE_LENGTH}`
       }
     ],
     required: true

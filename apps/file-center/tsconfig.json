@@ -4,7 +4,6 @@
     "paths": {
       "~/*": ["./src/*"],
       "@/*": ["./*"],
-      "@yx-chat/i18n/*": ["../../packages/i18n/src/*"],
       "@yx-chat/shared/*": ["../../packages/shared/src/*"]
     }
   },

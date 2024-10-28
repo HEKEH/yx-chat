@@ -10,6 +10,10 @@ export class TextDraftItem {
   get content() {
     return this._content;
   }
+  get errorMsg() {
+    // no error
+    return undefined;
+  }
   setContent(content: string) {
     this._content = content;
   }

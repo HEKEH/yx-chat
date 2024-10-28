@@ -41,6 +41,9 @@ export const DraftInput = defineComponent({
             draft.onFocus();
           }}
         >
+          {draft.globalErrorMsg && (
+            <div class={s['error']}>{`(${draft.globalErrorMsg})`}</div>
+          )}
           {draft.items.map(item => {
             if (item.type === ChatMessageFormat.text) {
               return <TextDraftInput key={item.key} item={item} />;
