@@ -1,8 +1,9 @@
 import { Subject } from 'rxjs';
 import { getRandomId } from '@yx-chat/shared/utils';
 import { ChatMessageFormat, ChatMessageItem } from '@yx-chat/shared/types';
+import { IDraftItem } from './types';
 
-export class TextDraftItem {
+export class TextDraftItem implements IDraftItem<string> {
   readonly key = getRandomId();
   readonly focusSubject = new Subject<void>();
   readonly type = ChatMessageFormat.text;

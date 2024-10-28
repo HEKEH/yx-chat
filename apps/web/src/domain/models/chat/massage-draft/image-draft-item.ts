@@ -2,11 +2,12 @@ import { ChatMessageFormat, ChatMessageItem } from '@yx-chat/shared/types';
 import { getRandomId } from '@yx-chat/shared/utils';
 import config from '~/config';
 import i18n from '~/infra/i18n';
+import { IDraftItem } from './types';
 
-export class ImageDraftItem {
+export class ImageDraftItem implements IDraftItem<File> {
   readonly key = getRandomId();
   readonly type = ChatMessageFormat.image;
-  private _content: File | null = null;
+  private _content: File;
 
   uploadedFilename = '';
 
@@ -14,7 +15,7 @@ export class ImageDraftItem {
     return this._content;
   }
   constructor(file: File) {
-    this.setContent(file);
+    this._content = file;
   }
   setContent(image: File) {
     this._content = image;
@@ -22,9 +23,6 @@ export class ImageDraftItem {
   }
 
   get errorMsg() {
-    if (!this._content) {
-      return undefined;
-    }
     if (
       config.uploadFileSizeLimit &&
       this._content.size > config.uploadFileSizeLimit * 1024 * 1024
@@ -36,7 +34,7 @@ export class ImageDraftItem {
   }
 
   async generateChatItem(): Promise<ChatMessageItem | undefined> {
-    if (!this._content) {
+    if (!this.uploadedFilename) {
       return;
     }
     return {
