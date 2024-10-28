@@ -5,7 +5,7 @@ import config from './config';
 
 const { env } = process;
 logger.info('[env]', env.NODE_ENV);
-logger.info('[port]', env.PUBLIC_SERVER_PORT);
+logger.info('[port]', env.SERVER_PORT);
 
 (async () => {
   await initMongoDB();

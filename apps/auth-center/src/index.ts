@@ -7,7 +7,7 @@ import { createNewUser } from './biz-utils/create-new-user';
 
 const { env } = process;
 logger.info('[env]', env.NODE_ENV);
-logger.info('[port]', env.PUBLIC_AUTH_CENTER_PORT);
+logger.info('[port]', env.AUTH_CENTER_PORT);
 
 (async () => {
   await initMongoDB();

@@ -9,12 +9,9 @@ if (!uploadDir) {
   process.exit(1);
 }
 
-let authCenterUrl = env.PUBLIC_AUTH_CENTER_HOSTNAME;
-if (authCenterUrl && env.PUBLIC_AUTH_CENTER_PORT) {
-  authCenterUrl = `${authCenterUrl}:${env.PUBLIC_AUTH_CENTER_PORT}`;
-}
+const authCenterUrl = env.PUBLIC_AUTH_CENTER_URL;
 if (!authCenterUrl) {
-  logger.error('PUBLIC_AUTH_CENTER_HOSTNAME is required');
+  logger.error('PUBLIC_AUTH_CENTER_URL is required');
   process.exit(1);
 }
 
@@ -27,9 +24,7 @@ if (!defaultLanguage) {
 
 export default {
   /** service port */
-  port: env.PUBLIC_FILE_CENTER_PORT
-    ? parseInt(env.PUBLIC_FILE_CENTER_PORT, 10)
-    : 7090,
+  port: env.FILE_CENTER_PORT ? parseInt(env.FILE_CENTER_PORT, 10) : 7090,
   allowOrigin: env.ALLOW_ORIGIN || '*',
   defaultLanguage,
   uploadDir,

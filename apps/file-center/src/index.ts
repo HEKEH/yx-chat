@@ -5,7 +5,7 @@ import initApp from './app';
 
 const { env } = process;
 logger.info('[env]', env.NODE_ENV);
-logger.info('[port]', env.PUBLIC_FILE_CENTER_PORT);
+logger.info('[port]', env.FILE_CENTER_PORT);
 
 (async () => {
   // init file upload directory
