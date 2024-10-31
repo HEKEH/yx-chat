@@ -8,8 +8,9 @@ import config from '~/config';
 import i18n from '~/infra/i18n';
 import { ImageDraftItem } from './image-draft-item';
 import { TextDraftItem } from './text-draft-item';
+import { FileDraftItem } from './file-draft-item';
 
-export type DraftItem = TextDraftItem | ImageDraftItem;
+export type DraftItem = TextDraftItem | ImageDraftItem | FileDraftItem;
 
 export default class MessageDraft {
   private _items: DraftItem[] = [new TextDraftItem()];
@@ -77,8 +78,11 @@ export default class MessageDraft {
   }
 
   /** if the last item is text, combine it with the previous text item */
-  private _removeAbundantTextItem() {
-    for (let i = this._items.length - 1; i >= 1; i--) {
+  private _removeAbundantTextItem(
+    startIndex = 0,
+    endIndex = this._items.length - 1,
+  ) {
+    for (let i = endIndex; i > startIndex; i--) {
       const currentItem = this._items[i];
       const previousItem = this._items[i - 1];
       if (
@@ -92,18 +96,32 @@ export default class MessageDraft {
     }
   }
 
-  addImage(file: File) {
+  addFile(file: File) {
     if (this._items[this._items.length - 1].type !== ChatMessageFormat.text) {
       // insert a text item before image
       this._items.push(new TextDraftItem());
     }
-    this._items.push(new ImageDraftItem(file));
+    if (file.type.startsWith('image/')) {
+      this._items.push(new ImageDraftItem(file));
+    } else {
+      this._items.push(new FileDraftItem(file));
+    }
     // insert a text item after image
     this._items.push(new TextDraftItem());
   }
 
   removeItem(item: DraftItem) {
-    this._items = this._items.filter(i => i !== item);
-    this._removeAbundantTextItem();
+    const index = this._items.indexOf(item);
+    if (index > -1) {
+      this._items.splice(index, 1);
+      const nextItem = this._items[index];
+      if (nextItem?.type === ChatMessageFormat.text) {
+        if (!nextItem.content) {
+          this._items.splice(index, 1);
+        } else {
+          this._removeAbundantTextItem(index - 1, index);
+        }
+      }
+    }
   }
 }

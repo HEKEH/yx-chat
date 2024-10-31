@@ -26,7 +26,7 @@ export class TextDraftItem implements IDraftItem<string> {
       return;
     }
     return {
-      data: this._content,
+      data: this._content.trimEnd(),
       type: this.type,
     };
   }

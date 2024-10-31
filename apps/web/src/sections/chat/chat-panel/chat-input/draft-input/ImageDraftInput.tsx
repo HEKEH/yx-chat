@@ -8,6 +8,7 @@ import {
 } from 'vue';
 import { ImageDraftItem } from '~/domain/models/chat/massage-draft/image-draft-item';
 import s from './ImageDraftInput.module.sass';
+import commonS from './Common.module.sass';
 import Close from '@/assets/icons/close.svg';
 
 export const ImageDraftInput = defineComponent({
@@ -61,10 +62,10 @@ export const ImageDraftInput = defineComponent({
             hide-on-click-modal
           />
           {props.item.errorMsg ? (
-            <span class={s.error}>{`(${props.item.errorMsg})`}</span>
+            <span class={commonS.error}>{`(${props.item.errorMsg})`}</span>
           ) : null}
           <div
-            class={s['delete-icon']}
+            class="delete-icon"
             onClick={() => {
               emit('delete', props.item);
             }}
