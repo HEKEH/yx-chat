@@ -5,7 +5,7 @@ import s from './AccountEntry.module.sass';
 import { Login } from './login';
 import { Register } from './register';
 
-/** 登录/注册按钮 */
+/** login/register button */
 export const AccountEntry = defineComponent({
   name: 'AccountEntry',
   setup() {
@@ -21,13 +21,7 @@ export const AccountEntry = defineComponent({
             }}
             class={s['login-text']}
           >{`${t('account.login')} / ${t('account.register')}`}</p>
-          <ElDialog
-            v-model={showAccountPanel.value}
-            showClose={false}
-            width="400px"
-            align-center
-            class={s.dialog}
-          >
+          <ElDialog v-model={showAccountPanel.value} width="400px" align-center>
             <ElTabs stretch v-model={activeTab.value}>
               <ElTabPane name="login" label={t('account.login')}>
                 <Login
