@@ -31,6 +31,7 @@ const ChatMessageSchema = new Schema({
           required: true,
         },
         data: { type: String, required: true },
+        name: { type: String, required: false },
       },
     ],
     default: [],

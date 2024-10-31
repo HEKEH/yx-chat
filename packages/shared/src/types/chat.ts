@@ -49,10 +49,18 @@ export type HistoryChatMessagesRequestBody = {
 
 export type HistoryChatMessagesResponse = ChatMessage[];
 
-export type ChatMessageItem = {
+export type FileChatMessageItem = {
+  type: ChatMessageFormat.file;
   data: string;
-  type: ChatMessageFormat;
+  name: string;
 };
+
+export type ChatMessageItem =
+  | {
+      type: Exclude<ChatMessageFormat, ChatMessageFormat.file>;
+      data: string;
+    }
+  | FileChatMessageItem;
 
 export type SendChatMessageBody = {
   to: string;

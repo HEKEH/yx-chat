@@ -9,10 +9,6 @@ export class FileDraftItem implements IDraftItem<File> {
   readonly type = ChatMessageFormat.file;
   private _content: File;
 
-  get filename() {
-    return this._content.name;
-  }
-
   uploadedFilename = '';
 
   get content() {
@@ -44,6 +40,7 @@ export class FileDraftItem implements IDraftItem<File> {
     return {
       data: this.uploadedFilename,
       type: this.type,
+      name: this.content.name,
     };
   }
 }

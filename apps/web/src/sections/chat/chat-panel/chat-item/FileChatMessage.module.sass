@@ -1,0 +1,21 @@
+.file-chat-message
+  position: relative
+  padding: 10px
+  border-radius: 8px
+  width: fit-content
+  cursor: pointer
+  background-color: #e3f2fd
+  &.from-self
+    background-color: #f0f2f5
+  &:hover
+    .file
+      filter: blur(1px)
+    .download
+      display: block
+  .download
+    position: absolute
+    color: #555555
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
+    display: none

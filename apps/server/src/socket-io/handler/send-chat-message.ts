@@ -1,5 +1,6 @@
 import assert from 'assert';
 import {
+  type ChatMessageItem,
   ServerMessageType,
   type ChatMessage,
   type SendChatMessageBody,
@@ -20,10 +21,14 @@ let sendChatMessage: EventHandler = async (
   data: SendChatMessageBody,
 ): Promise<ChatMessage> => {
   assert(data.items.length, 'Message cannot be empty');
-  const items = data.items.map(item => ({
-    type: item.type,
-    data: xss(item.data),
-  }));
+  const items = data.items.map(
+    item =>
+      ({
+        type: item.type,
+        data: xss(item.data),
+        name: 'name' in item ? xss(item.name) : undefined,
+      } as ChatMessageItem),
+  );
 
   const { to } = data;
   const userId = context.userId!;

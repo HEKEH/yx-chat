@@ -20,7 +20,7 @@ export const FileDraftInput = defineComponent({
     return () => {
       return (
         <div class={s['file-wrapper']} onClick={e => e.stopPropagation()}>
-          <FileView file={props.item.content} />
+          <FileView filename={props.item.content.name} />
           {props.item.errorMsg ? (
             <span class={commonS.error}>{`(${props.item.errorMsg})`}</span>
           ) : null}

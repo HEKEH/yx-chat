@@ -6,10 +6,15 @@ import { ChatMessageFormat, ChatMessageItem } from '@yx-chat/shared/types';
 import { getFileUrl } from '~/utils/get-file-url';
 import { ElImage } from 'element-plus';
 import s from './index.module.sass';
+import FileChatMessage from './FileChatMessage';
 
 const MessageBody = defineComponent({
   name: 'MessageBody',
   props: {
+    isFromSelf: {
+      type: Boolean,
+      required: true,
+    },
     value: {
       type: Array as PropType<ChatMessageItem[]>,
       required: true,
@@ -17,7 +22,7 @@ const MessageBody = defineComponent({
   },
   setup(props) {
     return () => {
-      const { value } = props;
+      const { value, isFromSelf } = props;
       return (
         <div class={s.message}>
           <div class={s.content}>
@@ -44,7 +49,13 @@ const MessageBody = defineComponent({
                 );
               }
               if (item.type === ChatMessageFormat.file) {
-                return null;
+                return (
+                  <FileChatMessage
+                    key={index}
+                    value={item}
+                    isFromSelf={isFromSelf}
+                  />
+                );
               }
             })}
           </div>
@@ -71,9 +82,9 @@ export const ChatItem = defineComponent({
     return () => {
       const { value, self } = props;
       const { from } = value;
-      const isSelf = from.id === self.id;
+      const isFromSelf = from.id === self.id;
       return (
-        <div class={[s['chat-item'], isSelf ? s.right : s.left]}>
+        <div class={[s['chat-item'], isFromSelf ? s.right : s.left]}>
           <Avatar url={from.avatar} class={s.avatar} />
           <div class={s.container}>
             <div class={[s.row, s['first-row']]}>
@@ -81,7 +92,7 @@ export const ChatItem = defineComponent({
               <div class={s.time}>{value.createTime.format()}</div>
             </div>
             <div class={[s.row, s['second-row']]}>
-              <MessageBody value={value.items} />
+              <MessageBody isFromSelf={isFromSelf} value={value.items} />
             </div>
           </div>
         </div>

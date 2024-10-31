@@ -36,14 +36,16 @@ export default class Controller {
     if (file) {
       const contentType = getContentTypeByFilename(filename);
       ctx.set('Content-Type', contentType);
+      const downloadName = (ctx.query['download-name'] || filename) as string;
+      const sanitizedName = encodeURIComponent(downloadName);
       if (
         contentType.startsWith('image/') ||
         contentType.startsWith('video/') ||
         contentType.startsWith('audio/')
       ) {
-        ctx.set('Content-Disposition', `inline; filename=${filename}`);
+        ctx.set('Content-Disposition', `inline; filename=${sanitizedName}`);
       } else {
-        ctx.set('Content-Disposition', `attachment; filename=${filename}`);
+        ctx.set('Content-Disposition', `attachment; filename=${sanitizedName}`);
       }
       ctx.body = file;
     }
