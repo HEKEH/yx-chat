@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import path from 'path';
 import { optimize } from 'svgo';
 import { compileTemplate } from '@vue/compiler-sfc';
-import removeColor from './svgo-remove-color';
+// import removeColor from './svgo-remove-color';
 
 export default function svgVueComponentPlugin() {
   return {
@@ -22,7 +22,7 @@ export default function svgVueComponentPlugin() {
           'removeEditorsNSData',
           'cleanupAttrs',
           'removeEmptyAttrs',
-          removeColor,
+          // removeColor,
         ],
       });
 

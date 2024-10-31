@@ -1,15 +1,12 @@
-import { ElImage } from 'element-plus';
 import { PropType, defineComponent } from 'vue';
 import { FileDraftItem } from '~/domain/models/chat/massage-draft/file-draft-item';
+import { FileView } from '~/components/file';
 import commonS from './Common.module.sass';
 import s from './FileDraftInput.module.sass';
 import Close from '@/assets/icons/close.svg';
 
 export const FileDraftInput = defineComponent({
   name: 'FileDraftInput',
-  components: {
-    ElImage,
-  },
   props: {
     item: {
       type: Object as PropType<FileDraftItem>,
@@ -23,7 +20,7 @@ export const FileDraftInput = defineComponent({
     return () => {
       return (
         <div class={s['file-wrapper']} onClick={e => e.stopPropagation()}>
-          <div class={s.filename}>{props.item.filename}</div>
+          <FileView file={props.item.content} />
           {props.item.errorMsg ? (
             <span class={commonS.error}>{`(${props.item.errorMsg})`}</span>
           ) : null}

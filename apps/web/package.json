@@ -4,7 +4,9 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite --config ./vite.config.ts --open",
     "build": "cross-env NODE_ENV=production vue-tsc --noEmit && vite build --config ./vite.config.ts",
-    "preview": "vite preview",
+    "build:dev": "cross-env NODE_ENV=development vue-tsc --noEmit && vite build --mode development --config ./vite.config.ts",
+    "preview:dev": "cross-env NODE_ENV=development vite preview",
+    "preview:prod": "cross-env NODE_ENV=production vite preview",
     "lint": "eslint",
     "preinstall": "npx only-allow pnpm"
   },
