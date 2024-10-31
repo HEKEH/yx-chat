@@ -8,9 +8,14 @@ import config from '~/config';
 import i18n from '~/infra/i18n';
 import { ImageDraftItem } from './image-draft-item';
 import { TextDraftItem } from './text-draft-item';
+import { VideoDraftItem } from './video-draft-item';
 import { FileDraftItem } from './file-draft-item';
 
-export type DraftItem = TextDraftItem | ImageDraftItem | FileDraftItem;
+export type DraftItem =
+  | TextDraftItem
+  | ImageDraftItem
+  | VideoDraftItem
+  | FileDraftItem;
 
 export default class MessageDraft {
   private _items: DraftItem[] = [new TextDraftItem()];
@@ -103,6 +108,8 @@ export default class MessageDraft {
     }
     if (file.type.startsWith('image/')) {
       this._items.push(new ImageDraftItem(file));
+    } else if (file.type.startsWith('video/')) {
+      this._items.push(new VideoDraftItem(file));
     } else {
       this._items.push(new FileDraftItem(file));
     }

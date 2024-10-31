@@ -1,12 +1,13 @@
-.image-wrapper
+
+$width: 230px
+.video-wrapper
   position: relative
-  width: 140px
+  width: $width
   padding: 0 5px
   white-space: nowrap
   &:hover
     :global(.delete-icon)
       visibility: visible
-  .image
-    width: 100%
-    height: auto
+  .video
+    width: $width - 30px !important
     vertical-align: bottom

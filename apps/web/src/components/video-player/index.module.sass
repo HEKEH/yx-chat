@@ -1,0 +1,25 @@
+.video-player
+  width: 100%
+  :global(.art-video-player)
+    width: 100%!important
+    height: 100%!important
+  &.video-player-small
+    :global(.art-video-player)
+      font-size: 12px
+      --art-state-size: 40px
+      --art-control-height: 20px
+      --art-control-icon-size: 16px
+      --art-bottom-gap: 3px
+      --art-volume-height: 90px
+      --art-indicator-size: 10px
+      --art-volume-handle-size: 10px
+      --art-contextmenus-min-width: 100px
+      :global(.art-icon-state)
+        width: 100%
+      :global(.art-icon)
+        overflow: hidden
+      :global(.art-contextmenu)
+        font-size: 10px
+        padding: 5px
+      :global(.art-info)
+        font-size: 10px

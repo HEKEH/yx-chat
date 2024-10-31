@@ -1,8 +1,8 @@
 import { ChatMessageFormat, ChatMessageItem } from '@yx-chat/shared/types';
 import { BaseFileDraftItem } from './base-file-draft-item';
 
-export class ImageDraftItem extends BaseFileDraftItem {
-  readonly type = ChatMessageFormat.image;
+export class VideoDraftItem extends BaseFileDraftItem {
+  readonly type = ChatMessageFormat.video;
 
   constructor(file: File) {
     super(file);

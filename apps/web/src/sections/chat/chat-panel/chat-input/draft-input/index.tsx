@@ -5,6 +5,7 @@ import s from './index.module.sass';
 import { TextDraftInput } from './TextDraftInput';
 import { ImageDraftInput } from './ImageDraftInput';
 import { FileDraftInput } from './FileDraftInput';
+import { VideoDraftInput } from './VideoDraftInput';
 
 export const DraftInput = defineComponent({
   name: 'DraftInput',
@@ -54,6 +55,14 @@ export const DraftInput = defineComponent({
               case ChatMessageFormat.image:
                 return (
                   <ImageDraftInput
+                    key={item.key}
+                    item={item}
+                    onDelete={onDelete}
+                  />
+                );
+              case ChatMessageFormat.video:
+                return (
+                  <VideoDraftInput
                     key={item.key}
                     item={item}
                     onDelete={onDelete}

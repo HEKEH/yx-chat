@@ -48,6 +48,7 @@ const cn: I18nMessage = {
     send: '发送',
     image: '图片',
     file: '文件',
+    download: '下载',
   },
   setting: {
     general: '通用',

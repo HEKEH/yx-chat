@@ -13,6 +13,8 @@ export enum ChatMessageFormat {
   // text message
   text = 'text',
   image = 'image',
+  video = 'video',
+
   file = 'file',
 }
 
