@@ -7,6 +7,7 @@ import { getFileUrl } from '~/utils/get-file-url';
 import { ElImage } from 'element-plus';
 import s from './index.module.sass';
 import FileChatMessage from './FileChatMessage';
+import VideoChatMessage from './VideoChatMessage';
 
 const MessageBody = defineComponent({
   name: 'MessageBody',
@@ -47,6 +48,9 @@ const MessageBody = defineComponent({
                     />
                   </div>
                 );
+              }
+              if (item.type === ChatMessageFormat.video) {
+                return <VideoChatMessage key={index} value={item} />;
               }
               if (item.type === ChatMessageFormat.file) {
                 return (

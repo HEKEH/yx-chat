@@ -22,11 +22,12 @@ export class TextDraftItem implements IDraftItem<string> {
     this.focusSubject.next();
   }
   generateChatItem(): ChatMessageItem | undefined {
-    if (!this._content) {
+    const content = this._content.trimEnd();
+    if (!content) {
       return;
     }
     return {
-      data: this._content.trimEnd(),
+      data: content,
       type: this.type,
     };
   }

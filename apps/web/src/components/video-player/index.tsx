@@ -40,16 +40,12 @@ const VideoPlayer = defineComponent({
     const instance = ref<Artplayer | null>(null);
     const artRef = ref<HTMLDivElement | null>(null);
     const isFullscreen = ref(false);
-    const downloadIconRef = ref<HTMLElement>(
-      (() => {
-        const icon = createDownloadIcon();
-        icon.setAttribute('aria-label', t('common.download'));
-        return icon;
-      })(),
-    );
+    const downloadIconRef = ref<HTMLElement>(createDownloadIcon());
 
     const initArtplayer = () => {
       if (!artRef.value) return;
+      instance.value?.destroy(false);
+      downloadIconRef.value.setAttribute('aria-label', t('common.download'));
       const art = new Artplayer(
         {
           autoSize: true,
@@ -79,26 +75,15 @@ const VideoPlayer = defineComponent({
       art.on('fullscreen', state => {
         isFullscreen.value = state;
       });
-
       instance.value = art;
-
       nextTick(() => {
         emit('getInstance', instance.value);
       });
     };
-    watch(
-      () => {
-        downloadIconRef.value.setAttribute('aria-label', t('common.download'));
-        if (instance.value) {
-          instance.value.destroy(false);
-          initArtplayer();
-        }
-      },
-      () => locale.value,
-    );
-    onMounted(() => {
-      initArtplayer();
-    });
+    watch(() => locale.value, initArtplayer);
+    watch(() => props.option, initArtplayer, { deep: true });
+
+    onMounted(initArtplayer);
     onBeforeUnmount(() => {
       instance.value?.destroy(false);
     });

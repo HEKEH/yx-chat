@@ -54,7 +54,8 @@ var ChatMessageSchema = new import_mongoose.Schema({
           enum: import_types.ChatMessageFormatList,
           required: true
         },
-        data: { type: String, required: true }
+        data: { type: String, required: true },
+        name: { type: String, required: false }
       }
     ],
     default: [],

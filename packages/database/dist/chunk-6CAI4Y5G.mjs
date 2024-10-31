@@ -24,7 +24,8 @@ var ChatMessageSchema = new Schema({
           enum: ChatMessageFormatList,
           required: true
         },
-        data: { type: String, required: true }
+        data: { type: String, required: true },
+        name: { type: String, required: false }
       }
     ],
     default: [],

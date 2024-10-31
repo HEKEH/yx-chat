@@ -46,6 +46,7 @@ interface I18nMessage {
         send: string;
         image: string;
         file: string;
+        download: string;
     };
     setting: {
         general: string;

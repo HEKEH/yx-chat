@@ -51,6 +51,7 @@ var ChatMessageRequestType = /* @__PURE__ */ ((ChatMessageRequestType2) => {
 var ChatMessageFormat = /* @__PURE__ */ ((ChatMessageFormat2) => {
   ChatMessageFormat2["text"] = "text";
   ChatMessageFormat2["image"] = "image";
+  ChatMessageFormat2["video"] = "video";
   ChatMessageFormat2["file"] = "file";
   return ChatMessageFormat2;
 })(ChatMessageFormat || {});

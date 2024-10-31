@@ -70,7 +70,8 @@ var cn = {
     updateSuccessful: "\u4FEE\u6539\u6210\u529F",
     send: "\u53D1\u9001",
     image: "\u56FE\u7247",
-    file: "\u6587\u4EF6"
+    file: "\u6587\u4EF6",
+    download: "\u4E0B\u8F7D"
   },
   setting: {
     general: "\u901A\u7528",

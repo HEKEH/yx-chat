@@ -46,7 +46,8 @@ var en = {
     updateSuccessful: "Update successful",
     send: "Send",
     image: "Image",
-    file: "File"
+    file: "File",
+    download: "Download"
   },
   setting: {
     general: "General",

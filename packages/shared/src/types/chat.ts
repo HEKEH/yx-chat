@@ -57,12 +57,26 @@ export type FileChatMessageItem = {
   name: string;
 };
 
+export type VideoChatMessageItem = {
+  type: ChatMessageFormat.video;
+  data: string;
+};
+
+export type ImageChatMessageItem = {
+  type: ChatMessageFormat.image;
+  data: string;
+};
+
+export type TextChatMessageItem = {
+  type: ChatMessageFormat.text;
+  data: string;
+};
+
 export type ChatMessageItem =
-  | {
-      type: Exclude<ChatMessageFormat, ChatMessageFormat.file>;
-      data: string;
-    }
-  | FileChatMessageItem;
+  | VideoChatMessageItem
+  | FileChatMessageItem
+  | TextChatMessageItem
+  | ImageChatMessageItem;
 
 export type SendChatMessageBody = {
   to: string;

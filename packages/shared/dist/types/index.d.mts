@@ -1,6 +1,6 @@
 export { UserBasicInfo } from './user.mjs';
 export { AccountRequestType, Environment, LoginByTokenRequestBody, LoginRequestBody, LoginSuccessResponse, RegisterRequestBody, UpdateUserInfoRequestBody } from './account.mjs';
-export { ChatMessage, ChatMessageFormat, ChatMessageFormatList, ChatMessageItem, ChatMessageRequestType, ChatMessagesRecord, HistoryChatMessagesRequestBody, HistoryChatMessagesResponse, LastMessagesRequestBody, LastMessagesResponse, SendChatMessageBody, UpdateHistoryRequestBody, UpdateHistoryResponse } from './chat.mjs';
+export { ChatMessage, ChatMessageFormat, ChatMessageFormatList, ChatMessageItem, ChatMessageRequestType, ChatMessagesRecord, FileChatMessageItem, HistoryChatMessagesRequestBody, HistoryChatMessagesResponse, ImageChatMessageItem, LastMessagesRequestBody, LastMessagesResponse, SendChatMessageBody, TextChatMessageItem, UpdateHistoryRequestBody, UpdateHistoryResponse, VideoChatMessageItem } from './chat.mjs';
 export { FriendAddNotification, Notification, NotificationType } from './notification.mjs';
 export { AcceptFriendAddRequestBody, AcceptFriendAddRequestResponse, ContactRequestType, CreateGroupRequestBody, CreateGroupSuccessResponse, Friend, Group, JoinGroupRequestBody, JoinGroupSuccessResponse, RejectFriendAddRequestBody, SendFriendAddRequestBody, SendFriendAddRequestResponse } from './contact.mjs';
 export { AllRequestTypes } from './request-types.mjs';
