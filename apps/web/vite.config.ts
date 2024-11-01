@@ -21,9 +21,6 @@ export default defineConfig(({ mode }) => {
     alias['@yx-chat/shared'] = resolve(packagesDir, './shared/src');
   }
 
-  // const serverPath =
-  //   path || (mode === 'development' ? 'http://localhost:6870' : '/');
-
   return {
     define: {
       // see https://stackoverflow.com/questions/66140411/you-are-running-the-esm-bundler-build-of-vue-i18n-it-is-recommended-to-configur
@@ -46,15 +43,5 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias,
     },
-    // server: {
-    //   proxy: {
-    //     '/avatar': serverPath,
-    //     '/GroupAvatar': serverPath,
-    //     '/Avatar': {
-    //       target: serverPath,
-    //       rewrite: path => path.replace(/^\/Avatar/, '/avatar'),
-    //     },
-    //   },
-    // },
   };
 });
