@@ -6,7 +6,7 @@ export function getFileUrl(filename: string, downloadName?: string) {
   // const token = getToken();
   // url = `${url}?${TOKEN_HEADER_KEY}=${token}&${LANGUAGE_HEADER_KEY}=${i18n.global.locale.value}`;
   if (downloadName) {
-    url = `${url}&download-name=${encodeURIComponent(downloadName)}`;
+    url = `${url}?download-name=${encodeURIComponent(downloadName)}`;
   }
   return url;
 }

@@ -1,3 +1,4 @@
+import zlib from 'zlib';
 import { AssertionError } from 'assert';
 import {
   ACCEPT_LANGUAGES,
@@ -9,6 +10,7 @@ import {
 import { logger } from '@yx-chat/shared/logger';
 import { RESPONSE_CODE } from '@yx-chat/shared/types';
 import { Context, Next } from 'koa';
+import compress from 'koa-compress';
 import { v4 as uuid } from 'uuid';
 import config from '~/config';
 import i18n from '~/i18n';
@@ -125,3 +127,23 @@ export const tokenAuthMiddleware = async (ctx: Context, next: Next) => {
     return;
   }
 };
+
+export const compressMiddleware = compress({
+  // Enable compression for these mime types
+  filter: contentType => {
+    // Check if client accepts gzip
+    return /text|javascript|json|css|xml|html|image|plain|font|pdf|csv|markdown|yaml|yml|typescript|graphql|protobuf|rtf/i.test(
+      contentType,
+    );
+  },
+  // Compression threshold (don't compress responses below this size)
+  threshold: 2048,
+  // Support br and gzip
+  br: false, // Enable if you want brotli compression
+  gzip: {
+    flush: zlib.constants.Z_SYNC_FLUSH,
+    level: 6,
+  },
+  // Don't compress already compressed files
+  deflate: false,
+});
