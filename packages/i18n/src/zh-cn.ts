@@ -48,6 +48,9 @@ const cn: I18nMessage = {
     send: '发送',
     image: '图片',
     file: '文件',
+    video: '视频',
+    audio: '音频',
+    imageNotFound: '图片未找到',
     download: '下载',
   },
   setting: {

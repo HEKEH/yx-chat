@@ -4,7 +4,7 @@ import { ChatMessageModel } from '~/domain/models/chat/chat-message';
 import Self from '~/domain/models/self';
 import { ChatMessageFormat, ChatMessageItem } from '@yx-chat/shared/types';
 import { getFileUrl } from '~/utils/get-file-url';
-import { ElImage } from 'element-plus';
+import CustomImage from '~/components/image';
 import s from './index.module.sass';
 import FileChatMessage from './FileChatMessage';
 import VideoChatMessage from './VideoChatMessage';
@@ -39,7 +39,7 @@ const MessageBody = defineComponent({
                 const url = getFileUrl(item.data);
                 return (
                   <div key={index} class={s['image-message']}>
-                    <ElImage
+                    <CustomImage
                       class={s.image}
                       src={url}
                       preview-src-list={[url]}

@@ -1,4 +1,4 @@
-import { computed, defineComponent, PropType } from 'vue';
+import { computed, defineComponent } from 'vue';
 import styles from './index.module.sass';
 
 function getFileExt(filename: string) {

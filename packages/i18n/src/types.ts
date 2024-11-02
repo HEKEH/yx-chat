@@ -46,6 +46,9 @@ export interface I18nMessage {
     send: string;
     image: string;
     file: string;
+    video: string;
+    audio: string;
+    imageNotFound: string;
     download: string;
   };
   setting: {

@@ -48,6 +48,9 @@ const en: I18nMessage = {
     send: 'Send',
     image: 'Image',
     file: 'File',
+    video: 'Video',
+    audio: 'Audio',
+    imageNotFound: 'Image not found',
     download: 'Download',
   },
   setting: {

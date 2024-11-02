@@ -16,6 +16,7 @@ export enum ChatMessageFormat {
   video = 'video',
 
   file = 'file',
+  audio = 'audio',
 }
 
 export const ChatMessageFormatList: ChatMessageFormat[] =
@@ -67,6 +68,11 @@ export type ImageChatMessageItem = {
   data: string;
 };
 
+export type AudioChatMessageItem = {
+  type: ChatMessageFormat.audio;
+  data: string;
+};
+
 export type TextChatMessageItem = {
   type: ChatMessageFormat.text;
   data: string;
@@ -76,7 +82,8 @@ export type ChatMessageItem =
   | VideoChatMessageItem
   | FileChatMessageItem
   | TextChatMessageItem
-  | ImageChatMessageItem;
+  | ImageChatMessageItem
+  | AudioChatMessageItem;
 
 export type SendChatMessageBody = {
   to: string;

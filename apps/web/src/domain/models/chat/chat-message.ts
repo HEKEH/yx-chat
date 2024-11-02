@@ -44,6 +44,10 @@ export class ChatMessageModel {
           return `[${t('common.image')}]`;
         case ChatMessageFormat.file:
           return `[${t('common.file')}]`;
+        case ChatMessageFormat.video:
+          return `[${t('common.video')}]`;
+        case ChatMessageFormat.audio:
+          return `[${t('common.audio')}]`;
       }
     });
     const brief = briefs.join(' ');

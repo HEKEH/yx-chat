@@ -21,6 +21,6 @@ router.post(
   Controller.uploadFiles,
 );
 
-router.get('/file/:filename', tokenAuthMiddleware, Controller.getFile);
+router.get('/file/:filename', Controller.getFile);
 
 export default router;
