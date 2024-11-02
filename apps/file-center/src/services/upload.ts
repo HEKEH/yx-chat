@@ -6,21 +6,9 @@ import multer from '@koa/multer';
 import config from '~/config';
 import { BusinessError } from '~/utils/error';
 import { compressFile } from '~/utils/compress';
-import { getRandomId } from '@yx-chat/shared/utils';
-
-const TEMP_FILE_PREFIX = 'yx';
 
 // Custom storage engine
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, config.uploadDir);
-  },
-  filename: function (req, file, cb) {
-    logger.info('[upload file]', file.originalname);
-    // Temporarily use the original filename, we'll replace it later
-    cb(null, `${TEMP_FILE_PREFIX}_${getRandomId(10)}_${file.originalname}`);
-  },
-});
+const storage = multer.memoryStorage();
 
 export const uploadMulter = multer({
   storage,
@@ -32,10 +20,14 @@ export const uploadMulter = multer({
 });
 
 // Generate file hash
-async function generateFileHash(fileBuffer: Buffer) {
+function generateHashFileName(file: multer.File) {
+  const fileExtension = path.extname(file.originalname);
   const hashSum = crypto.createHash('sha256');
-  hashSum.update(fileBuffer);
-  return hashSum.digest('hex');
+  hashSum.update(file.buffer);
+  const fileHash = hashSum.digest('hex');
+  // new filename = hash + original extension
+  const newFilename = `${fileHash}${fileExtension}`;
+  return newFilename;
 }
 
 /** @returns filename */
@@ -46,29 +38,23 @@ export const uploadSingleFile = async (
   if (!file) {
     throw new BusinessError('No file uploaded');
   }
-  const oldPath = file.path;
-  const fileExtension = path.extname(file.originalname);
+  try {
+    const newFilename = generateHashFileName(file);
+    const filePath = path.join(config.uploadDir, newFilename);
 
-  // generate file hash
-  const fileBuffer = await fs.readFile(oldPath);
-  const fileHash = await generateFileHash(fileBuffer);
+    if (shouldCompress) {
+      await compressFile(file.buffer, filePath);
+    } else {
+      await fs.writeFile(filePath, file.buffer);
+      await fs.chmod(filePath, 0o666);
+    }
 
-  // new filename = hash + original extension
-  const newFilename = `${fileHash}${fileExtension}`;
-  const newPath = path.join(config.uploadDir, newFilename);
-
-  if (shouldCompress) {
-    // Compress file
-    await compressFile(fileBuffer, newPath);
-    // Delete original file
-    await fs.unlink(oldPath);
-  } else {
-    await fs.rename(oldPath, newPath);
-    // set file permission to readonly and writable, but not executable
-    await fs.chmod(newPath, 0o666);
+    logger.info('[upload file] success', newFilename);
+    return newFilename;
+  } finally {
+    // Clean up memory
+    file.buffer = Buffer.alloc(0);
   }
-  logger.info('[upload file] success', newFilename);
-  return newFilename;
 };
 
 export const uploadFiles = async (files: multer.File[]) => {
