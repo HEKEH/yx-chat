@@ -41,9 +41,12 @@ const VideoPlayer = defineComponent({
     const artRef = ref<HTMLDivElement | null>(null);
     const isFullscreen = ref(false);
     const downloadIconRef = ref<HTMLElement>(createDownloadIcon());
+    const hasError = ref(false);
+    const isLoading = ref(false);
 
     const initArtplayer = () => {
       if (!artRef.value) return;
+      isLoading.value = true;
       instance.value?.destroy(false);
       downloadIconRef.value.setAttribute('aria-label', t('common.download'));
       const art = new Artplayer(
@@ -66,14 +69,22 @@ const VideoPlayer = defineComponent({
         },
         () => {
           if (artRef.value) {
+            hasError.value = false;
             const video = art.video;
             const ratio = video.videoWidth / video.videoHeight;
             artRef.value.style.aspectRatio = `${ratio}`;
           }
+          isLoading.value = false;
         },
       );
       art.on('fullscreen', state => {
         isFullscreen.value = state;
+      });
+      art.on('error', (e: any, reconnectTime: number) => {
+        if (e.type === 'error' && reconnectTime >= 5) {
+          isLoading.value = false;
+          hasError.value = true;
+        }
       });
       instance.value = art;
       nextTick(() => {
@@ -89,13 +100,21 @@ const VideoPlayer = defineComponent({
     });
     return () => (
       <div
+        v-loading={isLoading.value}
         ref={artRef}
         class={{
           [s['video-player']]: true,
           [s['video-player-small']]:
             props.size === 'small' && !isFullscreen.value,
         }}
-      ></div>
+      >
+        <div class={s['video-player-error']}>{t('common.videoLoadFailed')}</div>
+        {hasError.value && (
+          <div class={s['video-player-error']}>
+            {t('common.videoLoadFailed')}
+          </div>
+        )}
+      </div>
     );
   },
 });
