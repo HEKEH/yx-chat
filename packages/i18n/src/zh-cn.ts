@@ -52,6 +52,7 @@ const cn: I18nMessage = {
     audio: '音频',
     imageNotFound: '图片未找到',
     videoLoadFailed: '视频加载失败',
+    audioLoadFailed: '音频加载失败',
     download: '下载',
   },
   setting: {

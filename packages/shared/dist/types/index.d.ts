@@ -1,6 +1,6 @@
 export { UserBasicInfo } from './user.js';
 export { AccountRequestType, Environment, LoginByTokenRequestBody, LoginRequestBody, LoginSuccessResponse, RegisterRequestBody, UpdateUserInfoRequestBody } from './account.js';
-export { ChatMessage, ChatMessageFormat, ChatMessageFormatList, ChatMessageItem, ChatMessageRequestType, ChatMessagesRecord, FileChatMessageItem, HistoryChatMessagesRequestBody, HistoryChatMessagesResponse, ImageChatMessageItem, LastMessagesRequestBody, LastMessagesResponse, SendChatMessageBody, TextChatMessageItem, UpdateHistoryRequestBody, UpdateHistoryResponse, VideoChatMessageItem } from './chat.js';
+export { AudioChatMessageItem, ChatMessage, ChatMessageFormat, ChatMessageFormatList, ChatMessageItem, ChatMessageRequestType, ChatMessagesRecord, FileChatMessageItem, HistoryChatMessagesRequestBody, HistoryChatMessagesResponse, ImageChatMessageItem, LastMessagesRequestBody, LastMessagesResponse, SendChatMessageBody, TextChatMessageItem, UpdateHistoryRequestBody, UpdateHistoryResponse, VideoChatMessageItem } from './chat.js';
 export { FriendAddNotification, Notification, NotificationType } from './notification.js';
 export { AcceptFriendAddRequestBody, AcceptFriendAddRequestResponse, ContactRequestType, CreateGroupRequestBody, CreateGroupSuccessResponse, Friend, Group, JoinGroupRequestBody, JoinGroupSuccessResponse, RejectFriendAddRequestBody, SendFriendAddRequestBody, SendFriendAddRequestResponse } from './contact.js';
 export { AllRequestTypes } from './request-types.js';

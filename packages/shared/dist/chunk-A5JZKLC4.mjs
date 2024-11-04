@@ -15,6 +15,7 @@ var ChatMessageFormat = /* @__PURE__ */ ((ChatMessageFormat2) => {
   ChatMessageFormat2["image"] = "image";
   ChatMessageFormat2["video"] = "video";
   ChatMessageFormat2["file"] = "file";
+  ChatMessageFormat2["audio"] = "audio";
   return ChatMessageFormat2;
 })(ChatMessageFormat || {});
 var ChatMessageFormatList = enum2ValueArray(ChatMessageFormat);

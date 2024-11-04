@@ -71,6 +71,11 @@ var cn = {
     send: "\u53D1\u9001",
     image: "\u56FE\u7247",
     file: "\u6587\u4EF6",
+    video: "\u89C6\u9891",
+    audio: "\u97F3\u9891",
+    imageNotFound: "\u56FE\u7247\u672A\u627E\u5230",
+    videoLoadFailed: "\u89C6\u9891\u52A0\u8F7D\u5931\u8D25",
+    audioLoadFailed: "\u97F3\u9891\u52A0\u8F7D\u5931\u8D25",
     download: "\u4E0B\u8F7D"
   },
   setting: {

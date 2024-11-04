@@ -47,6 +47,11 @@ var en = {
     send: "Send",
     image: "Image",
     file: "File",
+    video: "Video",
+    audio: "Audio",
+    imageNotFound: "Image not found",
+    videoLoadFailed: "Video load failed",
+    audioLoadFailed: "Audio load failed",
     download: "Download"
   },
   setting: {
