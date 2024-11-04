@@ -79,8 +79,81 @@ const useVolume = (player: Ref<HTMLAudioElement | null>) => {
   };
 };
 
+const formatTime = (time: number) => {
+  const min = Math.floor(time / 60);
+  const sec = Math.floor(time % 60);
+  return `${min < 10 ? `0${min}` : min}:${sec < 10 ? `0${sec}` : sec}`;
+};
+
 const useProcess = (player: Ref<HTMLAudioElement | null>) => {
-  // TODO: 进度条
+  const progressBar = ref<HTMLElement | null>(null);
+  const progressBarPin = ref<HTMLElement | null>(null);
+  const currentTime = ref('00:00');
+  const totalTime = ref('00:00');
+  const isDragging = ref(false);
+  const percent = ref(0);
+
+  const updateProgress = () => {
+    if (!player.value || !progressBar.value || isDragging.value) return;
+
+    const current = player.value.currentTime;
+    const duration = player.value.duration;
+    percent.value = current / duration;
+
+    currentTime.value = formatTime(current);
+  };
+
+  const handleProgressBarClick = (event: MouseEvent) => {
+    if (!player.value || !progressBar.value?.parentElement) return;
+
+    const bounds = progressBar.value.parentElement.getBoundingClientRect();
+    const x = event.clientX - bounds.left;
+    const width = bounds.width;
+    percent.value = x / width;
+    player.value.currentTime = percent.value * player.value.duration;
+  };
+
+  const startDraggingProcess = (event: MouseEvent) => {
+    event.stopPropagation();
+    event.preventDefault();
+    isDragging.value = true;
+    document.addEventListener('mousemove', handleDraggingProcess);
+    document.addEventListener('mouseup', stopDraggingProcess);
+  };
+
+  const handleDraggingProcess = (event: MouseEvent) => {
+    if (!player.value || !progressBar.value?.parentElement) return;
+
+    const bounds = progressBar.value.parentElement.getBoundingClientRect();
+    const x = Math.max(0, Math.min(event.clientX - bounds.left, bounds.width));
+    percent.value = x / bounds.width;
+    player.value.currentTime = percent.value * player.value.duration;
+  };
+
+  const removeDraggingProcessListeners = () => {
+    document.removeEventListener('mousemove', handleDraggingProcess);
+    document.removeEventListener('mouseup', stopDraggingProcess);
+  };
+
+  const stopDraggingProcess = () => {
+    isDragging.value = false;
+    removeDraggingProcessListeners();
+  };
+
+  onBeforeUnmount(() => {
+    removeDraggingProcessListeners();
+  });
+
+  return {
+    progressBar,
+    progressBarPin,
+    currentTime,
+    totalTime,
+    percent,
+    updateProgress,
+    handleProgressBarClick,
+    startDraggingProcess,
+  };
 };
 
 const AudioPlayer = defineComponent({
@@ -100,28 +173,28 @@ const AudioPlayer = defineComponent({
   setup(props) {
     const container = ref<HTMLElement | null>(null);
     const player = ref<HTMLAudioElement | null>(null);
-    const progressBar = ref<HTMLElement | null>(null);
-    const progressBarPin = ref<HTMLElement | null>(null);
-    const currentTime = ref('00:00');
-    const totalTime = ref('00:00');
     const isPlaying = ref(false);
     const isLoading = ref(false);
-    const isDragging = ref(false);
 
-    const formatTime = (time: number) => {
-      const min = Math.floor(time / 60);
-      const sec = Math.floor(time % 60);
-      return `${min < 10 ? `0${min}` : min}:${sec < 10 ? `0${sec}` : sec}`;
-    };
+    const {
+      progressBar,
+      progressBarPin,
+      currentTime,
+      totalTime,
+      percent,
+      updateProgress,
+      handleProgressBarClick,
+      startDraggingProcess,
+    } = useProcess(player);
 
-    // const stopOtherPlayers = () => {
-    //   const players = document.querySelectorAll('.audio-player audio');
-    //   players.forEach(audioElement => {
-    //     if (audioElement !== player.value) {
-    //       audioElement.pause();
-    //     }
-    //   });
-    // };
+    const {
+      volumeBar,
+      volumeBarPin,
+      volumeBarWrapper,
+      volume,
+      handleVolumeBarClick,
+      startDraggingVolume,
+    } = useVolume(player);
 
     const togglePlay = async () => {
       if (!player.value) return;
@@ -145,60 +218,6 @@ const AudioPlayer = defineComponent({
       }
     };
 
-    const updateProgress = () => {
-      if (!player.value || !progressBar.value || isDragging.value) return;
-
-      const current = player.value.currentTime;
-      const duration = player.value.duration;
-      const percent = (current / duration) * 100;
-
-      progressBar.value.style.width = `${percent}%`;
-      currentTime.value = formatTime(current);
-    };
-
-    const handleProgressBarClick = (event: MouseEvent) => {
-      if (!player.value || !progressBar.value?.parentElement) return;
-
-      const bounds = progressBar.value.parentElement.getBoundingClientRect();
-      const x = event.clientX - bounds.left;
-      const width = bounds.width;
-      const percentage = x / width;
-
-      player.value.currentTime = percentage * player.value.duration;
-    };
-
-    const startDraggingProcess = (event: MouseEvent) => {
-      event.stopPropagation();
-      event.preventDefault();
-      isDragging.value = true;
-      document.addEventListener('mousemove', handleDraggingProcess);
-      document.addEventListener('mouseup', stopDraggingProcess);
-    };
-
-    const handleDraggingProcess = (event: MouseEvent) => {
-      if (!player.value || !progressBar.value?.parentElement) return;
-
-      const bounds = progressBar.value.parentElement.getBoundingClientRect();
-      const x = Math.max(
-        0,
-        Math.min(event.clientX - bounds.left, bounds.width),
-      );
-      const percentage = x / bounds.width;
-
-      progressBar.value.style.width = `${percentage * 100}%`;
-      player.value.currentTime = percentage * player.value.duration;
-    };
-
-    const removeDraggingProcessListeners = () => {
-      document.removeEventListener('mousemove', handleDraggingProcess);
-      document.removeEventListener('mouseup', stopDraggingProcess);
-    };
-
-    const stopDraggingProcess = () => {
-      isDragging.value = false;
-      removeDraggingProcessListeners();
-    };
-
     const playerEvents = {
       timeupdate: updateProgress,
       loadedmetadata: () => {
@@ -212,15 +231,6 @@ const AudioPlayer = defineComponent({
       },
     };
 
-    const {
-      volumeBar,
-      volumeBarPin,
-      volumeBarWrapper,
-      volume,
-      handleVolumeBarClick,
-      startDraggingVolume,
-    } = useVolume(player);
-
     onMounted(() => {
       if (!player.value) return;
       Object.entries(playerEvents).forEach(([event, handler]) => {
@@ -230,8 +240,6 @@ const AudioPlayer = defineComponent({
 
     onBeforeUnmount(() => {
       if (!player.value) return;
-
-      removeDraggingProcessListeners();
 
       Object.entries(playerEvents).forEach(([event, handler]) => {
         player.value?.removeEventListener(event, handler);
@@ -271,7 +279,11 @@ const AudioPlayer = defineComponent({
               onClick={handleProgressBarClick}
             >
               <div class={s['progress-bar']}>
-                <div class={s['progress-bar__fill']} ref={progressBar}>
+                <div
+                  class={s['progress-bar__fill']}
+                  style={{ width: `${percent.value * 100}%` }}
+                  ref={progressBar}
+                >
                   <div
                     class={s['progress-bar__pin']}
                     ref={progressBarPin}

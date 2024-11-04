@@ -10,130 +10,132 @@
   border-radius: 4px
   user-select: none
   background-color: #fff
+  cursor: default
 
-.player-controls
-  display: flex
-  align-items: center
-  width: 100%
-  gap: 8px
-
-.play-pause-btn
-  width: 28px
-  height: 28px
-  border: none
-  cursor: pointer
-  display: flex
-  background: transparent
-  justify-content: center
-  align-items: center
-
-  &.loading
-    opacity: 0.5
-    cursor: wait
-  &__icon
-    width: 12px
-    height: 16px
-    fill: #566574
-
-.controls
-  flex: 1
-  display: flex
-  align-items: center
-  gap: 8px
-
-.progress-bar-wrapper
-  flex: 1
-  cursor: pointer
-  padding: 8px 0
-
-.progress-bar
-  height: 4px
-  border-radius: 2px
-  background-color: #e4e4e4
-
-  &__fill
-    height: 100%
-    background-color: var(--primary-color-10)
-    border-radius: 2px
-    position: relative
-    transition: width 0.1s ease-in-out
-    width: 0
-
-  &__pin
-    width: 12px
-    height: 12px
-    background-color: var(--primary-color-10)
-    border-radius: 50%
-    position: absolute
-    right: -6px
-    top: 50%
-    transform: translateY(-50%)
-    cursor: grab
-
-  &__pin:active
-    cursor: grabbing
-
-.controls__current-time,
-.controls__total-time
-  font-size: 12px
-  color: #566574
-  width: 35px
-
-.volume-controls
-  position: relative
-  display: flex
-  align-items: center
-
-.volume-btn
-  width: 32px
-  height: 32px
-  border: none
-  background: none
-  cursor: pointer
-  display: flex
-  justify-content: center
-  align-items: center
-
-  &__icon
-    width: 18px
-    height: 18px
-    fill: #566574
-
-.volume-bar-wrapper
-  height: 100px
-  width: 20px
-  display: flex
-  justify-content: center
-
-.volume-bar
-  width: 4px
-  height: 100%
-  background: #e4e4e4
-  border-radius: 2px
-  position: relative
-  cursor: pointer
-
-  &__fill
-    position: absolute
-    bottom: 0
+  .player-controls
+    display: flex
+    align-items: center
     width: 100%
-    background: var(--primary-color-10)
+    gap: 8px
+
+  .play-pause-btn
+    height: 28px
+    padding: 0 2px
+    border: none
+    cursor: pointer
+    display: flex
+    background: transparent
+    justify-content: center
+    align-items: center
+
+    &.loading
+      opacity: 0.5
+      cursor: wait
+    &__icon
+      width: 12px
+      height: 16px
+      fill: #566574
+
+  .controls
+    flex: 1
+    display: flex
+    align-items: center
+    gap: 8px
+
+  .progress-bar-wrapper
+    flex: 1
+    cursor: pointer
+    padding: 8px 0
+
+  .progress-bar
+    height: 4px
     border-radius: 2px
-    transition: height 0.1s ease-in-out
+    background-color: #e4e4e4
 
-  &__pin
-    width: 12px
-    height: 12px
-    background: var(--primary-color-10)
-    border-radius: 50%
-    position: absolute
-    right: -4px
-    top: -6px
-    cursor: grab
+    &__fill
+      height: 100%
+      background-color: var(--primary-color-10)
+      border-radius: 2px
+      position: relative
+      transition: width 0.1s ease-in-out
+      width: 0
 
-    &:active
+    &__pin
+      width: 12px
+      height: 12px
+      background-color: var(--primary-color-10)
+      border-radius: 50%
+      position: absolute
+      right: -6px
+      top: 50%
+      transform: translateY(-50%)
+      cursor: grab
+
+    &__pin:active
       cursor: grabbing
+
+  .controls__current-time,
+  .controls__total-time
+    font-size: 12px
+    color: #566574
+    width: fit-content
+    padding: 0 2px
+
+  .volume-controls
+    position: relative
+    display: flex
+    align-items: center
+
+  .volume-btn
+    height: 28px
+    padding: 0 2px
+    border: none
+    background: none
+    cursor: pointer
+    display: flex
+    justify-content: center
+    align-items: center
+
+    &__icon
+      width: 18px
+      height: 18px
+      fill: #566574
 
 .volume-popover
   min-width: unset !important
-  padding: 8px 0 !important
+  padding: 10px 0 8px 0 !important
+
+  .volume-bar-wrapper
+    height: 100px
+    width: 20px
+    display: flex
+    justify-content: center
+
+  .volume-bar
+    width: 4px
+    height: 100%
+    background: #e4e4e4
+    border-radius: 2px
+    position: relative
+    cursor: pointer
+
+    &__fill
+      position: absolute
+      bottom: 0
+      width: 100%
+      background: var(--primary-color-10)
+      border-radius: 2px
+      transition: height 0.1s ease-in-out
+
+    &__pin
+      width: 10px
+      height: 10px
+      background: var(--primary-color-10)
+      border-radius: 50%
+      position: absolute
+      right: -3px
+      top: -5px
+      cursor: grab
+
+      &:active
+        cursor: grabbing
