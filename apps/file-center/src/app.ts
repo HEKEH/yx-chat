@@ -4,7 +4,6 @@ import { corsMiddleware } from '@yx-chat/shared/utils';
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import koaStatic from 'koa-static';
-import range from 'koa-range';
 import config from './config';
 import {
   addContextPropsMiddleware,
@@ -20,7 +19,6 @@ export default function initApp() {
 
   // Add compression middleware
   app.use(compressMiddleware);
-  app.use(range);
 
   // serve public static files
   app.use(

@@ -2,6 +2,7 @@ import Router from 'koa-router';
 import Controller from '~/controllers';
 import { tokenAuthMiddleware } from '~/middlewares';
 import { uploadMulter } from '~/services/upload';
+import range from 'koa-range';
 
 const router = new Router();
 
@@ -21,6 +22,10 @@ router.post(
   Controller.uploadFiles,
 );
 
-router.get('/file/:filename', Controller.getFile);
+router.get(
+  '/file/:filename',
+  range, // handle range request of video or audio
+  Controller.getFile,
+);
 
 export default router;

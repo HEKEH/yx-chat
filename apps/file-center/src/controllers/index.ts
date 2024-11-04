@@ -39,9 +39,9 @@ export default class Controller {
       const downloadName = (ctx.query['download-name'] || filename) as string;
       const sanitizedName = encodeURIComponent(downloadName);
       if (
-        contentType.startsWith('image/') ||
-        contentType.startsWith('video/') ||
-        contentType.startsWith('audio/')
+        ['image', 'video', 'audio'].some(type =>
+          contentType.startsWith(`${type}/`),
+        )
       ) {
         ctx.set('Content-Disposition', `inline; filename=${sanitizedName}`);
       } else {
