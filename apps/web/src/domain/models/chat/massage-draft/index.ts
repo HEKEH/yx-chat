@@ -10,11 +10,13 @@ import { ImageDraftItem } from './image-draft-item';
 import { TextDraftItem } from './text-draft-item';
 import { VideoDraftItem } from './video-draft-item';
 import { FileDraftItem } from './file-draft-item';
+import { AudioDraftItem } from './audio-draft-item';
 
 export type DraftItem =
   | TextDraftItem
   | ImageDraftItem
   | VideoDraftItem
+  | AudioDraftItem
   | FileDraftItem;
 
 export default class MessageDraft {
@@ -110,6 +112,8 @@ export default class MessageDraft {
       this._items.push(new ImageDraftItem(file));
     } else if (file.type.startsWith('video/')) {
       this._items.push(new VideoDraftItem(file));
+    } else if (file.type.startsWith('audio/')) {
+      this._items.push(new AudioDraftItem(file));
     } else {
       this._items.push(new FileDraftItem(file));
     }

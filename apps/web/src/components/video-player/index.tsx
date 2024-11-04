@@ -38,17 +38,21 @@ const VideoPlayer = defineComponent({
   setup(props, { emit }) {
     const { t, locale } = useI18n();
     const instance = ref<Artplayer | null>(null);
-    const artRef = ref<HTMLDivElement | null>(null);
+    const containerRef = ref<HTMLDivElement | null>(null);
     const isFullscreen = ref(false);
     const downloadIconRef = ref<HTMLElement>(createDownloadIcon());
     const hasError = ref(false);
     const isLoading = ref(false);
 
-    const initArtplayer = () => {
-      if (!artRef.value) return;
+    const initArtplayer = async () => {
+      if (!containerRef.value) return;
       isLoading.value = true;
-      instance.value?.destroy(false);
+      if (instance.value) {
+        instance.value.destroy(true);
+        instance.value = null;
+      }
       downloadIconRef.value.setAttribute('aria-label', t('common.download'));
+      await nextTick();
       const art = new Artplayer(
         {
           autoSize: true,
@@ -65,14 +69,14 @@ const VideoPlayer = defineComponent({
             ...(props.option.controls || []),
           ],
           ...props.option,
-          container: artRef.value,
+          container: containerRef.value,
         },
         () => {
-          if (artRef.value) {
+          if (containerRef.value) {
             hasError.value = false;
             const video = art.video;
             const ratio = video.videoWidth / video.videoHeight;
-            artRef.value.style.aspectRatio = `${ratio}`;
+            containerRef.value.style.aspectRatio = `${ratio}`;
           }
           isLoading.value = false;
         },
@@ -87,28 +91,26 @@ const VideoPlayer = defineComponent({
         }
       });
       instance.value = art;
-      nextTick(() => {
-        emit('getInstance', instance.value);
-      });
+      emit('getInstance', instance.value);
     };
     watch(() => locale.value, initArtplayer);
     watch(() => props.option, initArtplayer, { deep: true });
 
     onMounted(initArtplayer);
     onBeforeUnmount(() => {
-      instance.value?.destroy(false);
+      instance.value?.destroy(true);
+      instance.value = null;
     });
     return () => (
       <div
         v-loading={isLoading.value}
-        ref={artRef}
+        ref={containerRef}
         class={{
           [s['video-player']]: true,
           [s['video-player-small']]:
             props.size === 'small' && !isFullscreen.value,
         }}
       >
-        <div class={s['video-player-error']}>{t('common.videoLoadFailed')}</div>
         {hasError.value && (
           <div class={s['video-player-error']}>
             {t('common.videoLoadFailed')}

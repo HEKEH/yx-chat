@@ -6,6 +6,7 @@ import { TextDraftInput } from './TextDraftInput';
 import { ImageDraftInput } from './ImageDraftInput';
 import { FileDraftInput } from './FileDraftInput';
 import { VideoDraftInput } from './VideoDraftInput';
+import { AudioDraftInput } from './AudioDraftInput';
 
 export const DraftInput = defineComponent({
   name: 'DraftInput',
@@ -63,6 +64,14 @@ export const DraftInput = defineComponent({
               case ChatMessageFormat.video:
                 return (
                   <VideoDraftInput
+                    key={item.key}
+                    item={item}
+                    onDelete={onDelete}
+                  />
+                );
+              case ChatMessageFormat.audio:
+                return (
+                  <AudioDraftInput
                     key={item.key}
                     item={item}
                     onDelete={onDelete}

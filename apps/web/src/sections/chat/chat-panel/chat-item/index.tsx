@@ -8,6 +8,7 @@ import CustomImage from '~/components/image';
 import s from './index.module.sass';
 import FileChatMessage from './FileChatMessage';
 import VideoChatMessage from './VideoChatMessage';
+import AudioChatMessage from './AudioChatMessage';
 
 const MessageBody = defineComponent({
   name: 'MessageBody',
@@ -51,6 +52,9 @@ const MessageBody = defineComponent({
               }
               if (item.type === ChatMessageFormat.video) {
                 return <VideoChatMessage key={index} value={item} />;
+              }
+              if (item.type === ChatMessageFormat.audio) {
+                return <AudioChatMessage key={index} value={item} />;
               }
               if (item.type === ChatMessageFormat.file) {
                 return (
