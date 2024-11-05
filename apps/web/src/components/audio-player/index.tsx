@@ -1,5 +1,6 @@
 import { ElPopover } from 'element-plus';
 import {
+  computed,
   defineComponent,
   onBeforeUnmount,
   onMounted,
@@ -22,15 +23,17 @@ const useVolume = (player: Ref<HTMLAudioElement | null>) => {
   const volumeBarPin = ref<HTMLElement | null>(null);
   const volumeBarWrapper = ref<HTMLElement | null>(null);
   const isDraggingVolume = ref(false);
-  const volume = ref(1);
+  const volumePercentage = ref(1);
+  const isVolumeOpen = ref(true);
 
   const handleVolumeBarClick = (event: MouseEvent) => {
     if (!volumeBar.value?.parentElement) return;
+    isVolumeOpen.value = true;
     const bounds = volumeBar.value.parentElement.getBoundingClientRect();
     const y = bounds.bottom - event.clientY;
     const height = bounds.height;
     const percentage = Math.max(0, Math.min(y / height, 1));
-    volume.value = percentage;
+    volumePercentage.value = percentage;
   };
 
   const startDraggingVolume = (event: MouseEvent) => {
@@ -47,7 +50,7 @@ const useVolume = (player: Ref<HTMLAudioElement | null>) => {
     const y = bounds.bottom - event.clientY;
     const percentage =
       Math.round(Math.max(0, Math.min((y / bounds.height) * 100, 100))) / 100;
-    volume.value = percentage;
+    volumePercentage.value = percentage;
   };
 
   const removeDraggingVolumeListeners = () => {
@@ -64,6 +67,14 @@ const useVolume = (player: Ref<HTMLAudioElement | null>) => {
     removeDraggingVolumeListeners();
   });
 
+  const toggleVolumeOpen = () => {
+    isVolumeOpen.value = !isVolumeOpen.value;
+  };
+
+  const volume = computed(() => {
+    return isVolumeOpen.value ? volumePercentage.value : 0;
+  });
+
   watchEffect(() => {
     if (!player.value) return;
     player.value.volume = volume.value;
@@ -76,6 +87,7 @@ const useVolume = (player: Ref<HTMLAudioElement | null>) => {
     handleVolumeBarClick,
     startDraggingVolume,
     volumeBarWrapper,
+    toggleVolumeOpen,
   };
 };
 
@@ -194,6 +206,7 @@ const AudioPlayer = defineComponent({
       volume,
       handleVolumeBarClick,
       startDraggingVolume,
+      toggleVolumeOpen,
     } = useVolume(player);
 
     const togglePlay = async () => {
@@ -303,7 +316,7 @@ const AudioPlayer = defineComponent({
             <div class={s['right-controls']}>
               <ElPopover
                 placement="top"
-                trigger="click"
+                trigger="hover"
                 width="auto"
                 showArrow={false}
                 popperClass={s['volume-popover']}
@@ -311,22 +324,26 @@ const AudioPlayer = defineComponent({
               >
                 {{
                   reference: () => (
-                    <button class={s['control-btn']}>
+                    <button class={s['control-btn']} onClick={toggleVolumeOpen}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
+                        viewBox="0 0 22 22"
                         class={s['control-btn__icon']}
                       >
-                        <path
-                          fill-rule="evenodd"
-                          d={
-                            volume.value === 0
-                              ? 'M0 7.667v8h5.333L12 22.333V1L5.333 7.667'
-                              : volume.value < 0.5
-                              ? 'M0 7.667v8h5.333L12 22.333V1L5.333 7.667M17.333 11.373C17.333 9.013 16 6.987 14 6v10.707c2-.947 3.333-2.987 3.333-5.334z'
-                              : 'M14.667 0v2.747c3.853 1.146 6.666 4.72 6.666 8.946 0 4.227-2.813 7.787-6.666 8.934v2.76C20 22.173 24 17.4 24 11.693 24 5.987 20 1.213 14.667 0zM18 11.693c0-2.36-1.333-4.386-3.333-5.373v10.707c2-.947 3.333-2.987 3.333-5.334zm-18-4v8h5.333L12 22.36V1.027L5.333 7.693H0z'
-                          }
-                        />
+                        {volume.value === 0 ? (
+                          <>
+                            <path d="M15 11a3.998 3.998 0 0 0-2-3.465v2.636l1.865 1.865A4.02 4.02 0 0 0 15 11z"></path>
+                            <path d="M13.583 5.583A5.998 5.998 0 0 1 17 11a6 6 0 0 1-.585 2.587l1.477 1.477a8.001 8.001 0 0 0-3.446-11.286 1 1 0 0 0-.863 1.805zm5.195 13.195-2.121-2.121-1.414-1.414-1.415-1.415L13 13l-2-2-3.889-3.889-3.889-3.889a.999.999 0 1 0-1.414 1.414L5.172 8H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h1l4.188 3.35a.5.5 0 0 0 .812-.39v-3.131l2.587 2.587-.01.005a1 1 0 0 0 .86 1.806c.215-.102.424-.214.627-.333l2.3 2.3a1.001 1.001 0 0 0 1.414-1.416zM11 5.04a.5.5 0 0 0-.813-.39L8.682 5.854 11 8.172V5.04z"></path>
+                          </>
+                        ) : (
+                          <>
+                            <path
+                              fill-rule="evenodd"
+                              d="M10.188 4.65 6 8H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h1l4.188 3.35a.5.5 0 0 0 .812-.39V5.04a.498.498 0 0 0-.812-.39zm4.258-.872a1 1 0 0 0-.862 1.804 6.002 6.002 0 0 1-.007 10.838 1 1 0 0 0 .86 1.806A8.001 8.001 0 0 0 19 11a8.001 8.001 0 0 0-4.554-7.222z"
+                            />
+                            <path d="M15 11a3.998 3.998 0 0 0-2-3.465v6.93A3.998 3.998 0 0 0 15 11z"></path>
+                          </>
+                        )}
                       </svg>
                     </button>
                   ),
@@ -367,7 +384,7 @@ const AudioPlayer = defineComponent({
                   >
                     <path
                       fill-rule="evenodd"
-                      d="M20 8h-5V2H9v6H4l8 9 8-9zM4 19v3h16v-3H4z"
+                      d="M19 9h-4V3H9v6H5l7 8 7-8zM5 18v3h14v-3H5z"
                     />
                   </svg>
                 </button>
