@@ -47,11 +47,15 @@ export const AudioDraftInput = defineComponent({
         URL.revokeObjectURL(objectUrl.value);
       }
     });
-
+    const audioPlayerOptions = { showDownloadButton: false };
     return () => {
       return objectUrl.value ? (
         <div class={s['audio-wrapper']} onClick={e => e.stopPropagation()}>
-          <AudioPlayer class={s.audio} url={objectUrl.value} />
+          <AudioPlayer
+            class={s.audio}
+            url={objectUrl.value}
+            options={audioPlayerOptions}
+          />
           {props.item.errorMsg ? (
             <span class={commonS.error}>{`(${props.item.errorMsg})`}</span>
           ) : null}

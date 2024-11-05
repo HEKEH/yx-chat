@@ -246,112 +246,139 @@ const AudioPlayer = defineComponent({
       });
     });
 
-    return () => (
-      <div class={s['audio-player']} ref={container}>
-        <div class={s['player-controls']}>
-          <button
-            class={`${s['play-pause-btn']} ${
-              isLoading.value ? s['loading'] : ''
-            }`}
-            onClick={togglePlay}
-            disabled={isLoading.value}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 18 24"
-              class={s['play-pause-btn__icon']}
+    return () => {
+      const { showDownloadButton = true } = props.options;
+      return (
+        <div class={s['audio-player']} ref={container}>
+          <div class={s['player-controls']}>
+            <button
+              class={`${s['play-pause-btn']} ${
+                isLoading.value ? s['loading'] : ''
+              }`}
+              onClick={togglePlay}
+              disabled={isLoading.value}
             >
-              <path
-                fill-rule="evenodd"
-                d={
-                  isPlaying.value
-                    ? 'M0 0h6v24H0zM12 0h6v24h-6z'
-                    : 'M18 12L0 24V0'
-                }
-              />
-            </svg>
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 18 24"
+                class={s['play-pause-btn__icon']}
+              >
+                <path
+                  fill-rule="evenodd"
+                  d={
+                    isPlaying.value
+                      ? 'M0 0h6v24H0zM12 0h6v24h-6z'
+                      : 'M18 12L0 24V0'
+                  }
+                />
+              </svg>
+            </button>
 
-          <div class={s['controls']}>
-            <span class={s['controls__current-time']}>{currentTime.value}</span>
-            <div
-              class={s['progress-bar-wrapper']}
-              onClick={handleProgressBarClick}
-            >
-              <div class={s['progress-bar']}>
-                <div
-                  class={s['progress-bar__fill']}
-                  style={{ width: `${percent.value * 100}%` }}
-                  ref={progressBar}
-                >
+            <div class={s['controls']}>
+              <span class={s['controls__current-time']}>
+                {currentTime.value}
+              </span>
+              <div
+                class={s['progress-bar-wrapper']}
+                onClick={handleProgressBarClick}
+              >
+                <div class={s['progress-bar']}>
                   <div
-                    class={s['progress-bar__pin']}
-                    ref={progressBarPin}
-                    onMousedown={startDraggingProcess}
-                    onDragstart={e => e.stopPropagation()}
-                  ></div>
+                    class={s['progress-bar__fill']}
+                    style={{ width: `${percent.value * 100}%` }}
+                    ref={progressBar}
+                  >
+                    <div
+                      class={s['progress-bar__pin']}
+                      ref={progressBarPin}
+                      onMousedown={startDraggingProcess}
+                      onDragstart={e => e.stopPropagation()}
+                    ></div>
+                  </div>
                 </div>
               </div>
+              <span class={s['controls__total-time']}>{totalTime.value}</span>
             </div>
-            <span class={s['controls__total-time']}>{totalTime.value}</span>
-          </div>
 
-          <div class={s['volume-controls']}>
-            <ElPopover
-              placement="top"
-              trigger="click"
-              width="auto"
-              showArrow={false}
-              popperClass={s['volume-popover']}
-              offset={2}
-            >
-              {{
-                reference: () => (
-                  <button class={s['volume-btn']}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      class={s['volume-btn__icon']}
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d={
-                          volume.value === 0
-                            ? 'M0 7.667v8h5.333L12 22.333V1L5.333 7.667'
-                            : volume.value < 0.5
-                            ? 'M0 7.667v8h5.333L12 22.333V1L5.333 7.667M17.333 11.373C17.333 9.013 16 6.987 14 6v10.707c2-.947 3.333-2.987 3.333-5.334z'
-                            : 'M14.667 0v2.747c3.853 1.146 6.666 4.72 6.666 8.946 0 4.227-2.813 7.787-6.666 8.934v2.76C20 22.173 24 17.4 24 11.693 24 5.987 20 1.213 14.667 0zM18 11.693c0-2.36-1.333-4.386-3.333-5.373v10.707c2-.947 3.333-2.987 3.333-5.334zm-18-4v8h5.333L12 22.36V1.027L5.333 7.693H0z'
-                        }
-                      />
-                    </svg>
-                  </button>
-                ),
-                default: () => (
-                  <div class={s['volume-bar-wrapper']} ref={volumeBarWrapper}>
-                    <div class={s['volume-bar']} onClick={handleVolumeBarClick}>
+            <div class={s['volume-controls']}>
+              <ElPopover
+                placement="top"
+                trigger="click"
+                width="auto"
+                showArrow={false}
+                popperClass={s['volume-popover']}
+                offset={2}
+              >
+                {{
+                  reference: () => (
+                    <button class={s['volume-btn']}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        class={s['volume-btn__icon']}
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d={
+                            volume.value === 0
+                              ? 'M0 7.667v8h5.333L12 22.333V1L5.333 7.667'
+                              : volume.value < 0.5
+                              ? 'M0 7.667v8h5.333L12 22.333V1L5.333 7.667M17.333 11.373C17.333 9.013 16 6.987 14 6v10.707c2-.947 3.333-2.987 3.333-5.334z'
+                              : 'M14.667 0v2.747c3.853 1.146 6.666 4.72 6.666 8.946 0 4.227-2.813 7.787-6.666 8.934v2.76C20 22.173 24 17.4 24 11.693 24 5.987 20 1.213 14.667 0zM18 11.693c0-2.36-1.333-4.386-3.333-5.373v10.707c2-.947 3.333-2.987 3.333-5.334zm-18-4v8h5.333L12 22.36V1.027L5.333 7.693H0z'
+                          }
+                        />
+                      </svg>
+                    </button>
+                  ),
+                  default: () => (
+                    <div class={s['volume-bar-wrapper']} ref={volumeBarWrapper}>
                       <div
-                        class={s['volume-bar__fill']}
-                        ref={volumeBar}
-                        style={{ height: `${volume.value * 100}%` }}
+                        class={s['volume-bar']}
+                        onClick={handleVolumeBarClick}
                       >
                         <div
-                          class={s['volume-bar__pin']}
-                          ref={volumeBarPin}
-                          onMousedown={startDraggingVolume}
-                          onDragstart={e => e.stopPropagation()}
-                        ></div>
+                          class={s['volume-bar__fill']}
+                          ref={volumeBar}
+                          style={{ height: `${volume.value * 100}%` }}
+                        >
+                          <div
+                            class={s['volume-bar__pin']}
+                            ref={volumeBarPin}
+                            onMousedown={startDraggingVolume}
+                            onDragstart={e => e.stopPropagation()}
+                          ></div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ),
-              }}
-            </ElPopover>
-          </div>
+                  ),
+                }}
+              </ElPopover>
+              {showDownloadButton && (
+                <button
+                  class={s['download-btn']}
+                  onClick={() => {
+                    window.open(props.url, '_blank');
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    class={s['download-btn__icon']}
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                    />
+                  </svg>
+                </button>
+              )}
+            </div>
 
-          <audio ref={player} src={props.url} preload="metadata"></audio>
+            <audio ref={player} src={props.url} preload="metadata"></audio>
+          </div>
         </div>
-      </div>
-    );
+      );
+    };
   },
 });
 

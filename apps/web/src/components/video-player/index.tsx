@@ -11,7 +11,9 @@ import {
 } from 'vue';
 import { useI18n } from 'vue-i18n';
 import s from './index.module.sass';
-export type VideoPlayerOption = Omit<ArtplayerOption, 'container'>;
+export type VideoPlayerOption = Omit<ArtplayerOption, 'container'> & {
+  showDownloadButton?: boolean;
+};
 
 const createDownloadIcon = (): HTMLElement => {
   const downloadIconSvg = `<svg stroke="currentColor" stroke-width="5" width="22" height="22" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 24.0083V42H42V24" stroke="inherit" stroke-width="inherit" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M33 23L24 32L15 23" stroke="inherit" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round"/><path d="M23.9917 6V32" stroke="inherit" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -53,22 +55,27 @@ const VideoPlayer = defineComponent({
       }
       downloadIconRef.value.setAttribute('aria-label', t('common.download'));
       await nextTick();
+      let controls = props.option.controls || [];
+      const { showDownloadButton = true } = props.option;
+      if (showDownloadButton) {
+        controls = [
+          ...controls,
+          {
+            position: 'right',
+            html: downloadIconRef.value,
+            click: function () {
+              window.open(props.option.url, '_blank');
+            },
+          },
+        ];
+      }
       const art = new Artplayer(
         {
           autoSize: true,
           fullscreen: true,
-          lang: locale.value,
-          controls: [
-            {
-              position: 'right',
-              html: downloadIconRef.value,
-              click: function () {
-                window.open(props.option.url, '_blank');
-              },
-            },
-            ...(props.option.controls || []),
-          ],
           ...props.option,
+          lang: locale.value,
+          controls,
           container: containerRef.value,
         },
         () => {

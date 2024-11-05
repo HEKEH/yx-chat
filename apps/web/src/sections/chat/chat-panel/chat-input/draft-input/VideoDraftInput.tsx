@@ -52,6 +52,7 @@ export const VideoDraftInput = defineComponent({
     return () => {
       const option = computed<VideoPlayerOption>(() => ({
         url: objectUrl.value ?? '',
+        showDownloadButton: false,
       }));
       return objectUrl.value ? (
         <div class={s['video-wrapper']} onClick={e => e.stopPropagation()}>
