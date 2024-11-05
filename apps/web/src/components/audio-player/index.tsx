@@ -274,7 +274,7 @@ const AudioPlayer = defineComponent({
               </svg>
             </button>
 
-            <div class={s['controls']}>
+            <div class={s['player-progress']}>
               <span class={s['controls__current-time']}>
                 {currentTime.value}
               </span>
@@ -300,7 +300,7 @@ const AudioPlayer = defineComponent({
               <span class={s['controls__total-time']}>{totalTime.value}</span>
             </div>
 
-            <div class={s['volume-controls']}>
+            <div class={s['right-controls']}>
               <ElPopover
                 placement="top"
                 trigger="click"
@@ -311,11 +311,11 @@ const AudioPlayer = defineComponent({
               >
                 {{
                   reference: () => (
-                    <button class={s['volume-btn']}>
+                    <button class={s['control-btn']}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
-                        class={s['volume-btn__icon']}
+                        class={s['control-btn__icon']}
                       >
                         <path
                           fill-rule="evenodd"
@@ -355,7 +355,7 @@ const AudioPlayer = defineComponent({
               </ElPopover>
               {showDownloadButton && (
                 <button
-                  class={s['download-btn']}
+                  class={s['control-btn']}
                   onClick={() => {
                     window.open(props.url, '_blank');
                   }}
@@ -363,11 +363,11 @@ const AudioPlayer = defineComponent({
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    class={s['download-btn__icon']}
+                    class={s['control-btn__icon']}
                   >
                     <path
                       fill-rule="evenodd"
-                      d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                      d="M20 8h-5V2H9v6H4l8 9 8-9zM4 19v3h16v-3H4z"
                     />
                   </svg>
                 </button>
