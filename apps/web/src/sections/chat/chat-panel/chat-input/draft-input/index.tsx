@@ -1,6 +1,7 @@
 import { PropType, defineComponent } from 'vue';
 import MessageDraft, { DraftItem } from '~/domain/models/chat/massage-draft';
 import { ChatMessageFormat } from '@yx-chat/shared/types';
+import { TextDraftItem } from '~/domain/models/chat/massage-draft/text-draft-item';
 import s from './index.module.sass';
 import { TextDraftInput } from './TextDraftInput';
 import { ImageDraftInput } from './ImageDraftInput';
@@ -17,7 +18,8 @@ export const DraftInput = defineComponent({
     },
   },
   setup(props) {
-    const handlePaste = (event: ClipboardEvent) => {
+    const getFileFromClipboard = (event: ClipboardEvent) => {
+      const files: File[] = [];
       const items = event.clipboardData?.items;
       if (items) {
         for (let i = 0; i < items.length; i++) {
@@ -26,11 +28,32 @@ export const DraftInput = defineComponent({
             const file = item.getAsFile();
             if (file && !item.webkitGetAsEntry?.()?.isDirectory) {
               // to avoid folder
-              props.draft.addFile(file);
+              files.push(file);
             }
           }
         }
       }
+      return files;
+    };
+    const handlePaste = (event: ClipboardEvent) => {
+      const files = getFileFromClipboard(event);
+      if (!files.length) {
+        return;
+      }
+      props.draft.addFiles(files);
+    };
+    const handlePasteFileInTextInput = (
+      itemIndex: number,
+      event: ClipboardEvent,
+      selectionStart: number,
+      selectionEnd: number,
+    ) => {
+      const files = getFileFromClipboard(event);
+      if (!files.length) {
+        return;
+      }
+      props.draft.splitTextItem(itemIndex, selectionStart, selectionEnd);
+      props.draft.insertFiles(files, itemIndex + 1);
     };
     const onDelete = (item: DraftItem) => {
       props.draft.removeItem(item);
@@ -49,10 +72,23 @@ export const DraftInput = defineComponent({
           {draft.globalErrorMsg && (
             <div class={s['error']}>{`(${draft.globalErrorMsg})`}</div>
           )}
-          {draft.items.map(item => {
+          {draft.items.map((item, index) => {
             switch (item.type) {
               case ChatMessageFormat.text:
-                return <TextDraftInput key={item.key} item={item} />;
+                return (
+                  <TextDraftInput
+                    key={item.key}
+                    item={item}
+                    onPasteFile={(e, selectionStart, selectionEnd) =>
+                      handlePasteFileInTextInput(
+                        index,
+                        e,
+                        selectionStart,
+                        selectionEnd,
+                      )
+                    }
+                  />
+                );
               case ChatMessageFormat.image:
                 return (
                   <ImageDraftInput

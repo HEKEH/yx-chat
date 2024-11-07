@@ -7,7 +7,7 @@ export class TextDraftItem implements IDraftItem<string> {
   readonly key = getRandomId();
   readonly focusSubject = new Subject<void>();
   readonly type = ChatMessageFormat.text;
-  private _content = '';
+  private _content;
   get content() {
     return this._content;
   }
@@ -30,5 +30,8 @@ export class TextDraftItem implements IDraftItem<string> {
       data: content,
       type: this.type,
     };
+  }
+  constructor(content?: string) {
+    this._content = content ?? '';
   }
 }

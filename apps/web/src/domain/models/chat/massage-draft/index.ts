@@ -103,22 +103,51 @@ export default class MessageDraft {
     }
   }
 
-  addFile(file: File) {
-    if (this._items[this._items.length - 1].type !== ChatMessageFormat.text) {
-      // insert a text item before image
-      this._items.push(new TextDraftItem());
+  splitTextItem(index: number, selectionStart: number, selectionEnd: number) {
+    const item = this._items[index];
+    if (item.type !== ChatMessageFormat.text) {
+      throw new Error('The item must be a text item');
     }
-    if (file.type.startsWith('image/')) {
-      this._items.push(new ImageDraftItem(file));
-    } else if (file.type.startsWith('video/')) {
-      this._items.push(new VideoDraftItem(file));
-    } else if (file.type.startsWith('audio/')) {
-      this._items.push(new AudioDraftItem(file));
-    } else {
-      this._items.push(new FileDraftItem(file));
+    const content = item.content;
+    const beforeSelection = content.slice(0, selectionStart);
+    const afterSelection = content.slice(selectionEnd);
+    item.setContent(beforeSelection);
+    this._items.splice(index + 1, 0, new TextDraftItem(afterSelection));
+  }
+
+  insertFiles(files: File[], index: number) {
+    if (!files.length) {
+      return;
     }
-    // insert a text item after image
-    this._items.push(new TextDraftItem());
+    const newDraftItems: DraftItem[] = [];
+    files.forEach((file, i) => {
+      if (file.type.startsWith('image/')) {
+        newDraftItems.push(new ImageDraftItem(file));
+      } else if (file.type.startsWith('video/')) {
+        newDraftItems.push(new VideoDraftItem(file));
+      } else if (file.type.startsWith('audio/')) {
+        newDraftItems.push(new AudioDraftItem(file));
+      } else {
+        newDraftItems.push(new FileDraftItem(file));
+      }
+      if (i !== files.length - 1) {
+        newDraftItems.push(new TextDraftItem());
+      }
+    });
+    if (this._items[index - 1].type !== ChatMessageFormat.text) {
+      newDraftItems.unshift(new TextDraftItem());
+    }
+    if (
+      index === this._items.length ||
+      this._items[index].type !== ChatMessageFormat.text
+    ) {
+      newDraftItems.push(new TextDraftItem());
+    }
+    this._items.splice(index, 0, ...newDraftItems);
+  }
+
+  addFiles(files: File[]) {
+    this.insertFiles(files, this._items.length);
   }
 
   removeItem(item: DraftItem) {

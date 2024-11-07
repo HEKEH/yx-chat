@@ -18,9 +18,18 @@ export const TextDraftInput = defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  emits: {
+    pasteFile: (
+      event: ClipboardEvent,
+      selectionStart: number,
+      selectionEnd: number,
+    ) => true,
+  },
+  setup(props, { emit }) {
     const inputRef = ref<HTMLInputElement | null>(null);
-    const textareaRef = computed(() => (inputRef.value as any)?.textarea);
+    const textareaRef = computed<HTMLTextAreaElement | null>(
+      () => (inputRef.value as any)?.textarea,
+    );
     const focus = () => {
       inputRef.value?.focus();
       // Position cursor at the end of the input
@@ -39,11 +48,18 @@ export const TextDraftInput = defineComponent({
       subscription.unsubscribe();
       textareaRef.value?.removeEventListener('paste', handlePaste);
     });
+
     const handlePaste = (e: ClipboardEvent) => {
       const text = e.clipboardData?.getData('text/plain');
       if (!text) {
+        // Handle paste file
+
         // Prevent paste file name
         e.preventDefault();
+        e.stopPropagation();
+
+        const textArea = e.target as HTMLTextAreaElement; // = textareaRef.value
+        emit('pasteFile', e, textArea.selectionStart, textArea.selectionEnd);
       }
     };
     return () => {
