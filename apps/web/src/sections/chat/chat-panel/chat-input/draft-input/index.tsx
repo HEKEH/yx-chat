@@ -1,7 +1,6 @@
 import { PropType, defineComponent } from 'vue';
 import MessageDraft, { DraftItem } from '~/domain/models/chat/massage-draft';
 import { ChatMessageFormat } from '@yx-chat/shared/types';
-import { TextDraftItem } from '~/domain/models/chat/massage-draft/text-draft-item';
 import s from './index.module.sass';
 import { TextDraftInput } from './TextDraftInput';
 import { ImageDraftInput } from './ImageDraftInput';

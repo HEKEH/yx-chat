@@ -30,18 +30,22 @@ export const TextDraftInput = defineComponent({
     const textareaRef = computed<HTMLTextAreaElement | null>(
       () => (inputRef.value as any)?.textarea,
     );
-    const focus = () => {
+    const focus = (atStart = false) => {
       inputRef.value?.focus();
       // Position cursor at the end of the input
       const textarea = textareaRef.value;
-      const length = textarea?.value?.length;
-      if (length) {
-        textarea.setSelectionRange(length, length);
+      if (!atStart) {
+        const length = textarea?.value?.length;
+        if (length) {
+          textarea.setSelectionRange(length, length);
+        }
+      } else {
+        textarea?.setSelectionRange(0, 0);
       }
     };
-    const subscription = props.item.focusSubject.subscribe(focus);
+    const subscription = props.item.focusSubject.subscribe(() => focus());
     onMounted(() => {
-      focus();
+      focus(true); // Usually element is created after pasting files, at this time focus at the start of the input
       textareaRef.value?.addEventListener('paste', handlePaste);
     });
     onBeforeUnmount(() => {
@@ -60,6 +64,8 @@ export const TextDraftInput = defineComponent({
 
         const textArea = e.target as HTMLTextAreaElement; // = textareaRef.value
         emit('pasteFile', e, textArea.selectionStart, textArea.selectionEnd);
+      } else {
+        // do default behavior, no need to handle
       }
     };
     return () => {
