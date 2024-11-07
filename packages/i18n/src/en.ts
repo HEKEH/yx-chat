@@ -53,6 +53,7 @@ const en: I18nMessage = {
     imageNotFound: 'Image not found',
     videoLoadFailed: 'Video load failed',
     audioLoadFailed: 'Audio load failed',
+    chooseFile: 'Choose file',
     download: 'Download',
   },
   setting: {

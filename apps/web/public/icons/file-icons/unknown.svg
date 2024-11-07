@@ -1,0 +1,21 @@
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 96">
+  <style>
+    .st0 {
+      fill: #fff
+    }
+
+    .st1 {
+      fill: #bababa
+    }
+  </style>
+  <path class="st0" d="M71.9 24c-.1-.4-.2-.7-.4-1L52 1.2V24h19.9z" />
+  <path class="st0" stroke="#000000"
+    d="M0 2v92c0 1.1.9 2 2 2h68c1.1 0 2-.9 2-2V28H50c-1.1 0-2-.9-2-2V0H2C.9 0 0 .9 0 2z" />
+  <path class="st1"
+    d="M0 94V2C0 .9.9 0 2 0h48c.6 0 1.1.2 1.5.7l20 22.3c.3.4.5.8.5 1.3V94c0 1.1-.9 2-2 2H2c-1.1 0-2-.9-2-2zm68-68.9L49.1 4H4v88h64V25.1z" />
+  <path fill="none"
+    d="M36 57.9372V51.9372C40.9706 51.9372 45 47.9077 45 42.9372C45 37.9666 40.9706 33.9372 36 33.9372C31.0294 33.9372 27 37.9666 27 42.9372"
+    stroke="#bababa" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  <path class="st1" fill-rule="evenodd" clip-rule="evenodd"
+    d="M36 71.4372C38.0711 71.4372 39.75 69.7583 39.75 67.6872C39.75 65.6161 38.0711 63.9372 36 63.9372C33.9289 63.9372 32.25 65.6161 32.25 67.6872C32.25 69.7583 33.9289 71.4372 36 71.4372Z" />
+</svg>

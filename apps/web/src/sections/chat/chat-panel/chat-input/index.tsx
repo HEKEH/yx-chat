@@ -6,6 +6,7 @@ import { ElTooltip } from 'element-plus';
 import { useI18n } from 'vue-i18n';
 import s from './index.module.sass';
 import { DraftInput } from './draft-input';
+import { FileChooseIcon } from './file-choose';
 import PaperAirplane from '@/assets/icons/paper-airplane.svg';
 
 export const ChatInputContainer = defineComponent({
@@ -28,24 +29,32 @@ export const ChatInputContainer = defineComponent({
       if (!chatMessageCollection) {
         return null;
       }
-      const hasInputError = chatMessageCollection.draft.hasError;
-      const iconSize = 28;
+      const draft = chatMessageCollection.draft;
+      const hasInputError = draft.hasError;
+      const onFilesChoose = (files: File[]) => {
+        draft.addFiles(files);
+      };
       return (
         <div class={s['chat-input-container']}>
           <DraftInput draft={chatMessageCollection.draft} />
-          <div class={s.actions}>
-            {!isSending.value ? (
-              <ElTooltip content={t('common.send')} placement="top">
-                <PaperAirplane
-                  width={iconSize}
-                  height={iconSize}
-                  class={{ [s.icon]: true, [s.disabled]: hasInputError }}
-                  onClick={hasInputError ? undefined : sendMessage}
-                />
-              </ElTooltip>
-            ) : (
-              <Loading class={s.icon} size={iconSize} />
-            )}
+          <div class={s['bottom-row']}>
+            <div class={s.actions}>
+              <FileChooseIcon
+                iconClass={s.icon}
+                onFilesChoose={onFilesChoose}
+                size={26}
+              />
+              {!isSending.value ? (
+                <ElTooltip content={t('common.send')} placement="top">
+                  <PaperAirplane
+                    class={{ [s.icon]: true, [s.disabled]: hasInputError }}
+                    onClick={hasInputError ? undefined : sendMessage}
+                  />
+                </ElTooltip>
+              ) : (
+                <Loading class={s.icon} size={28} />
+              )}
+            </div>
           </div>
         </div>
       );

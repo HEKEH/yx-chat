@@ -51,6 +51,7 @@ export interface I18nMessage {
     imageNotFound: string;
     videoLoadFailed: string;
     audioLoadFailed: string;
+    chooseFile: string;
     download: string;
   };
   setting: {
