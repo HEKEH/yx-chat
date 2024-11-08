@@ -2,6 +2,16 @@
   "name": "yx-chat",
   "version": "0.0.0",
   "packageManager": "^pnpm@7.13.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HEKEH/yx-chat"
+  },
+  "keywords": [
+    "chat",
+    "web",
+    "socket.io",
+    "instant-messaging"
+  ],
   "scripts": {
     "dev:web": "cross-env pnpm --filter @yx-chat/web run dev",
     "build:web": "cross-env turbo build --filter @yx-chat/web",

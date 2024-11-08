@@ -17,7 +17,6 @@ export default defineConfig(() => {
       vueJsx() as PluginOption,
       cssInjectedByJsPlugin(),
       dts({
-        // entryRoot: 'src',
         include: ['src/**/*.ts', 'src/**/*.vue'],
         outDir: 'dist',
         tsconfigPath: './tsconfig.app.json',
