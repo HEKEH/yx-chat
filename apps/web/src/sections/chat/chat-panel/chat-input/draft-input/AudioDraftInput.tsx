@@ -6,7 +6,7 @@ import {
   watchEffect,
 } from 'vue';
 import { AudioDraftItem } from '~/domain/models/chat/massage-draft/audio-draft-item';
-import AudioPlayer from '~/components/audio-player';
+import EasyAudioPlayer from 'easy-audio-player';
 import s from './AudioDraftInput.module.sass';
 import commonS from './Common.module.sass';
 import Close from '@/assets/icons/close.svg';
@@ -51,7 +51,7 @@ export const AudioDraftInput = defineComponent({
     return () => {
       return objectUrl.value ? (
         <div class={s['audio-wrapper']} onClick={e => e.stopPropagation()}>
-          <AudioPlayer
+          <EasyAudioPlayer
             class={s.audio}
             url={objectUrl.value}
             options={audioPlayerOptions}

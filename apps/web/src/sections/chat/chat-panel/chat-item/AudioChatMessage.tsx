@@ -1,7 +1,7 @@
 import { computed, defineComponent, PropType } from 'vue';
 import { AudioChatMessageItem } from '@yx-chat/shared/types';
 import { getFileUrl } from '~/utils/get-file-url';
-import AudioPlayer from '~/components/audio-player';
+import EasyAudioPlayer from 'easy-audio-player';
 import s from './AudioChatMessage.module.sass';
 
 const AudioChatMessage = defineComponent({
@@ -17,7 +17,7 @@ const AudioChatMessage = defineComponent({
     return () => {
       return (
         <div class={s['audio-chat-message']}>
-          <AudioPlayer url={url.value} />
+          <EasyAudioPlayer url={url.value} />
         </div>
       );
     };

@@ -1,4 +1,2 @@
-import AudioPlayer from './main.vue';
-export default AudioPlayer;
-
-export * from './main.vue';
+import EasyAudioPlayer from './main.vue';
+export default EasyAudioPlayer;
