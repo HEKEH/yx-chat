@@ -4,7 +4,7 @@
     trigger="hover"
     width="auto"
     :show-arrow="false"
-    popper-class="volume-popover"
+    popper-class="easy-audio-player-volume-popover"
     :offset="2"
   >
     <template #reference>
@@ -172,7 +172,7 @@ export default PlayerVolume;
 </script>
 
 <style lang="scss">
-.volume-popover {
+.easy-audio-player-volume-popover {
   min-width: unset !important;
   padding: 10px 0 8px 0 !important;
 
@@ -195,7 +195,7 @@ export default PlayerVolume;
       position: absolute;
       bottom: 0;
       width: 100%;
-      background: var(--primary-color-10);
+      background: var(--e-a-player-primary-color);
       border-radius: 2px;
       transition: height 0.1s ease-in-out;
     }
@@ -203,7 +203,7 @@ export default PlayerVolume;
     &__pin {
       width: 10px;
       height: 10px;
-      background: var(--primary-color-10);
+      background: var(--e-a-player-primary-color);
       border-radius: 50%;
       position: absolute;
       right: -3px;

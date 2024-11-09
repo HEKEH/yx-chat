@@ -192,7 +192,7 @@ export default PlayerProgress;
 
       &__fill {
         height: 100%;
-        background-color: var(--primary-color-10);
+        background-color: var(--e-a-player-primary-color);
         border-radius: 2px;
         position: relative;
         transition: width 0.1s ease-in-out;
@@ -202,7 +202,7 @@ export default PlayerProgress;
       &__pin {
         width: 12px;
         height: 12px;
-        background-color: var(--primary-color-10);
+        background-color: var(--e-a-player-primary-color);
         border-radius: 50%;
         position: absolute;
         right: -6px;
@@ -220,7 +220,7 @@ export default PlayerProgress;
   .controls__current-time,
   .controls__total-time {
     font-size: 12px;
-    color: #566574;
+    color: var(--e-a-player-text-color);
     width: fit-content;
     padding: 0 2px;
   }

@@ -395,6 +395,9 @@ importers:
       '@vue/tsconfig':
         specifier: ^0.5.1
         version: 0.5.1
+      sass:
+        specifier: ^1.80.6
+        version: 1.80.6
       vite:
         specifier: ^5.4.10
         version: 5.4.10(@types/node@22.9.0)(sass@1.80.6)

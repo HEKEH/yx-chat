@@ -1,0 +1,24 @@
+$prefix: --e-a-player-;
+
+$colors: (
+  'text-color': #566574,
+  'bg-color': #fff,
+  'icon-color': #566574,
+  'primary-color': #4a90e2,
+);
+
+$sizes: (
+  'height': 56px,
+);
+
+html {
+  // color variables
+  @each $name, $value in $colors {
+    #{$prefix}#{$name}: #{$value};
+  }
+
+  // size variables
+  @each $name, $value in $sizes {
+    #{$prefix}#{$name}: #{$value};
+  }
+}

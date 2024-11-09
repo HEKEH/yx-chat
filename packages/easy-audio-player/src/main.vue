@@ -168,7 +168,7 @@ export default EasyAudioPlayer;
 .easy-audio-player {
   width: 100%;
   min-width: 300px;
-  height: 56px;
+  height: var(--e-a-player-height);
   box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.07);
   display: flex;
   justify-content: space-between;
@@ -176,7 +176,7 @@ export default EasyAudioPlayer;
   padding: 0 15px;
   border-radius: 4px;
   user-select: none;
-  background-color: #fff;
+  background-color: var(--e-a-player-background-color);
   cursor: default;
 
   .player-controls {
@@ -203,7 +203,10 @@ export default EasyAudioPlayer;
     &__icon {
       width: 12px;
       height: 16px;
-      fill: #566574;
+      fill: var(--e-a-player-icon-color);
+    }
+    &:hover {
+      opacity: 0.8;
     }
   }
 
@@ -225,8 +228,8 @@ export default EasyAudioPlayer;
       &__icon {
         width: 18px;
         height: 18px;
-        fill: #566574;
-        color: #566574;
+        fill: var(--e-a-player-icon-color);
+        color: var(--e-a-player-icon-color);
       }
       &:hover {
         opacity: 0.8;
