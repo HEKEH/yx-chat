@@ -1,7 +1,7 @@
 import { computed, defineComponent, PropType } from 'vue';
 import { AudioChatMessageItem } from '@yx-chat/shared/types';
 import { getFileUrl } from '~/utils/get-file-url';
-import EasyAudioPlayer from 'easy-audio-player';
+import EasyAudioPlayer from '@hekeh/easy-audio-player-vue';
 import s from './AudioChatMessage.module.sass';
 
 const AudioChatMessage = defineComponent({

@@ -6,7 +6,7 @@ import {
   watchEffect,
 } from 'vue';
 import { AudioDraftItem } from '~/domain/models/chat/massage-draft/audio-draft-item';
-import EasyAudioPlayer from 'easy-audio-player';
+import EasyAudioPlayer from '@hekeh/easy-audio-player-vue';
 import s from './AudioDraftInput.module.sass';
 import commonS from './Common.module.sass';
 import Close from '@/assets/icons/close.svg';
