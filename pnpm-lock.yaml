@@ -288,8 +288,8 @@ importers:
   apps/web:
     dependencies:
       '@hekeh/easy-audio-player-vue':
-        specifier: ^0.0.1
-        version: 0.0.1(vue@3.5.12)
+        specifier: ^1.0.0
+        version: 1.0.0(vue@3.5.12)
       '@yx-chat/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
@@ -1301,8 +1301,8 @@ packages:
     resolution: {integrity: sha512-Waj1cwPXJDucOib4a3bAISsKJVb15MKi9IvmTI/7ssVEm6sywXGjVJDhl6/umt1pK1ZS7PacXU3A1PmFKHEZ2w==}
     dev: false
 
-  /@hekeh/easy-audio-player-vue@0.0.1(vue@3.5.12):
-    resolution: {integrity: sha512-Mcapj9aZSRpkx3KsNJsaigYXR50wa7MVqGYuBdXNTofdNT2dHgLWbKCbQQMyomEUhRzIcx7EGzLuEMFgccBHaQ==}
+  /@hekeh/easy-audio-player-vue@1.0.0(vue@3.5.12):
+    resolution: {integrity: sha512-gSI7Q2n1NbHzQJpNrKiFf70lwFEXfwlHAAf61o638P/3QAEaRnGjwX0s72WHv31gLEj15hmFv+DlRPFivoa+6w==}
     requiresBuild: true
     peerDependencies:
       vue: ^3.0.0
