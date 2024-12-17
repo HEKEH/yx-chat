@@ -1,6 +1,7 @@
-import { LANGUAGE } from '@yx-chat/shared/constants';
+import type { LANGUAGE } from '@yx-chat/shared/constants';
+import type { PropType } from 'vue';
 import { ElRadio, ElRadioGroup } from 'element-plus';
-import { defineComponent, PropType } from 'vue';
+import { defineComponent } from 'vue';
 import i18n, { I18N_OPTIONS, setI18nLanguage } from '~/infra/i18n';
 import s from './LanguageSelect.module.sass';
 
@@ -13,7 +14,7 @@ export const LanguageSelect = defineComponent({
     },
   },
   emits: {
-    select: (value: LANGUAGE) => true,
+    select: (_: LANGUAGE) => true,
   },
   setup(props, { emit }) {
     return () => (

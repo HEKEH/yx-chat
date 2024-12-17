@@ -1,5 +1,5 @@
-import { ChatMessagesRecord } from './chat';
-import { CommonResult } from './common';
+import type { ChatMessagesRecord } from './chat';
+import type { CommonResult } from './common';
 
 export interface Friend {
   id: string;

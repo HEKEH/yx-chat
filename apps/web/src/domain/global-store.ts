@@ -1,4 +1,4 @@
-import {
+import type {
   ChatMessagesRecord,
   CreateGroupSuccessResponse,
   Friend,
@@ -7,12 +7,17 @@ import {
   LastMessagesResponse,
   LoginSuccessResponse,
   SendFriendAddRequestResponse,
-  ServerMessageType,
   UserAndGroupSearchResult,
 } from '@yx-chat/shared/types';
+import type { Subscription } from 'rxjs';
+import type { ChatMessageCollectionContext } from './models/chat/chat-message-collection';
+import type { ChatMessageManagerContext } from './models/chat/chat-message-manager';
+import type { FriendAddNotificationModel } from './models/notification/friend-add-notification';
+import type { IUser } from './models/typing';
+import { ServerMessageType } from '@yx-chat/shared/types';
 import { isErrorResponse } from '@yx-chat/shared/utils';
-import { Subscription } from 'rxjs';
 import { LocalStorageStore } from '~/infra/local-storage-store';
+import getToken from '~/infra/local-storage-store/get-token';
 import { SocketIO } from '~/infra/socket-io';
 import { CreateGroupRequest } from '~/infra/socket-io/request/create-group-request';
 import { GetChatMessagesRequest } from '~/infra/socket-io/request/get-chat-messages-request';
@@ -22,23 +27,14 @@ import { LoginRequest } from '~/infra/socket-io/request/login-request';
 import { RegisterRequest } from '~/infra/socket-io/request/register-request';
 import { SearchUsersAndGroupsRequest } from '~/infra/socket-io/request/search-users-and-groups-request';
 import { SendFriendAddRequest } from '~/infra/socket-io/request/send-friend-add-request';
-import getToken from '~/infra/local-storage-store/get-token';
-import {
-  ChatMessageCollection,
-  ChatMessageCollectionContext,
-} from './models/chat/chat-message-collection';
-import {
-  ChatMessageManagerContext,
-  ChatMessageManager,
-} from './models/chat/chat-message-manager';
+import { ChatMessageCollection } from './models/chat/chat-message-collection';
+import { ChatMessageManager } from './models/chat/chat-message-manager';
 import { ContactManager } from './models/contact';
 import { FriendModel } from './models/contact/friend';
 import { GroupModel } from './models/contact/group';
-import { FriendAddNotificationModel } from './models/notification/friend-add-notification';
 import { NotificationManager } from './models/notification/notification-manager';
 import Self from './models/self';
 import { ThemeManager } from './models/theme';
-import { IUser } from './models/typing';
 import { MainMenu } from './types';
 
 export default class GlobalStore

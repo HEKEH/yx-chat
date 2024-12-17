@@ -1,8 +1,9 @@
-import { Notification, ServerMessageType } from '@yx-chat/shared/types';
-import { Subscription } from 'rxjs';
+import type { Notification } from '@yx-chat/shared/types';
+import type { Subscription } from 'rxjs';
+import type { NotificationContext, NotificationModel } from './typing';
+import { ServerMessageType } from '@yx-chat/shared/types';
 import { SocketIO } from '~/infra/socket-io';
 import { notificationFactory } from './notification-factory';
-import { NotificationContext, NotificationModel } from './typing';
 
 export class NotificationManager implements NotificationContext {
   private _notificationListenSubscription: Subscription | undefined;

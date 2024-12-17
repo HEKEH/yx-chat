@@ -1,11 +1,11 @@
 import { ElNotification } from 'element-plus';
-import 'element-plus/dist/index.css';
 import { defineComponent, onBeforeUnmount, onErrorCaptured, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { HomePage } from '~/sections/homepage';
 import { SocketEventType, SocketIO } from '~/infra/socket-io';
+import { HomePage } from '~/sections/homepage';
 import { initI18n as _initI18n } from './infra/i18n';
 import { provideGlobalStore } from './utils/vue';
+import 'element-plus/dist/index.css';
 
 function initI18n() {
   const isI18nReady = ref(false);
@@ -75,6 +75,8 @@ function initGlobalStore() {
 export default defineComponent({
   name: 'App',
   setup() {
+    const { isI18nReady, t } = initI18n();
+
     onErrorCaptured(e => {
       ElNotification.error({
         message: t(typeof e === 'string' ? e : (e as Error).message),
@@ -82,9 +84,6 @@ export default defineComponent({
       console.error(e);
       return false;
     });
-
-    const { isI18nReady, t } = initI18n();
-
     initSocketIO();
 
     const { isGlobalStoreReady } = initGlobalStore();

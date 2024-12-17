@@ -1,6 +1,10 @@
 {
   "name": "@yx-chat/web",
   "version": "0.0.0",
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite --config ./vite.config.ts --open",
     "build": "cross-env NODE_ENV=production vue-tsc --noEmit && vite build --config ./vite.config.ts",
@@ -39,9 +43,5 @@
   "browserslist": [
     "> 1%",
     "not ie 11"
-  ],
-  "files": [
-    "dist",
-    "package.json"
   ]
 }

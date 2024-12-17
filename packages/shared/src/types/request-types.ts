@@ -1,7 +1,7 @@
-import { AccountRequestType } from './account';
-import { ChatMessageRequestType } from './chat';
-import { ContactRequestType } from './contact';
-import { SystemRequestType } from './system';
+import type { AccountRequestType } from './account';
+import type { ChatMessageRequestType } from './chat';
+import type { ContactRequestType } from './contact';
+import type { SystemRequestType } from './system';
 
 export type AllRequestTypes =
   | AccountRequestType

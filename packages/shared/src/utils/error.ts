@@ -1,4 +1,4 @@
-import { ErrorResponse } from '../types/error';
+import type { ErrorResponse } from '../types/error';
 
 export function isErrorResponse(response: any): response is ErrorResponse {
   return (

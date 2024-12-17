@@ -1,6 +1,6 @@
+import iconCatalogList from '@/public/icons/file-icons/catalog.json';
 import { computed, defineComponent } from 'vue';
 import styles from './index.module.sass';
-import iconCatalogList from '@/public/icons/file-icons/catalog.json';
 
 function getFileExt(filename: string) {
   if (filename.includes('.')) {
@@ -31,7 +31,7 @@ export const FileView = defineComponent({
       const { filename } = props;
       return (
         <div class={styles['file-view']}>
-          <img src={fileIconPath.value} alt={''} />
+          <img src={fileIconPath.value} alt="" />
           <div class={styles['file-name']}>{filename}</div>
         </div>
       );

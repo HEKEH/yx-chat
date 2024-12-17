@@ -1,23 +1,23 @@
 {
   "extends": "../../tsconfig",
-  "include": [
-    "./src/**/*.ts",
-    "./src/**/*.d.ts",
-    "./src/**/*.tsx",
-    "./src/**/*.vue"
-  ],
-  "references": [{ "path": "./tsconfig.node.json" }],
   "compilerOptions": {
     "jsx": "preserve",
-    "jsxImportSource": "vue",
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment",
-    "types": ["node", "vite/client"],
+    "jsxImportSource": "vue",
     "paths": {
       "~/*": ["./src/*"],
       "@/*": ["./*"],
       "@yx-chat/i18n/*": ["../../packages/i18n/src/*"],
       "@yx-chat/shared/*": ["../../packages/shared/src/*"]
-    }
-  }
+    },
+    "types": ["node", "vite/client"]
+  },
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.d.ts",
+    "./src/**/*.tsx",
+    "./src/**/*.vue"
+  ]
 }

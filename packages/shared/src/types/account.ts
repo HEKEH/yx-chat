@@ -1,6 +1,6 @@
-import { Friend, Group } from './contact';
-import { Notification } from './notification';
-import { UserBasicInfo } from './user';
+import type { Friend, Group } from './contact';
+import type { Notification } from './notification';
+import type { UserBasicInfo } from './user';
 
 export enum AccountRequestType {
   login = 'login', // Login account

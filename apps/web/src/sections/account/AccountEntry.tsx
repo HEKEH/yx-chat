@@ -1,5 +1,6 @@
-import { ElDialog, ElTabPane, ElTabs, ElMessage } from 'element-plus';
-import { Ref, defineComponent, ref } from 'vue';
+import type { Ref } from 'vue';
+import { ElDialog, ElMessage, ElTabPane, ElTabs } from 'element-plus';
+import { defineComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import s from './AccountEntry.module.sass';
 import { Login } from './login';
@@ -20,7 +21,9 @@ export const AccountEntry = defineComponent({
               showAccountPanel.value = true;
             }}
             class={s['login-text']}
-          >{`${t('account.login')} / ${t('account.register')}`}</p>
+          >
+            {`${t('account.login')} / ${t('account.register')}`}
+          </p>
           <ElDialog v-model={showAccountPanel.value} width="400px" align-center>
             <ElTabs stretch v-model={activeTab.value}>
               <ElTabPane name="login" label={t('account.login')}>

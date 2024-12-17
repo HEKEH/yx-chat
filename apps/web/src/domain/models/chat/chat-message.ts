@@ -1,8 +1,5 @@
-import {
-  ChatMessage,
-  ChatMessageFormat,
-  ChatMessageItem,
-} from '@yx-chat/shared/types';
+import type { ChatMessage, ChatMessageItem } from '@yx-chat/shared/types';
+import { ChatMessageFormat } from '@yx-chat/shared/types';
 import i18n from '~/infra/i18n';
 import { GeneralTime } from '../common/time';
 
@@ -48,11 +45,13 @@ export class ChatMessageModel {
           return `[${t('common.video')}]`;
         case ChatMessageFormat.audio:
           return `[${t('common.audio')}]`;
+        default:
+          return '';
       }
     });
     const brief = briefs.join(' ');
     if (brief.length > 10) {
-      return brief.slice(0, 10) + '...';
+      return `${brief.slice(0, 10)}...`;
     }
     return brief;
   }

@@ -1,5 +1,5 @@
-import { createApp } from 'vue';
 import { vLoading } from 'element-plus';
+import { createApp } from 'vue';
 import App from './App';
 import i18n from './infra/i18n';
 import './style.css';

@@ -1,4 +1,4 @@
-import { I18nMessage } from './types';
+import type { I18nMessage } from './types';
 
 const en: I18nMessage = {
   account: {

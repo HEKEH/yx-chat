@@ -1,11 +1,13 @@
-import { ChatMessageModel } from '../chat/chat-message';
-import { ChatMessageCollection } from '../chat/chat-message-collection';
-import { GeneralTime } from '../common/time';
-import { IUser } from '../typing';
+import type { ChatMessageModel } from '../chat/chat-message';
+import type { ChatMessageCollection } from '../chat/chat-message-collection';
+import type { GeneralTime } from '../common/time';
+import type { IUser } from '../typing';
 
 export interface IContactUnit extends IUser {
   readonly chatMessageCollection: ChatMessageCollection;
-  setChatMessageCollection(chatMessageCollection: ChatMessageCollection): void;
+  setChatMessageCollection: (
+    chatMessageCollection: ChatMessageCollection,
+  ) => void;
   /** For friend, the key is selfId + friend's id. for group, it is the group id */
   readonly messageOwnerKey: string;
   readonly latestMessage: ChatMessageModel | undefined;

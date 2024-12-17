@@ -1,6 +1,6 @@
-import { ChatMessage } from './chat';
-import { Friend } from './contact';
-import { Notification } from './notification';
+import type { ChatMessage } from './chat';
+import type { Friend } from './contact';
+import type { Notification } from './notification';
 
 export enum ServerMessageType {
   chat = 'chat',

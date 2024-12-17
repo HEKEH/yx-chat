@@ -1,6 +1,6 @@
+import LoadingSvg from '@/assets/icons/loading.svg';
 import { defineComponent } from 'vue';
 import s from './Loading.module.sass';
-import LoadingSvg from '@/assets/icons/loading.svg';
 
 const Loading = defineComponent({
   name: 'LoadingIcon',

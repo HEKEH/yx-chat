@@ -1,7 +1,7 @@
-import { I18nMessage } from '@yx-chat/i18n/types';
+import type { I18nMessage } from '@yx-chat/i18n/types';
 import zhCn from '@yx-chat/i18n/zh-cn';
-import { createI18n } from 'vue-i18n';
 import { LANGUAGE } from '@yx-chat/shared/constants';
+import { createI18n } from 'vue-i18n';
 import config from '~/config';
 import { LocalStorageStore } from '../local-storage-store';
 

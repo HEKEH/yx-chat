@@ -1,18 +1,19 @@
-import {
+import type {
   ChatMessage,
   ChatMessagesRecord,
   HistoryChatMessagesResponse,
   UpdateHistoryResponse,
 } from '@yx-chat/shared/types';
+import type { IContactUnit } from '../contact/typing';
+import type Self from '../self';
+import type { IUser } from '../typing';
+import type { ChatMessageModel } from './chat-message';
 import { Subject } from 'rxjs';
 import { SocketIO } from '~/infra/socket-io';
 import { GetHistoryChatMessagesRequest } from '~/infra/socket-io/request/get-history-chat-messages-request';
 import { SendChatMessageRequest } from '~/infra/socket-io/request/send-chat-message-request';
 import { UpdateHistoryRequest } from '~/infra/socket-io/request/update-history-request';
-import { IContactUnit } from '../contact/typing';
-import Self from '../self';
-import { IUser } from '../typing';
-import { ChatMessageModel, chatMessageFactory } from './chat-message';
+import { chatMessageFactory } from './chat-message';
 import MessageDraft from './massage-draft';
 
 export interface ChatMessageCollectionContext {
@@ -189,6 +190,7 @@ export class ChatMessageCollection {
       unread: messagesRecord?.unread || 0,
     });
   }
+
   static createEmpty(
     id: string,
     context: ChatMessageCollectionContext,

@@ -1,4 +1,4 @@
-import { Group } from '@yx-chat/shared/types';
+import type { Group } from '@yx-chat/shared/types';
 import { AbstractContactUnit } from './abstract-contact-unit';
 
 export class GroupModel extends AbstractContactUnit {

@@ -1,6 +1,6 @@
+import type { UserAccountInfo } from '../typing';
 import { defineComponent } from 'vue';
 import { getGlobalStore } from '~/utils/vue';
-import { UserAccountInfo } from '../typing';
 import { LoginForm } from './LoginForm';
 
 export const Login = defineComponent({

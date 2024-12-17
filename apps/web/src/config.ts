@@ -1,4 +1,4 @@
-import { LANGUAGE } from '@yx-chat/shared/constants';
+import type { LANGUAGE } from '@yx-chat/shared/constants';
 
 // @ts-expect-error ignore type error
 const env = import.meta.env; // import.meta is from vite，process.env can't get value

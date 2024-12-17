@@ -1,6 +1,6 @@
-import { ChatMessageCollection } from '../chat/chat-message-collection';
+import type { ChatMessageCollection } from '../chat/chat-message-collection';
+import type { IContactUnit } from './typing';
 import { GeneralTime } from '../common/time';
-import { IContactUnit } from './typing';
 
 export abstract class AbstractContactUnit implements IContactUnit {
   protected _name: string;

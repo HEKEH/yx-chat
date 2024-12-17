@@ -1,10 +1,11 @@
 /** Info of the login user */
 
-import { RESPONSE_CODE, UserBasicInfo } from '@yx-chat/shared/types';
+import type { UserBasicInfo } from '@yx-chat/shared/types';
+import type { IUser } from './typing';
+import { RESPONSE_CODE } from '@yx-chat/shared/types';
 import uploadFile from '~/infra/requests/upload-file';
-import { UpdateUserInfoRequest } from '~/infra/socket-io/request/update-user-info-request';
 import { SocketIO } from '~/infra/socket-io';
-import { IUser } from './typing';
+import { UpdateUserInfoRequest } from '~/infra/socket-io/request/update-user-info-request';
 
 export default class Self implements IUser {
   private _userInfo: UserBasicInfo | undefined;
@@ -29,7 +30,6 @@ export default class Self implements IUser {
     return this._userInfo?.avatar || '';
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
   setUserInfo(userInfo: UserBasicInfo) {

@@ -1,7 +1,8 @@
-import { ChatMessage, ServerMessageType } from '@yx-chat/shared/types';
-import { Subscription } from 'rxjs';
+import type { ChatMessage } from '@yx-chat/shared/types';
+import type { Subscription } from 'rxjs';
+import type { ChatMessageCollection } from './chat-message-collection';
+import { ServerMessageType } from '@yx-chat/shared/types';
 import { SocketIO } from '~/infra/socket-io';
-import { ChatMessageCollection } from './chat-message-collection';
 
 export interface ChatMessageManagerContext {
   /** global current chatMessageCollection */
@@ -18,9 +19,11 @@ export class ChatMessageManager {
   get selectedItem() {
     return this._list.find(item => item.id === this._selectedId);
   }
+
   get list() {
     return this._list;
   }
+
   get selectedId() {
     return this._selectedId;
   }

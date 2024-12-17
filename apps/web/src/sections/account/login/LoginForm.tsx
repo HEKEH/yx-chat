@@ -1,15 +1,9 @@
-import {
-  ElButton,
-  ElForm,
-  ElFormItem,
-  ElInput,
-  FormInstance,
-  FormItemRule,
-} from 'element-plus';
+import type { FormInstance, FormItemRule } from 'element-plus';
 import type { Arrayable } from 'element-plus/es/utils/typescript';
+import type { UserAccountInfo } from '../typing';
+import { ElButton, ElForm, ElFormItem, ElInput } from 'element-plus';
 import { defineComponent, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { UserAccountInfo } from '../typing';
 
 const USER_NAME: keyof UserAccountInfo = 'username';
 const PASSWORD: keyof UserAccountInfo = 'password';

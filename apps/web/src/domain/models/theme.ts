@@ -1,10 +1,10 @@
-import setCssVariable from '~/utils/css-variable';
 import { LocalStorageStore } from '~/infra/local-storage-store';
+import setCssVariable from '~/utils/css-variable';
 
-type ThemeSetting = {
+interface ThemeSetting {
   primaryColor: string;
   primaryTextColor: string;
-};
+}
 
 export type ThemeName = 'default' | 'cool';
 

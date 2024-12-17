@@ -22,7 +22,7 @@ export enum ChatMessageFormat {
 export const ChatMessageFormatList: ChatMessageFormat[] =
   enum2ValueArray(ChatMessageFormat);
 
-export type ChatMessage = {
+export interface ChatMessage {
   items: ChatMessageItem[];
   createTime: string;
   deleted: boolean;
@@ -33,50 +33,50 @@ export type ChatMessage = {
     avatar: string;
   };
   to: string;
-};
+}
 
 /** Messages with an user or an group */
-export type ChatMessagesRecord = {
+export interface ChatMessagesRecord {
   messages: ChatMessage[];
   unread: number; // 未读消息数
-};
+}
 
-export type LastMessagesRequestBody = {
+export interface LastMessagesRequestBody {
   contactKeys: string[]; // connection of two user ids or a group id
-};
+}
 
-export type HistoryChatMessagesRequestBody = {
+export interface HistoryChatMessagesRequestBody {
   contactKey: string;
   offset: number;
-};
+}
 
 export type HistoryChatMessagesResponse = ChatMessage[];
 
-export type FileChatMessageItem = {
+export interface FileChatMessageItem {
   type: ChatMessageFormat.file;
   data: string;
   name: string;
-};
+}
 
-export type VideoChatMessageItem = {
+export interface VideoChatMessageItem {
   type: ChatMessageFormat.video;
   data: string;
-};
+}
 
-export type ImageChatMessageItem = {
+export interface ImageChatMessageItem {
   type: ChatMessageFormat.image;
   data: string;
-};
+}
 
-export type AudioChatMessageItem = {
+export interface AudioChatMessageItem {
   type: ChatMessageFormat.audio;
   data: string;
-};
+}
 
-export type TextChatMessageItem = {
+export interface TextChatMessageItem {
   type: ChatMessageFormat.text;
   data: string;
-};
+}
 
 export type ChatMessageItem =
   | VideoChatMessageItem
@@ -85,19 +85,19 @@ export type ChatMessageItem =
   | ImageChatMessageItem
   | AudioChatMessageItem;
 
-export type SendChatMessageBody = {
+export interface SendChatMessageBody {
   to: string;
   items: ChatMessageItem[];
-};
+}
 
-export type UpdateHistoryRequestBody = {
+export interface UpdateHistoryRequestBody {
   contactKey: string;
   messageId: string;
-};
+}
 
-export type UpdateHistoryResponse = {
+export interface UpdateHistoryResponse {
   success: boolean;
-};
+}
 
 /** Key is connection of two user ids or a group id */
 export type LastMessagesResponse = Record<string, ChatMessagesRecord>;

@@ -10,7 +10,7 @@ function createUser(userName, password, dbName, role) {
       db.createUser({
         user: userName,
         pwd: password,
-        roles: [{ role: role, db: dbName }],
+        roles: [{ role, db: dbName }],
       });
       print(`User ${userName} created successfully for database ${dbName}`);
     } else {

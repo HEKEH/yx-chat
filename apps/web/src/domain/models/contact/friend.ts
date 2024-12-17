@@ -1,4 +1,4 @@
-import { Friend } from '@yx-chat/shared/types';
+import type { Friend } from '@yx-chat/shared/types';
 import { AbstractContactUnit } from './abstract-contact-unit';
 
 export class FriendModel extends AbstractContactUnit {

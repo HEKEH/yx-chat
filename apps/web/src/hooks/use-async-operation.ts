@@ -1,4 +1,5 @@
-import { ref, Ref } from 'vue';
+import type { Ref } from 'vue';
+import { ref } from 'vue';
 
 export function useAsyncOperation<T extends (...args: any[]) => any>(
   operationFn: T,

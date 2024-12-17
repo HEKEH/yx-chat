@@ -1,4 +1,5 @@
-import { InjectionKey, inject, provide, reactive } from 'vue';
+import type { InjectionKey } from 'vue';
+import { inject, provide, reactive } from 'vue';
 import GlobalStore from '~/domain/global-store';
 
 const GlobalStoreKey: InjectionKey<GlobalStore> = Symbol('GlobalStore');

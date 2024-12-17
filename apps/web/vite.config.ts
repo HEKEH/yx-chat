@@ -1,7 +1,8 @@
-import { resolve } from 'path';
-import { AliasOptions, defineConfig, loadEnv } from 'vite';
+import type { AliasOptions } from 'vite';
+import { resolve } from 'node:path';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
+import { defineConfig, loadEnv } from 'vite';
 import svgVueComponentPlugin from './plugins/vite-plugin-svg-vue-component';
 
 // https://vitejs.dev/config/

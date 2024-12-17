@@ -1,4 +1,5 @@
-import { CSSProperties, PropType, computed, defineComponent } from 'vue';
+import type { CSSProperties, PropType } from 'vue';
+import { computed, defineComponent } from 'vue';
 import clientConfig from '~/config';
 import { getFileUrl } from '~/utils/get-file-url';
 import s from './index.module.sass';
