@@ -276,8 +276,8 @@ importers:
   apps/web:
     dependencies:
       '@hekeh/easy-audio-player-vue':
-        specifier: ^1.0.6
-        version: 1.0.6(vue@3.5.12)
+        specifier: ^1.0.7
+        version: 1.0.7(vue@3.5.12)
       '@yx-chat/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
@@ -1499,18 +1499,18 @@ packages:
     resolution: {integrity: sha512-Waj1cwPXJDucOib4a3bAISsKJVb15MKi9IvmTI/7ssVEm6sywXGjVJDhl6/umt1pK1ZS7PacXU3A1PmFKHEZ2w==}
     dev: false
 
-  /@hekeh/easy-audio-player-vue@1.0.6(vue@3.5.12):
-    resolution: {integrity: sha512-HlNBRLS5gioV+VkdfZH59ExAErxWazu15i2rpkml8fEAAvyvCK4jgAWWaV9XTDedid3gdUpC5RvTOOWuYfAziQ==}
+  /@hekeh/easy-audio-player-vue@1.0.7(vue@3.5.12):
+    resolution: {integrity: sha512-UhDqjfCv1l8q61IT2tWnwm8OoDAesPCqR4YZmZZYpLFWjpC6i4DEVDodGThFhGLGROsDbeL0ZKv8tAc0dFZLbg==}
     requiresBuild: true
     peerDependencies:
       vue: '>=3.0.0'
     dependencies:
-      '@hekeh/el-popover': 1.0.1(vue@3.5.12)
+      '@hekeh/el-popover': 1.0.3(vue@3.5.12)
       vue: 3.5.12(typescript@5.6.3)
     dev: false
 
-  /@hekeh/el-popover@1.0.1(vue@3.5.12):
-    resolution: {integrity: sha512-deXWijfLMD2M0gaK6xTNx9igD3wG5SsehtuYLVw+HjkX3fwgnAZa+X5L5BrTEb+y/mAPZ/p7xUNowCnevreLQQ==}
+  /@hekeh/el-popover@1.0.3(vue@3.5.12):
+    resolution: {integrity: sha512-cy8jZ8hfNK03o23uEapmCEpK3CFJAvRdspqxAexICwRv22gDBw74t4I3JUaFEtonTl7ZkesJG/g/ldX44KIVvQ==}
     requiresBuild: true
     peerDependencies:
       vue: ^3.0.0
